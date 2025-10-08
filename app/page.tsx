@@ -262,7 +262,25 @@ export default function Home() {
           </div>
         </div>
         <div className={styles.summaryCard}>
-          <h2>Your Squares</h2>
+          <div className={styles.summaryHeader}>
+            <h2>Your Squares</h2>
+            <div className={styles.signatureRow}>
+              {POLICIES.map((policy) => {
+                const color = getScoreColor(policy.key, userSpectrum[policy.key]);
+                return (
+                  <span
+                    key={`${policy.key}-square`}
+                    className={styles.signatureSquare}
+                    style={{
+                      backgroundColor: color,
+                      boxShadow: `0 0 10px ${hexToRgba(color, 0.4)}`,
+                    }}
+                    aria-label={`${policy.label} selection`}
+                  />
+                );
+              })}
+            </div>
+          </div>
           <ul>
             {POLICIES.map((policy) => (
               <li key={policy.key}>
