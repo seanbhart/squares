@@ -154,3 +154,65 @@ Rights (civil liberties, e.g. LGBTQ+ rights)
 - Economics: 🟧 Strong social programs
 - Rights: 🟪 Full legal equality
 
+**John F. Kennedy (1917-1963)** 🟩🟥🟩🟧🟩
+- Trade: 🟩 Selective trade agreements
+- Abortion: 🟥 Limit after heartbeat detection
+- Migration: 🟩 Expanded quotas
+- Economics: 🟧 Strong social programs
+- Rights: 🟩 Protections with some limits
+
+**Lyndon B. Johnson (1908-1973)** 🟨🟥🟦🟥🟦
+- Trade: 🟨 Balanced tariffs
+- Abortion: 🟥 Limit after heartbeat detection
+- Migration: 🟦 Easy pathways to citizenship
+- Economics: 🟥 Extensive public ownership
+- Rights: 🟦 Protections with few limits
+
+**Richard Nixon (1913-1994)** 🟧🟥🟧🟨🟨
+- Trade: 🟧 Strategic protections
+- Abortion: 🟥 Limit after heartbeat detection
+- Migration: 🟧 Reduced quotas
+- Economics: 🟨 Balanced public-private
+- Rights: 🟨 Tolerance without endorsement
+
+**Gerald Ford (1913-2006)** 🟦🟧🟨🟩🟩
+- Trade: 🟦 Minimal tariffs
+- Abortion: 🟧 Limit after first trimester
+- Migration: 🟨 Current restrictions
+- Economics: 🟩 Market-based with safety net
+- Rights: 🟩 Protections with some limits
+
+**George H.W. Bush (1924-2018)** 🟦🟧🟨🟦🟨
+- Trade: 🟦 Minimal tariffs
+- Abortion: 🟧 Limit after first trimester
+- Migration: 🟨 Current restrictions
+- Economics: 🟦 Minimal regulation
+- Rights: 🟨 Tolerance without endorsement
+
+**Bill Clinton (b. 1946)** 🟦🟩🟩🟩🟩
+- Trade: 🟦 Minimal tariffs
+- Abortion: 🟩 Limit after third trimester
+- Migration: 🟩 Expanded quotas
+- Economics: 🟩 Market-based with safety net
+- Rights: 🟩 Protections with some limits
+
+**George W. Bush (b. 1946)** 🟦🟥🟨🟩🟨
+- Trade: 🟦 Minimal tariffs
+- Abortion: 🟥 Limit after heartbeat detection
+- Migration: 🟨 Current restrictions
+- Economics: 🟩 Market-based with safety net
+- Rights: 🟨 Tolerance without endorsement
+
+**Barack Obama (b. 1961)** 🟩🟦🟦🟧🟪
+- Trade: 🟩 Selective trade agreements
+- Abortion: 🟦 Limit after viability
+- Migration: 🟦 Easy pathways to citizenship
+- Economics: 🟧 Strong social programs
+- Rights: 🟪 Full legal equality
+
+**Donald Trump (b. 1946)** 🟥🟩🟥🟦🟨
+- Trade: 🟥 Heavy tariffs
+- Abortion: 🟩 Limit after third trimester
+- Migration: 🟥 Strict limits only
+- Economics: 🟦 Minimal regulation
+- Rights: 🟨 Tolerance without endorsement
