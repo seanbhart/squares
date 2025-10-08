@@ -1,0 +1,269 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+  padding: 4rem 5vw 6rem;
+}
+
+.hero {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2.5rem;
+  align-items: start;
+}
+
+.heroContent {
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+}
+
+.title {
+  margin: 0;
+  font-size: clamp(2.75rem, 5vw, 3.75rem);
+  font-weight: 700;
+  color: #f8fafc;
+}
+
+.subtitle {
+  margin: 0;
+  line-height: 1.6;
+  max-width: 50ch;
+  color: #cbd5f5;
+}
+
+.ctaRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.presetButton,
+.resetButton {
+  border: 1px solid rgba(148, 163, 184, 0.4);
+  background: rgba(15, 23, 42, 0.6);
+  color: #e2e8f0;
+  padding: 0.65rem 1.1rem;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.presetButton:hover,
+.resetButton:hover {
+  border-color: rgba(148, 163, 184, 0.7);
+  transform: translateY(-1px);
+}
+
+.presetButton[data-selected="true"] {
+  background: rgba(96, 165, 250, 0.25);
+  border-color: rgba(59, 130, 246, 0.7);
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
+}
+
+.summaryCard {
+  background: rgba(15, 23, 42, 0.7);
+  border: 1px solid rgba(148, 163, 184, 0.25);
+  border-radius: 1.25rem;
+  padding: 1.75rem;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.4);
+}
+
+.summaryCard h2 {
+  margin-top: 0;
+  margin-bottom: 1.25rem;
+  font-size: 1.4rem;
+  color: #f1f5f9;
+}
+
+.summaryCard ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.summaryCard li {
+  display: flex;
+  justify-content: space-between;
+  gap: 1.5rem;
+  align-items: center;
+  min-height: 32px;
+  font-size: 0.95rem;
+}
+
+.policyLabel {
+  display: inline-flex;
+  gap: 0.6rem;
+  align-items: center;
+  color: #cbd5e1;
+  font-weight: 600;
+}
+
+.policyValue {
+  color: #f8fafc;
+}
+
+.labelSquare {
+  width: 18px;
+  height: 18px;
+  border-radius: 4px;
+  border: 1px solid rgba(15, 23, 42, 0.45);
+  box-shadow: 0 0 0 1px rgba(148, 163, 184, 0.15);
+  flex-shrink: 0;
+}
+
+.slidersSection {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.slidersSection h2 {
+  margin: 0;
+  font-size: 1.8rem;
+  color: #f1f5f9;
+}
+
+.slidersGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.75rem;
+}
+
+.sliderGroup {
+  background: rgba(15, 23, 42, 0.65);
+  border-radius: 1.1rem;
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  min-height: 260px;
+}
+
+.sliderHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  color: #f8fafc;
+}
+
+.sliderHeader h3 {
+  margin: 0;
+  font-size: 1.15rem;
+}
+
+.compareValue {
+  margin-left: auto;
+  font-size: 0.85rem;
+  color: #94a3b8;
+}
+
+.sliderTrack {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.sliderButton {
+  border: none;
+  background: transparent;
+  padding: 0.35rem;
+  border-radius: 0.75rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.sliderButton:hover,
+.sliderButton:focus-visible {
+  background: rgba(59, 130, 246, 0.12);
+  outline: none;
+}
+
+.sliderButton[data-active="true"] {
+  background: rgba(96, 165, 250, 0.2);
+  box-shadow: inset 0 0 0 1px rgba(59, 130, 246, 0.4);
+}
+
+.cell {
+  display: flex;
+  gap: 0.8rem;
+  align-items: center;
+  color: #cbd5e1;
+}
+
+.cellDot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #1f2937;
+  flex-shrink: 0;
+  box-shadow: 0 0 10px rgba(59, 130, 246, 0.2);
+}
+
+.cellLabel {
+  text-align: left;
+  font-size: 0.9rem;
+}
+
+.diffRow {
+  display: flex;
+  justify-content: space-between;
+  color: #94a3b8;
+  font-size: 0.85rem;
+  border-top: 1px solid rgba(148, 163, 184, 0.2);
+  padding-top: 0.75rem;
+  margin-top: auto;
+}
+
+.diffValue {
+  font-weight: 600;
+}
+
+.diffValue[data-positive="true"] {
+  color: #34d399;
+}
+
+.diffValue[data-positive="false"] {
+  color: #f87171;
+}
+
+.examplesSection {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 2rem;
+  background: rgba(15, 23, 42, 0.65);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 1.25rem;
+  padding: 2rem;
+}
+
+.examplesSection h2 {
+  margin-top: 0;
+  font-size: 1.6rem;
+  color: #f1f5f9;
+}
+
+.examplesSection p {
+  margin: 0;
+  line-height: 1.7;
+  color: #cbd5f5;
+}
+
+@media (max-width: 640px) {
+  .main {
+    padding: 3rem 1.5rem 4rem;
+  }
+
+  .ctaRow {
+    gap: 0.5rem;
+  }
+
+  .sliderGroup {
+    min-height: 0;
+  }
+}
