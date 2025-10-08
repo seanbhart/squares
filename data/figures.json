@@ -756,23 +756,6 @@
       ]
     },
     {
-      "name": "Pope John Paul II",
-      "lifespan": "1920-2005",
-      "spectrum": [3, 6, 2, 4, 5],
-      "timeline": [
-        {
-          "label": "Early Papacy (1978-1989)",
-          "spectrum": [3, 6, 2, 4, 5],
-          "note": "Anti-communist solidarity with Poland balances distributist economics and absolute pro-life positions."
-        },
-        {
-          "label": "Post-Cold War (1989-2005)",
-          "spectrum": [3, 6, 2, 4, 5],
-          "note": "Critique of capitalism and consumerism maintains social teaching while opposing abortion and LGBTQ rights."
-        }
-      ]
-    },
-    {
       "name": "Angela Merkel",
       "lifespan": "b. 1954",
       "spectrum": [1, 3, 1, 3, 2],
@@ -837,6 +820,407 @@
           "label": "Senior Minister (1990-2015)",
           "spectrum": [1, 4, 5, 3, 4],
           "note": "Asian values advocacy maintains model of market capitalism with restricted civil liberties."
+        }
+      ]
+    },
+    {
+      "name": "Pope John Paul II",
+      "lifespan": "1920-2005",
+      "spectrum": [3, 6, 2, 4, 5],
+      "timeline": [
+        {
+          "label": "Early Papacy (1978-1989)",
+          "spectrum": [3, 6, 2, 4, 5],
+          "note": "Anti-communist solidarity with Poland balances distributist economics and absolute pro-life positions."
+        },
+        {
+          "label": "Post-Cold War (1989-2005)",
+          "spectrum": [3, 6, 2, 4, 5],
+          "note": "Critique of capitalism and consumerism maintains social teaching while opposing abortion and LGBTQ rights."
+        }
+      ]
+    },
+    {
+      "name": "Pope Francis",
+      "lifespan": "b. 1936",
+      "spectrum": [3, 5, 1, 5, 4],
+      "timeline": [
+        {
+          "label": "Archbishop of Buenos Aires (1998-2013)",
+          "spectrum": [3, 5, 2, 5, 4],
+          "note": "Social justice focus and work with poor emphasize economic equality while maintaining traditional marriage doctrine."
+        },
+        {
+          "label": "Early Papacy (2013-2020)",
+          "spectrum": [3, 5, 1, 5, 4],
+          "note": "Laudato Si' encyclical and refugee advocacy push progressive economics and immigration while softening LGBTQ rhetoric."
+        },
+        {
+          "label": "Recent Years (2020-present)",
+          "spectrum": [3, 5, 1, 5, 3],
+          "note": "Civil union support and inclusive language signal modest shift on rights while maintaining strong social program advocacy."
+        }
+      ]
+    },
+    {
+      "name": "Desmond Tutu",
+      "lifespan": "1931-2021",
+      "spectrum": [2, 2, 1, 5, 0],
+      "timeline": [
+        {
+          "label": "Anti-Apartheid Activism (1970s-1994)",
+          "spectrum": [2, 2, 1, 5, 1],
+          "note": "Economic sanctions advocacy and liberation theology support redistributive economics with civil rights focus."
+        },
+        {
+          "label": "Truth & Reconciliation (1995-2000)",
+          "spectrum": [2, 2, 1, 5, 0],
+          "note": "Restorative justice work balances social programs with progressive rights including LGBTQ equality."
+        },
+        {
+          "label": "Global Advocacy (2000-2021)",
+          "spectrum": [2, 2, 1, 5, 0],
+          "note": "Climate justice and LGBTQ rights activism establish progressive stance across all policy areas."
+        }
+      ]
+    },
+    {
+      "name": "Billy Graham",
+      "lifespan": "1918-2018",
+      "spectrum": [2, 4, 3, 3, 3],
+      "timeline": [
+        {
+          "label": "Early Crusades (1949-1960s)",
+          "spectrum": [2, 5, 3, 3, 4],
+          "note": "Anti-communist preaching and traditional social values dominate with moderate economic positions."
+        },
+        {
+          "label": "Civil Rights Era (1960s-1970s)",
+          "spectrum": [2, 4, 3, 3, 3],
+          "note": "Integration of crusades and friendship with MLK signal moderation on racial justice while maintaining conservative social theology."
+        },
+        {
+          "label": "Later Ministry (1980s-2018)",
+          "spectrum": [2, 4, 3, 3, 3],
+          "note": "Distance from political partisanship and focus on gospel message maintain moderate evangelical positions."
+        }
+      ]
+    },
+    {
+      "name": "Jerry Falwell Sr.",
+      "lifespan": "1933-2007",
+      "spectrum": [1, 6, 4, 1, 5],
+      "timeline": [
+        {
+          "label": "Segregationist Era (1950s-1970s)",
+          "spectrum": [2, 6, 5, 2, 6],
+          "note": "Opposition to integration and defense of segregated Christian academies reflect conservative social positions."
+        },
+        {
+          "label": "Moral Majority (1979-1989)",
+          "spectrum": [1, 6, 4, 1, 5],
+          "note": "Political mobilization against abortion and LGBTQ rights combines with supply-side economic support."
+        },
+        {
+          "label": "Post-Cold War (1990-2007)",
+          "spectrum": [1, 6, 4, 1, 5],
+          "note": "Continued cultural warfare and Republican alliance maintain conservative evangelical political engagement."
+        }
+      ]
+    },
+    {
+      "name": "Pat Robertson",
+      "lifespan": "1930-2023",
+      "spectrum": [2, 6, 4, 1, 5],
+      "timeline": [
+        {
+          "label": "700 Club & CBN Growth (1960s-1980s)",
+          "spectrum": [2, 6, 4, 2, 5],
+          "note": "Charismatic theology and media empire building combine traditional values with entrepreneurial capitalism."
+        },
+        {
+          "label": "Presidential Run & Political Peak (1988-2000)",
+          "spectrum": [2, 6, 4, 1, 5],
+          "note": "Christian Coalition mobilization pushes pro-life agenda and opposition to LGBTQ rights with economic conservatism."
+        },
+        {
+          "label": "Later Years (2000-2023)",
+          "spectrum": [2, 6, 4, 1, 5],
+          "note": "Controversial statements and continued political advocacy maintain culture war focus with business interests."
+        }
+      ]
+    },
+    {
+      "name": "Rick Warren",
+      "lifespan": "b. 1954",
+      "spectrum": [2, 5, 3, 3, 4],
+      "timeline": [
+        {
+          "label": "Saddleback Church Growth (1980-2000)",
+          "spectrum": [2, 5, 3, 3, 4],
+          "note": "Purpose Driven model emphasizes church growth with traditional evangelical theology and moderate politics."
+        },
+        {
+          "label": "Global Influence Era (2000-2020)",
+          "spectrum": [2, 5, 3, 3, 3],
+          "note": "HIV/AIDS advocacy and poverty initiatives signal engagement with social issues while maintaining traditional marriage stance."
+        },
+        {
+          "label": "Recent Ministry (2020-present)",
+          "spectrum": [2, 5, 3, 3, 3],
+          "note": "Mental health advocacy and reduced political engagement show shift toward pastoral focus with moderate conservatism."
+        }
+      ]
+    },
+    {
+      "name": "Franklin Graham",
+      "lifespan": "b. 1952",
+      "spectrum": [1, 6, 5, 1, 5],
+      "timeline": [
+        {
+          "label": "Early Ministry (1970s-2000)",
+          "spectrum": [2, 5, 4, 2, 4],
+          "note": "Samaritan's Purse humanitarian work combines disaster relief with traditional evangelical theology."
+        },
+        {
+          "label": "Political Engagement (2001-2015)",
+          "spectrum": [1, 6, 5, 1, 5],
+          "note": "Post-9/11 Islam criticism and Obama opposition shift toward explicit Republican partisanship."
+        },
+        {
+          "label": "Trump Era Alliance (2016-present)",
+          "spectrum": [1, 6, 5, 1, 5],
+          "note": "Strong Trump endorsement and culture war focus depart from father's political caution."
+        }
+      ]
+    },
+    {
+      "name": "Joel Osteen",
+      "lifespan": "b. 1963",
+      "spectrum": [1, 3, 2, 2, 2],
+      "timeline": [
+        {
+          "label": "Lakewood Church Leadership (1999-present)",
+          "spectrum": [1, 3, 2, 2, 2],
+          "note": "Prosperity gospel and positive thinking avoid explicit political stances while emphasizing individual success."
+        }
+      ]
+    },
+    {
+      "name": "T.D. Jakes",
+      "lifespan": "b. 1957",
+      "spectrum": [2, 4, 2, 3, 3],
+      "timeline": [
+        {
+          "label": "The Potter's House Era (1996-present)",
+          "spectrum": [2, 4, 2, 3, 3],
+          "note": "Economic empowerment message combines prosperity teaching with Black church social consciousness."
+        }
+      ]
+    },
+    {
+      "name": "James Dobson",
+      "lifespan": "b. 1936",
+      "spectrum": [1, 6, 4, 1, 5],
+      "timeline": [
+        {
+          "label": "Focus on the Family Founding (1977-2000)",
+          "spectrum": [1, 6, 4, 1, 5],
+          "note": "Family values focus and opposition to LGBTQ rights establish Christian Right psychological framework."
+        },
+        {
+          "label": "Political Mobilization (2000-2020)",
+          "spectrum": [1, 6, 4, 1, 5],
+          "note": "Marriage amendment advocacy and Republican endorsements maintain culture war leadership."
+        }
+      ]
+    },
+    {
+      "name": "Mother Teresa",
+      "lifespan": "1910-1997",
+      "spectrum": [4, 6, 1, 5, 6],
+      "timeline": [
+        {
+          "label": "Missionaries of Charity (1950-1997)",
+          "spectrum": [4, 6, 1, 5, 6],
+          "note": "Service to poorest of poor combines radical hospitality with absolute pro-life and traditional sexual ethics."
+        }
+      ]
+    },
+    {
+      "name": "Dalai Lama (Tenzin Gyatso)",
+      "lifespan": "b. 1935",
+      "spectrum": [2, 1, 1, 4, 1],
+      "timeline": [
+        {
+          "label": "Tibetan Leadership in Exile (1959-1990)",
+          "spectrum": [3, 2, 1, 4, 2],
+          "note": "Nonviolent resistance to Chinese occupation emphasizes Buddhist economics and human rights."
+        },
+        {
+          "label": "Global Spiritual Leader (1990-2010)",
+          "spectrum": [2, 1, 1, 4, 1],
+          "note": "Interfaith dialogue and environmental advocacy advance progressive social positions with Buddhist compassion."
+        },
+        {
+          "label": "Democratic Transition (2011-present)",
+          "spectrum": [2, 1, 1, 4, 1],
+          "note": "Relinquishing political power and LGBTQ acceptance signal liberal shift within Buddhist framework."
+        }
+      ]
+    },
+    {
+      "name": "Ayatollah Khomeini",
+      "lifespan": "1902-1989",
+      "spectrum": [5, 6, 6, 6, 6],
+      "timeline": [
+        {
+          "label": "Iranian Revolution (1979-1989)",
+          "spectrum": [5, 6, 6, 6, 6],
+          "note": "Islamic Republic establishment combines state control of economy with strict Sharia law and closed borders."
+        }
+      ]
+    },
+    {
+      "name": "Archbishop Oscar Romero",
+      "lifespan": "1917-1980",
+      "spectrum": [3, 3, 1, 5, 1],
+      "timeline": [
+        {
+          "label": "Early Ministry (1970-1977)",
+          "spectrum": [2, 4, 2, 3, 2],
+          "note": "Conservative bishop maintains traditional Catholic positions with moderate social concern."
+        },
+        {
+          "label": "Liberation Theology Turn (1977-1980)",
+          "spectrum": [3, 3, 1, 5, 1],
+          "note": "Witnessing violence shifts toward preferential option for poor and human rights advocacy."
+        }
+      ]
+    },
+    {
+      "name": "Thich Nhat Hanh",
+      "lifespan": "1926-2022",
+      "spectrum": [2, 1, 0, 4, 0],
+      "timeline": [
+        {
+          "label": "Vietnam War Peace Activism (1960s)",
+          "spectrum": [2, 1, 0, 4, 0],
+          "note": "Engaged Buddhism and anti-war advocacy establish progressive nonviolent resistance framework."
+        },
+        {
+          "label": "Western Teaching Era (1970s-2022)",
+          "spectrum": [2, 1, 0, 4, 0],
+          "note": "Mindfulness movement and environmental activism maintain progressive Buddhist social engagement."
+        }
+      ]
+    },
+    {
+      "name": "Reinhold Niebuhr",
+      "lifespan": "1892-1971",
+      "spectrum": [2, 3, 2, 4, 2],
+      "timeline": [
+        {
+          "label": "Social Gospel Era (1920s-1930s)",
+          "spectrum": [3, 3, 2, 5, 2],
+          "note": "Socialist sympathies and labor activism reflect progressive Christian political theology."
+        },
+        {
+          "label": "Christian Realism (1940s-1971)",
+          "spectrum": [2, 3, 2, 4, 2],
+          "note": "Cold War pragmatism and critique of utopianism balance progressive economics with international realism."
+        }
+      ]
+    },
+    {
+      "name": "Dietrich Bonhoeffer",
+      "lifespan": "1906-1945",
+      "spectrum": [2, 3, 2, 4, 1],
+      "timeline": [
+        {
+          "label": "Confessing Church Resistance (1933-1945)",
+          "spectrum": [2, 3, 2, 4, 1],
+          "note": "Anti-Nazi resistance and theological opposition to totalitarianism combine Christian ethics with political courage."
+        }
+      ]
+    },
+    {
+      "name": "John Stott",
+      "lifespan": "1921-2011",
+      "spectrum": [2, 4, 2, 3, 4],
+      "timeline": [
+        {
+          "label": "Evangelical Leadership (1950-2011)",
+          "spectrum": [2, 4, 2, 3, 4],
+          "note": "Lausanne Covenant and social concern movement balance evangelical orthodoxy with creation care and poverty focus."
+        }
+      ]
+    },
+    {
+      "name": "Cornel West",
+      "lifespan": "b. 1953",
+      "spectrum": [4, 1, 0, 6, 0],
+      "timeline": [
+        {
+          "label": "Academic & Prophetic Ministry (1980s-2010s)",
+          "spectrum": [4, 1, 0, 6, 0],
+          "note": "Democratic socialism and Black prophetic tradition combine radical economic critique with full rights advocacy."
+        },
+        {
+          "label": "Political Activism (2015-present)",
+          "spectrum": [4, 1, 0, 6, 0],
+          "note": "Sanders campaigns and Green Party run maintain democratic socialist religious progressivism."
+        }
+      ]
+    },
+    {
+      "name": "Tim Keller",
+      "lifespan": "1950-2023",
+      "spectrum": [2, 4, 3, 3, 4],
+      "timeline": [
+        {
+          "label": "Redeemer Presbyterian Founding (1989-2017)",
+          "spectrum": [2, 4, 3, 3, 4],
+          "note": "Urban ministry model combines Reformed theology with racial justice concern and traditional sexual ethics."
+        },
+        {
+          "label": "Public Theology Era (2017-2023)",
+          "spectrum": [2, 4, 3, 3, 3],
+          "note": "Trump criticism and 'third way' politics position between culture war extremes with orthodox theology."
+        }
+      ]
+    },
+    {
+      "name": "Russell Moore",
+      "lifespan": "b. 1971",
+      "spectrum": [2, 5, 3, 3, 3],
+      "timeline": [
+        {
+          "label": "Southern Baptist Leadership (2013-2021)",
+          "spectrum": [2, 5, 4, 3, 4],
+          "note": "Religious liberty focus and adoption advocacy maintain conservative positions with racial reconciliation emphasis."
+        },
+        {
+          "label": "Trump-Era Dissent (2016-present)",
+          "spectrum": [2, 5, 3, 3, 3],
+          "note": "Trump criticism and departure from SBC signal shift toward less partisan evangelical conservatism."
+        }
+      ]
+    },
+    {
+      "name": "Beth Moore",
+      "lifespan": "b. 1957",
+      "spectrum": [2, 4, 2, 3, 2],
+      "timeline": [
+        {
+          "label": "Bible Study Ministry (1990s-2016)",
+          "spectrum": [2, 5, 3, 3, 4],
+          "note": "Women's ministry focus maintains complementarian theology with evangelical orthodoxy."
+        },
+        {
+          "label": "Prophetic Turn (2016-present)",
+          "spectrum": [2, 4, 2, 3, 2],
+          "note": "Trump criticism and departure from SBC over abuse and sexism signal moderate shift on rights and politics."
         }
       ]
     }
