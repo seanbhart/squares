@@ -3,6 +3,32 @@
   flex-direction: column;
   gap: 4rem;
   padding: 4rem 5vw 6rem;
+  position: relative;
+}
+
+.themeToggle {
+  position: fixed;
+  top: 1.5rem;
+  right: 1.5rem;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 1px solid var(--border-strong);
+  background: var(--surface);
+  color: var(--text-primary);
+  font-size: 1.5rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px var(--shadow);
+  z-index: 100;
+}
+
+.themeToggle:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 16px var(--shadow-strong);
 }
 
 .hero {
@@ -22,14 +48,14 @@
   margin: 0;
   font-size: clamp(2.75rem, 5vw, 3.75rem);
   font-weight: 700;
-  color: #f8fafc;
+  color: var(--text-primary);
 }
 
 .subtitle {
   margin: 0;
   line-height: 1.6;
   max-width: 50ch;
-  color: #cbd5f5;
+  color: var(--text-secondary);
 }
 
 .ctaRow {
@@ -40,9 +66,9 @@
 
 .presetButton,
 .resetButton {
-  border: 1px solid rgba(148, 163, 184, 0.4);
-  background: rgba(15, 23, 42, 0.6);
-  color: #e2e8f0;
+  border: 1px solid var(--border-strong);
+  background: var(--surface);
+  color: var(--text-primary);
   padding: 0.65rem 1.1rem;
   border-radius: 999px;
   cursor: pointer;
@@ -51,23 +77,26 @@
 
 .presetButton:hover,
 .resetButton:hover {
-  border-color: rgba(148, 163, 184, 0.7);
+  background: var(--surface-hover);
+  border-color: var(--border-strong);
   transform: translateY(-1px);
+  box-shadow: 0 2px 8px var(--shadow);
 }
 
 .presetButton[data-selected="true"] {
-  background: rgba(96, 165, 250, 0.25);
-  border-color: rgba(59, 130, 246, 0.7);
-  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
+  background: var(--accent);
+  color: white;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px var(--accent-hover);
 }
 
 .summaryCard {
-  background: rgba(15, 23, 42, 0.7);
-  border: 1px solid rgba(148, 163, 184, 0.25);
+  background: var(--surface);
+  border: 1px solid var(--border);
   border-radius: 1.25rem;
   padding: 1.75rem;
   backdrop-filter: blur(12px);
-  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.4);
+  box-shadow: 0 18px 40px var(--shadow-strong);
 }
 
 .summaryHeader {
@@ -81,7 +110,7 @@
 .summaryCard h2 {
   margin: 0;
   font-size: 1.4rem;
-  color: #f1f5f9;
+  color: var(--text-primary);
 }
 
 .signatureRow {
@@ -119,12 +148,13 @@
   display: inline-flex;
   gap: 0.6rem;
   align-items: center;
-  color: #cbd5e1;
+  color: var(--text-secondary);
   font-weight: 600;
 }
 
 .policyValue {
-  color: #f8fafc;
+  color: var(--text-primary);
+  text-align: right;
 }
 
 .labelSquare {
@@ -145,7 +175,7 @@
 .slidersSection h2 {
   margin: 0;
   font-size: 1.8rem;
-  color: #f1f5f9;
+  color: var(--text-primary);
 }
 
 .slidersGrid {
@@ -155,9 +185,9 @@
 }
 
 .sliderGroup {
-  background: rgba(15, 23, 42, 0.65);
+  background: var(--surface);
   border-radius: 1.1rem;
-  border: 1px solid rgba(148, 163, 184, 0.2);
+  border: 1px solid var(--border);
   padding: 1.5rem;
   display: flex;
   flex-direction: column;
@@ -170,7 +200,7 @@
   align-items: center;
   gap: 0.65rem;
   font-weight: 600;
-  color: #f8fafc;
+  color: var(--text-primary);
 }
 
 .sliderHeader h3 {
@@ -209,7 +239,7 @@
 
 .sliderButton:hover,
 .sliderButton:focus-visible {
-  background: rgba(59, 130, 246, 0.12);
+  background: var(--surface-hover);
   outline: none;
 }
 
@@ -222,7 +252,7 @@
   display: flex;
   gap: 0.8rem;
   align-items: center;
-  color: #cbd5e1;
+  color: var(--text-secondary);
 }
 
 .cellDot {
@@ -263,24 +293,185 @@
 
 .examplesSection {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 2rem;
-  background: rgba(15, 23, 42, 0.65);
-  border: 1px solid rgba(148, 163, 184, 0.2);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.45fr);
+  gap: 2.4rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
   border-radius: 1.25rem;
-  padding: 2rem;
+  padding: 2.2rem;
+  width: 100%;
+  box-sizing: border-box;
 }
 
-.examplesSection h2 {
+.examplesIntro h2 {
   margin-top: 0;
   font-size: 1.6rem;
-  color: #f1f5f9;
+  color: var(--text-primary);
 }
 
-.examplesSection p {
-  margin: 0;
+.examplesIntro,
+.examplesDetail {
+  min-width: 0;
+}
+
+.examplesIntro p {
+  margin: 0 0 1rem;
   line-height: 1.7;
-  color: #cbd5f5;
+  color: var(--text-secondary);
+}
+
+.dropdownLabel {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-top: 1.25rem;
+}
+
+.figureDropdown {
+  background: var(--surface);
+  border: 1px solid var(--border-strong);
+  color: var(--text-primary);
+  border-radius: 0.65rem;
+  padding: 0.55rem 0.75rem;
+}
+
+.figureDropdown:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.examplesDetail {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.figureHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+.figureHeader h3 {
+  margin: 0;
+  font-size: 1.4rem;
+  color: var(--text-primary);
+}
+
+.figureMeta {
+  margin: 0.3rem 0 0;
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}
+
+.timelineSquares {
+  display: inline-flex;
+  gap: 0.35rem;
+}
+
+.timelineSquare {
+  width: 18px;
+  height: 18px;
+  border-radius: 4px;
+  border: 1px solid rgba(15, 23, 42, 0.4);
+}
+
+.timelineWrapper {
+  overflow-x: auto;
+  padding-bottom: 0.75rem;
+  -webkit-overflow-scrolling: touch;
+  width: 100%;
+  position: relative;
+}
+
+.timelineWrapper::before,
+.timelineWrapper::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0.75rem;
+  width: 40px;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.timelineWrapper::before {
+  left: 0;
+  background: linear-gradient(to right, var(--surface), transparent);
+}
+
+.timelineWrapper::after {
+  right: 0;
+  background: linear-gradient(to left, var(--surface), transparent);
+}
+
+@media (max-width: 960px) {
+  .timelineWrapper::after {
+    opacity: 1;
+  }
+}
+
+.timelineList {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(220px, 260px);
+  gap: 1.5rem;
+  width: max-content;
+}
+
+.timelineCard {
+  width: 100%;
+  background: var(--surface-hover);
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  padding: 1.1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  box-shadow: 0 16px 32px var(--shadow-strong);
+}
+
+.timelineCard h4 {
+  margin: 0;
+  font-size: 1.05rem;
+  color: var(--text-primary);
+}
+
+.timelineNote {
+  margin: 0;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  font-size: 0.92rem;
+}
+
+.placeholderCard {
+  background: var(--surface);
+  border: 1px dashed var(--border-strong);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+@media (max-width: 960px) {
+  .examplesSection {
+    grid-template-columns: 1fr;
+    padding: 1.85rem;
+  }
+
+  .figureHeader {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .timelineList {
+    grid-auto-columns: minmax(220px, 280px);
+  }
 }
 
 @media (max-width: 640px) {
@@ -294,5 +485,14 @@
 
   .sliderGroup {
     min-height: 0;
+  }
+
+  .examplesSection {
+    padding: 1.6rem;
+    gap: 1.8rem;
+  }
+
+  .timelineList {
+    grid-auto-columns: minmax(220px, 260px);
   }
 }

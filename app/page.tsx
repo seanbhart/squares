@@ -1,7 +1,28 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { ChangeEvent, useCallback, useEffect, useMemo, useState } from "react";
+import figuresRaw from "../data/figures.json";
 import styles from "./page.module.css";
+
+type TimelineEntry = {
+  label: string;
+  spectrum: number[];
+  note: string;
+};
+
+type Figure = {
+  name: string;
+  lifespan: string;
+  spectrum: number[];
+  timeline: TimelineEntry[];
+};
+
+type FiguresData = {
+  featured: string[];
+  figures: Figure[];
+};
+
+const figuresData = figuresRaw as FiguresData;
 
 const COLOR_RAMP = [
   "#7c3aed",
@@ -17,7 +38,6 @@ const POLICIES = [
   {
     key: "trade",
     label: "Trade",
-    icon: "🟪",
     colorRamp: [
       "free trade",
       "minimal tariffs",
@@ -32,7 +52,6 @@ const POLICIES = [
   {
     key: "abortion",
     label: "Abortion",
-    icon: "🟦",
     colorRamp: [
       "partial birth abortion",
       "limit after viability",
@@ -47,7 +66,6 @@ const POLICIES = [
   {
     key: "migration",
     label: "Migration / Immigration",
-    icon: "🟩",
     colorRamp: [
       "open borders",
       "easy pathways to citizenship",
@@ -62,7 +80,6 @@ const POLICIES = [
   {
     key: "economics",
     label: "Economics",
-    icon: "🟨",
     colorRamp: [
       "pure free market",
       "minimal regulation",
@@ -77,7 +94,6 @@ const POLICIES = [
   {
     key: "rights",
     label: "Rights (civil liberties)",
-    icon: "🟥",
     colorRamp: [
       "full legal equality",
       "protections with few limits",
@@ -91,64 +107,42 @@ const POLICIES = [
   },
 ] as const;
 
-const PRESETS = [
-  {
-    name: "Franklin D. Roosevelt",
-    spectrum: {
-      trade: 4,
-      abortion: 5,
-      migration: 4,
-      economics: 5,
-      rights: 3,
-    },
-  },
-  {
-    name: "Ronald Reagan",
-    spectrum: {
-      trade: 1,
-      abortion: 5,
-      migration: 2,
-      economics: 1,
-      rights: 3,
-    },
-  },
-  {
-    name: "Barack Obama",
-    spectrum: {
-      trade: 2,
-      abortion: 1,
-      migration: 1,
-      economics: 3,
-      rights: 0,
-    },
-  },
-  {
-    name: "Donald Trump",
-    spectrum: {
-      trade: 5,
-      abortion: 2,
-      migration: 5,
-      economics: 1,
-      rights: 3,
-    },
-  },
-] as const;
+type PolicyKey = (typeof POLICIES)[number]["key"];
+type Spectrum = Record<PolicyKey, number>;
 
-const getInitialSpectrum = () => {
+const getBaselineSpectrum = () => {
   const entries = POLICIES.map((policy) => [policy.key, 3]);
-  return Object.fromEntries(entries) as Record<(typeof POLICIES)[number]["key"], number>;
+  return Object.fromEntries(entries) as Spectrum;
 };
 
-type Spectrum = ReturnType<typeof getInitialSpectrum>;
+const spectrumFromArray = (values: number[]) => {
+  const entries = POLICIES.map((policy, index) => [policy.key, values[index] ?? 3]);
+  return Object.fromEntries(entries) as Spectrum;
+};
 
-type Preset = (typeof PRESETS)[number];
+const FIGURE_MAP = new Map<string, Figure>(
+  figuresData.figures.map((figure) => [figure.name, figure])
+);
 
-const getScoreLabel = (policyKey: keyof Spectrum, score: number) => {
+const FEATURED_FIGURES = figuresData.featured
+  .map((name) => FIGURE_MAP.get(name))
+  .filter((figure): figure is Figure => Boolean(figure));
+
+const ADDITIONAL_FIGURES = figuresData.figures.filter(
+  (figure) => !figuresData.featured.includes(figure.name)
+);
+
+const DEFAULT_FIGURE = FEATURED_FIGURES[0] ?? ADDITIONAL_FIGURES[0] ?? null;
+const DEFAULT_SPECTRUM = DEFAULT_FIGURE
+  ? spectrumFromArray(DEFAULT_FIGURE.spectrum)
+  : getBaselineSpectrum();
+
+const getScoreLabel = (policyKey: PolicyKey, score: number) => {
   const ramp = POLICIES.find((policy) => policy.key === policyKey)?.colorRamp ?? [];
   return ramp[score] ?? "";
 };
 
-const getScoreColor = (policyKey: keyof Spectrum, score: number) => {
+const getScoreColor = (policyKey: PolicyKey, score: number) => {
   const palette = POLICIES.find((policy) => policy.key === policyKey)?.colors ?? [];
   return palette[score] ?? COLOR_RAMP[COLOR_RAMP.length - 1];
 };
@@ -169,39 +163,24 @@ const hexToRgba = (hex: string, alpha = 1) => {
   return `rgba(${r}, ${g}, ${b}, ${alpha})`;
 };
 
-function useSpectrumComparison() {
-  const [userSpectrum, setUserSpectrum] = useState<Spectrum>(() => getInitialSpectrum());
-  const [comparison, setComparison] = useState<Preset | null>(null);
+function useSpectrumState(initialSpectrum: Spectrum) {
+  const [userSpectrum, setUserSpectrum] = useState<Spectrum>(initialSpectrum);
 
-  const handleUpdate = (key: keyof Spectrum, value: number) => {
+  const handleUpdate = useCallback((key: PolicyKey, value: number) => {
     setUserSpectrum((prev) => ({ ...prev, [key]: value }));
-  };
+  }, []);
 
-  const loadSpectrum = (next: Spectrum) => {
+  const loadSpectrum = useCallback((next: Spectrum) => {
     setUserSpectrum({ ...next });
-  };
+  }, []);
 
-  const resetSpectrum = () => {
-    setUserSpectrum(getInitialSpectrum());
-    setComparison(null);
-  };
-
-  const spectrumDiff = useMemo(() => {
-    if (!comparison) return null;
-    const entries = Object.keys(userSpectrum).map((key) => {
-      const typedKey = key as keyof Spectrum;
-      const delta = userSpectrum[typedKey] - comparison.spectrum[typedKey];
-      return [typedKey, delta];
-    });
-    return Object.fromEntries(entries) as Record<keyof Spectrum, number>;
-  }, [comparison, userSpectrum]);
+  const resetSpectrum = useCallback(() => {
+    setUserSpectrum({ ...initialSpectrum });
+  }, [initialSpectrum]);
 
   return {
     userSpectrum,
     handleUpdate,
-    comparison,
-    setComparison,
-    spectrumDiff,
     loadSpectrum,
     resetSpectrum,
   };
@@ -230,18 +209,96 @@ const EvaluationCell = ({
   );
 };
 
+const TimelineSquares = ({ values }: { values: number[] }) => {
+  return (
+    <div className={styles.timelineSquares}>
+      {POLICIES.map((policy, index) => {
+        const value = values[index] ?? 3;
+        const color = getScoreColor(policy.key, value);
+        return (
+          <span
+            key={`${policy.key}-${index}`}
+            className={styles.timelineSquare}
+            style={{
+              backgroundColor: color,
+              boxShadow: `0 0 8px ${hexToRgba(color, 0.35)}`,
+            }}
+          />
+        );
+      })}
+    </div>
+  );
+};
+
 export default function Home() {
-  const {
-    userSpectrum,
-    setComparison,
-    handleUpdate,
-    loadSpectrum,
-    resetSpectrum,
-  } =
-    useSpectrumComparison();
+  const { userSpectrum, handleUpdate, loadSpectrum, resetSpectrum } = useSpectrumState(DEFAULT_SPECTRUM);
+
+  const [selectedFigureName, setSelectedFigureName] = useState<string>(DEFAULT_FIGURE?.name ?? "");
+  const [theme, setTheme] = useState<"light" | "dark">("light");
+
+  useEffect(() => {
+    const savedTheme = localStorage.getItem("theme") as "light" | "dark" | null;
+    if (savedTheme) {
+      setTheme(savedTheme);
+      document.documentElement.setAttribute("data-theme", savedTheme);
+    }
+  }, []);
+
+  const toggleTheme = useCallback(() => {
+    const newTheme = theme === "light" ? "dark" : "light";
+    setTheme(newTheme);
+    document.documentElement.setAttribute("data-theme", newTheme);
+    localStorage.setItem("theme", newTheme);
+  }, [theme]);
+
+  const selectedFigure = useMemo(() => {
+    if (!selectedFigureName) return null;
+    return FIGURE_MAP.get(selectedFigureName) ?? null;
+  }, [selectedFigureName]);
+
+  const handleSelectFigure = useCallback(
+    (name: string) => {
+      const figure = FIGURE_MAP.get(name);
+      if (!figure) return;
+      setSelectedFigureName(name);
+      loadSpectrum(spectrumFromArray(figure.spectrum));
+      
+      // Reset timeline scroll to beginning
+      setTimeout(() => {
+        const timelineWrapper = document.querySelector(`.${styles.timelineWrapper}`);
+        if (timelineWrapper) {
+          timelineWrapper.scrollLeft = 0;
+        }
+      }, 0);
+    },
+    [loadSpectrum]
+  );
+
+  const handleDropdownChange = useCallback(
+    (event: ChangeEvent<HTMLSelectElement>) => {
+      const { value } = event.target;
+      if (!value) return;
+      handleSelectFigure(value);
+    },
+    [handleSelectFigure]
+  );
+
+  const dropdownValue = useMemo(() => {
+    return ADDITIONAL_FIGURES.some((figure) => figure.name === selectedFigureName)
+      ? selectedFigureName
+      : "";
+  }, [selectedFigureName]);
 
   return (
     <main className={styles.main}>
+      <button
+        className={styles.themeToggle}
+        onClick={toggleTheme}
+        aria-label="Toggle theme"
+        title={`Switch to ${theme === "light" ? "dark" : "light"} mode`}
+      >
+        {theme === "light" ? "🌙" : "☀️"}
+      </button>
       <section className={styles.hero}>
         <div className={styles.heroContent}>
           <h1 className={styles.title}>Map Your Squares</h1>
@@ -251,28 +308,17 @@ export default function Home() {
             historical figures or modern leaders.
           </p>
           <div className={styles.ctaRow}>
-            {PRESETS.map((preset) => (
+            {FEATURED_FIGURES.map((figure) => (
               <button
-                key={preset.name}
+                key={figure.name}
                 type="button"
                 className={styles.presetButton}
-                onClick={() => {
-                  setComparison(preset);
-                  loadSpectrum(preset.spectrum as Spectrum);
-                }}
+                data-selected={selectedFigureName === figure.name}
+                onClick={() => handleSelectFigure(figure.name)}
               >
-                {preset.name}
+                {figure.name}
               </button>
             ))}
-            <button
-              type="button"
-              className={styles.resetButton}
-              onClick={() => {
-                resetSpectrum();
-              }}
-            >
-              Reset
-            </button>
           </div>
         </div>
         <div className={styles.summaryCard}>
@@ -375,18 +421,66 @@ export default function Home() {
       </section>
 
       <section className={styles.examplesSection}>
-        <div>
+        <div className={styles.examplesIntro}>
           <h2>How TAME-R Works</h2>
           <p>
-            TAME-R summarizes Trade, Abortion, Migration, Economics, and Rights policies using a
-            seven-step gradient. Move from 🟪 expansive support to ⬛ restrictive control on each
-            issue. Your pattern becomes a signature set of squares that can be compared with
-            public figures or shared with others.
+            TAME-R maps political positions across Trade, Abortion, Migration, Economics, and
+            Rights using a seven-step spectrum. Each color represents a different level of
+            government intervention—from 🟪 minimal restrictions and maximum individual freedom to
+            ⬛ extensive regulation and state control. Your unique pattern of squares reveals where
+            you stand on the role of government across these five dimensions.
           </p>
           <p>
-            Pick a preset above to load historical examples or modern leaders instantly, then
-            adjust the controls to see how you align and where you differ.
+            Explore the featured figures or select another leader from the archive to see how their
+            positions evolved across major chapters of their public life.
           </p>
+          {ADDITIONAL_FIGURES.length > 0 && (
+            <label className={styles.dropdownLabel}>
+              Explore more figures
+              <select
+                className={styles.figureDropdown}
+                value={dropdownValue}
+                onChange={handleDropdownChange}
+              >
+                <option value="">Select another leader…</option>
+                {ADDITIONAL_FIGURES.map((figure) => (
+                  <option key={figure.name} value={figure.name}>
+                    {figure.name}
+                  </option>
+                ))}
+              </select>
+            </label>
+          )}
+        </div>
+        <div className={styles.examplesDetail}>
+          {selectedFigure ? (
+            <>
+              <header className={styles.figureHeader}>
+                <div>
+                  <h3>{selectedFigure.name}</h3>
+                  <p className={styles.figureMeta}>{selectedFigure.lifespan}</p>
+                </div>
+                <TimelineSquares values={selectedFigure.spectrum} />
+              </header>
+              <div className={styles.timelineWrapper}>
+                <div className={styles.timelineList}>
+                  {selectedFigure.timeline.map((entry) => (
+                    <article key={entry.label} className={styles.timelineCard}>
+                      <header>
+                        <h4>{entry.label}</h4>
+                      </header>
+                      <TimelineSquares values={entry.spectrum} />
+                      <p className={styles.timelineNote}>{entry.note}</p>
+                    </article>
+                  ))}
+                </div>
+              </div>
+            </>
+          ) : (
+            <div className={styles.placeholderCard}>
+              <p>Select a figure to explore their TAME-R journey.</p>
+            </div>
+          )}
         </div>
       </section>
     </main>
