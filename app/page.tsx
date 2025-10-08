@@ -177,6 +177,15 @@ function useSpectrumComparison() {
     setUserSpectrum((prev) => ({ ...prev, [key]: value }));
   };
 
+  const loadSpectrum = (next: Spectrum) => {
+    setUserSpectrum({ ...next });
+  };
+
+  const resetSpectrum = () => {
+    setUserSpectrum(getInitialSpectrum());
+    setComparison(null);
+  };
+
   const spectrumDiff = useMemo(() => {
     if (!comparison) return null;
     const entries = Object.keys(userSpectrum).map((key) => {
@@ -193,6 +202,8 @@ function useSpectrumComparison() {
     comparison,
     setComparison,
     spectrumDiff,
+    loadSpectrum,
+    resetSpectrum,
   };
 }
 
@@ -220,7 +231,13 @@ const EvaluationCell = ({
 };
 
 export default function Home() {
-  const { userSpectrum, comparison, setComparison, handleUpdate, spectrumDiff } =
+  const {
+    userSpectrum,
+    setComparison,
+    handleUpdate,
+    loadSpectrum,
+    resetSpectrum,
+  } =
     useSpectrumComparison();
 
   return (
@@ -239,8 +256,10 @@ export default function Home() {
                 key={preset.name}
                 type="button"
                 className={styles.presetButton}
-                data-selected={comparison?.name === preset.name}
-                onClick={() => setComparison(preset)}
+                onClick={() => {
+                  setComparison(preset);
+                  loadSpectrum(preset.spectrum as Spectrum);
+                }}
               >
                 {preset.name}
               </button>
@@ -249,12 +268,7 @@ export default function Home() {
               type="button"
               className={styles.resetButton}
               onClick={() => {
-                setComparison(null);
-                handleUpdate("trade", 3);
-                handleUpdate("abortion", 3);
-                handleUpdate("migration", 3);
-                handleUpdate("economics", 3);
-                handleUpdate("rights", 3);
+                resetSpectrum();
               }}
             >
               Reset
@@ -316,12 +330,18 @@ export default function Home() {
           {POLICIES.map((policy) => (
             <div key={policy.key} className={styles.sliderGroup}>
               <div className={styles.sliderHeader}>
+                <span
+                  className={styles.headerSquare}
+                  style={{
+                    backgroundColor: getScoreColor(policy.key, userSpectrum[policy.key]),
+                    boxShadow: `0 0 8px ${hexToRgba(
+                      getScoreColor(policy.key, userSpectrum[policy.key]),
+                      0.4,
+                    )}`,
+                  }}
+                  aria-hidden
+                />
                 <h3>{policy.label}</h3>
-                {comparison && (
-                  <span className={styles.compareValue}>
-                    {comparison.name.split(" ")[0]}: {comparison.spectrum[policy.key] + 1}
-                  </span>
-                )}
               </div>
               <div className={styles.sliderTrack}>
                 {policy.colorRamp.map((label, index) => {
@@ -349,14 +369,6 @@ export default function Home() {
                   );
                 })}
               </div>
-              {comparison && (
-                <div className={styles.diffRow}>
-                  <span>Difference:</span>
-                  <span className={styles.diffValue} data-positive={(spectrumDiff?.[policy.key] ?? 0) > 0}>
-                    {spectrumDiff?.[policy.key] ?? 0}
-                  </span>
-                </div>
-              )}
             </div>
           ))}
         </div>
