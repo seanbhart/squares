@@ -3,7 +3,7 @@
 import { ChangeEvent, useCallback, useEffect, useMemo, useState } from "react";
 import figuresRaw from "../data/figures.json";
 import styles from "./page.module.css";
-import ChatBox from "./components/ChatBox";
+import ChatModal from "./components/ChatModal";
 
 type TimelineEntry = {
   label: string;
@@ -291,15 +291,17 @@ export default function Home() {
   }, [selectedFigureName]);
 
   return (
-    <main className={styles.main}>
-      <button
-        className={styles.themeToggle}
-        onClick={toggleTheme}
-        aria-label="Toggle theme"
-        title={`Switch to ${theme === "light" ? "dark" : "light"} mode`}
-      >
-        {theme === "light" ? "🌙" : "☀️"}
-      </button>
+    <>
+      <ChatModal />
+      <main className={styles.main}>
+        <button
+          className={styles.themeToggle}
+          onClick={toggleTheme}
+          aria-label="Toggle theme"
+          title={`Switch to ${theme === "light" ? "dark" : "light"} mode`}
+        >
+          {theme === "light" ? "🌙" : "☀️"}
+        </button>
       <section className={styles.hero}>
         <div className={styles.heroContent}>
           <h1 className={styles.title}>Map Your Squares</h1>
@@ -421,17 +423,6 @@ export default function Home() {
         </div>
       </section>
 
-      <section className={styles.chatSection}>
-        <div className={styles.chatContainer}>
-          <h2>Ask Squares</h2>
-          <p className={styles.chatDescription}>
-            Ask questions about how TAME-R works, or request assessments for public figures,
-            policies, or events. The AI will explain its reasoning and confidence level.
-          </p>
-          <ChatBox />
-        </div>
-      </section>
-
       <section className={styles.examplesSection}>
         <div className={styles.examplesIntro}>
           <h2>How TAME-R Works</h2>
@@ -495,6 +486,7 @@ export default function Home() {
           )}
         </div>
       </section>
-    </main>
+      </main>
+    </>
   );
 }
