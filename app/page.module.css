@@ -172,6 +172,32 @@
   gap: 2rem;
 }
 
+.chatSection {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.chatContainer {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 1.25rem;
+  padding: 2rem;
+  box-shadow: 0 18px 40px var(--shadow-strong);
+}
+
+.chatContainer h2 {
+  margin: 0 0 0.5rem;
+  font-size: 1.8rem;
+  color: var(--text-primary);
+}
+
+.chatDescription {
+  margin: 0 0 1.5rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+}
+
 .slidersSection h2 {
   margin: 0;
   font-size: 1.8rem;

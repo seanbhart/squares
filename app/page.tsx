@@ -3,6 +3,7 @@
 import { ChangeEvent, useCallback, useEffect, useMemo, useState } from "react";
 import figuresRaw from "../data/figures.json";
 import styles from "./page.module.css";
+import ChatBox from "./components/ChatBox";
 
 type TimelineEntry = {
   label: string;
@@ -417,6 +418,17 @@ export default function Home() {
               </div>
             </div>
           ))}
+        </div>
+      </section>
+
+      <section className={styles.chatSection}>
+        <div className={styles.chatContainer}>
+          <h2>Ask Squares</h2>
+          <p className={styles.chatDescription}>
+            Ask questions about how TAME-R works, or request assessments for public figures,
+            policies, or events. The AI will explain its reasoning and confidence level.
+          </p>
+          <ChatBox />
         </div>
       </section>
 
