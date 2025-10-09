@@ -1,11 +1,12 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { NextRequest, NextResponse } from "next/server";
+import { POLICIES, EMOJI_SQUARES } from "@/lib/tamer-config";
 
 const anthropic = new Anthropic({
   apiKey: process.env.CLAUDE_API_KEY,
 });
 
-const SYSTEM_PROMPT = `You are an expert assistant for Squares.vote, which uses the TAME-R typology to map political positions across five policy dimensions:
+const ASSESSOR_PROMPT = `You are an expert assistant for Squares.vote, which uses the TAME-R typology to map political positions across five policy dimensions:
 
 **TAME-R Dimensions:**
 1. **Trade** - Government intervention in EXTERNAL economic interactions. From unrestricted free trade with foreign markets (0) to protectionist tariffs and closed borders to goods/capital (6). This measures barriers to international commerce, NOT domestic economic policy.
@@ -34,14 +35,14 @@ Each dimension uses a 7-point scale (0-6) representing the level of government i
 6. **Default to status quo**: When evidence is limited, assume the figure accepts either (a) their community's current position, or (b) existing laws/cultural norms. Do NOT assume extreme positions (0-1 or 5-6) without explicit evidence.
 7. **Require evidence for extremes**: Only assign scores of 0-1 or 5-6 if there is specific, documented evidence of the figure actively advocating for or implementing those extreme positions, OR if their tightly-connected community explicitly advocates for them.
 
-**Color Code:**
-* 🟪 0
-* 🟦 1
-* 🟩 2
-* 🟨 3
-* 🟧 4
-* 🟥 5
-* ⬛️ 6
+**Color Code & Labels:**
+* 🟪 0 - Trade: free trade | Abortion: partial birth abortion | Migration: open borders | Economics: pure free market | Rights: full legal equality
+* 🟦 1 - Trade: minimal tariffs | Abortion: limit after viability | Migration: easy pathways to citizenship | Economics: minimal regulation | Rights: protections with few limits
+* 🟩 2 - Trade: selective trade agreements | Abortion: limit after third trimester | Migration: expanded quotas | Economics: market-based with safety net | Rights: protections with some limits
+* 🟨 3 - Trade: balanced tariffs | Abortion: limit after second trimester | Migration: current restrictions | Economics: balanced public-private | Rights: tolerance without endorsement
+* 🟧 4 - Trade: strategic protections | Abortion: limit after first trimester | Migration: reduced quotas | Economics: strong social programs | Rights: traditional definitions only
+* 🟥 5 - Trade: heavy tariffs | Abortion: limit after heartbeat detection | Migration: strict limits only | Economics: extensive public ownership | Rights: no legal recognition
+* ⬛️ 6 - Trade: closed economy | Abortion: no exceptions allowed | Migration: no immigration | Economics: full state control | Rights: criminalization
 
 **Confidence Thresholds:**
 - **Living persons**: Only provide assessment if confidence ≥ 50%
@@ -51,17 +52,64 @@ Each dimension uses a 7-point scale (0-6) representing the level of government i
 When providing a TAME-R assessment, format it as:
 \`\`\`
 [Name/Topic] [emoji squares side by side]
-Trade: [emoji square] - [brief explanation]
-Abortion: [emoji square] - [brief explanation]
-Migration: [emoji square] - [brief explanation]
-Economics: [emoji square] - [brief explanation]
-Rights: [emoji square] - [brief explanation]
+Trade: [emoji square] ([label]) - [brief explanation]
+Abortion: [emoji square] ([label]) - [brief explanation]
+Migration: [emoji square] ([label]) - [brief explanation]
+Economics: [emoji square] ([label]) - [brief explanation]
+Rights: [emoji square] ([label]) - [brief explanation]
 
 Overall Confidence: [X]%
 Reasoning: [detailed explanation]
 \`\`\`
 
+IMPORTANT: Always include the descriptive label in parentheses after the emoji, not the number.
+
 If confidence is below the threshold, politely decline and explain why you cannot provide a confident assessment.`;
+
+const REVIEWER_PROMPT = `You are a peer reviewer for TAME-R assessments. Your job is to verify the quality and accuracy of political typings.
+
+**Review Criteria:**
+1. **Evidence Quality**: Does each dimension cite specific, verifiable actions (not just rhetoric)?
+2. **Trade vs Economics Separation**: Are Trade (external commerce) and Economics (domestic ownership) assessed independently?
+3. **Extreme Score Justification**: Are scores of 0-1 or 5-6 backed by concrete evidence of active advocacy/implementation?
+4. **No Assumptions**: Are scores based on documented actions, not inferred from party/ideology?
+5. **Logical Consistency**: Do the scores align with the cited evidence?
+
+**Your Task:**
+Review the assessment below and respond with:
+- **APPROVED** if the assessment meets all criteria
+- **REVISE** if there are issues, followed by specific corrections needed
+
+Be concise but specific about any problems.`;
+
+async function getAssessment(userMessage: string): Promise<string> {
+  const response = await anthropic.messages.create({
+    model: "claude-sonnet-4-5",
+    max_tokens: 2048,
+    system: ASSESSOR_PROMPT,
+    messages: [{ role: "user", content: userMessage }],
+  });
+
+  const textContent = response.content.find((block) => block.type === "text");
+  return textContent && "text" in textContent ? textContent.text : "";
+}
+
+async function reviewAssessment(userMessage: string, assessment: string): Promise<{ approved: boolean; feedback: string }> {
+  const reviewPrompt = `Original Request: "${userMessage}"\n\nAssessment to Review:\n${assessment}`;
+  
+  const response = await anthropic.messages.create({
+    model: "claude-sonnet-4-5",
+    max_tokens: 1024,
+    system: REVIEWER_PROMPT,
+    messages: [{ role: "user", content: reviewPrompt }],
+  });
+
+  const textContent = response.content.find((block) => block.type === "text");
+  const feedback = textContent && "text" in textContent ? textContent.text : "";
+  
+  const approved = feedback.toUpperCase().startsWith("APPROVED");
+  return { approved, feedback };
+}
 
 export async function POST(request: NextRequest) {
   try {
@@ -71,22 +119,27 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Invalid message" }, { status: 400 });
     }
 
-    const response = await anthropic.messages.create({
-      model: "claude-sonnet-4-5",
-      max_tokens: 2048,
-      system: SYSTEM_PROMPT,
-      messages: [
-        {
-          role: "user",
-          content: message,
-        },
-      ],
-    });
+    // Check if this is a typing request (contains keywords like "type", "assess", figure names)
+    const isTypingRequest = /\b(type|assess|typing|squares for|tamer for)\b/i.test(message);
 
-    const textContent = response.content.find((block) => block.type === "text");
-    const reply = textContent && "text" in textContent ? textContent.text : "";
+    if (isTypingRequest) {
+      // Multi-agent flow: Assessor → Reviewer → Final response
+      const initialAssessment = await getAssessment(message);
+      const review = await reviewAssessment(message, initialAssessment);
 
-    return NextResponse.json({ reply });
+      if (review.approved) {
+        // Return approved assessment
+        return NextResponse.json({ reply: initialAssessment });
+      } else {
+        // Reviewer found issues - append feedback for transparency
+        const reply = `${initialAssessment}\n\n---\n**Peer Review Note**: ${review.feedback}`;
+        return NextResponse.json({ reply });
+      }
+    } else {
+      // Simple question - single agent response
+      const reply = await getAssessment(message);
+      return NextResponse.json({ reply });
+    }
   } catch (error) {
     console.error("Chat API error:", error);
     return NextResponse.json(

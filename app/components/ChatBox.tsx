@@ -83,7 +83,7 @@ export default function ChatBox() {
           type="text"
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          placeholder="Ask Squares to type..."
+          placeholder="Hey Squares, type Rick Astley"
           className={styles.input}
           disabled={loading}
         />
