@@ -408,6 +408,9 @@ export default function AdminPage() {
         <header className={styles.header}>
           <h1>Squares Admin</h1>
           <div className={styles.userInfo}>
+            <a href="/" target="_blank" rel="noopener noreferrer" className={styles.mainSiteLink}>
+              View Main Site →
+            </a>
             <span>{user.email}</span>
             <button onClick={handleSignOut} className={styles.button}>
               Sign Out

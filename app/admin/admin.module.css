@@ -27,6 +27,18 @@
   margin-left: auto;
 }
 
+.mainSiteLink {
+  color: var(--text-primary);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.mainSiteLink:hover {
+  color: var(--accent);
+  text-decoration: underline;
+}
+
 .loginCard {
   max-width: 400px;
   margin: 4rem auto;
