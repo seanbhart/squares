@@ -1,10 +1,11 @@
 "use client";
 
-import { ChangeEvent, useCallback, useEffect, useMemo, useState } from "react";
+import { ChangeEvent, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import figuresRaw from "../data/figures.json";
 import styles from "./page.module.css";
 import ChatModal from "./components/ChatModal";
-import { POLICIES, COLOR_RAMP, getScoreLabel, getScoreColor, type PolicyKey } from "@/lib/tamer-config";
+import { POLICIES, getScoreColor, getEmojiSquare, type PolicyKey } from "@/lib/tamer-config";
+import { ClipboardIcon, CheckIcon, SunIcon, MoonIcon } from "./components/icons";
 
 type TimelineEntry = {
   label: string;
@@ -27,6 +28,8 @@ type FiguresData = {
 const figuresData = figuresRaw as FiguresData;
 
 type Spectrum = Record<PolicyKey, number>;
+
+type CopyState = "idle" | "copied" | "error";
 
 const getBaselineSpectrum = () => {
   const entries = POLICIES.map((policy) => [policy.key, 3]);
@@ -143,6 +146,8 @@ export default function Home() {
 
   const [selectedFigureName, setSelectedFigureName] = useState<string>(DEFAULT_FIGURE?.name ?? "");
   const [theme, setTheme] = useState<"light" | "dark">("light");
+  const [copyState, setCopyState] = useState<CopyState>("idle");
+  const copyTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     const savedTheme = localStorage.getItem("theme") as "light" | "dark" | null;
@@ -158,6 +163,14 @@ export default function Home() {
     document.documentElement.setAttribute("data-theme", newTheme);
     localStorage.setItem("theme", newTheme);
   }, [theme]);
+
+  useEffect(() => {
+    return () => {
+      if (copyTimeoutRef.current) {
+        clearTimeout(copyTimeoutRef.current);
+      }
+    };
+  }, []);
 
   const selectedFigure = useMemo(() => {
     if (!selectedFigureName) return null;
@@ -197,6 +210,36 @@ export default function Home() {
       : "";
   }, [selectedFigureName]);
 
+  const emojiSignature = useMemo(() => {
+    return POLICIES.map((policy) => getEmojiSquare(userSpectrum[policy.key])).join("");
+  }, [userSpectrum]);
+
+  const handleCopySquares = useCallback(async () => {
+    if (!emojiSignature) return;
+
+    if (typeof navigator === "undefined" || !navigator.clipboard) {
+      setCopyState("error");
+      return;
+    }
+
+    try {
+      await navigator.clipboard.writeText(emojiSignature);
+      setCopyState("copied");
+    } catch (error) {
+      console.error("Failed to copy squares", error);
+      setCopyState("error");
+      return;
+    }
+
+    if (copyTimeoutRef.current) {
+      clearTimeout(copyTimeoutRef.current);
+    }
+
+    copyTimeoutRef.current = setTimeout(() => {
+      setCopyState("idle");
+    }, 1500);
+  }, [emojiSignature]);
+
   return (
     <>
       <ChatModal />
@@ -207,7 +250,7 @@ export default function Home() {
           aria-label="Toggle theme"
           title={`Switch to ${theme === "light" ? "dark" : "light"} mode`}
         >
-          {theme === "light" ? "🌙" : "☀️"}
+          {theme === "light" ? <MoonIcon /> : <SunIcon />}
         </button>
       <section className={styles.hero}>
         <div className={styles.heroContent}>
@@ -234,21 +277,41 @@ export default function Home() {
         <div className={styles.summaryCard}>
           <div className={styles.summaryHeader}>
             <h2>Your Squares</h2>
-            <div className={styles.signatureRow}>
-              {POLICIES.map((policy) => {
-                const color = getScoreColor(policy.key, userSpectrum[policy.key]);
-                return (
-                  <span
-                    key={`${policy.key}-square`}
-                    className={styles.signatureSquare}
-                    style={{
-                      backgroundColor: color,
-                      boxShadow: `0 0 10px ${hexToRgba(color, 0.4)}`,
-                    }}
-                    aria-label={`${policy.label} selection`}
-                  />
-                );
-              })}
+            <div className={styles.signatureWrapper}>
+              <div className={styles.signatureRow}>
+                {POLICIES.map((policy) => {
+                  const color = getScoreColor(policy.key, userSpectrum[policy.key]);
+                  return (
+                    <span
+                      key={`${policy.key}-square`}
+                      className={styles.signatureSquare}
+                      style={{
+                        backgroundColor: color,
+                        boxShadow: `0 0 10px ${hexToRgba(color, 0.4)}`,
+                      }}
+                      aria-label={`${policy.label} selection`}
+                    />
+                  );
+                })}
+              </div>
+              <button
+                type="button"
+                className={styles.copyButton}
+                data-state={copyState}
+                onClick={handleCopySquares}
+                aria-label={
+                  copyState === "copied"
+                    ? "Squares copied to clipboard"
+                    : copyState === "error"
+                    ? "Copy failed, try again"
+                    : "Copy squares to clipboard"
+                }
+                title={
+                  copyState === "copied" ? "Copied!" : copyState === "error" ? "Copy failed" : emojiSignature
+                }
+              >
+                {copyState === "copied" ? <CheckIcon /> : <ClipboardIcon />}
+              </button>
             </div>
           </div>
           <ul>

@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import ChatBox from "./ChatBox";
 import styles from "./ChatModal.module.css";
+import { MessageCircleIcon, XIcon } from "./icons";
 
 export default function ChatModal() {
   const [isOpen, setIsOpen] = useState(false);
@@ -26,7 +27,7 @@ export default function ChatModal() {
         aria-label="Open chat with Squares"
         title="Ask Squares"
       >
-        💬
+        <MessageCircleIcon />
       </button>
 
       {isOpen && (
@@ -44,7 +45,7 @@ export default function ChatModal() {
                 onClick={() => setIsOpen(false)}
                 aria-label="Close chat"
               >
-                ✕
+                <XIcon />
               </button>
             </div>
             <div className={styles.modalBody}>
