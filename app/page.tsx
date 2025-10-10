@@ -140,7 +140,13 @@ const TimelineSquares = ({ values }: { values: number[] }) => {
 };
 
 export default function Home() {
-  const { userSpectrum, handleUpdate, loadSpectrum, resetSpectrum } = useSpectrumState(DEFAULT_SPECTRUM);
+  const [hasManualEdit, setHasManualEdit] = useState(false);
+  const { userSpectrum, handleUpdate: baseHandleUpdate, loadSpectrum, resetSpectrum } = useSpectrumState(DEFAULT_SPECTRUM);
+
+  const handleUpdate = useCallback((key: PolicyKey, value: number) => {
+    baseHandleUpdate(key, value);
+    setHasManualEdit(true);
+  }, [baseHandleUpdate]);
 
   const [selectedFigureName, setSelectedFigureName] = useState<string>(DEFAULT_FIGURE?.name ?? "");
   const [theme, setTheme] = useState<"light" | "dark">("light");
@@ -181,32 +187,19 @@ export default function Home() {
       if (!figure) return;
       setSelectedFigureName(name);
       loadSpectrum(spectrumFromArray(figure.spectrum));
-      
-      // Reset timeline scroll to beginning
-      setTimeout(() => {
-        const timelineWrapper = document.querySelector(`.${styles.timelineWrapper}`);
-        if (timelineWrapper) {
-          timelineWrapper.scrollLeft = 0;
-        }
-      }, 0);
+      setHasManualEdit(false);
     },
     [loadSpectrum]
   );
 
-  const handleDropdownChange = useCallback(
-    (event: ChangeEvent<HTMLSelectElement>) => {
-      const { value } = event.target;
-      if (!value) return;
-      handleSelectFigure(value);
-    },
-    [handleSelectFigure]
-  );
+  const allFigures = useMemo(() => {
+    return [...FEATURED_FIGURES, ...ADDITIONAL_FIGURES];
+  }, []);
 
-  const dropdownValue = useMemo(() => {
-    return ADDITIONAL_FIGURES.some((figure) => figure.name === selectedFigureName)
-      ? selectedFigureName
-      : "";
-  }, [selectedFigureName]);
+  const displayedFigure = useMemo(() => {
+    if (hasManualEdit) return null;
+    return selectedFigure;
+  }, [hasManualEdit, selectedFigure]);
 
   const emojiSignature = useMemo(() => {
     return POLICIES.map((policy) => getEmojiSquare(userSpectrum[policy.key])).join("");
@@ -264,17 +257,29 @@ export default function Home() {
                 key={figure.name}
                 type="button"
                 className={styles.presetButton}
-                data-selected={selectedFigureName === figure.name}
+                data-selected={!hasManualEdit && selectedFigureName === figure.name}
                 onClick={() => handleSelectFigure(figure.name)}
               >
                 {figure.name}
               </button>
             ))}
+            <select
+              className={styles.figureSelect}
+              value={hasManualEdit ? "" : selectedFigureName}
+              onChange={(e) => e.target.value && handleSelectFigure(e.target.value)}
+            >
+              <option value="">More figures…</option>
+              {ADDITIONAL_FIGURES.map((figure) => (
+                <option key={figure.name} value={figure.name}>
+                  {figure.name}
+                </option>
+              ))}
+            </select>
           </div>
         </div>
         <div className={styles.summaryCard}>
           <div className={styles.summaryHeader}>
-            <h2>Your Squares</h2>
+            <h2>{displayedFigure ? displayedFigure.name : "Your Squares"}</h2>
             <div className={styles.signatureWrapper}>
               <div className={styles.signatureRow}>
                 {POLICIES.map((policy) => {
@@ -311,31 +316,59 @@ export default function Home() {
               </button>
             </div>
           </div>
-          <ul>
-            {POLICIES.map((policy) => (
-              <li key={policy.key}>
-                {(() => {
-                  const color = getScoreColor(policy.key, userSpectrum[policy.key]);
-                  return (
-                    <>
-                      <span className={styles.policyLabel}>
-                        <span
-                          className={styles.labelSquare}
-                          style={{
-                            backgroundColor: color,
-                          }}
-                        />
-                        {policy.label}
-                      </span>
-                      <span className={styles.policyValue}>
-                        {policy.colorRamp[userSpectrum[policy.key]]}
-                      </span>
-                    </>
-                  );
-                })()}
-              </li>
-            ))}
-          </ul>
+          {displayedFigure ? (
+            <div className={styles.figureTimeline}>
+              <p className={styles.figureLifespan}>{displayedFigure.lifespan}</p>
+              <div className={styles.timelineEntries}>
+                {displayedFigure.timeline.map((entry) => (
+                  <div key={entry.label} className={styles.timelineEntry}>
+                    <h4>{entry.label}</h4>
+                    <div className={styles.entrySquares}>
+                      {entry.spectrum.map((value, index) => {
+                        const policy = POLICIES[index];
+                        const color = getScoreColor(policy.key, value);
+                        return (
+                          <span
+                            key={`${policy.key}-${index}`}
+                            className={styles.entrySquare}
+                            style={{ backgroundColor: color }}
+                            title={`${policy.label}: ${policy.colorRamp[value]}`}
+                          />
+                        );
+                      })}
+                    </div>
+                    <p className={styles.entryNote}>{entry.note}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ) : (
+            <ul>
+              {POLICIES.map((policy) => (
+                <li key={policy.key}>
+                  {(() => {
+                    const color = getScoreColor(policy.key, userSpectrum[policy.key]);
+                    return (
+                      <>
+                        <span className={styles.policyLabel}>
+                          <span
+                            className={styles.labelSquare}
+                            style={{
+                              backgroundColor: color,
+                            }}
+                          />
+                          {policy.label}
+                        </span>
+                        <span className={styles.policyValue}>
+                          {policy.colorRamp[userSpectrum[policy.key]]}
+                        </span>
+                      </>
+                    );
+                  })()}
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
       </section>
 
@@ -377,68 +410,20 @@ export default function Home() {
         </div>
       </section>
 
-      <section className={styles.examplesSection}>
-        <div className={styles.examplesIntro}>
-          <h2>How TAME-R Works</h2>
-          <p>
-            TAME-R maps political positions across Trade, Abortion, Migration, Economics, and
-            Rights using a seven-step spectrum. Each color represents a different level of
-            government intervention—from 🟪 minimal restrictions and maximum individual freedom to
-            ⬛ extensive regulation and state control. Your unique pattern of squares reveals where
-            you stand on the role of government across these five dimensions.
-          </p>
-          <p>
-            Explore the featured figures or select another leader from the archive to see how their
-            positions evolved across major chapters of their public life.
-          </p>
-          {ADDITIONAL_FIGURES.length > 0 && (
-            <label className={styles.dropdownLabel}>
-              Explore more figures
-              <select
-                className={styles.figureDropdown}
-                value={dropdownValue}
-                onChange={handleDropdownChange}
-              >
-                <option value="">Select another leader…</option>
-                {ADDITIONAL_FIGURES.map((figure) => (
-                  <option key={figure.name} value={figure.name}>
-                    {figure.name}
-                  </option>
-                ))}
-              </select>
-            </label>
-          )}
-        </div>
-        <div className={styles.examplesDetail}>
-          {selectedFigure ? (
-            <>
-              <header className={styles.figureHeader}>
-                <div>
-                  <h3>{selectedFigure.name}</h3>
-                  <p className={styles.figureMeta}>{selectedFigure.lifespan}</p>
-                </div>
-                <TimelineSquares values={selectedFigure.spectrum} />
-              </header>
-              <div className={styles.timelineWrapper}>
-                <div className={styles.timelineList}>
-                  {selectedFigure.timeline.map((entry) => (
-                    <article key={entry.label} className={styles.timelineCard}>
-                      <header>
-                        <h4>{entry.label}</h4>
-                      </header>
-                      <TimelineSquares values={entry.spectrum} />
-                      <p className={styles.timelineNote}>{entry.note}</p>
-                    </article>
-                  ))}
-                </div>
-              </div>
-            </>
-          ) : (
-            <div className={styles.placeholderCard}>
-              <p>Select a figure to explore their TAME-R journey.</p>
-            </div>
-          )}
-        </div>
+      <section className={styles.aboutSection}>
+        <h2>How TAME-R Works</h2>
+        <p>
+          TAME-R maps political positions across Trade, Abortion, Migration, Economics, and
+          Rights using a seven-step spectrum. Each color represents a different level of
+          government intervention—from 🟪 minimal restrictions and maximum individual freedom to
+          ⬛ extensive regulation and state control. Your unique pattern of squares reveals where
+          you stand on the role of government across these five dimensions.
+        </p>
+        <p>
+          Select a featured figure or choose from the dropdown to see how their positions evolved
+          across major chapters of their public life. Adjust the sliders to create your own
+          political profile.
+        </p>
       </section>
       </main>
     </>
