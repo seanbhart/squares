@@ -2,7 +2,8 @@ import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 import Anthropic from 'https://esm.sh/@anthropic-ai/sdk@0.32.1';
 
-const ASSESSOR_PROMPT = `You are an expert assistant for Squares.vote, which uses the TAME-R typology to map political positions across five policy dimensions:
+// Fallback prompts if database fetch fails
+const FALLBACK_ASSESSOR_PROMPT = `You are an expert assistant for Squares.vote, which uses the TAME-R typology to map political positions across five policy dimensions:
 
 **TAME-R Dimensions:**
 1. **Trade** - Government intervention in EXTERNAL economic interactions. From unrestricted free trade with foreign markets (0) to protectionist tariffs and closed borders to goods/capital (6). This measures barriers to international commerce, NOT domestic economic policy.
@@ -74,6 +75,30 @@ interface AssessmentResult {
   }>;
 }
 
+async function getSystemPrompts(supabaseClient: any): Promise<{ assessor: string; reviewer?: string }> {
+  try {
+    const { data, error } = await supabaseClient
+      .from('system_prompts')
+      .select('assessor_prompt, reviewer_prompt')
+      .order('created_at', { ascending: false })
+      .limit(1)
+      .single();
+
+    if (error || !data) {
+      console.warn('Failed to fetch prompts from database, using fallback');
+      return { assessor: FALLBACK_ASSESSOR_PROMPT };
+    }
+
+    return {
+      assessor: data.assessor_prompt || FALLBACK_ASSESSOR_PROMPT,
+      reviewer: data.reviewer_prompt,
+    };
+  } catch (error) {
+    console.warn('Error fetching prompts:', error);
+    return { assessor: FALLBACK_ASSESSOR_PROMPT };
+  }
+}
+
 serve(async (req) => {
   // Handle CORS preflight
   if (req.method === 'OPTIONS') {
@@ -91,6 +116,9 @@ serve(async (req) => {
     });
 
     const { figureName, contextNotes, requestType, figureId }: AnalyzeRequest = await req.json();
+
+    // Fetch system prompts from database
+    const prompts = await getSystemPrompts(supabaseClient);
 
     // Create analysis request record
     const { data: analysisRequest, error: insertError } = await supabaseClient
@@ -118,7 +146,7 @@ serve(async (req) => {
       const response = await anthropic.messages.create({
         model: 'claude-sonnet-4-5',
         max_tokens: 4096,
-        system: ASSESSOR_PROMPT,
+        system: prompts.assessor,
         messages: [
           {
             role: 'user',
