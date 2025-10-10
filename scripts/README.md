@@ -15,7 +15,8 @@ npm run type-figures -- --verify
 ```
 
 This will:
-- Generate AI assessments for each existing figure
+- Generate AI assessments for each figure's overall spectrum
+- Generate AI assessments for each timeline entry
 - Compare with current data
 - Flag discrepancies ≥2 points
 - Show peer review issues if any
@@ -30,9 +31,23 @@ npm run type-figures -- --verify --update
 
 This will:
 - Run verification as above
-- Automatically update spectrum values for figures with ≥2 point discrepancies AND approved peer reviews
-- Save changes to `data/figures.json`
-- Report how many figures were updated
+- Automatically update **both overall spectrum AND timeline entries** with ≥2 point discrepancies AND approved peer reviews
+- **Update each timeline entry's note** with AI reasoning for that specific period
+- **Save changes immediately after each figure** (prevents data loss on errors)
+- Report total number of entries updated
+
+#### Resume from Specific Figure
+
+If the script errors out, resume from where it stopped:
+
+```bash
+npm run type-figures -- --verify --update --start-from "George H.W. Bush"
+```
+
+This will:
+- Skip all figures before the specified name
+- Continue verification/updates from that point
+- Useful for recovering from API errors or rate limits
 
 #### Add New Figures
 
@@ -74,9 +89,13 @@ When new figures are added, you must:
 3. Review and refine the auto-generated notes
 4. Optionally add to `featured` array
 
-### Rate Limiting
+### Rate Limiting & Retry Logic
 
-The script includes 1-second delays between API calls to avoid throttling.
+The script includes:
+- 1-second delays between API calls to avoid throttling
+- Automatic retry with exponential backoff for API errors (500, 529, "Overloaded")
+- Up to 3 retry attempts per API call before failing
+- Graceful error handling to prevent data loss
 
 ### Environment
 

@@ -96,107 +96,196 @@ type ReviewResult = {
   suggestions: string[];
 };
 
-async function getAssessment(name: string): Promise<AssessmentResult> {
-  const response = await anthropic.messages.create({
-    model: "claude-sonnet-4-5",
-    max_tokens: 2048,
-    system: ASSESSOR_PROMPT,
-    messages: [
-      {
-        role: "user",
-        content: `Provide a TAME-R assessment for: ${name}`,
-      },
-    ],
-  });
+async function getAssessment(name: string, period?: string, retries = 3): Promise<AssessmentResult> {
+  const prompt = period 
+    ? `Provide a TAME-R assessment for ${name} during the period: ${period}`
+    : `Provide a TAME-R assessment for: ${name}`;
 
-  const textContent = response.content.find((block) => block.type === "text");
-  let text = textContent && "text" in textContent ? textContent.text : "{}";
+  for (let attempt = 1; attempt <= retries; attempt++) {
+    try {
+      const response = await anthropic.messages.create({
+        model: "claude-sonnet-4-5",
+        max_tokens: 2048,
+        system: ASSESSOR_PROMPT,
+        messages: [
+          {
+            role: "user",
+            content: prompt,
+          },
+        ],
+      });
 
-  // Strip markdown code fences if present
-  text = text.replace(/^```json\s*/i, "").replace(/\s*```$/, "").trim();
+      const textContent = response.content.find((block) => block.type === "text");
+      let text = textContent && "text" in textContent ? textContent.text : "{}";
 
-  try {
-    return JSON.parse(text);
-  } catch (e) {
-    console.error(`Failed to parse assessment for ${name}:`, text);
-    throw new Error(`Invalid JSON response for ${name}`);
+      // Strip markdown code fences if present
+      text = text.replace(/^```json\s*/i, "").replace(/\s*```$/, "").trim();
+
+      return JSON.parse(text);
+    } catch (e: any) {
+      const isRetryable = e.status === 500 || e.status === 529 || e.message?.includes("Overloaded");
+      
+      if (attempt < retries && isRetryable) {
+        const waitTime = Math.min(1000 * Math.pow(2, attempt - 1), 10000); // Exponential backoff, max 10s
+        console.log(`      ⏳ Retry ${attempt}/${retries} after ${waitTime}ms (${e.message || e.status})`);
+        await new Promise((resolve) => setTimeout(resolve, waitTime));
+      } else {
+        console.error(`Failed to get assessment for ${name}${period ? ` (${period})` : ""}:`, e.message);
+        throw e;
+      }
+    }
   }
+  
+  throw new Error(`Failed after ${retries} retries`);
 }
 
 async function reviewAssessment(
   name: string,
-  assessment: AssessmentResult
+  assessment: AssessmentResult,
+  retries = 3
 ): Promise<ReviewResult> {
   const reviewPrompt = `Figure: ${name}\n\nAssessment:\nSpectrum: ${assessment.spectrum}\nConfidence: ${assessment.confidence}%\nReasoning: ${assessment.reasoning}`;
 
-  const response = await anthropic.messages.create({
-    model: "claude-sonnet-4-5",
-    max_tokens: 1024,
-    system: REVIEWER_PROMPT,
-    messages: [{ role: "user", content: reviewPrompt }],
-  });
+  for (let attempt = 1; attempt <= retries; attempt++) {
+    try {
+      const response = await anthropic.messages.create({
+        model: "claude-sonnet-4-5",
+        max_tokens: 1024,
+        system: REVIEWER_PROMPT,
+        messages: [{ role: "user", content: reviewPrompt }],
+      });
 
-  const textContent = response.content.find((block) => block.type === "text");
-  let text = textContent && "text" in textContent ? textContent.text : "{}";
+      const textContent = response.content.find((block) => block.type === "text");
+      let text = textContent && "text" in textContent ? textContent.text : "{}";
 
-  // Strip markdown code fences if present
-  text = text.replace(/^```json\s*/i, "").replace(/\s*```$/, "").trim();
+      // Strip markdown code fences if present
+      text = text.replace(/^```json\s*/i, "").replace(/\s*```$/, "").trim();
 
-  // Extract just the JSON object (everything from first { to last })
-  const jsonMatch = text.match(/\{[\s\S]*\}/);
-  if (jsonMatch) {
-    text = jsonMatch[0];
+      // Extract just the JSON object (everything from first { to last })
+      const jsonMatch = text.match(/\{[\s\S]*\}/);
+      if (jsonMatch) {
+        text = jsonMatch[0];
+      }
+
+      return JSON.parse(text);
+    } catch (e: any) {
+      const isRetryable = e.status === 500 || e.status === 529 || e.message?.includes("Overloaded");
+      
+      if (attempt < retries && isRetryable) {
+        const waitTime = Math.min(1000 * Math.pow(2, attempt - 1), 10000); // Exponential backoff, max 10s
+        console.log(`      ⏳ Retry ${attempt}/${retries} after ${waitTime}ms (${e.message || e.status})`);
+        await new Promise((resolve) => setTimeout(resolve, waitTime));
+      } else {
+        console.error(`Failed to review for ${name}:`, e.message);
+        throw e;
+      }
+    }
+  }
+  
+  throw new Error(`Failed after ${retries} retries`);
+}
+
+async function verifyTimelineEntry(
+  figureName: string,
+  entry: { label: string; spectrum: number[]; note: string },
+  autoUpdate: boolean
+): Promise<{ updated: boolean; newSpectrum?: number[]; newNote?: string }> {
+  console.log(`   📅 ${entry.label}`);
+  console.log(`      Current: [${entry.spectrum.join(", ")}]`);
+
+  const assessment = await getAssessment(figureName, entry.label);
+  console.log(`      AI:      [${assessment.spectrum.join(", ")}] (${assessment.confidence}%)`);
+
+  const review = await reviewAssessment(`${figureName} - ${entry.label}`, assessment);
+
+  if (!review.approved) {
+    console.log(`      ⚠️  REVIEW ISSUES:`);
+    review.issues.forEach((issue) => console.log(`         - ${issue}`));
   }
 
-  try {
-    return JSON.parse(text);
-  } catch (e) {
-    console.error(`Failed to parse review for ${name}:`, text);
-    throw new Error(`Invalid JSON response for review of ${name}`);
+  // Check for significant differences
+  const differences = entry.spectrum.map((val, idx) => Math.abs(val - assessment.spectrum[idx]));
+  const maxDiff = Math.max(...differences);
+
+  if (maxDiff >= 2) {
+    console.log(`      ⚠️  LARGE DISCREPANCY (max diff: ${maxDiff})`);
+    
+    if (autoUpdate && review.approved) {
+      console.log(`      🔄 AUTO-UPDATING`);
+      return {
+        updated: true,
+        newSpectrum: assessment.spectrum,
+        newNote: assessment.reasoning,
+      };
+    }
+  } else if (maxDiff >= 1) {
+    console.log(`      ℹ️  Minor difference (max diff: ${maxDiff})`);
+  } else {
+    console.log(`      ✅ Matches`);
   }
+
+  return { updated: false };
 }
 
 async function verifyExistingFigure(
   figure: Figure,
   autoUpdate: boolean
-): Promise<{ updated: boolean; newSpectrum?: number[] }> {
+): Promise<number> {
   console.log(`\n🔍 Verifying: ${figure.name}`);
-  console.log(`   Current spectrum: [${figure.spectrum.join(", ")}]`);
 
-  const assessment = await getAssessment(figure.name);
-  console.log(`   AI assessment:    [${assessment.spectrum.join(", ")}]`);
-  console.log(`   Confidence: ${assessment.confidence}%`);
+  let updatedEntries = 0;
 
-  const review = await reviewAssessment(figure.name, assessment);
+  // Verify main spectrum
+  console.log(`   📊 Overall Spectrum`);
+  console.log(`      Current: [${figure.spectrum.join(", ")}]`);
 
-  if (!review.approved) {
-    console.log(`   ⚠️  REVIEW ISSUES:`);
-    review.issues.forEach((issue) => console.log(`      - ${issue}`));
-    if (review.suggestions.length > 0) {
-      console.log(`   💡 SUGGESTIONS:`);
-      review.suggestions.forEach((suggestion) => console.log(`      - ${suggestion}`));
-    }
+  const overallAssessment = await getAssessment(figure.name);
+  console.log(`      AI:      [${overallAssessment.spectrum.join(", ")}] (${overallAssessment.confidence}%)`);
+
+  const overallReview = await reviewAssessment(figure.name, overallAssessment);
+
+  if (!overallReview.approved) {
+    console.log(`      ⚠️  REVIEW ISSUES:`);
+    overallReview.issues.forEach((issue) => console.log(`         - ${issue}`));
   }
 
-  // Check for significant differences
-  const differences = figure.spectrum.map((val, idx) => Math.abs(val - assessment.spectrum[idx]));
-  const maxDiff = Math.max(...differences);
+  const overallDifferences = figure.spectrum.map((val, idx) => Math.abs(val - overallAssessment.spectrum[idx]));
+  const overallMaxDiff = Math.max(...overallDifferences);
 
-  if (maxDiff >= 2) {
-    console.log(`   ⚠️  LARGE DISCREPANCY (max diff: ${maxDiff})`);
-    console.log(`   Reasoning: ${assessment.reasoning.substring(0, 300)}...`);
+  if (overallMaxDiff >= 2) {
+    console.log(`      ⚠️  LARGE DISCREPANCY (max diff: ${overallMaxDiff})`);
     
-    if (autoUpdate && review.approved) {
-      console.log(`   🔄 AUTO-UPDATING spectrum`);
-      return { updated: true, newSpectrum: assessment.spectrum };
+    if (autoUpdate && overallReview.approved) {
+      console.log(`      🔄 AUTO-UPDATING`);
+      figure.spectrum = overallAssessment.spectrum;
+      updatedEntries++;
     }
-  } else if (maxDiff >= 1) {
-    console.log(`   ℹ️  Minor difference (max diff: ${maxDiff})`);
+  } else if (overallMaxDiff >= 1) {
+    console.log(`      ℹ️  Minor difference (max diff: ${overallMaxDiff})`);
   } else {
-    console.log(`   ✅ Matches existing data`);
+    console.log(`      ✅ Matches`);
   }
 
-  return { updated: false };
+  // Rate limit between assessments
+  await new Promise((resolve) => setTimeout(resolve, 1000));
+
+  // Verify each timeline entry
+  if (figure.timeline && figure.timeline.length > 0) {
+    for (const entry of figure.timeline) {
+      const result = await verifyTimelineEntry(figure.name, entry, autoUpdate);
+      
+      if (result.updated && result.newSpectrum && result.newNote) {
+        entry.spectrum = result.newSpectrum;
+        entry.note = result.newNote.substring(0, 500);
+        updatedEntries++;
+      }
+
+      // Rate limit between timeline entries
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+    }
+  }
+
+  return updatedEntries;
 }
 
 async function addNewFigure(name: string): Promise<Figure | null> {
@@ -246,17 +335,22 @@ async function main() {
     update: args.includes("--update"),
   };
 
+  // Extract --start-from value
+  const startFromIndex = args.findIndex((arg) => arg === "--start-from");
+  const startFromName = startFromIndex !== -1 ? args[startFromIndex + 1] : null;
+
   if (!flags.verify && !flags.add) {
     console.log(`
 Usage:
-  npm run type-figures -- --verify                    # Verify existing figures
-  npm run type-figures -- --verify --update           # Verify and auto-update large discrepancies
-  npm run type-figures -- --add "Name1" "Name2"       # Add new figures
-  npm run type-figures -- --verify --add "Name"       # Both
+  npm run type-figures -- --verify                              # Verify existing figures
+  npm run type-figures -- --verify --update                     # Verify and auto-update large discrepancies
+  npm run type-figures -- --verify --start-from "Figure Name"   # Start verification from specific figure
+  npm run type-figures -- --add "Name1" "Name2"                 # Add new figures
 
 Examples:
   npm run type-figures -- --verify
   npm run type-figures -- --verify --update
+  npm run type-figures -- --verify --update --start-from "George H.W. Bush"
   npm run type-figures -- --add "Taylor Swift" "Elon Musk"
     `);
     process.exit(1);
@@ -267,27 +361,48 @@ Examples:
 
   if (flags.verify) {
     console.log("🔍 VERIFYING EXISTING FIGURES\n");
-    console.log(`Total figures: ${figuresData.figures.length}\n`);
+    
+    // Find starting index
+    let startIndex = 0;
+    if (startFromName) {
+      const foundIndex = figuresData.figures.findIndex(
+        (fig) => fig.name.toLowerCase() === startFromName.toLowerCase()
+      );
+      if (foundIndex !== -1) {
+        startIndex = foundIndex;
+        console.log(`▶️  Starting from: ${figuresData.figures[startIndex].name} (${startIndex + 1}/${figuresData.figures.length})\n`);
+      } else {
+        console.error(`❌ Figure "${startFromName}" not found in database`);
+        process.exit(1);
+      }
+    }
+    
+    console.log(`Total figures: ${figuresData.figures.length} (processing ${figuresData.figures.length - startIndex})\n`);
     if (flags.update) {
-      console.log("⚠️  AUTO-UPDATE MODE: Large discrepancies with approved reviews will be updated\n");
+      console.log("⚠️  AUTO-UPDATE MODE: Changes saved after each figure\n");
     }
 
     let updatedCount = 0;
 
-    for (const figure of figuresData.figures) {
-      const result = await verifyExistingFigure(figure, flags.update);
-      if (result.updated && result.newSpectrum) {
-        figure.spectrum = result.newSpectrum;
-        updatedCount++;
+    for (let i = startIndex; i < figuresData.figures.length; i++) {
+      const figure = figuresData.figures[i];
+      console.log(`\n[${i + 1}/${figuresData.figures.length}]`);
+      
+      const entriesUpdated = await verifyExistingFigure(figure, flags.update);
+      
+      if (entriesUpdated > 0) {
+        updatedCount += entriesUpdated;
+        
+        // Save immediately after each figure with updates
+        if (flags.update) {
+          fs.writeFileSync(figuresPath, JSON.stringify(figuresData, null, 2));
+          console.log(`   💾 Saved ${entriesUpdated} update(s) to data/figures.json`);
+        }
       }
-      // Rate limit to avoid API throttling
-      await new Promise((resolve) => setTimeout(resolve, 1000));
     }
 
-    if (flags.update && updatedCount > 0) {
-      console.log(`\n📝 Updating ${updatedCount} figure(s) in data/figures.json`);
-      fs.writeFileSync(figuresPath, JSON.stringify(figuresData, null, 2));
-      console.log("✅ Updated data/figures.json");
+    if (flags.update) {
+      console.log(`\n✅ Completed: ${updatedCount} figure(s) updated`);
     }
   }
 
