@@ -127,6 +127,42 @@
   border-radius: 8px;
 }
 
+.optionsTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+.optionsTable th,
+.optionsTable td {
+  padding: 0.75rem;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+
+.optionsTable th {
+  font-weight: 600;
+  color: var(--text-primary);
+  background: var(--background);
+}
+
+.optionsTable td {
+  color: var(--text-secondary);
+}
+
+.optionsTable code {
+  background: var(--background);
+  padding: 0.2rem 0.4rem;
+  border-radius: 4px;
+  font-family: 'Monaco', 'Menlo', monospace;
+  font-size: 0.85rem;
+  color: var(--text-primary);
+}
+
+.optionsTable tbody tr:hover {
+  background: var(--background);
+}
+
 .features h2 {
   margin-top: 0;
 }

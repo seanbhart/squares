@@ -26,7 +26,13 @@ export default function EmbedPage() {
   SquaresEmbed.init({
     elementId: 'squares-widget',
     variant: 'card',
-    buttonText: 'Map Your Squares'
+    buttonText: 'Map Your Squares',
+    // Optional customization:
+    align: 'center',        // 'left', 'center', 'right'
+    maxWidth: '600px',      // e.g., '600px', '100%'
+    primaryColor: '#4285f4', // Custom button color
+    borderRadius: '12px',   // Custom border radius
+    shadow: true            // Show/hide shadow
   });
 </script>`;
 
@@ -39,7 +45,9 @@ export default function EmbedPage() {
   SquaresEmbed.init({
     elementId: 'squares-widget',
     variant: 'button',
-    buttonText: 'Map Your Squares'
+    buttonText: 'Map Your Squares',
+    align: 'center',
+    maxWidth: '400px'
   });
 </script>`;
 
@@ -115,12 +123,77 @@ export default function EmbedPage() {
       </div>
 
       <div className={styles.features}>
+        <h2>Customization Options</h2>
+        <table className={styles.optionsTable}>
+          <thead>
+            <tr>
+              <th>Option</th>
+              <th>Type</th>
+              <th>Default</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>elementId</code></td>
+              <td>string</td>
+              <td><em>required</em></td>
+              <td>ID of container element</td>
+            </tr>
+            <tr>
+              <td><code>variant</code></td>
+              <td>string</td>
+              <td><code>'card'</code></td>
+              <td><code>'card'</code> or <code>'button'</code></td>
+            </tr>
+            <tr>
+              <td><code>buttonText</code></td>
+              <td>string</td>
+              <td><code>'Map Your Squares'</code></td>
+              <td>Custom button text</td>
+            </tr>
+            <tr>
+              <td><code>align</code></td>
+              <td>string</td>
+              <td><code>'center'</code></td>
+              <td><code>'left'</code>, <code>'center'</code>, or <code>'right'</code></td>
+            </tr>
+            <tr>
+              <td><code>maxWidth</code></td>
+              <td>string</td>
+              <td><code>null</code></td>
+              <td>Max width (e.g., <code>'600px'</code>)</td>
+            </tr>
+            <tr>
+              <td><code>primaryColor</code></td>
+              <td>string</td>
+              <td><code>null</code></td>
+              <td>Custom button color (hex)</td>
+            </tr>
+            <tr>
+              <td><code>borderRadius</code></td>
+              <td>string</td>
+              <td><code>null</code></td>
+              <td>Custom border radius</td>
+            </tr>
+            <tr>
+              <td><code>shadow</code></td>
+              <td>boolean</td>
+              <td><code>true</code></td>
+              <td>Show/hide shadow</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div className={styles.features}>
         <h2>Features</h2>
         <ul>
           <li>✅ <strong>Self-contained:</strong> No dependencies, works anywhere</li>
           <li>✅ <strong>Responsive:</strong> Works on all screen sizes</li>
           <li>✅ <strong>Fast:</strong> Lightweight and optimized</li>
-          <li>✅ <strong>Customizable:</strong> Choose button text and variant</li>
+          <li>✅ <strong>Customizable:</strong> Full styling control</li>
+          <li>✅ <strong>Isolated:</strong> Shadow DOM prevents conflicts</li>
           <li>✅ <strong>Privacy-focused:</strong> No tracking or data collection</li>
         </ul>
       </div>

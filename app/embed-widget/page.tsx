@@ -8,7 +8,17 @@ function EmbedWidgetContent() {
   const searchParams = useSearchParams();
   const variant = (searchParams.get('variant') as 'card' | 'button') || 'card';
   const buttonText = searchParams.get('buttonText') || 'Map Your Squares';
+  const elementId = searchParams.get('elementId') || 'squares-widget';
+  const primaryColor = searchParams.get('primaryColor');
+  const borderRadius = searchParams.get('borderRadius');
+  const shadow = searchParams.get('shadow') !== 'false';
   const [height, setHeight] = useState(0);
+
+  // Build custom CSS variables
+  const customStyles = {
+    ...(primaryColor && { '--accent': primaryColor }),
+    ...(borderRadius && { '--border-radius': borderRadius }),
+  } as React.CSSProperties;
 
   useEffect(() => {
     // Send height updates to parent window
@@ -18,23 +28,38 @@ function EmbedWidgetContent() {
         setHeight(newHeight);
         window.parent.postMessage({
           type: 'squares-resize',
-          height: newHeight
+          height: newHeight,
+          elementId: elementId
         }, '*');
       }
     };
 
-    // Initial update
-    updateHeight();
+    // Initial update with a small delay to ensure content is rendered
+    const timeoutId = setTimeout(updateHeight, 100);
 
     // Update on resize
     const observer = new ResizeObserver(updateHeight);
     observer.observe(document.body);
 
-    return () => observer.disconnect();
-  }, [height]);
+    return () => {
+      clearTimeout(timeoutId);
+      observer.disconnect();
+    };
+  }, [height, elementId]);
 
   return (
-    <div style={{ padding: '1rem' }}>
+    <div 
+      style={{ 
+        padding: '1rem',
+        ...customStyles
+      }}
+      className={!shadow ? 'no-shadow' : ''}
+    >
+      <style>{`
+        .no-shadow * {
+          box-shadow: none !important;
+        }
+      `}</style>
       <SquaresEmbed variant={variant} buttonText={buttonText} />
     </div>
   );
