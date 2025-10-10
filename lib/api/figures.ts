@@ -24,6 +24,7 @@ const USE_SUPABASE = process.env.NEXT_PUBLIC_USE_SUPABASE_FIGURES === 'true';
 
 /**
  * Get all figures from Supabase or JSON fallback
+ * Always falls back to JSON on connection errors or timeouts
  */
 export async function getAllFigures(): Promise<FiguresData> {
   if (!USE_SUPABASE) {
@@ -31,17 +32,29 @@ export async function getAllFigures(): Promise<FiguresData> {
   }
 
   try {
+    // Set a timeout for the Supabase request
+    const timeoutPromise = new Promise<never>((_, reject) => {
+      setTimeout(() => reject(new Error('Supabase request timeout')), 5000);
+    });
+
     // Get all figures with their timelines
-    const { data: figures, error } = await supabase.rpc('get_all_figures');
+    const figuresPromise = supabase.rpc('get_all_figures');
+    const { data: figures, error } = await Promise.race([figuresPromise, timeoutPromise]);
 
     if (error) throw error;
+    if (!figures) throw new Error('No data returned from Supabase');
 
     // Get featured figure names
-    const { data: featuredFigures, error: featuredError } = await supabase
+    const featuredPromise = supabase
       .from('figures')
       .select('name')
       .eq('is_featured', true)
       .order('featured_order');
+    
+    const { data: featuredFigures, error: featuredError } = await Promise.race([
+      featuredPromise,
+      timeoutPromise,
+    ]);
 
     if (featuredError) throw featuredError;
 
@@ -60,13 +73,14 @@ export async function getAllFigures(): Promise<FiguresData> {
       figures: transformedFigures,
     };
   } catch (error) {
-    console.error('Error fetching from Supabase, falling back to JSON:', error);
+    console.warn('⚠️  Supabase connection failed, using local JSON fallback:', error instanceof Error ? error.message : error);
     return figuresDataJson as FiguresData;
   }
 }
 
 /**
  * Get featured figures only
+ * Always falls back to JSON on connection errors
  */
 export async function getFeaturedFigures(): Promise<Figure[]> {
   if (!USE_SUPABASE) {
@@ -75,9 +89,15 @@ export async function getFeaturedFigures(): Promise<Figure[]> {
   }
 
   try {
-    const { data: figures, error } = await supabase.rpc('get_featured_figures');
+    const timeoutPromise = new Promise<never>((_, reject) => {
+      setTimeout(() => reject(new Error('Supabase request timeout')), 5000);
+    });
+
+    const figuresPromise = supabase.rpc('get_featured_figures');
+    const { data: figures, error } = await Promise.race([figuresPromise, timeoutPromise]);
 
     if (error) throw error;
+    if (!figures) throw new Error('No data returned from Supabase');
 
     return figures.map((f: any) => ({
       name: f.name,
@@ -86,7 +106,7 @@ export async function getFeaturedFigures(): Promise<Figure[]> {
       timeline: Array.isArray(f.timeline) ? f.timeline : [],
     }));
   } catch (error) {
-    console.error('Error fetching featured figures, falling back to JSON:', error);
+    console.warn('⚠️  Supabase connection failed, using local JSON fallback:', error instanceof Error ? error.message : error);
     const data = figuresDataJson as FiguresData;
     return data.figures.filter((f) => data.featured.includes(f.name));
   }
@@ -94,6 +114,7 @@ export async function getFeaturedFigures(): Promise<Figure[]> {
 
 /**
  * Get a single figure by name
+ * Always falls back to JSON on connection errors
  */
 export async function getFigureByName(name: string): Promise<Figure | null> {
   if (!USE_SUPABASE) {
@@ -102,9 +123,14 @@ export async function getFigureByName(name: string): Promise<Figure | null> {
   }
 
   try {
-    const { data: figures, error } = await supabase.rpc('get_figure_by_name', {
+    const timeoutPromise = new Promise<never>((_, reject) => {
+      setTimeout(() => reject(new Error('Supabase request timeout')), 5000);
+    });
+
+    const figurePromise = supabase.rpc('get_figure_by_name', {
       p_name: name,
     });
+    const { data: figures, error } = await Promise.race([figurePromise, timeoutPromise]);
 
     if (error) throw error;
 
@@ -119,7 +145,7 @@ export async function getFigureByName(name: string): Promise<Figure | null> {
       timeline: Array.isArray(figure.timeline) ? figure.timeline : [],
     };
   } catch (error) {
-    console.error('Error fetching figure, falling back to JSON:', error);
+    console.warn('⚠️  Supabase connection failed, using local JSON fallback:', error instanceof Error ? error.message : error);
     const data = figuresDataJson as FiguresData;
     return data.figures.find((f) => f.name === name) || null;
   }
