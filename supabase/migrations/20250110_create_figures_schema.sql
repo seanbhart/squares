@@ -92,11 +92,8 @@ CREATE POLICY "Allow admin write access to timeline_entries" ON timeline_entries
   );
 
 -- RLS Policies for analysis_requests table
-CREATE POLICY "Users can read own requests" ON analysis_requests
-  FOR SELECT USING (
-    requested_by = auth.uid() OR 
-    auth.jwt() ->> 'role' = 'admin'
-  );
+CREATE POLICY "Allow public read of analysis requests" ON analysis_requests
+  FOR SELECT USING (true);
 
 CREATE POLICY "Allow request creation" ON analysis_requests
   FOR INSERT WITH CHECK (true);
