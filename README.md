@@ -8,11 +8,13 @@ An open-source framework for mapping political positions across key policy dimen
 
 ## 🚀 Quick Start for Developers
 
-### React Component (Recommended)
+### Installation
 
 ```bash
 npm install @squares-app/react
 ```
+
+### Usage
 
 ```tsx
 import { SquaresEmbedReact } from '@squares-app/react';
@@ -22,22 +24,7 @@ function App() {
 }
 ```
 
-### Vanilla JavaScript
-
-```html
-<div id="squares-widget"></div>
-<script src="https://squares.vote/embed.js"></script>
-<script>
-  SquaresEmbed.init({
-    elementId: 'squares-widget',
-    variant: 'card',
-    maxWidth: '600px',
-    align: 'center'
-  });
-</script>
-```
-
-📚 **[Complete Embed Guide →](./EMBED.md)**
+📚 **[Complete Documentation →](./EMBED.md)**
 
 ### Local Development
 
@@ -88,86 +75,16 @@ function MyComponent() {
 />
 ```
 
-**Why use the React component?**
+**Features:**
 - ✅ **Proper lifecycle management** - Uses `useRef` and `useEffect`
 - ✅ **No DOM conflicts** - Integrates cleanly with React's rendering
 - ✅ **TypeScript support** - Full type safety
 - ✅ **Auto-cleanup** - Automatically destroys widget on unmount
 - ✅ **SSR-safe** - Works with Next.js and other SSR frameworks
+- ✅ **Responsive** - Works on all screen sizes
+- ✅ **Privacy-focused** - No tracking or data collection
 
----
-
-### Vanilla JavaScript Embed
-
-For non-React websites, use the vanilla JavaScript embed:
-
-#### Option 1: Card Embed
-
-Self-contained card with explanation and example. Best for first-time visitors.
-
-```html
-<!-- Add this where you want the card to appear -->
-<div id="squares-widget"></div>
-
-<!-- Add this before closing </body> tag -->
-<script src="https://squares.vote/embed.js"></script>
-<script>
-  SquaresEmbed.init({
-    elementId: 'squares-widget',
-    variant: 'card',
-    buttonText: 'Map Your Squares',
-    // Optional customization:
-    align: 'center',        // 'left', 'center', 'right'
-    maxWidth: '600px',      // e.g., '600px', '100%'
-    primaryColor: '#4285f4', // Custom button color
-    borderRadius: '12px',   // Custom border radius
-    shadow: true            // Show/hide shadow
-  });
-</script>
-```
-
-#### Option 2: Button Only
-
-Minimal embed for sites where context is already provided.
-
-```html
-<!-- Add this where you want the button to appear -->
-<div id="squares-widget"></div>
-
-<!-- Add this before closing </body> tag -->
-<script src="https://squares.vote/embed.js"></script>
-<script>
-  SquaresEmbed.init({
-    elementId: 'squares-widget',
-    variant: 'button',
-    buttonText: 'Map Your Squares'
-  });
-</script>
-```
-
-### Customization Options
-
-| Option | Type | Default | Description |
-|--------|------|---------|-------------|
-| `elementId` | string | required | ID of container element |
-| `variant` | string | `'card'` | `'card'` or `'button'` |
-| `buttonText` | string | `'Map Your Squares'` | Custom button text |
-| `align` | string | `'center'` | `'left'`, `'center'`, or `'right'` |
-| `maxWidth` | string | `null` | Max width (e.g., `'600px'`) |
-| `primaryColor` | string | `null` | Custom button color (hex) |
-| `borderRadius` | string | `null` | Custom border radius |
-| `shadow` | boolean | `true` | Show/hide shadow |
-
-### Features
-
-- ✅ **Self-contained:** No dependencies, works anywhere
-- ✅ **Responsive:** Works on all screen sizes
-- ✅ **Fast:** Lightweight and optimized
-- ✅ **Customizable:** Full styling control
-- ✅ **Isolated:** Shadow DOM prevents conflicts
-- ✅ **Privacy-focused:** No tracking or data collection
-
-See the [live embed demo](https://squares.vote/embed) for interactive examples.
+See the [complete documentation](./EMBED.md) for all props and examples.
 
 ---
 

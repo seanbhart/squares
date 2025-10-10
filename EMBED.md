@@ -1,16 +1,24 @@
-# Squares.vote Embed Guide
+# @squares-app/react
 
-Complete guide for embedding Squares.vote widgets on your website.
+Official React component for embedding Squares.vote widgets with a complete interactive modal experience.
 
 ---
 
-## Quick Start
-
-### React / Next.js (Recommended)
+## Installation
 
 ```bash
 npm install @squares-app/react
 ```
+```bash
+yarn add @squares-app/react
+```
+```bash
+pnpm add @squares-app/react
+```
+
+---
+
+## Quick Start
 
 ```tsx
 import { SquaresEmbedReact } from '@squares-app/react';
@@ -20,36 +28,32 @@ export default function MyPage() {
 }
 ```
 
-### Vanilla JavaScript
-
-```html
-<div id="squares-widget"></div>
-<script src="https://squares.vote/embed.js"></script>
-<script>
-  SquaresEmbed.init({
-    elementId: 'squares-widget',
-    variant: 'card',
-    maxWidth: '600px',
-    align: 'center'
-  });
-</script>
-```
+When users click the button or card, a **full interactive modal** opens with:
+- 4-step guided experience
+- TAME-R framework introduction
+- Historical figure examples
+- Interactive sliders for all 5 policy dimensions
+- Results with copy-to-clipboard and link to squares.vote
 
 ---
 
-## React Component API
+## Props
 
-### Installation
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `variant` | `'card' \| 'button'` | `'card'` | Widget display style |
+| `buttonText` | `string` | `'Map Your Squares'` | Custom button text |
+| `align` | `'left' \| 'center' \| 'right'` | `'center'` | Horizontal alignment |
+| `maxWidth` | `string` | `undefined` | Max width (e.g., `'600px'`, `'100%'`) |
+| `primaryColor` | `string` | `undefined` | Custom button color (hex, e.g., `'#ff6b6b'`) |
+| `borderRadius` | `string` | `undefined` | Custom border radius (e.g., `'16px'`) |
+| `shadow` | `boolean` | `true` | Show/hide drop shadow |
 
-```bash
-npm install @squares-app/react
-# or
-yarn add @squares-app/react
-# or
-pnpm add @squares-app/react
-```
+---
 
-### Basic Usage
+## Examples
+
+### Basic Card
 
 ```tsx
 import { SquaresEmbedReact } from '@squares-app/react';
@@ -64,21 +68,7 @@ function App() {
 }
 ```
 
-### Props
-
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `variant` | `'card' \| 'button'` | `'card'` | Widget display style |
-| `buttonText` | `string` | `'Map Your Squares'` | Custom button text |
-| `align` | `'left' \| 'center' \| 'right'` | `'center'` | Horizontal alignment |
-| `maxWidth` | `string` | `undefined` | Max width (e.g., `'600px'`, `'100%'`) |
-| `primaryColor` | `string` | `undefined` | Custom button color (hex, e.g., `'#ff6b6b'`) |
-| `borderRadius` | `string` | `undefined` | Custom border radius (e.g., `'16px'`) |
-| `shadow` | `boolean` | `true` | Show/hide drop shadow |
-
-### Advanced Examples
-
-#### Custom Styling
+### Custom Styling
 
 ```tsx
 <SquaresEmbedReact
@@ -92,7 +82,7 @@ function App() {
 />
 ```
 
-#### Button Variant
+### Button Variant
 
 ```tsx
 <SquaresEmbedReact
@@ -103,7 +93,7 @@ function App() {
 />
 ```
 
-#### Dynamic Props
+### Dynamic Props
 
 ```tsx
 import { useState } from 'react';
@@ -123,7 +113,11 @@ function App() {
 }
 ```
 
-#### Next.js App Router
+---
+
+## Framework Examples
+
+### Next.js App Router
 
 ```tsx
 'use client'; // Required for client components
@@ -143,291 +137,7 @@ export default function EmbedPage() {
 }
 ```
 
-### TypeScript Support
-
-Full TypeScript support with exported types:
-
-```tsx
-import { SquaresEmbedReact, SquaresEmbedProps } from '@squares-app/react';
-
-const config: SquaresEmbedProps = {
-  variant: 'card',
-  maxWidth: '600px',
-  primaryColor: '#ff6b6b'
-};
-
-function App() {
-  return <SquaresEmbedReact {...config} />;
-}
-```
-
----
-
-## Vanilla JavaScript API
-
-### Installation
-
-Add the script to your HTML:
-
-```html
-<script src="https://squares.vote/embed.js"></script>
-```
-
-### Basic Usage
-
-```html
-<!-- 1. Add container element -->
-<div id="squares-widget"></div>
-
-<!-- 2. Initialize widget -->
-<script>
-  SquaresEmbed.init({
-    elementId: 'squares-widget',
-    variant: 'card'
-  });
-</script>
-```
-
-### Options
-
-| Option | Type | Default | Description |
-|--------|------|---------|-------------|
-| `elementId` | `string` | **required** | ID of container element |
-| `variant` | `string` | `'card'` | `'card'` or `'button'` |
-| `buttonText` | `string` | `'Map Your Squares'` | Custom button text |
-| `align` | `string` | `'center'` | `'left'`, `'center'`, or `'right'` |
-| `maxWidth` | `string` | `null` | Max width (e.g., `'600px'`) |
-| `primaryColor` | `string` | `null` | Custom button color (hex) |
-| `borderRadius` | `string` | `null` | Custom border radius |
-| `shadow` | `boolean` | `true` | Show/hide shadow |
-
-### Examples
-
-#### Card Embed (Recommended)
-
-```html
-<div id="squares-widget"></div>
-<script src="https://squares.vote/embed.js"></script>
-<script>
-  SquaresEmbed.init({
-    elementId: 'squares-widget',
-    variant: 'card',
-    align: 'center',
-    maxWidth: '600px',
-    primaryColor: '#4285f4',
-    borderRadius: '12px',
-    shadow: true
-  });
-</script>
-```
-
-#### Button Only
-
-```html
-<div id="squares-button"></div>
-<script src="https://squares.vote/embed.js"></script>
-<script>
-  SquaresEmbed.init({
-    elementId: 'squares-button',
-    variant: 'button',
-    buttonText: 'Take the Quiz',
-    align: 'center',
-    maxWidth: '400px'
-  });
-</script>
-```
-
-#### Multiple Widgets
-
-```html
-<!-- Widget 1 -->
-<div id="widget-1"></div>
-
-<!-- Widget 2 -->
-<div id="widget-2"></div>
-
-<script src="https://squares.vote/embed.js"></script>
-<script>
-  SquaresEmbed.init({
-    elementId: 'widget-1',
-    variant: 'card'
-  });
-
-  SquaresEmbed.init({
-    elementId: 'widget-2',
-    variant: 'button'
-  });
-</script>
-```
-
-#### Cleanup
-
-```javascript
-// Destroy widget when no longer needed
-SquaresEmbed.destroy('squares-widget');
-```
-
----
-
-## Features
-
-### React Component Benefits
-
-- ✅ **Proper lifecycle management** - Uses `useRef` and `useEffect`
-- ✅ **No DOM conflicts** - Integrates cleanly with React's rendering
-- ✅ **TypeScript support** - Full type safety
-- ✅ **Auto-cleanup** - Automatically destroys widget on unmount
-- ✅ **SSR-safe** - Works with Next.js and other SSR frameworks
-- ✅ **Dynamic props** - Re-initializes when props change
-
-### Vanilla JavaScript Benefits
-
-- ✅ **No dependencies** - Works anywhere
-- ✅ **Shadow DOM isolation** - Prevents style conflicts
-- ✅ **Async initialization** - No React render conflicts
-- ✅ **Multiple instances** - Multiple widgets per page
-- ✅ **Lazy loading** - Iframe loads on demand
-
-### General Features
-
-- ✅ **Responsive** - Works on all screen sizes
-- ✅ **Fast** - Lightweight and optimized
-- ✅ **Customizable** - Full styling control
-- ✅ **Privacy-focused** - No tracking or data collection
-- ✅ **Accessible** - ARIA labels and semantic HTML
-
----
-
-## Variants
-
-### Card Embed
-
-Self-contained card with explanation and example. **Best for first-time visitors.**
-
-Features:
-- Explanation of TAME-R framework
-- Visual example (e.g., Martin Luther King Jr.)
-- Call-to-action button
-- Recommended for landing pages and blog posts
-
-### Button Only
-
-Minimal embed for sites where context is already provided. **Best for compact layouts.**
-
-Features:
-- Just the call-to-action button
-- Smaller footprint
-- Recommended for sidebars and navigation
-
----
-
-## Styling
-
-### Alignment
-
-Control horizontal alignment:
-
-```tsx
-// React
-<SquaresEmbedReact align="left" />
-<SquaresEmbedReact align="center" />
-<SquaresEmbedReact align="right" />
-```
-
-```javascript
-// Vanilla JS
-SquaresEmbed.init({
-  elementId: 'squares-widget',
-  align: 'center'
-});
-```
-
-### Width Control
-
-Set maximum width:
-
-```tsx
-// React
-<SquaresEmbedReact maxWidth="600px" />
-<SquaresEmbedReact maxWidth="100%" />
-```
-
-```javascript
-// Vanilla JS
-SquaresEmbed.init({
-  elementId: 'squares-widget',
-  maxWidth: '600px'
-});
-```
-
-### Custom Colors
-
-Match your brand:
-
-```tsx
-// React
-<SquaresEmbedReact primaryColor="#ff6b6b" />
-```
-
-```javascript
-// Vanilla JS
-SquaresEmbed.init({
-  elementId: 'squares-widget',
-  primaryColor: '#4285f4'
-});
-```
-
-### Border Radius
-
-Customize corner rounding:
-
-```tsx
-// React
-<SquaresEmbedReact borderRadius="16px" />
-```
-
-```javascript
-// Vanilla JS
-SquaresEmbed.init({
-  elementId: 'squares-widget',
-  borderRadius: '12px'
-});
-```
-
-### Shadow
-
-Toggle drop shadow:
-
-```tsx
-// React
-<SquaresEmbedReact shadow={false} />
-```
-
-```javascript
-// Vanilla JS
-SquaresEmbed.init({
-  elementId: 'squares-widget',
-  shadow: false
-});
-```
-
----
-
-## Framework Examples
-
-### Next.js (App Router)
-
-```tsx
-'use client';
-
-import { SquaresEmbedReact } from '@squares-app/react';
-
-export default function Page() {
-  return <SquaresEmbedReact variant="card" />;
-}
-```
-
-### Next.js (Pages Router)
+### Next.js Pages Router
 
 ```tsx
 import { SquaresEmbedReact } from '@squares-app/react';
@@ -469,36 +179,114 @@ import { SquaresEmbedReact } from '@squares-app/react';
 <SquaresEmbedReact client:load variant="card" />
 ```
 
-### WordPress
+---
 
-Add to your theme or use a custom HTML block:
+## TypeScript Support
 
-```html
-<div id="squares-widget"></div>
-<script src="https://squares.vote/embed.js"></script>
-<script>
-  SquaresEmbed.init({
-    elementId: 'squares-widget',
-    variant: 'card'
-  });
-</script>
+Full TypeScript support with exported types:
+
+```tsx
+import { SquaresEmbedReact, SquaresEmbedProps } from '@squares-app/react';
+
+const config: SquaresEmbedProps = {
+  variant: 'card',
+  maxWidth: '600px',
+  primaryColor: '#ff6b6b'
+};
+
+function App() {
+  return <SquaresEmbedReact {...config} />;
+}
 ```
 
-### Webflow
+---
 
-1. Add an Embed element
-2. Paste the vanilla JavaScript code
-3. Publish
+## Variants
+
+### Card Embed
+
+Self-contained card with explanation and example. **Best for first-time visitors.**
+
+Features:
+- Explanation of TAME-R framework
+- Visual example (e.g., Martin Luther King Jr.)
+- Call-to-action button
+- Recommended for landing pages and blog posts
+
+### Button Only
+
+Minimal embed for sites where context is already provided. **Best for compact layouts.**
+
+Features:
+- Just the call-to-action button
+- Smaller footprint
+- Recommended for sidebars and navigation
+
+---
+
+## Styling
+
+### Alignment
+
+```tsx
+<SquaresEmbedReact align="left" />
+<SquaresEmbedReact align="center" />
+<SquaresEmbedReact align="right" />
+```
+
+### Width Control
+
+```tsx
+<SquaresEmbedReact maxWidth="600px" />
+<SquaresEmbedReact maxWidth="100%" />
+```
+
+### Custom Colors
+
+```tsx
+<SquaresEmbedReact primaryColor="#ff6b6b" />
+<SquaresEmbedReact primaryColor="#4285f4" />
+```
+
+### Border Radius
+
+```tsx
+<SquaresEmbedReact borderRadius="16px" />
+<SquaresEmbedReact borderRadius="8px" />
+```
+
+### Shadow
+
+```tsx
+<SquaresEmbedReact shadow={true} />
+<SquaresEmbedReact shadow={false} />
+```
+
+---
+
+## Features
+
+- ✅ **Complete interactive experience** - Full 4-step modal widget
+- ✅ **Self-contained** - No external dependencies or iframes
+- ✅ **No API calls** - All content bundled in the package
+- ✅ **Proper lifecycle management** - Uses `useRef` and `useEffect`
+- ✅ **No DOM conflicts** - Integrates cleanly with React's rendering
+- ✅ **TypeScript support** - Full type safety
+- ✅ **Auto-cleanup** - Automatically destroys widget on unmount
+- ✅ **SSR-safe** - Works with Next.js and other SSR frameworks
+- ✅ **Responsive** - Works on all screen sizes
+- ✅ **Customizable** - Full styling control
+- ✅ **Privacy-focused** - No tracking or data collection
 
 ---
 
 ## Troubleshooting
 
-### React: Widget not appearing
+### Widget not appearing
 
 **Issue:** Component renders but widget doesn't show.
 
-**Solution:** Ensure you're using the component in a client component:
+**Solution:** Ensure you're using the component in a client component (Next.js App Router):
 
 ```tsx
 'use client'; // Add this at the top
@@ -506,21 +294,11 @@ Add to your theme or use a custom HTML block:
 import { SquaresEmbedReact } from '@squares-app/react';
 ```
 
-### Vanilla JS: Multiple widgets conflict
+### Modal not opening
 
-**Issue:** Multiple widgets on same page interfere with each other.
+**Issue:** Clicking the button/card doesn't open the modal.
 
-**Solution:** Use unique element IDs:
-
-```html
-<div id="widget-1"></div>
-<div id="widget-2"></div>
-
-<script>
-  SquaresEmbed.init({ elementId: 'widget-1', variant: 'card' });
-  SquaresEmbed.init({ elementId: 'widget-2', variant: 'button' });
-</script>
-```
+**Solution:** Ensure JavaScript is enabled and there are no console errors. The component uses React state to manage the modal visibility.
 
 ### Styling not applying
 

@@ -12,9 +12,12 @@ interface SquaresEmbedProps {
 /**
  * Official React component for embedding Squares.vote widget
  *
+ * Completely self-contained with full interactive modal.
+ * No external dependencies or iframes needed.
+ *
  * @example
  * ```tsx
- * import { SquaresEmbedReact } from '@squares/react';
+ * import { SquaresEmbedReact } from '@squares-app/react';
  *
  * function MyComponent() {
  *   return (
@@ -28,22 +31,11 @@ interface SquaresEmbedProps {
  * ```
  */
 declare function SquaresEmbedReact({ variant, buttonText, align, maxWidth, primaryColor, borderRadius, shadow, }: SquaresEmbedProps): React.JSX.Element;
-declare global {
-    interface Window {
-        SquaresEmbed?: {
-            init: (options: {
-                elementId: string;
-                variant?: 'card' | 'button';
-                buttonText?: string;
-                align?: 'left' | 'center' | 'right';
-                maxWidth?: string | null;
-                primaryColor?: string | null;
-                borderRadius?: string | null;
-                shadow?: boolean;
-            }) => void;
-            destroy: (elementId: string) => void;
-        };
-    }
-}
 
-export { type SquaresEmbedProps, SquaresEmbedReact };
+interface SquaresWidgetProps {
+    onClose: () => void;
+    primaryColor?: string;
+}
+declare function SquaresWidget({ onClose, primaryColor }: SquaresWidgetProps): React.JSX.Element;
+
+export { type SquaresEmbedProps, SquaresEmbedReact, SquaresWidget };

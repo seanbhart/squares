@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import SquaresEmbed from '@/components/embed/SquaresEmbed';
+import { SquaresEmbedReact } from '@squares-app/react';
 import styles from './embed.module.css';
 
 export default function EmbedPage() {
@@ -17,39 +17,34 @@ export default function EmbedPage() {
     }
   };
 
-  const cardEmbedCode = `<!-- Add this where you want the card to appear -->
-<div id="squares-widget"></div>
+  const cardEmbedCode = `import { SquaresEmbedReact } from '@squares-app/react';
 
-<!-- Add this before closing </body> tag -->
-<script src="https://squares.vote/embed.js"></script>
-<script>
-  SquaresEmbed.init({
-    elementId: 'squares-widget',
-    variant: 'card',
-    buttonText: 'Map Your Squares',
-    // Optional customization:
-    align: 'center',        // 'left', 'center', 'right'
-    maxWidth: '600px',      // e.g., '600px', '100%'
-    primaryColor: '#4285f4', // Custom button color
-    borderRadius: '12px',   // Custom border radius
-    shadow: true            // Show/hide shadow
-  });
-</script>`;
+function MyComponent() {
+  return (
+    <SquaresEmbedReact
+      variant="card"
+      buttonText="Map Your Squares"
+      align="center"
+      maxWidth="600px"
+      primaryColor="#4285f4"
+      borderRadius="12px"
+      shadow={true}
+    />
+  );
+}`;
 
-  const buttonEmbedCode = `<!-- Add this where you want the button to appear -->
-<div id="squares-widget"></div>
+  const buttonEmbedCode = `import { SquaresEmbedReact } from '@squares-app/react';
 
-<!-- Add this before closing </body> tag -->
-<script src="https://squares.vote/embed.js"></script>
-<script>
-  SquaresEmbed.init({
-    elementId: 'squares-widget',
-    variant: 'button',
-    buttonText: 'Map Your Squares',
-    align: 'center',
-    maxWidth: '400px'
-  });
-</script>`;
+function MyComponent() {
+  return (
+    <SquaresEmbedReact
+      variant="button"
+      buttonText="Map Your Squares"
+      align="center"
+      maxWidth="400px"
+    />
+  );
+}`;
 
   return (
     <div className={styles.container}>
@@ -66,7 +61,7 @@ export default function EmbedPage() {
         <h2>Option 1: Card Embed (Recommended)</h2>
         <p>Self-contained with explanation and example. Best for first-time visitors.</p>
         <div className={styles.preview}>
-          <SquaresEmbed variant="card" />
+          <SquaresEmbedReact variant="card" />
         </div>
         <details className={styles.codeDetails}>
           <summary>Show embed code</summary>
@@ -96,7 +91,7 @@ export default function EmbedPage() {
         <h2>Option 2: Button Only</h2>
         <p>Minimal embed for sites where context is already provided.</p>
         <div className={styles.preview}>
-          <SquaresEmbed variant="button" />
+          <SquaresEmbedReact variant="button" />
         </div>
         <details className={styles.codeDetails}>
           <summary>Show embed code</summary>
@@ -134,12 +129,6 @@ export default function EmbedPage() {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td><code>elementId</code></td>
-              <td>string</td>
-              <td><em>required</em></td>
-              <td>ID of container element</td>
-            </tr>
             <tr>
               <td><code>variant</code></td>
               <td>string</td>
