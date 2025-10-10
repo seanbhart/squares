@@ -18,26 +18,26 @@ export default function EmbedPage() {
   };
 
   const cardEmbedCode = `<!-- Add this where you want the card to appear -->
-<div id="squares-embed"></div>
+<div id="squares-widget"></div>
 
 <!-- Add this before closing </body> tag -->
 <script src="https://squares.vote/embed.js"></script>
 <script>
   SquaresEmbed.init({
-    elementId: 'squares-embed',
+    elementId: 'squares-widget',
     variant: 'card',
     buttonText: 'Map Your Squares'
   });
 </script>`;
 
   const buttonEmbedCode = `<!-- Add this where you want the button to appear -->
-<div id="squares-embed"></div>
+<div id="squares-widget"></div>
 
 <!-- Add this before closing </body> tag -->
 <script src="https://squares.vote/embed.js"></script>
 <script>
   SquaresEmbed.init({
-    elementId: 'squares-embed',
+    elementId: 'squares-widget',
     variant: 'button',
     buttonText: 'Map Your Squares'
   });
