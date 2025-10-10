@@ -1,31 +1,11 @@
 "use client";
 
 import { ChangeEvent, useCallback, useEffect, useMemo, useRef, useState } from "react";
-import figuresRaw from "../data/figures.json";
 import styles from "./page.module.css";
 import ChatModal from "./components/ChatModal";
 import { POLICIES, getScoreColor, getEmojiSquare, type PolicyKey } from "@/lib/tamer-config";
 import { ClipboardIcon, CheckIcon, SunIcon, MoonIcon } from "./components/icons";
-
-type TimelineEntry = {
-  label: string;
-  spectrum: number[];
-  note: string;
-};
-
-type Figure = {
-  name: string;
-  lifespan: string;
-  spectrum: number[];
-  timeline: TimelineEntry[];
-};
-
-type FiguresData = {
-  featured: string[];
-  figures: Figure[];
-};
-
-const figuresData = figuresRaw as FiguresData;
+import { getAllFigures, type Figure, type FiguresData } from "@/lib/api/figures";
 
 type Spectrum = Record<PolicyKey, number>;
 
@@ -40,23 +20,6 @@ const spectrumFromArray = (values: number[]) => {
   const entries = POLICIES.map((policy, index) => [policy.key, values[index] ?? 3]);
   return Object.fromEntries(entries) as Spectrum;
 };
-
-const FIGURE_MAP = new Map<string, Figure>(
-  figuresData.figures.map((figure) => [figure.name, figure])
-);
-
-const FEATURED_FIGURES = figuresData.featured
-  .map((name) => FIGURE_MAP.get(name))
-  .filter((figure): figure is Figure => Boolean(figure));
-
-const ADDITIONAL_FIGURES = figuresData.figures.filter(
-  (figure) => !figuresData.featured.includes(figure.name)
-);
-
-const DEFAULT_FIGURE = FEATURED_FIGURES[0] ?? ADDITIONAL_FIGURES[0] ?? null;
-const DEFAULT_SPECTRUM = DEFAULT_FIGURE
-  ? spectrumFromArray(DEFAULT_FIGURE.spectrum)
-  : getBaselineSpectrum();
 
 const hexToRgba = (hex: string, alpha = 1) => {
   const normalized = hex.replace("#", "");
@@ -140,18 +103,43 @@ const TimelineSquares = ({ values }: { values: number[] }) => {
 };
 
 export default function Home() {
+  const [figuresData, setFiguresData] = useState<FiguresData | null>(null);
+  const [loading, setLoading] = useState(true);
   const [hasManualEdit, setHasManualEdit] = useState(false);
-  const { userSpectrum, handleUpdate: baseHandleUpdate, loadSpectrum, resetSpectrum } = useSpectrumState(DEFAULT_SPECTRUM);
+  const { userSpectrum, handleUpdate: baseHandleUpdate, loadSpectrum, resetSpectrum } = useSpectrumState(getBaselineSpectrum());
 
   const handleUpdate = useCallback((key: PolicyKey, value: number) => {
     baseHandleUpdate(key, value);
     setHasManualEdit(true);
   }, [baseHandleUpdate]);
 
-  const [selectedFigureName, setSelectedFigureName] = useState<string>(DEFAULT_FIGURE?.name ?? "");
+  const [selectedFigureName, setSelectedFigureName] = useState<string>("");
   const [theme, setTheme] = useState<"light" | "dark">("light");
   const [copyState, setCopyState] = useState<CopyState>("idle");
   const copyTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  // Load figures data
+  useEffect(() => {
+    async function loadFigures() {
+      try {
+        const data = await getAllFigures();
+        setFiguresData(data);
+        
+        // Set default figure
+        const featuredFigures = data.figures.filter(f => data.featured.includes(f.name));
+        const defaultFigure = featuredFigures[0] || data.figures[0];
+        if (defaultFigure) {
+          setSelectedFigureName(defaultFigure.name);
+          loadSpectrum(spectrumFromArray(defaultFigure.spectrum));
+        }
+      } catch (error) {
+        console.error('Failed to load figures:', error);
+      } finally {
+        setLoading(false);
+      }
+    }
+    loadFigures();
+  }, [loadSpectrum]);
 
   useEffect(() => {
     const savedTheme = localStorage.getItem("theme") as "light" | "dark" | null;
@@ -176,25 +164,40 @@ export default function Home() {
     };
   }, []);
 
+  const figureMap = useMemo(() => {
+    if (!figuresData) return new Map();
+    return new Map(figuresData.figures.map(f => [f.name, f]));
+  }, [figuresData]);
+
+  const featuredFigures = useMemo(() => {
+    if (!figuresData) return [];
+    return figuresData.figures.filter(f => figuresData.featured.includes(f.name));
+  }, [figuresData]);
+
+  const additionalFigures = useMemo(() => {
+    if (!figuresData) return [];
+    return figuresData.figures.filter(f => !figuresData.featured.includes(f.name));
+  }, [figuresData]);
+
   const selectedFigure = useMemo(() => {
     if (!selectedFigureName) return null;
-    return FIGURE_MAP.get(selectedFigureName) ?? null;
-  }, [selectedFigureName]);
+    return figureMap.get(selectedFigureName) ?? null;
+  }, [selectedFigureName, figureMap]);
 
   const handleSelectFigure = useCallback(
     (name: string) => {
-      const figure = FIGURE_MAP.get(name);
+      const figure = figureMap.get(name);
       if (!figure) return;
       setSelectedFigureName(name);
       loadSpectrum(spectrumFromArray(figure.spectrum));
       setHasManualEdit(false);
     },
-    [loadSpectrum]
+    [loadSpectrum, figureMap]
   );
 
   const allFigures = useMemo(() => {
-    return [...FEATURED_FIGURES, ...ADDITIONAL_FIGURES];
-  }, []);
+    return [...featuredFigures, ...additionalFigures];
+  }, [featuredFigures, additionalFigures]);
 
   const displayedFigure = useMemo(() => {
     if (hasManualEdit) return null;
@@ -231,6 +234,16 @@ export default function Home() {
     }, 1500);
   }, [emojiSignature]);
 
+  if (loading) {
+    return (
+      <main className={styles.main}>
+        <div style={{ padding: '2rem', textAlign: 'center' }}>
+          <h1>Loading...</h1>
+        </div>
+      </main>
+    );
+  }
+
   return (
     <>
       <ChatModal />
@@ -252,7 +265,7 @@ export default function Home() {
             historical figures or modern leaders.
           </p>
           <div className={styles.ctaRow}>
-            {FEATURED_FIGURES.map((figure) => (
+            {featuredFigures.map((figure) => (
               <button
                 key={figure.name}
                 type="button"
@@ -269,7 +282,7 @@ export default function Home() {
               onChange={(e) => e.target.value && handleSelectFigure(e.target.value)}
             >
               <option value="">More figures…</option>
-              {ADDITIONAL_FIGURES.map((figure) => (
+              {additionalFigures.map((figure) => (
                 <option key={figure.name} value={figure.name}>
                   {figure.name}
                 </option>
