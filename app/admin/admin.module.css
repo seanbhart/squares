@@ -17,12 +17,14 @@
 .header h1 {
   margin: 0;
   font-size: 2rem;
+  flex: 1;
 }
 
 .userInfo {
   display: flex;
   align-items: center;
   gap: 1rem;
+  margin-left: auto;
 }
 
 .loginCard {
@@ -105,6 +107,57 @@
   display: flex;
   flex-direction: column;
   gap: 2rem;
+}
+
+.twoColumnLayout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+@media (max-width: 768px) {
+  .twoColumnLayout {
+    grid-template-columns: 1fr;
+  }
+}
+
+.compactForm {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.timelineViewer h3 {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+}
+
+.timelineEntries {
+  margin-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.timelineEntry {
+  padding: 1rem;
+  background: var(--background);
+  border: 1px solid var(--border-strong);
+  border-radius: 4px;
+}
+
+.timelineEntry h4 {
+  margin: 0 0 0.75rem 0;
+  font-size: 1rem;
+  color: var(--text-primary);
+}
+
+.entryNote {
+  margin: 0.75rem 0 0 0;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
 }
 
 .section {
@@ -198,6 +251,20 @@
   background: var(--background);
   border: 1px solid var(--border-strong);
   border-radius: 4px;
+  transition: all 0.2s;
+}
+
+.figureCard[draggable="true"] {
+  cursor: grab;
+}
+
+.figureCard[draggable="true"]:active {
+  cursor: grabbing;
+}
+
+.figureCard.dragging {
+  opacity: 0.5;
+  transform: scale(0.95);
 }
 
 .figureHeader {
@@ -225,6 +292,13 @@
   color: var(--text-secondary);
   font-size: 0.9rem;
   margin: 0.25rem 0;
+}
+
+.lastUpdated {
+  color: var(--text-secondary);
+  font-size: 0.75rem;
+  margin: 0.5rem 0 0 0;
+  font-style: italic;
 }
 
 .spectrumDisplay {
@@ -561,4 +635,50 @@
   color: var(--text-secondary);
   font-style: italic;
   font-size: 0.9rem;
+}
+
+/* Prompts Editor Styles */
+.promptsHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.promptsHeader h2 {
+  margin: 0;
+}
+
+.promptEditor {
+  margin-bottom: 2rem;
+}
+
+.promptEditor h3 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.1rem;
+}
+
+.promptTextarea {
+  width: 100%;
+  padding: 1rem;
+  border: 1px solid var(--border-strong);
+  border-radius: 4px;
+  font-size: 0.9rem;
+  font-family: 'Monaco', 'Menlo', 'Courier New', monospace;
+  background: var(--background);
+  color: var(--text-primary);
+  resize: vertical;
+  line-height: 1.5;
+}
+
+.promptTextarea:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.promptActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 2rem;
 }

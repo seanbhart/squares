@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { signInWithGoogle, signOut, isAdmin, onAuthStateChange } from '@/lib/admin/auth';
 import {
   getAllFiguresAdmin,
+  getFigureWithTimeline,
   updateFigureFeatured,
   deleteFigure,
   reanalyzeFigure,
@@ -15,6 +16,8 @@ import {
   addUserRole,
   removeUserRole,
   createOrUpdateUserByEmail,
+  getSystemPrompts,
+  updateSystemPrompts,
   type AdminFigure,
 } from '@/lib/admin/api';
 import { spectrumArrayToEmojis } from '@/lib/utils/spectrum';
@@ -34,10 +37,18 @@ export default function AdminPage() {
   const [newFigureName, setNewFigureName] = useState('');
   const [newFigureContext, setNewFigureContext] = useState('');
   const [reanalyzeId, setReanalyzeId] = useState<string | null>(null);
+  const [draggedFigure, setDraggedFigure] = useState<AdminFigure | null>(null);
+  const [selectedFigureForTimeline, setSelectedFigureForTimeline] = useState<AdminFigure | null>(null);
   
   // User management state
   const [newUserEmail, setNewUserEmail] = useState('');
   const [newUserRoles, setNewUserRoles] = useState<string[]>([]);
+  
+  // Prompts state
+  const [assessorPrompt, setAssessorPrompt] = useState('');
+  const [reviewerPrompt, setReviewerPrompt] = useState('');
+  const [promptsLoading, setPromptsLoading] = useState(false);
+  const [promptsSaved, setPromptsSaved] = useState(false);
   
   // Confirmation modal state
   const [confirmModal, setConfirmModal] = useState<{
@@ -104,6 +115,40 @@ export default function AdminPage() {
     } catch (error) {
       console.error('Failed to load data:', error);
       showMessage('error', 'Failed to load data');
+    }
+  }
+
+  async function loadPrompts() {
+    try {
+      setPromptsLoading(true);
+      const prompts = await getSystemPrompts();
+      if (prompts) {
+        setAssessorPrompt(prompts.assessor_prompt || '');
+        setReviewerPrompt(prompts.reviewer_prompt || '');
+      }
+    } catch (error) {
+      console.error('Failed to load prompts:', error);
+      showMessage('error', 'Failed to load prompts');
+    } finally {
+      setPromptsLoading(false);
+    }
+  }
+
+  async function handleSavePrompts() {
+    try {
+      setPromptsLoading(true);
+      await updateSystemPrompts({
+        assessor_prompt: assessorPrompt,
+        reviewer_prompt: reviewerPrompt,
+      });
+      showMessage('success', 'Prompts updated successfully');
+      setPromptsSaved(true);
+      setTimeout(() => setPromptsSaved(false), 3000);
+    } catch (error) {
+      console.error('Failed to save prompts:', error);
+      showMessage('error', 'Failed to save prompts');
+    } finally {
+      setPromptsLoading(false);
     }
   }
 
@@ -252,6 +297,65 @@ export default function AdminPage() {
     );
   }
 
+  // Helper function to get last name
+  function getLastName(fullName: string): string {
+    const parts = fullName.trim().split(' ');
+    return parts[parts.length - 1];
+  }
+
+  // Sort figures: featured first (by featured_order), then non-featured alphabetically by last name
+  const sortedFigures = [...figures].sort((a, b) => {
+    if (a.is_featured && !b.is_featured) return -1;
+    if (!a.is_featured && b.is_featured) return 1;
+    if (a.is_featured && b.is_featured) {
+      return (a.featured_order ?? 0) - (b.featured_order ?? 0);
+    }
+    // Sort non-featured by last name
+    return getLastName(a.name).localeCompare(getLastName(b.name));
+  });
+
+  async function handleDragStart(figure: AdminFigure) {
+    setDraggedFigure(figure);
+  }
+
+  async function handleDragOver(e: React.DragEvent, targetFigure: AdminFigure) {
+    e.preventDefault();
+    if (!draggedFigure || draggedFigure.id === targetFigure.id) return;
+
+    // Only allow reordering within the same category (featured or non-featured)
+    if (draggedFigure.is_featured !== targetFigure.is_featured) return;
+
+    // For featured figures, swap their order
+    if (draggedFigure.is_featured && targetFigure.is_featured) {
+      const draggedOrder = draggedFigure.featured_order ?? 0;
+      const targetOrder = targetFigure.featured_order ?? 0;
+
+      try {
+        // Swap the orders
+        await updateFigureFeatured(draggedFigure.id, true, targetOrder);
+        await updateFigureFeatured(targetFigure.id, true, draggedOrder);
+        loadData();
+      } catch (error) {
+        console.error('Failed to reorder figures:', error);
+        showMessage('error', 'Failed to reorder figures');
+      }
+    }
+  }
+
+  function handleDragEnd() {
+    setDraggedFigure(null);
+  }
+
+  async function handleSelectFigure(figure: AdminFigure) {
+    try {
+      const fullFigure = await getFigureWithTimeline(figure.id);
+      setSelectedFigureForTimeline(fullFigure as any);
+    } catch (error) {
+      console.error('Failed to load figure timeline:', error);
+      showMessage('error', 'Failed to load timeline');
+    }
+  }
+
   if (loading) {
     return (
       <div className={styles.container}>
@@ -346,36 +450,92 @@ export default function AdminPage() {
 
       {activeTab === 'figures' && (
         <div className={styles.content}>
-          <section className={styles.section}>
-            <h2>Add New Figure</h2>
-            <form onSubmit={handleAddFigure} className={styles.form}>
-              <input
-                type="text"
-                placeholder="Figure name"
-                value={newFigureName}
-                onChange={(e) => setNewFigureName(e.target.value)}
-                className={styles.input}
-                required
-              />
-              <textarea
-                placeholder="Context notes (optional)"
-                value={newFigureContext}
-                onChange={(e) => setNewFigureContext(e.target.value)}
-                className={styles.textarea}
-                rows={3}
-              />
-              <button type="submit" className={styles.primaryButton}>
-                Analyze & Add Figure
-              </button>
-            </form>
-          </section>
+          <div className={styles.twoColumnLayout}>
+            <section className={styles.section}>
+              <h2>Add New Figure</h2>
+              <form onSubmit={handleAddFigure} className={styles.compactForm}>
+                <input
+                  type="text"
+                  placeholder="Figure name"
+                  value={newFigureName}
+                  onChange={(e) => setNewFigureName(e.target.value)}
+                  className={styles.input}
+                  required
+                />
+                <textarea
+                  placeholder="Context notes (optional)"
+                  value={newFigureContext}
+                  onChange={(e) => setNewFigureContext(e.target.value)}
+                  className={styles.textarea}
+                  rows={2}
+                />
+                <button type="submit" className={styles.primaryButton}>
+                  Analyze & Add Figure
+                </button>
+              </form>
+            </section>
+
+            <section className={styles.section}>
+              <h2>Timeline Viewer</h2>
+              {selectedFigureForTimeline ? (
+                <div className={styles.timelineViewer}>
+                  <h3>{selectedFigureForTimeline.name}</h3>
+                  <p className={styles.lifespan}>{selectedFigureForTimeline.lifespan}</p>
+                  <div className={styles.spectrumDisplay}>
+                    <div className={styles.spectrumEmojis}>
+                      {spectrumArrayToEmojis(selectedFigureForTimeline.spectrum)}
+                    </div>
+                    <div className={styles.spectrumNumbers}>
+                      [{selectedFigureForTimeline.spectrum.join(', ')}]
+                    </div>
+                  </div>
+                  {selectedFigureForTimeline.timeline && selectedFigureForTimeline.timeline.length > 0 ? (
+                    <div className={styles.timelineEntries}>
+                      {selectedFigureForTimeline.timeline.map((entry: any, index: number) => (
+                        <div key={index} className={styles.timelineEntry}>
+                          <h4>{entry.label}</h4>
+                          <div className={styles.spectrumDisplay}>
+                            <div className={styles.spectrumEmojis}>
+                              {spectrumArrayToEmojis(entry.spectrum)}
+                            </div>
+                            <div className={styles.spectrumNumbers}>
+                              [{entry.spectrum.join(', ')}]
+                            </div>
+                          </div>
+                          <p className={styles.entryNote}>{entry.note}</p>
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <p className={styles.note}>No timeline entries</p>
+                  )}
+                </div>
+              ) : (
+                <p className={styles.note}>Click a figure name below to view its timeline</p>
+              )}
+            </section>
+          </div>
 
           <section className={styles.section}>
             <h2>All Figures</h2>
+            <p className={styles.note}>
+              Featured figures appear first and can be reordered by dragging. Drag featured figures to reorder them.
+            </p>
             <div className={styles.figureList}>
-              {figures.map((figure) => (
-                <div key={figure.id} className={styles.figureCard}>
-                  <div className={styles.figureHeader}>
+              {sortedFigures.map((figure) => (
+                <div 
+                  key={figure.id} 
+                  className={`${styles.figureCard} ${draggedFigure?.id === figure.id ? styles.dragging : ''}`}
+                  draggable={figure.is_featured}
+                  onDragStart={() => handleDragStart(figure)}
+                  onDragOver={(e) => handleDragOver(e, figure)}
+                  onDragEnd={handleDragEnd}
+                >
+                  <div 
+                    className={styles.figureHeader}
+                    onClick={() => handleSelectFigure(figure)}
+                    style={{ cursor: 'pointer' }}
+                  >
                     <h3>{figure.name}</h3>
                     {figure.is_featured && (
                       <span className={styles.badge}>Featured #{figure.featured_order! + 1}</span>
@@ -390,6 +550,11 @@ export default function AdminPage() {
                       [{figure.spectrum.join(', ')}]
                     </div>
                   </div>
+                  {figure.updated_at && (
+                    <p className={styles.lastUpdated}>
+                      Updated: {new Date(figure.updated_at).toLocaleDateString()} {new Date(figure.updated_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                    </p>
+                  )}
                   <div className={styles.actions}>
                     <button
                       onClick={() => handleToggleFeatured(figure)}
@@ -572,27 +737,56 @@ export default function AdminPage() {
       {activeTab === 'prompts' && (
         <div className={styles.content}>
           <section className={styles.section}>
-            <h2>AI Prompts</h2>
+            <div className={styles.promptsHeader}>
+              <h2>AI Prompts</h2>
+              <button
+                onClick={() => loadPrompts()}
+                className={styles.button}
+                disabled={promptsLoading}
+              >
+                {promptsLoading ? 'Loading...' : 'Load Current Prompts'}
+              </button>
+            </div>
             <p className={styles.note}>
-              The system uses two prompts for figure analysis:
+              Edit the prompts below and click "Save Prompts" to update. Changes take effect immediately for new analysis requests.
             </p>
-            <ul>
-              <li><strong>Assessor Prompt:</strong> Used by Claude to generate the initial TAME-R assessment with spectrum scores and timeline</li>
-              <li><strong>Reviewer Prompt:</strong> Used for quality control and validation (optional, not currently implemented)</li>
-            </ul>
-            <div className={styles.infoBox}>
-              <h3>✅ Dynamic Prompts Enabled</h3>
-              <p>
-                The Edge Function now fetches prompts from the <code>system_prompts</code> table on each analysis request.
-                This allows you to update prompts without redeploying the function.
-              </p>
-              <p>
-                <strong>To update prompts:</strong> Use SQL to update the <code>system_prompts</code> table, or use the Supabase dashboard.
-                The most recent prompt (by <code>created_at</code>) will be used.
-              </p>
+
+            <div className={styles.promptEditor}>
+              <h3>Assessor Prompt</h3>
               <p className={styles.note}>
-                A visual prompt editor will be added in a future update.
+                Used by Claude to generate the initial TAME-R assessment with spectrum scores and timeline
               </p>
+              <textarea
+                className={styles.promptTextarea}
+                value={assessorPrompt}
+                onChange={(e) => setAssessorPrompt(e.target.value)}
+                placeholder="Load prompts to edit..."
+                rows={20}
+              />
+            </div>
+
+            <div className={styles.promptEditor}>
+              <h3>Reviewer Prompt</h3>
+              <p className={styles.note}>
+                Used for quality control and validation (optional, not currently implemented in Edge Function)
+              </p>
+              <textarea
+                className={styles.promptTextarea}
+                value={reviewerPrompt}
+                onChange={(e) => setReviewerPrompt(e.target.value)}
+                placeholder="Load prompts to edit..."
+                rows={15}
+              />
+            </div>
+
+            <div className={styles.promptActions}>
+              <button
+                onClick={handleSavePrompts}
+                className={styles.primaryButton}
+                disabled={promptsLoading || !assessorPrompt}
+              >
+                {promptsLoading ? 'Saving...' : promptsSaved ? '✓ Saved!' : 'Save Prompts'}
+              </button>
             </div>
           </section>
         </div>

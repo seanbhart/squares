@@ -1,6 +1,12 @@
 import { supabase } from '../supabase/client';
 import { analyzeFigure, getAnalysisStatus } from '../api/figures';
 
+export interface TimelineEntry {
+  label: string;
+  spectrum: number[];
+  note: string;
+}
+
 export interface AdminFigure {
   id: string;
   name: string;
@@ -10,6 +16,7 @@ export interface AdminFigure {
   featured_order: number | null;
   created_at: string;
   updated_at: string;
+  timeline?: TimelineEntry[];
 }
 
 /**
@@ -23,6 +30,32 @@ export async function getAllFiguresAdmin(): Promise<AdminFigure[]> {
 
   if (error) throw error;
   return data || [];
+}
+
+/**
+ * Get a single figure with timeline
+ */
+export async function getFigureWithTimeline(figureId: string) {
+  const { data: figure, error } = await supabase
+    .from('figures')
+    .select('*')
+    .eq('id', figureId)
+    .single();
+
+  if (error) throw error;
+
+  const { data: timeline, error: timelineError } = await supabase
+    .from('timeline_entries')
+    .select('*')
+    .eq('figure_id', figureId)
+    .order('entry_order');
+
+  if (timelineError) throw timelineError;
+
+  return {
+    ...figure,
+    timeline: timeline || [],
+  };
 }
 
 /**
@@ -113,14 +146,13 @@ export async function getSystemPrompts() {
     .from('system_prompts')
     .select('*')
     .order('created_at', { ascending: false })
-    .limit(1)
-    .single();
+    .limit(1);
 
-  if (error && error.code !== 'PGRST116') { // PGRST116 = no rows returned
+  if (error) {
     throw error;
   }
 
-  return data || null;
+  return data && data.length > 0 ? data[0] : null;
 }
 
 /**
@@ -259,6 +291,7 @@ export async function createOrUpdateUserByEmail(email: string, roles: string[]) 
     if (error) throw error;
   } else {
     // User doesn't exist, create a pending user record
+    // Database will auto-generate UUID for id
     const { error } = await supabase
       .from('users')
       .insert({
