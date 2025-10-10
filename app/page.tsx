@@ -112,7 +112,6 @@ const EvaluationCell = ({
         className={styles.cellDot}
         style={{
           backgroundColor: color,
-          boxShadow: `0 0 12px ${hexToRgba(color, isActive ? 0.6 : 0.35)}`,
         }}
       />
       <span className={styles.cellLabel}>{label}</span>
@@ -132,7 +131,6 @@ const TimelineSquares = ({ values }: { values: number[] }) => {
             className={styles.timelineSquare}
             style={{
               backgroundColor: color,
-              boxShadow: `0 0 8px ${hexToRgba(color, 0.35)}`,
             }}
           />
         );
@@ -287,7 +285,6 @@ export default function Home() {
                       className={styles.signatureSquare}
                       style={{
                         backgroundColor: color,
-                        boxShadow: `0 0 10px ${hexToRgba(color, 0.4)}`,
                       }}
                       aria-label={`${policy.label} selection`}
                     />
@@ -326,7 +323,6 @@ export default function Home() {
                           className={styles.labelSquare}
                           style={{
                             backgroundColor: color,
-                            boxShadow: `0 0 8px ${hexToRgba(color, 0.45)}`,
                           }}
                         />
                         {policy.label}
@@ -353,10 +349,6 @@ export default function Home() {
                   className={styles.headerSquare}
                   style={{
                     backgroundColor: getScoreColor(policy.key, userSpectrum[policy.key]),
-                    boxShadow: `0 0 8px ${hexToRgba(
-                      getScoreColor(policy.key, userSpectrum[policy.key]),
-                      0.4,
-                    )}`,
                   }}
                   aria-hidden
                 />
@@ -373,14 +365,6 @@ export default function Home() {
                       onClick={() => handleUpdate(policy.key, index)}
                       className={styles.sliderButton}
                       data-active={isActive}
-                      style={
-                        isActive
-                          ? {
-                              backgroundColor: hexToRgba(color, 0.18),
-                              boxShadow: `0 0 18px ${hexToRgba(color, 0.35)}`,
-                            }
-                          : undefined
-                      }
                       aria-label={`${policy.label} • ${label}`}
                     >
                       <EvaluationCell label={label} color={color} isActive={isActive} />
