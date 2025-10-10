@@ -12,8 +12,13 @@ import {
   getAllUsers,
   makeAdmin,
   removeAdmin,
+  addUserRole,
+  removeUserRole,
+  createOrUpdateUserByEmail,
   type AdminFigure,
 } from '@/lib/admin/api';
+import { spectrumArrayToEmojis } from '@/lib/utils/spectrum';
+import ConfirmModal from '@/components/ConfirmModal';
 import styles from './admin.module.css';
 
 export default function AdminPage() {
@@ -29,6 +34,24 @@ export default function AdminPage() {
   const [newFigureName, setNewFigureName] = useState('');
   const [newFigureContext, setNewFigureContext] = useState('');
   const [reanalyzeId, setReanalyzeId] = useState<string | null>(null);
+  
+  // User management state
+  const [newUserEmail, setNewUserEmail] = useState('');
+  const [newUserRoles, setNewUserRoles] = useState<string[]>([]);
+  
+  // Confirmation modal state
+  const [confirmModal, setConfirmModal] = useState<{
+    isOpen: boolean;
+    title: string;
+    message: string;
+    onConfirm: () => void;
+  }>({
+    isOpen: false,
+    title: '',
+    message: '',
+    onConfirm: () => {},
+  });
+  
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
 
   useEffect(() => {
@@ -123,16 +146,22 @@ export default function AdminPage() {
   }
 
   async function handleDeleteFigure(figure: AdminFigure) {
-    if (!confirm(`Are you sure you want to delete ${figure.name}?`)) return;
-
-    try {
-      await deleteFigure(figure.id);
-      showMessage('success', `${figure.name} deleted`);
-      loadData();
-    } catch (error) {
-      console.error('Failed to delete figure:', error);
-      showMessage('error', 'Failed to delete figure');
-    }
+    setConfirmModal({
+      isOpen: true,
+      title: 'Delete Figure',
+      message: `Are you sure you want to delete ${figure.name}? This action cannot be undone.`,
+      onConfirm: async () => {
+        try {
+          await deleteFigure(figure.id);
+          showMessage('success', `${figure.name} deleted`);
+          loadData();
+        } catch (error) {
+          console.error('Failed to delete figure:', error);
+          showMessage('error', 'Failed to delete figure');
+        }
+        setConfirmModal({ ...confirmModal, isOpen: false });
+      },
+    });
   }
 
   async function handleReanalyze(figure: AdminFigure) {
@@ -165,8 +194,8 @@ export default function AdminPage() {
     }
   }
 
-  async function handleToggleAdmin(userId: string, currentRole: string, email: string) {
-    const isCurrentlyAdmin = currentRole === 'admin';
+  async function handleToggleAdmin(userId: string, currentRoles: string[], email: string) {
+    const isCurrentlyAdmin = currentRoles.includes('admin');
     
     if (isCurrentlyAdmin) {
       if (!confirm(`Remove admin access for ${email}?`)) return;
@@ -189,6 +218,38 @@ export default function AdminPage() {
         showMessage('error', 'Failed to grant admin access');
       }
     }
+  }
+
+  async function handleAddUserByEmail() {
+    if (!newUserEmail.trim() || newUserRoles.length === 0) return;
+
+    try {
+      await createOrUpdateUserByEmail(newUserEmail, newUserRoles);
+      showMessage('success', `Roles updated for ${newUserEmail}: ${newUserRoles.join(', ')}`);
+      setNewUserEmail('');
+      setNewUserRoles([]);
+      loadData();
+    } catch (error) {
+      console.error('Failed to add user:', error);
+      showMessage('error', 'Failed to add user');
+    }
+  }
+
+  function handleSelectUser(email: string) {
+    setNewUserEmail(email);
+    // Find user's current roles and set them
+    const user = users.find(u => u.email === email);
+    if (user && user.roles) {
+      setNewUserRoles([...user.roles]);
+    }
+  }
+
+  function toggleNewUserRole(role: string) {
+    setNewUserRoles(prev => 
+      prev.includes(role) 
+        ? prev.filter(r => r !== role)
+        : [...prev, role]
+    );
   }
 
   if (loading) {
@@ -228,16 +289,27 @@ export default function AdminPage() {
   }
 
   return (
-    <div className={styles.container}>
-      <header className={styles.header}>
-        <h1>Squares Admin</h1>
-        <div className={styles.userInfo}>
-          <span>{user.email}</span>
-          <button onClick={handleSignOut} className={styles.button}>
-            Sign Out
-          </button>
-        </div>
-      </header>
+    <>
+      <ConfirmModal
+        isOpen={confirmModal.isOpen}
+        title={confirmModal.title}
+        message={confirmModal.message}
+        onConfirm={confirmModal.onConfirm}
+        onCancel={() => setConfirmModal({ ...confirmModal, isOpen: false })}
+        confirmText="Remove"
+        isDanger={true}
+      />
+      
+      <div className={styles.container}>
+        <header className={styles.header}>
+          <h1>Squares Admin</h1>
+          <div className={styles.userInfo}>
+            <span>{user.email}</span>
+            <button onClick={handleSignOut} className={styles.button}>
+              Sign Out
+            </button>
+          </div>
+        </header>
 
       {message && (
         <div className={`${styles.message} ${styles[message.type]}`}>
@@ -262,7 +334,7 @@ export default function AdminPage() {
           className={activeTab === 'admins' ? styles.activeTab : ''}
           onClick={() => setActiveTab('admins')}
         >
-          Admins ({users.filter(u => u.role === 'admin').length})
+          Admins ({users.filter(u => u.roles?.includes('admin')).length})
         </button>
         <button
           className={activeTab === 'prompts' ? styles.activeTab : ''}
@@ -310,9 +382,14 @@ export default function AdminPage() {
                     )}
                   </div>
                   <p className={styles.lifespan}>{figure.lifespan}</p>
-                  <p className={styles.spectrum}>
-                    Spectrum: [{figure.spectrum.join(', ')}]
-                  </p>
+                  <div className={styles.spectrumDisplay}>
+                    <div className={styles.spectrumEmojis}>
+                      {spectrumArrayToEmojis(figure.spectrum)}
+                    </div>
+                    <div className={styles.spectrumNumbers}>
+                      [{figure.spectrum.join(', ')}]
+                    </div>
+                  </div>
                   <div className={styles.actions}>
                     <button
                       onClick={() => handleToggleFeatured(figure)}
@@ -372,38 +449,118 @@ export default function AdminPage() {
       {activeTab === 'admins' && (
         <div className={styles.content}>
           <section className={styles.section}>
-            <h2>Admin Management</h2>
+            <h2>Manage User Roles</h2>
             <p className={styles.note}>
-              Manage who has admin access to this panel. Admins can manage figures, view analysis history, and control other admins.
+              <strong>Visitor:</strong> can view public content. <strong>Member:</strong> can create narrative feeds. <strong>Admin:</strong> can manage users.
+            </p>
+            <p className={styles.note}>
+              💡 Enter any email to create a new user or update an existing one.
+            </p>
+            <div className={styles.addUserForm}>
+              <input
+                type="email"
+                placeholder="user@example.com"
+                value={newUserEmail}
+                onChange={(e) => setNewUserEmail(e.target.value)}
+                className={styles.emailInput}
+              />
+              <select 
+                className={styles.roleDropdown}
+                value=""
+                onChange={(e) => {
+                  if (e.target.value && !newUserRoles.includes(e.target.value)) {
+                    setNewUserRoles([...newUserRoles, e.target.value]);
+                  }
+                }}
+              >
+                <option value="">Select role...</option>
+                <option value="user">user</option>
+                <option value="admin">admin</option>
+              </select>
+              <button 
+                type="button"
+                onClick={handleAddUserByEmail}
+                className={styles.addRoleButton}
+                disabled={!newUserEmail || newUserRoles.length === 0}
+              >
+                Add Role
+              </button>
+            </div>
+            {newUserRoles.length > 0 && (
+              <div className={styles.selectedRoles}>
+                {newUserRoles.map(role => (
+                  <span key={role} className={styles.roleBadge}>
+                    {role}
+                    <button
+                      type="button"
+                      onClick={() => setNewUserRoles(newUserRoles.filter(r => r !== role))}
+                      className={styles.removeBadge}
+                    >
+                      ×
+                    </button>
+                  </span>
+                ))}
+              </div>
+            )}
+          </section>
+
+          <section className={styles.section}>
+            <h2>All Users</h2>
+            <p className={styles.note}>
+              Manage existing users and their roles. Users marked as "Pending" haven't signed in yet.
             </p>
             
-            <div className={styles.userList}>
-              <h3>All Users ({users.length})</h3>
+            <div className={styles.userTable}>
+              <div className={styles.tableHeader}>
+                <div className={styles.tableCol}>Email</div>
+                <div className={styles.tableCol}>Role</div>
+              </div>
               {users.map((u) => (
-                <div key={u.id} className={styles.userCard}>
-                  <div className={styles.userInfo}>
-                    <div>
-                      <strong>{u.email}</strong>
-                      {u.role === 'admin' && (
-                        <span className={styles.adminBadge}>Admin</span>
-                      )}
-                      {u.id === user?.id && (
-                        <span className={styles.youBadge}>You</span>
+                <div key={u.email || u.id} className={styles.tableRow}>
+                  <div className={styles.tableCol}>
+                    <button
+                      type="button"
+                      className={styles.emailButton}
+                      onClick={() => handleSelectUser(u.email)}
+                    >
+                      {u.email}
+                    </button>
+                  </div>
+                  <div className={styles.tableCol}>
+                    <div className={styles.rolesCell}>
+                      {u.roles && u.roles.length > 0 ? (
+                        u.roles.map(role => (
+                          <span key={role} className={styles.roleBadge}>
+                            {role}
+                            <button
+                              type="button"
+                              onClick={() => {
+                                setConfirmModal({
+                                  isOpen: true,
+                                  title: 'Remove Role',
+                                  message: `Remove ${role} role from ${u.email}?`,
+                                  onConfirm: async () => {
+                                    try {
+                                      await removeUserRole(u.id, role);
+                                      showMessage('success', `Removed ${role} from ${u.email}`);
+                                      loadData();
+                                    } catch (error) {
+                                      showMessage('error', 'Failed to remove role');
+                                    }
+                                    setConfirmModal({ ...confirmModal, isOpen: false });
+                                  },
+                                });
+                              }}
+                              className={styles.removeBadge}
+                            >
+                              ×
+                            </button>
+                          </span>
+                        ))
+                      ) : (
+                        <span className={styles.noRoles}>No roles</span>
                       )}
                     </div>
-                    <p className={styles.userMeta}>
-                      Joined: {new Date(u.created_at).toLocaleDateString()}
-                    </p>
-                  </div>
-                  <div className={styles.userActions}>
-                    {u.id !== user?.id && (
-                      <button
-                        onClick={() => handleToggleAdmin(u.id, u.role, u.email)}
-                        className={u.role === 'admin' ? styles.dangerButton : styles.primaryButton}
-                      >
-                        {u.role === 'admin' ? 'Remove Admin' : 'Make Admin'}
-                      </button>
-                    )}
                   </div>
                 </div>
               ))}
@@ -440,6 +597,7 @@ export default function AdminPage() {
           </section>
         </div>
       )}
-    </div>
+      </div>
+    </>
   );
 }

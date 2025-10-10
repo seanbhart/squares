@@ -170,27 +170,117 @@ export async function getAllUsers() {
 }
 
 /**
- * Update user role
+ * Add a role to a user
  */
-export async function updateUserRole(userId: string, role: 'user' | 'admin') {
+export async function addUserRole(userId: string, role: string) {
+  // Get current roles
+  const { data: userData, error: fetchError } = await supabase
+    .from('users')
+    .select('roles')
+    .eq('id', userId)
+    .single();
+
+  if (fetchError) throw fetchError;
+
+  const currentRoles = userData?.roles || [];
+  if (currentRoles.includes(role)) {
+    return; // Role already exists
+  }
+
+  const newRoles = [...currentRoles, role];
+
   const { error } = await supabase
     .from('users')
-    .update({ role, updated_at: new Date().toISOString() })
+    .update({ roles: newRoles, updated_at: new Date().toISOString() })
     .eq('id', userId);
 
   if (error) throw error;
 }
 
 /**
- * Remove user (set role to 'user')
+ * Remove a role from a user
  */
-export async function removeAdmin(userId: string) {
-  return updateUserRole(userId, 'user');
+export async function removeUserRole(userId: string, role: string) {
+  // Get current roles
+  const { data: userData, error: fetchError } = await supabase
+    .from('users')
+    .select('roles')
+    .eq('id', userId)
+    .single();
+
+  if (fetchError) throw fetchError;
+
+  const currentRoles = userData?.roles || [];
+  const newRoles = currentRoles.filter((r: string) => r !== role);
+
+  const { error } = await supabase
+    .from('users')
+    .update({ roles: newRoles, updated_at: new Date().toISOString() })
+    .eq('id', userId);
+
+  if (error) throw error;
 }
 
 /**
- * Make user an admin
+ * Remove admin role from user
+ */
+export async function removeAdmin(userId: string) {
+  return removeUserRole(userId, 'admin');
+}
+
+/**
+ * Add admin role to user
  */
 export async function makeAdmin(userId: string) {
-  return updateUserRole(userId, 'admin');
+  return addUserRole(userId, 'admin');
+}
+
+/**
+ * Create or update user by email (for pre-assigning roles)
+ */
+export async function createOrUpdateUserByEmail(email: string, roles: string[]) {
+  // Check if user already exists in users table
+  const { data: existingUser } = await supabase
+    .from('users')
+    .select('*')
+    .eq('email', email)
+    .single();
+
+  if (existingUser) {
+    // User exists, update their roles
+    const { error } = await supabase
+      .from('users')
+      .update({
+        roles,
+        updated_at: new Date().toISOString(),
+      })
+      .eq('email', email);
+
+    if (error) throw error;
+  } else {
+    // User doesn't exist, create a pending user record
+    const { error } = await supabase
+      .from('users')
+      .insert({
+        email,
+        roles,
+        is_pending: true,
+      });
+
+    if (error) throw error;
+  }
+}
+
+/**
+ * Get user by email
+ */
+export async function getUserByEmail(email: string) {
+  const { data, error } = await supabase
+    .from('users')
+    .select('*')
+    .eq('email', email)
+    .single();
+
+  if (error && error.code !== 'PGRST116') throw error;
+  return data;
 }

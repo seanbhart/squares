@@ -15,19 +15,15 @@ After signing in with Google for the first time, you need to grant yourself admi
 **Option A: Via Supabase Dashboard**
 1. Go to Supabase Dashboard → Table Editor → `users` table
 2. Find your user record (it should be auto-created after first sign-in)
-3. Edit the `role` column from `user` to `admin`
+3. Edit the `roles` column to `{admin}` (PostgreSQL array format)
 
 **Option B: Via SQL**
 Run this in the Supabase SQL Editor or via CLI:
 
 ```sql
-INSERT INTO users (id, email, role)
-VALUES (
-  (SELECT id FROM auth.users WHERE email = 'your-email@gmail.com'),
-  'your-email@gmail.com',
-  'admin'
-)
-ON CONFLICT (id) DO UPDATE SET role = 'admin';
+UPDATE users 
+SET roles = ARRAY['admin'] 
+WHERE email = 'your-email@gmail.com';
 ```
 
 ### 3. Access Admin Panel
@@ -64,10 +60,15 @@ All migrations are tracked in `supabase/migrations/` and will be applied in orde
 - The trigger should auto-create user records on sign-in
 - If it doesn't exist, manually insert:
   ```sql
-  INSERT INTO users (id, email, role)
+  INSERT INTO users (id, email, roles)
   VALUES (
     'your-auth-user-id',
     'your-email@gmail.com',
-    'admin'
+    ARRAY['admin']
   );
   ```
+
+**Note on Roles:**
+- Users can have multiple roles (e.g., `{admin, moderator, user}`)
+- The system checks if `admin` is in the roles array
+- Future roles can be added without schema changes

@@ -32,22 +32,22 @@ export async function getCurrentUser() {
   return user;
 }
 
-export async function getUserRole(userId: string): Promise<string | null> {
+export async function getUserRoles(userId: string): Promise<string[]> {
   try {
     const { data, error } = await supabase
       .from('users')
-      .select('role')
+      .select('roles')
       .eq('id', userId)
       .single();
 
     if (error) {
-      console.error('Error fetching user role:', error);
-      return null;
+      console.error('Error fetching user roles:', error);
+      return [];
     }
 
-    return data?.role || null;
+    return data?.roles || [];
   } catch {
-    return null;
+    return [];
   }
 }
 
@@ -56,8 +56,8 @@ export async function isAdmin(): Promise<boolean> {
     const user = await getCurrentUser();
     if (!user?.id) return false;
     
-    const role = await getUserRole(user.id);
-    return role === 'admin';
+    const roles = await getUserRoles(user.id);
+    return roles.includes('admin');
   } catch {
     return false;
   }

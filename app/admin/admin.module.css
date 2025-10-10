@@ -203,7 +203,7 @@
 .figureHeader {
   display: flex;
   justify-content: space-between;
-  align-items: start;
+  align-items: flex-start;
   margin-bottom: 0.5rem;
 }
 
@@ -227,10 +227,20 @@
   margin: 0.25rem 0;
 }
 
-.spectrum {
-  font-size: 0.85rem;
+.spectrumDisplay {
+  margin: 0.75rem 0;
+}
+
+.spectrumEmojis {
+  font-size: 1.5rem;
+  line-height: 1.8;
+  letter-spacing: 0.25rem;
+  margin-bottom: 0.25rem;
+}
+
+.spectrumNumbers {
+  font-size: 0.75rem;
   color: var(--text-secondary);
-  margin: 0.5rem 0;
   font-family: monospace;
 }
 
@@ -402,4 +412,153 @@
 .userActions {
   display: flex;
   gap: 0.5rem;
+}
+
+/* Role Management Styles */
+.addUserForm {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.emailInput {
+  flex: 1;
+  padding: 0.75rem;
+  border: 1px solid var(--border-strong);
+  border-radius: 4px;
+  font-size: 1rem;
+  font-family: inherit;
+  background: var(--background);
+  color: var(--text-primary);
+}
+
+.roleDropdown {
+  padding: 0.75rem;
+  border: 1px solid var(--border-strong);
+  border-radius: 4px;
+  font-size: 1rem;
+  background: var(--background);
+  color: var(--text-primary);
+  cursor: pointer;
+  min-width: 150px;
+}
+
+.addRoleButton {
+  padding: 0.75rem 1.5rem;
+  background: #4285f4;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.2s;
+}
+
+.addRoleButton:hover {
+  background: #357ae8;
+}
+
+.selectedRoles {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-top: 0.75rem;
+}
+
+.roleBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0.75rem;
+  background: #5865f2;
+  color: white;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.removeBadge {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.2rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0;
+  margin-left: 0.25rem;
+  opacity: 0.8;
+  transition: opacity 0.2s;
+}
+
+.removeBadge:hover {
+  opacity: 1;
+}
+
+/* User Table Styles */
+.userTable {
+  margin-top: 1.5rem;
+  border: 1px solid var(--border-strong);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.tableHeader {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border-strong);
+  font-weight: 600;
+  padding: 0.75rem 1rem;
+}
+
+.tableRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 1rem;
+  border-bottom: 1px solid var(--border-strong);
+  transition: background 0.2s;
+}
+
+.tableRow:last-child {
+  border-bottom: none;
+}
+
+.tableRow:hover {
+  background: var(--surface);
+}
+
+.tableCol {
+  display: flex;
+  align-items: center;
+}
+
+.emailButton {
+  background: none;
+  border: none;
+  color: #4285f4;
+  font-weight: 500;
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 0;
+  text-align: left;
+  transition: opacity 0.2s;
+}
+
+.emailButton:hover {
+  opacity: 0.8;
+  text-decoration: underline;
+}
+
+.rolesCell {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.noRoles {
+  color: var(--text-secondary);
+  font-style: italic;
+  font-size: 0.9rem;
 }
