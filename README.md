@@ -2,6 +2,19 @@
 
 An open-source framework for mapping political positions across key policy dimensions.
 
+🌐 **[Live Site](https://squares.vote)** | 🔌 **[Embed Demo](https://squares.vote/embed)**
+
+## Quick Start
+
+### For Users
+Visit [squares.vote](https://squares.vote) to:
+- Explore historical figures' political positions
+- Map your own positions using the TAME-R framework
+- See how positions evolved over time
+
+### For Developers
+Embed Squares on your website in 2 minutes. See the [embed documentation](#embedding) below.
+
 ## Square Typology
 
 The Squares typology uses a seven-point spectrum for each issue, allowing individuals to identify their position on multiple policy dimensions. Each color represents a distinct stance, creating a multi-dimensional political profile.
@@ -216,3 +229,142 @@ Rights (civil liberties, e.g. LGBTQ+ rights)
 - Migration: 🟥 Strict limits only
 - Economics: 🟦 Minimal regulation
 - Rights: 🟨 Tolerance without endorsement
+
+---
+
+## Embedding
+
+Add Squares to your website with a simple embed. Choose from two options:
+
+### Option 1: Card Embed (Recommended)
+
+Self-contained card with explanation and example. Best for first-time visitors.
+
+```html
+<!-- Add this where you want the card to appear -->
+<div id="squares-embed"></div>
+
+<!-- Add this before closing </body> tag -->
+<script src="https://squares.vote/embed.js"></script>
+<script>
+  SquaresEmbed.init({
+    elementId: 'squares-embed',
+    variant: 'card',
+    buttonText: 'Map Your Squares'
+  });
+</script>
+```
+
+### Option 2: Button Only
+
+Minimal embed for sites where context is already provided.
+
+```html
+<!-- Add this where you want the button to appear -->
+<div id="squares-embed"></div>
+
+<!-- Add this before closing </body> tag -->
+<script src="https://squares.vote/embed.js"></script>
+<script>
+  SquaresEmbed.init({
+    elementId: 'squares-embed',
+    variant: 'button',
+    buttonText: 'Map Your Squares'
+  });
+</script>
+```
+
+### Features
+
+- ✅ **Self-contained:** No dependencies, works anywhere
+- ✅ **Responsive:** Works on all screen sizes
+- ✅ **Fast:** Lightweight and optimized
+- ✅ **Customizable:** Choose button text and variant
+- ✅ **Privacy-focused:** No tracking or data collection
+
+See the [live embed demo](https://squares.vote/embed) for examples and customization options.
+
+---
+
+## Development
+
+### Tech Stack
+
+- **Framework:** Next.js 14 (App Router)
+- **Database:** Supabase (PostgreSQL)
+- **Authentication:** Supabase Auth (Google OAuth)
+- **Styling:** CSS Modules
+- **Deployment:** Vercel
+
+### Local Setup
+
+```bash
+# Clone the repository
+git clone https://github.com/seanbhart/squares.git
+cd squares
+
+# Install dependencies
+npm install
+
+# Set up environment variables
+cp .env.example .env.local
+# Add your Supabase credentials to .env.local
+
+# Run development server
+npm run dev
+```
+
+Visit `http://localhost:3000` to see the app.
+
+### Project Structure
+
+```
+squares/
+├── app/                    # Next.js app directory
+│   ├── admin/             # Admin panel
+│   ├── embed/             # Embed demo page
+│   └── page.tsx           # Main application
+├── components/            # React components
+│   └── embed/            # Embeddable widget components
+├── lib/                   # Utilities and API clients
+│   ├── admin/            # Admin API functions
+│   ├── api/              # Public API functions
+│   └── supabase/         # Supabase client
+└── supabase/             # Database migrations and functions
+    └── migrations/       # SQL migration files
+```
+
+### Admin Panel
+
+Access the admin panel at `/admin` (requires admin role):
+- Manage figures and their timelines
+- View analysis history
+- Manage user roles
+- Edit AI prompts
+
+---
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+### Guidelines
+
+1. Follow the existing code style
+2. Write clear commit messages
+3. Add tests for new features
+4. Update documentation as needed
+
+---
+
+## License
+
+MIT License - feel free to use this project for any purpose.
+
+---
+
+## Contact
+
+- **Website:** [squares.vote](https://squares.vote)
+- **GitHub:** [seanbhart/squares](https://github.com/seanbhart/squares)
+- **Issues:** [GitHub Issues](https://github.com/seanbhart/squares/issues)

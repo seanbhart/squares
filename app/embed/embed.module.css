@@ -1,11 +1,35 @@
 .container {
-  max-width: 900px;
+  max-width: 1000px;
   margin: 0 auto;
   padding: 2rem;
 }
 
+.backLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-weight: 500;
+  margin-bottom: 1.5rem;
+  transition: color 0.2s;
+}
+
+.backLink:hover {
+  color: var(--text-primary);
+}
+
+.backLink svg {
+  flex-shrink: 0;
+}
+
 .container h1 {
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.container > p {
+  color: var(--text-secondary);
+  margin-bottom: 2rem;
 }
 
 .demo {
@@ -16,35 +40,108 @@
   border-radius: 8px;
 }
 
-.demoButton {
-  padding: 1rem 2rem;
-  background: #4285f4;
-  color: white;
-  border: none;
+.demo h2 {
+  margin-top: 0;
+}
+
+.demo > p {
+  color: var(--text-secondary);
+  margin-bottom: 1.5rem;
+}
+
+.preview {
+  display: flex;
+  justify-content: center;
+  padding: 2rem;
+  background: var(--background);
   border-radius: 8px;
-  font-size: 1.1rem;
+  margin-bottom: 1rem;
+}
+
+.codeDetails {
+  margin-top: 1rem;
+}
+
+.codeDetails summary {
+  cursor: pointer;
+  padding: 0.75rem;
+  background: var(--background);
+  border-radius: 4px;
   font-weight: 600;
+  user-select: none;
+}
+
+.codeDetails summary:hover {
+  background: var(--surface);
+}
+
+.codeWrapper {
+  position: relative;
+  margin-top: 0.5rem;
+}
+
+.copyButton {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #e2e8f0;
+  padding: 0.5rem;
+  border-radius: 6px;
   cursor: pointer;
   transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
 }
 
-.demoButton:hover {
-  background: #357ae8;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(66, 133, 244, 0.3);
+.copyButton:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.3);
 }
 
-.instructions {
-  margin: 2rem 0;
+.copyButton svg {
+  display: block;
 }
 
 .code {
   background: #1a202c;
   color: #e2e8f0;
   padding: 1.5rem;
+  padding-right: 4rem;
   border-radius: 8px;
   overflow-x: auto;
   font-family: 'Monaco', 'Menlo', monospace;
   font-size: 0.9rem;
   line-height: 1.6;
+  margin: 0;
+}
+
+.features {
+  margin: 3rem 0;
+  padding: 2rem;
+  background: var(--surface);
+  border: 1px solid var(--border-strong);
+  border-radius: 8px;
+}
+
+.features h2 {
+  margin-top: 0;
+}
+
+.features ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.features li {
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--border-strong);
+}
+
+.features li:last-child {
+  border-bottom: none;
 }

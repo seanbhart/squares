@@ -477,6 +477,49 @@
   margin-bottom: 0;
 }
 
+.footer {
+  margin-top: 4rem;
+  padding: 2rem 0;
+  border-top: 1px solid var(--border);
+}
+
+.footerContent {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.footerContent p {
+  margin: 0 0 1rem 0;
+  color: var(--text-secondary);
+}
+
+.footerLinks {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  align-items: center;
+}
+
+.footerLink {
+  color: var(--text-primary);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.footerLink:hover {
+  color: var(--accent);
+  text-decoration: underline;
+}
+
+.footerLink svg {
+  flex-shrink: 0;
+}
+
 .timelineSquares {
   display: inline-flex;
   gap: 0.35rem;
