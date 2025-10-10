@@ -2,15 +2,27 @@
 
 An open-source framework for mapping political positions across key policy dimensions.
 
-🌐 **[Live Site](https://squares.vote)** | 🔌 **[Embed Demo](https://squares.vote/embed)** | 📖 **[TAME-R Framework](#tame-r-framework)**
+🌐 **[Live Site](https://squares.vote)** | 🔌 **[Embed Demo](https://squares.vote/embed)** | 📚 **[Embed Guide](./EMBED.md)** | 📖 **[TAME-R Framework](#tame-r-framework)**
 
 ---
 
 ## 🚀 Quick Start for Developers
 
-### Embed Widget
+### React Component (Recommended)
 
-Add Squares to your website in 2 minutes:
+```bash
+npm install @squares-app/react
+```
+
+```tsx
+import { SquaresEmbedReact } from '@squares-app/react';
+
+function App() {
+  return <SquaresEmbedReact variant="card" maxWidth="600px" />;
+}
+```
+
+### Vanilla JavaScript
 
 ```html
 <div id="squares-widget"></div>
@@ -25,7 +37,7 @@ Add Squares to your website in 2 minutes:
 </script>
 ```
 
-See [full embedding documentation](#embedding) below.
+📚 **[Complete Embed Guide →](./EMBED.md)**
 
 ### Local Development
 
@@ -42,9 +54,54 @@ Visit `http://localhost:3000` to see the app.
 
 ## Embedding
 
-Add Squares to your website with a simple embed. Choose from two options:
+Add Squares to your website with a simple embed.
 
-### Option 1: Card Embed (Recommended)
+### React Component (Recommended for React Apps)
+
+Install the official React component:
+
+```bash
+npm install @squares-app/react
+```
+
+**Basic Usage:**
+
+```tsx
+import { SquaresEmbedReact } from '@squares-app/react';
+
+function MyComponent() {
+  return <SquaresEmbedReact variant="card" />;
+}
+```
+
+**With Customization:**
+
+```tsx
+<SquaresEmbedReact
+  variant="card"
+  buttonText="Take the Quiz"
+  align="center"
+  maxWidth="600px"
+  primaryColor="#ff6b6b"
+  borderRadius="16px"
+  shadow={true}
+/>
+```
+
+**Why use the React component?**
+- ✅ **Proper lifecycle management** - Uses `useRef` and `useEffect`
+- ✅ **No DOM conflicts** - Integrates cleanly with React's rendering
+- ✅ **TypeScript support** - Full type safety
+- ✅ **Auto-cleanup** - Automatically destroys widget on unmount
+- ✅ **SSR-safe** - Works with Next.js and other SSR frameworks
+
+---
+
+### Vanilla JavaScript Embed
+
+For non-React websites, use the vanilla JavaScript embed:
+
+#### Option 1: Card Embed
 
 Self-contained card with explanation and example. Best for first-time visitors.
 
@@ -69,7 +126,7 @@ Self-contained card with explanation and example. Best for first-time visitors.
 </script>
 ```
 
-### Option 2: Button Only
+#### Option 2: Button Only
 
 Minimal embed for sites where context is already provided.
 
