@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Squares.vote",
+  title: "Squares",
   description:
-    "Explore the TAME-R political typology and map your positions across key policy dimensions.",
+    "Explore your political Squares across key policy dimensions.",
 };
 
 export default function RootLayout({
