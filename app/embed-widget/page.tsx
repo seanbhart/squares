@@ -1,10 +1,10 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import SquaresEmbed from '@/components/embed/SquaresEmbed';
 
-export default function EmbedWidgetPage() {
+function EmbedWidgetContent() {
   const searchParams = useSearchParams();
   const variant = (searchParams.get('variant') as 'card' | 'button') || 'card';
   const buttonText = searchParams.get('buttonText') || 'Map Your Squares';
@@ -37,5 +37,13 @@ export default function EmbedWidgetPage() {
     <div style={{ padding: '1rem' }}>
       <SquaresEmbed variant={variant} buttonText={buttonText} />
     </div>
+  );
+}
+
+export default function EmbedWidgetPage() {
+  return (
+    <Suspense fallback={<div style={{ padding: '1rem' }}>Loading...</div>}>
+      <EmbedWidgetContent />
+    </Suspense>
   );
 }
