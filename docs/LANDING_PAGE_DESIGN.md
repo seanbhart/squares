@@ -25,21 +25,37 @@ The new landing page uses a scroll-snap design to create a captivating, experien
 
 **Purpose:** Introduce the TAME-R framework visually before explaining it
 
-### Section 3: Show, Don't Tell (Interactive)
+### Section 3: The Color Scale (Interactive)
+**Message:** Each dimension uses a 7-color spectrum from minimal to total government control.
+
+**Visual:**
+- 7-color gradient display (purple → black)
+- Interactive dimension selector (T-A-M-E-R buttons)
+- Shows the scale for selected dimension with labels
+- Example: Trade scale from "free trade" to "closed economy"
+
+**Purpose:**
+- Teach the color language before using it
+- Show what each color represents
+- Make the subsequent comparison meaningful
+
+### Section 4: Show, Don't Tell (Interactive)
 **Message:** Pick two figures you admire - see how they differ
 
 **Visual:**
 - Grid of 12 historical figures with emoji icons
 - Click to select 2 figures
-- Shows comparison message when both selected
+- Shows side-by-side comparison with actual colored squares
+- TAME-R pattern for each figure displayed with labels
 - Demonstrates that even admired figures differ across dimensions
 
 **Purpose:**
 - Interactive engagement
 - Social proof (if they're mapped, it's interesting)
 - Demonstrates complexity without overwhelming
+- NOW readers understand what the colors mean!
 
-### Section 4: Call to Action
+### Section 5: Call to Action
 **Message:** Where do YOU belong?
 
 **Visual:**
@@ -79,8 +95,11 @@ The new landing page uses a scroll-snap design to create a captivating, experien
 
 ```
 Landing (/) 
-  ↓ Scroll through 4 sections
-  ↓ Click "Map My Squares"
+  ↓ Section 1: See problem (labels are broken)
+  ↓ Section 2: See solution (5 dimensions)
+  ↓ Section 3: Learn color scale (interactive)
+  ↓ Section 4: Compare figures (interactive)
+  ↓ Section 5: Click "Map My Squares"
 Assessment (/assess)
   ↓ Interact with sliders
   ↓ Get results
@@ -95,13 +114,15 @@ components/
     ├── LandingPage.tsx                  # Main container
     ├── LandingPage.module.css           # Scroll-snap container styles
     └── sections/
-        ├── ProblemSection.tsx           # Section 1
+        ├── ProblemSection.tsx           # Section 1: Labels are broken
         ├── ProblemSection.module.css
-        ├── RealitySection.tsx           # Section 2
+        ├── RealitySection.tsx           # Section 2: 5 dimensions
         ├── RealitySection.module.css
-        ├── ShowDontTellSection.tsx      # Section 3
+        ├── ColorScaleSection.tsx        # Section 3: Color scale explainer
+        ├── ColorScaleSection.module.css
+        ├── ShowDontTellSection.tsx      # Section 4: Figure comparison
         ├── ShowDontTellSection.module.css
-        ├── CTASection.tsx               # Section 4
+        ├── CTASection.tsx               # Section 5: CTA
         └── CTASection.module.css
 
 app/

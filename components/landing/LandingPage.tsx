@@ -3,6 +3,7 @@
 import { useEffect, useRef } from 'react';
 import ProblemSection from './sections/ProblemSection';
 import RealitySection from './sections/RealitySection';
+import ColorScaleSection from './sections/ColorScaleSection';
 import ShowDontTellSection from './sections/ShowDontTellSection';
 import CTASection from './sections/CTASection';
 import styles from './LandingPage.module.css';
@@ -33,6 +34,7 @@ export default function LandingPage() {
     <div ref={containerRef} className={styles.container}>
       <ProblemSection />
       <RealitySection />
+      <ColorScaleSection />
       <ShowDontTellSection />
       <CTASection />
     </div>
