@@ -130,6 +130,10 @@
 }
 
 @media (max-width: 768px) {
+  .section {
+    padding-bottom: 8rem; /* Extra space for mobile browser chrome */
+  }
+  
   .content {
     margin-bottom: 6rem;
   }
@@ -150,5 +154,9 @@
   
   .word {
     font-size: 1rem;
+  }
+  
+  .scrollHint {
+    bottom: 1rem; /* Closer to bottom on mobile */
   }
 }

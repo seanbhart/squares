@@ -231,7 +231,11 @@
 @media (max-width: 768px) {
   .section {
     padding: 1rem;
-    padding-bottom: 3rem;
+    padding-bottom: 8rem; /* Extra space for mobile browser chrome */
+  }
+  
+  .scrollHint {
+    bottom: 1rem; /* Closer to bottom on mobile */
   }
   
   .headline {

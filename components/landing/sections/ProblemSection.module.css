@@ -106,6 +106,7 @@
 @media (max-width: 768px) {
   .section {
     padding: 1rem;
+    padding-bottom: 8rem; /* Extra space for mobile browser chrome */
   }
   
   .labelsContainer {
@@ -115,5 +116,9 @@
   
   .label {
     padding: 0.5rem 1rem;
+  }
+  
+  .scrollHint {
+    bottom: 1rem; /* Closer to bottom on mobile */
   }
 }

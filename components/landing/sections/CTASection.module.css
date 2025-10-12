@@ -134,6 +134,10 @@
 }
 
 @media (max-width: 768px) {
+  .section {
+    padding-bottom: 8rem; /* Extra space for mobile browser chrome */
+  }
+  
   .ctaButton {
     padding: 1rem 2rem;
     font-size: 1.25rem;
