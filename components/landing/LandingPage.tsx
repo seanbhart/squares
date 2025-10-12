@@ -93,6 +93,7 @@ export default function LandingPage() {
           onChange={(value) => handleAnswerChange(index, value)}
           completedIndices={completedIndices}
           hasBeenTouched={touchedDimensions.has(index)}
+          allAnswers={answers}
         />
       ))}
       

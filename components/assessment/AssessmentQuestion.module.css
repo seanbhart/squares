@@ -1,5 +1,5 @@
 .section {
-  height: 100vh;
+  min-height: 100vh;
   scroll-snap-align: start;
   scroll-snap-stop: always;
   display: flex;
@@ -48,17 +48,17 @@
 }
 
 .progressDot[data-current="true"] {
-  background: var(--accent, #3498db);
   transform: scale(1.3);
   box-shadow: 0 0 0 4px rgba(52, 152, 219, 0.2);
 }
 
-.progressDot[data-complete="true"] {
+.progressDot[data-complete="true"]:not([style*="backgroundColor"]) {
   background: var(--success, #2ecc71);
 }
 
 .questionArea {
   text-align: center;
+  margin-bottom: 5rem;
 }
 
 .dimensionBadge {
@@ -221,6 +221,7 @@
   font-size: 0.875rem;
   color: var(--foreground-secondary);
   animation: bounce 2s ease-in-out infinite;
+  text-align: center;
 }
 
 @keyframes bounce {
@@ -231,12 +232,25 @@
 @media (max-width: 768px) {
   .section {
     padding: 1rem;
+    padding-bottom: 4rem;
+  }
+  
+  .questionArea {
+    margin-bottom: 4rem;
   }
   
   .scaleContainer {
-    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
     gap: 0.75rem;
     max-width: 100%;
+  }
+  
+  /* Center option (4th item, index 3) on its own row */
+  .option:nth-child(4) {
+    grid-column: 1 / -1;
+    max-width: 33.33%;
+    margin: 0 auto;
   }
   
   .option {
@@ -255,11 +269,6 @@
   }
   
   .scaleLabels {
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-  
-  .scaleArrow {
-    transform: rotate(90deg);
+    display: none;
   }
 }

@@ -27,6 +27,20 @@ export default function FiguresPage() {
   const [shareState, setShareState] = useState<'idle' | 'copied' | 'error'>('idle');
   const [copyState, setCopyState] = useState<'idle' | 'copied' | 'error'>('idle');
 
+  // Prevent body scroll when overlay is open on mobile
+  useEffect(() => {
+    const isMobile = window.innerWidth < 1024;
+    if (selectedFigure && isMobile) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [selectedFigure]);
+
   // Load user assessment from localStorage
   useEffect(() => {
     const assessment = loadUserAssessment();
@@ -42,13 +56,16 @@ export default function FiguresPage() {
         const data: FiguresData = await response.json();
         setFiguresData(data);
         
-        // Set default figure to first featured
-        const featuredFigures = data.figures.filter(f => data.featured.includes(f.name));
-        if (featuredFigures[0]) {
-          setSelectedFigure(featuredFigures[0]);
+        // On desktop, select first featured figure by default
+        if (data.featured.length > 0 && window.innerWidth >= 1024) {
+          const firstFeaturedName = data.featured[0];
+          const firstFigure = data.figures.find(f => f.name === firstFeaturedName);
+          if (firstFigure) {
+            setSelectedFigure(firstFigure);
+          }
         }
       } catch (error) {
-        console.error('Failed to load figures:', error);
+        console.error('Error loading figures:', error);
       } finally {
         setLoading(false);
       }
@@ -141,7 +158,15 @@ export default function FiguresPage() {
     return (
       <main className={styles.main}>
         <div className={styles.loadingContainer}>
-          <h1>Loading...</h1>
+          <div className={styles.loadingSpinner}>
+            <span className={styles.loadingEmoji}>🟪</span>
+            <span className={styles.loadingEmoji}>🟦</span>
+            <span className={styles.loadingEmoji}>🟩</span>
+            <span className={styles.loadingEmoji}>🟨</span>
+            <span className={styles.loadingEmoji}>🟧</span>
+            <span className={styles.loadingEmoji}>🟥</span>
+            <span className={styles.loadingEmoji}>⬛</span>
+          </div>
         </div>
       </main>
     );
@@ -246,6 +271,15 @@ export default function FiguresPage() {
         </section>
       )}
 
+      {/* Mobile overlay backdrop - outside grid */}
+      {selectedFigure && (
+        <div 
+          className={styles.mobileOverlay} 
+          onClick={() => setSelectedFigure(null)}
+          aria-hidden="true"
+        />
+      )}
+
       {/* Two-column layout: Figures on left, Detail on right */}
       <div className={styles.mainContent}>
         {/* Left Column: Dropdown + Figures Grid */}
@@ -322,13 +356,23 @@ export default function FiguresPage() {
         {/* Right Column: Selected Figure Detail */}
         <main className={styles.rightColumn}>
           {selectedFigure ? (
-            <section className={styles.detailSection}>
+            <section className={styles.detailSection} data-mobile-open={!!selectedFigure}>
               <div className={styles.detailCard}>
                 <div className={styles.detailHeader}>
-                  <div>
+                  {/* Mobile close button */}
+                  <button
+                    className={styles.mobileCloseButton}
+                    onClick={() => setSelectedFigure(null)}
+                    aria-label="Close detail view"
+                  >
+                    ←
+                  </button>
+                  
+                  <div className={styles.detailHeaderContent}>
                     <h2 className={styles.detailTitle}>{selectedFigure.name}</h2>
                     <p className={styles.detailLifespan}>{selectedFigure.lifespan}</p>
                   </div>
+                  
                   <button
                     className={styles.shareIconButton}
                     onClick={() => handleShareFigure(selectedFigure.name, selectedFigure.spectrum)}

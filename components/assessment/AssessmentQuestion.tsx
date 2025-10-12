@@ -1,7 +1,7 @@
 'use client';
 
 import styles from './AssessmentQuestion.module.css';
-import { getScoreColor } from '@/lib/tamer-config';
+import { getScoreColor, POLICIES } from '@/lib/tamer-config';
 import type { PolicyKey } from '@/lib/tamer-config';
 
 interface AssessmentQuestionProps {
@@ -15,6 +15,7 @@ interface AssessmentQuestionProps {
   onChange: (value: number) => void;
   completedIndices: number[];
   hasBeenTouched?: boolean;
+  allAnswers?: Record<number, number>;
 }
 
 export default function AssessmentQuestion({
@@ -28,6 +29,7 @@ export default function AssessmentQuestion({
   onChange,
   completedIndices,
   hasBeenTouched = false,
+  allAnswers = {},
 }: AssessmentQuestionProps) {
   return (
     <section className={styles.section}>
@@ -38,14 +40,25 @@ export default function AssessmentQuestion({
               {currentIndex + 1} of {totalQuestions}
             </span>
             <div className={styles.progressBar}>
-              {Array.from({ length: totalQuestions }).map((_, i) => (
-                <div
-                  key={i}
-                  className={styles.progressDot}
-                  data-complete={completedIndices.includes(i)}
-                  data-current={i === currentIndex}
-                />
-              ))}
+              {Array.from({ length: totalQuestions }).map((_, i) => {
+                const isComplete = completedIndices.includes(i);
+                const isCurrent = i === currentIndex;
+                const answerValue = allAnswers[i];
+                const policy = POLICIES[i];
+                const dotColor = isComplete && answerValue !== undefined
+                  ? getScoreColor(policy.key, answerValue)
+                  : undefined;
+                
+                return (
+                  <div
+                    key={i}
+                    className={styles.progressDot}
+                    data-complete={isComplete}
+                    data-current={isCurrent}
+                    style={dotColor ? { backgroundColor: dotColor } : undefined}
+                  />
+                );
+              })}
             </div>
           </div>
         </div>
@@ -102,11 +115,12 @@ export default function AssessmentQuestion({
           </div>
         </div>
 
-        {currentIndex < totalQuestions - 1 && (
-          <div className={styles.continueHint}>
-            Scroll down for next dimension ↓
-          </div>
-        )}
+        <div className={styles.continueHint}>
+          {currentIndex < totalQuestions - 1 
+            ? "Scroll down for next dimension ↓"
+            : "Scroll down to see your results ↓"
+          }
+        </div>
       </div>
     </section>
   );

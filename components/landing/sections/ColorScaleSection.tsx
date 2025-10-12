@@ -106,6 +106,11 @@ export default function ColorScaleSection() {
           </div>
         </div>
       </div>
+
+      <div className={styles.scrollHint}>
+        <span className={styles.scrollText}>Scroll to continue</span>
+        <div className={styles.scrollArrow}>↓</div>
+      </div>
     </section>
   );
 }

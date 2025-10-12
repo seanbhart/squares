@@ -162,6 +162,11 @@ export default function ShowDontTellSection() {
           </p>
         )}
       </div>
+
+      <div className={styles.scrollHint}>
+        <span className={styles.scrollText}>Scroll to continue</span>
+        <div className={styles.scrollArrow}>↓</div>
+      </div>
     </section>
   );
 }

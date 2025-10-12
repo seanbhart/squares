@@ -1,5 +1,5 @@
 .section {
-  height: 100vh;
+  min-height: 100vh;
   scroll-snap-align: start;
   scroll-snap-stop: always;
   display: flex;
@@ -7,6 +7,7 @@
   justify-content: center;
   background: var(--background);
   padding: 2rem;
+  position: relative;
 }
 
 .content {
@@ -97,7 +98,42 @@
   margin: 0 auto;
 }
 
+.scrollHint {
+  position: absolute;
+  bottom: 3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  animation: bounce 2s ease-in-out infinite;
+}
+
+.scrollText {
+  font-size: 0.875rem;
+  color: var(--foreground-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.scrollArrow {
+  font-size: 1.5rem;
+  color: var(--foreground-secondary);
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(10px);
+  }
+}
+
 @media (max-width: 768px) {
+  .content {
+    margin-bottom: 6rem;
+  }
+  
   .dimensionsGrid {
     gap: 1.5rem;
     margin: 3rem 0 2rem;

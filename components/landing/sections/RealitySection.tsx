@@ -67,6 +67,11 @@ export default function RealitySection() {
           TAME-R measures where you stand on five independent policy areas.
         </p>
       </div>
+
+      <div className={styles.scrollHint}>
+        <span className={styles.scrollText}>Scroll to continue</span>
+        <div className={styles.scrollArrow}>↓</div>
+      </div>
     </section>
   );
 }
