@@ -1,0 +1,155 @@
+.section {
+  height: 100vh;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: var(--background);
+  padding: 2rem;
+  position: relative;
+}
+
+.content {
+  text-align: center;
+  max-width: 700px;
+  width: 100%;
+}
+
+.headline {
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  font-weight: 800;
+  margin-bottom: 1rem;
+  color: var(--foreground);
+  line-height: 1.1;
+}
+
+.subheadline {
+  font-size: clamp(1.25rem, 3vw, 2rem);
+  color: var(--foreground-secondary);
+  margin-bottom: 3rem;
+  font-weight: 400;
+}
+
+.ctaButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.25rem 3rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: white;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 24px rgba(102, 126, 234, 0.4);
+  margin-bottom: 2rem;
+}
+
+.ctaButton:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(102, 126, 234, 0.5);
+}
+
+.ctaButton:active {
+  transform: translateY(-2px);
+}
+
+.buttonText {
+  line-height: 1;
+}
+
+.buttonIcon {
+  font-size: 2rem;
+  transition: transform 0.3s ease;
+}
+
+.ctaButton:hover .buttonIcon {
+  transform: translateX(5px);
+}
+
+.details {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.detailItem {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1rem;
+  color: var(--foreground-secondary);
+}
+
+.detailIcon {
+  font-size: 1.25rem;
+}
+
+.detailText {
+  font-weight: 500;
+}
+
+.detailSeparator {
+  color: var(--foreground-secondary);
+  opacity: 0.5;
+}
+
+.privacy {
+  font-size: 0.875rem;
+  color: var(--foreground-secondary);
+  font-style: italic;
+  margin-top: 2rem;
+}
+
+.footer {
+  position: absolute;
+  bottom: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 0.875rem;
+}
+
+.footerLink {
+  color: var(--foreground-secondary);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.footerLink:hover {
+  color: var(--foreground);
+  text-decoration: underline;
+}
+
+.footerSeparator {
+  color: var(--foreground-secondary);
+  opacity: 0.5;
+}
+
+@media (max-width: 768px) {
+  .ctaButton {
+    padding: 1rem 2rem;
+    font-size: 1.25rem;
+  }
+  
+  .details {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .detailSeparator {
+    display: none;
+  }
+  
+  .footer {
+    position: static;
+    margin-top: 3rem;
+  }
+}

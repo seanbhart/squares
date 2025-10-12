@@ -1,0 +1,222 @@
+.section {
+  height: 100vh;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--background);
+  padding: 2rem;
+  overflow-y: auto;
+}
+
+.content {
+  text-align: center;
+  max-width: 1000px;
+  width: 100%;
+}
+
+.headline {
+  font-size: clamp(1.75rem, 4vw, 3rem);
+  font-weight: 700;
+  margin-bottom: 2.5rem;
+  color: var(--foreground);
+}
+
+.figuresGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.figureCard {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 1.5rem 1rem;
+  background: var(--card-background, rgba(255, 255, 255, 0.05));
+  border: 2px solid transparent;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-height: 120px;
+}
+
+.figureCard:hover {
+  transform: translateY(-4px);
+  border-color: var(--foreground-secondary);
+  background: var(--card-hover-background, rgba(255, 255, 255, 0.1));
+}
+
+.figureCard[data-selected="true"] {
+  border-color: var(--accent, #3498db);
+  background: var(--card-selected-background, rgba(52, 152, 219, 0.1));
+  box-shadow: 0 4px 16px rgba(52, 152, 219, 0.3);
+}
+
+.figureEmoji {
+  font-size: 2.5rem;
+  line-height: 1;
+}
+
+.figureName {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--foreground);
+  text-align: center;
+  line-height: 1.3;
+}
+
+.selectionBadge {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  width: 28px;
+  height: 28px;
+  background: var(--accent, #3498db);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.875rem;
+  font-weight: 700;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.comparison {
+  margin-top: 3rem;
+  padding: 2rem;
+  background: var(--card-background, rgba(255, 255, 255, 0.05));
+  border-radius: 16px;
+  border: 2px solid var(--accent, #3498db);
+  animation: fadeInUp 0.5s ease;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.comparisonContent {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.comparisonText {
+  font-size: clamp(1.125rem, 2.5vw, 1.5rem);
+  font-weight: 600;
+  color: var(--foreground);
+  margin-bottom: 1rem;
+  line-height: 1.4;
+}
+
+.comparisonSubtext {
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  color: var(--foreground-secondary);
+  line-height: 1.4;
+}
+
+.figuresComparison {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  margin: 2rem 0;
+  flex-wrap: wrap;
+}
+
+.figurePattern {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.5rem;
+  background: var(--background, rgba(0, 0, 0, 0.02));
+  border-radius: 12px;
+  min-width: 200px;
+}
+
+.figurePattern .figureName {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--foreground);
+  margin: 0;
+  text-align: center;
+}
+
+.squares {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.squareWithLabel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.square {
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  display: block;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.squareLabel {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--foreground-secondary);
+  text-transform: uppercase;
+}
+
+.instruction {
+  font-size: 1rem;
+  color: var(--foreground-secondary);
+  margin-top: 1.5rem;
+  font-style: italic;
+}
+
+@media (max-width: 768px) {
+  .section {
+    padding: 1rem;
+  }
+  
+  .figuresGrid {
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 0.75rem;
+  }
+  
+  .figureCard {
+    padding: 1rem 0.5rem;
+    min-height: 100px;
+  }
+  
+  .figureEmoji {
+    font-size: 2rem;
+  }
+  
+  .figureName {
+    font-size: 0.75rem;
+  }
+  
+  .comparison {
+    padding: 1.5rem;
+    margin-top: 2rem;
+  }
+}
