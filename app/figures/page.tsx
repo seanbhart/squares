@@ -62,6 +62,33 @@ export default function FiguresPage() {
 
   const letters = ['T', 'A', 'M', 'E', 'R'];
 
+  const handleShareFigure = async (figureName: string, spectrum: number[], label?: string) => {
+    const emojiPattern = spectrum.map(value => getEmojiSquare(value)).join('');
+    const shareText = label 
+      ? `TAME-R political spectrum for ${figureName} (${label}):\n${emojiPattern}\n\nTrade, Abortion, Migration, Economics, Rights — Map yours at squares.vote`
+      : `TAME-R political spectrum for ${figureName}:\n${emojiPattern}\n\nTrade, Abortion, Migration, Economics, Rights — Map yours at squares.vote`;
+
+    // Try native share first (mobile)
+    if (navigator.share) {
+      try {
+        await navigator.share({ text: shareText });
+        return;
+      } catch (error) {
+        if ((error as Error).name !== 'AbortError') {
+          console.error('Share failed:', error);
+        }
+      }
+    }
+
+    // Fallback to clipboard
+    try {
+      await navigator.clipboard.writeText(shareText);
+      // Could add a toast notification here
+    } catch (error) {
+      console.error('Failed to copy:', error);
+    }
+  };
+
   const handleCopyEmoji = async () => {
     if (!userEmojiSignature) return;
 
@@ -79,7 +106,7 @@ export default function FiguresPage() {
   const handleShare = async () => {
     if (!userEmojiSignature) return;
 
-    const shareText = `My political pattern: ${userEmojiSignature}\n\nFind yours at ${window.location.origin}`;
+    const shareText = `My TAME-R political spectrum:\n${userEmojiSignature}\n\nTrade, Abortion, Migration, Economics, Rights — Map yours at squares.vote`;
 
     // Try native share first (mobile)
     if (navigator.share) {
@@ -253,29 +280,40 @@ export default function FiguresPage() {
             <h2 className={styles.sectionTitle}>Featured Figures</h2>
             <div className={styles.figuresGrid}>
               {featuredFigures.map((figure) => (
-                <button
-                  key={figure.name}
-                  className={styles.figureCard}
-                  data-selected={selectedFigure?.name === figure.name}
-                  onClick={() => setSelectedFigure(figure)}
-                >
-                  <h3 className={styles.figureName}>{figure.name}</h3>
-                  <p className={styles.figureLifespan}>{figure.lifespan}</p>
-                  <div className={styles.figureSquares}>
-                    {figure.spectrum.map((value, index) => {
-                      const policy = POLICIES[index];
-                      const color = getScoreColor(policy.key, value);
-                      return (
-                        <div
-                          key={policy.key}
-                          className={styles.figureSquare}
-                          style={{ backgroundColor: color }}
-                          title={`${policy.label}: ${policy.colorRamp[value]}`}
-                        />
-                      );
-                    })}
-                  </div>
-                </button>
+                <div key={figure.name} className={styles.figureCardWrapper}>
+                  <button
+                    className={styles.figureCard}
+                    data-selected={selectedFigure?.name === figure.name}
+                    onClick={() => setSelectedFigure(figure)}
+                  >
+                    <h3 className={styles.figureName}>{figure.name}</h3>
+                    <p className={styles.figureLifespan}>{figure.lifespan}</p>
+                    <div className={styles.figureSquares}>
+                      {figure.spectrum.map((value, index) => {
+                        const policy = POLICIES[index];
+                        const color = getScoreColor(policy.key, value);
+                        return (
+                          <div
+                            key={policy.key}
+                            className={styles.figureSquare}
+                            style={{ backgroundColor: color }}
+                            title={`${policy.label}: ${policy.colorRamp[value]}`}
+                          />
+                        );
+                      })}
+                    </div>
+                  </button>
+                  <button
+                    className={styles.shareIconButton}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleShareFigure(figure.name, figure.spectrum);
+                    }}
+                    title="Share this figure"
+                  >
+                    ↗
+                  </button>
+                </div>
               ))}
             </div>
           </section>
@@ -286,8 +324,19 @@ export default function FiguresPage() {
           {selectedFigure ? (
             <section className={styles.detailSection}>
               <div className={styles.detailCard}>
-            <h2 className={styles.detailTitle}>{selectedFigure.name}</h2>
-            <p className={styles.detailLifespan}>{selectedFigure.lifespan}</p>
+                <div className={styles.detailHeader}>
+                  <div>
+                    <h2 className={styles.detailTitle}>{selectedFigure.name}</h2>
+                    <p className={styles.detailLifespan}>{selectedFigure.lifespan}</p>
+                  </div>
+                  <button
+                    className={styles.shareIconButton}
+                    onClick={() => handleShareFigure(selectedFigure.name, selectedFigure.spectrum)}
+                    title="Share this figure"
+                  >
+                    ↗
+                  </button>
+                </div>
             
             <div className={styles.detailSquares}>
               {selectedFigure.spectrum.map((value, index) => {
@@ -315,7 +364,16 @@ export default function FiguresPage() {
                 <h3 className={styles.timelineTitle}>Evolution Over Time</h3>
                 {selectedFigure.timeline.map((entry, index) => (
                   <div key={index} className={styles.timelineEntry}>
-                    <h4 className={styles.timelineLabel}>{entry.label}</h4>
+                    <div className={styles.timelineHeader}>
+                      <h4 className={styles.timelineLabel}>{entry.label}</h4>
+                      <button
+                        className={styles.shareIconButton}
+                        onClick={() => handleShareFigure(selectedFigure.name, entry.spectrum, entry.label)}
+                        title="Share this phase"
+                      >
+                        ↗
+                      </button>
+                    </div>
                     <div className={styles.timelineSquares}>
                       {entry.spectrum.map((value, idx) => {
                         const policy = POLICIES[idx];
@@ -347,8 +405,10 @@ export default function FiguresPage() {
       </div>
 
       <footer className={styles.footer}>
-        <p>Squares.vote • Mapping political positions with TAME-R</p>
-        <Link href="/">Take the Assessment</Link>
+        <p>
+          <Link href="/" className={styles.footerLink}>Squares.vote</Link> • Mapping political positions with <Link href="/" className={styles.footerLink}>TAME-R</Link>
+        </p>
+        <Link href="/" className={styles.footerButton}>Take the Assessment</Link>
       </footer>
     </main>
   );
