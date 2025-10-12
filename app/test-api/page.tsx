@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { getAllFigures, getFeaturedFigures, type Figure } from '@/lib/api/figures';
+import type { Figure, FiguresData } from '@/lib/api/figures';
 
 export default function TestApiPage() {
   const [allFigures, setAllFigures] = useState<Figure[]>([]);
@@ -19,13 +19,12 @@ export default function TestApiPage() {
         const useSupabase = process.env.NEXT_PUBLIC_USE_SUPABASE_FIGURES === 'true';
         setDataSource(useSupabase ? 'supabase' : 'json');
 
-        const [allData, featured] = await Promise.all([
-          getAllFigures(),
-          getFeaturedFigures(),
-        ]);
+        const response = await fetch('/api/figures');
+        if (!response.ok) throw new Error('Failed to fetch figures');
+        const allData: FiguresData = await response.json();
 
         setAllFigures(allData.figures);
-        setFeaturedFigures(featured);
+        setFeaturedFigures(allData.figures.filter(f => allData.featured.includes(f.name)));
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Unknown error');
       } finally {

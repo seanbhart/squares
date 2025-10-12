@@ -5,7 +5,7 @@ import styles from "./page.module.css";
 import ChatModal from "./components/ChatModal";
 import { POLICIES, getScoreColor, getEmojiSquare, type PolicyKey } from "@/lib/tamer-config";
 import { ClipboardIcon, CheckIcon, SunIcon, MoonIcon } from "./components/icons";
-import { getAllFigures, type Figure, type FiguresData } from "@/lib/api/figures";
+import type { Figure, FiguresData } from "@/lib/api/figures";
 
 type Spectrum = Record<PolicyKey, number>;
 
@@ -122,7 +122,9 @@ export default function Home() {
   useEffect(() => {
     async function loadFigures() {
       try {
-        const data = await getAllFigures();
+        const response = await fetch('/api/figures');
+        if (!response.ok) throw new Error('Failed to fetch figures');
+        const data: FiguresData = await response.json();
         setFiguresData(data);
         
         // Set default figure

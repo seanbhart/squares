@@ -1,4 +1,4 @@
-import { supabase } from '../supabase/client';
+import { supabaseServer } from '../supabase/server';
 import figuresDataJson from '../../data/figures.json';
 
 export interface TimelineEntry {
@@ -38,14 +38,15 @@ export async function getAllFigures(): Promise<FiguresData> {
     });
 
     // Get all figures with their timelines
-    const figuresPromise = supabase.rpc('get_all_figures');
+    const sb = await supabaseServer();
+    const figuresPromise = sb.rpc('get_all_figures');
     const { data: figures, error } = await Promise.race([figuresPromise, timeoutPromise]);
 
     if (error) throw error;
     if (!figures) throw new Error('No data returned from Supabase');
 
     // Get featured figure names
-    const featuredPromise = supabase
+    const featuredPromise = sb
       .from('figures')
       .select('name')
       .eq('is_featured', true)
@@ -93,7 +94,8 @@ export async function getFeaturedFigures(): Promise<Figure[]> {
       setTimeout(() => reject(new Error('Supabase request timeout')), 5000);
     });
 
-    const figuresPromise = supabase.rpc('get_featured_figures');
+    const sb = await supabaseServer();
+    const figuresPromise = sb.rpc('get_featured_figures');
     const { data: figures, error } = await Promise.race([figuresPromise, timeoutPromise]);
 
     if (error) throw error;
@@ -127,7 +129,8 @@ export async function getFigureByName(name: string): Promise<Figure | null> {
       setTimeout(() => reject(new Error('Supabase request timeout')), 5000);
     });
 
-    const figurePromise = supabase.rpc('get_figure_by_name', {
+    const sb = await supabaseServer();
+    const figurePromise = sb.rpc('get_figure_by_name', {
       p_name: name,
     });
     const { data: figures, error } = await Promise.race([figurePromise, timeoutPromise]);
@@ -151,61 +154,3 @@ export async function getFigureByName(name: string): Promise<Figure | null> {
   }
 }
 
-/**
- * Request AI analysis for a new or existing figure
- */
-export async function analyzeFigure(params: {
-  figureName: string;
-  contextNotes?: string;
-  requestType: 'new' | 'reanalysis';
-  figureId?: string;
-}): Promise<{ requestId: string; figureId: string }> {
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE_SUPABASE_URL;
-  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || process.env.SUPABASE_SUPABASE_ANON_KEY;
-
-  const response = await fetch(`${supabaseUrl}/functions/v1/analyze-figure`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${supabaseAnonKey}`,
-    },
-    body: JSON.stringify(params),
-  });
-
-  if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.error || 'Failed to analyze figure');
-  }
-
-  return response.json();
-}
-
-/**
- * Get the status of an analysis request
- */
-export async function getAnalysisStatus(requestId: string): Promise<{
-  requestId: string;
-  status: 'pending' | 'processing' | 'completed' | 'failed';
-  figure?: Figure;
-  error?: string;
-  completedAt?: string;
-}> {
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE_SUPABASE_URL;
-  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || process.env.SUPABASE_SUPABASE_ANON_KEY;
-
-  const response = await fetch(
-    `${supabaseUrl}/functions/v1/get-analysis-status?requestId=${requestId}`,
-    {
-      headers: {
-        Authorization: `Bearer ${supabaseAnonKey}`,
-      },
-    }
-  );
-
-  if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.error || 'Failed to get analysis status');
-  }
-
-  return response.json();
-}

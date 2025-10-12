@@ -1,5 +1,5 @@
-import { supabase } from '../supabase/client';
-import { analyzeFigure, getAnalysisStatus } from '../api/figures';
+import { supabaseBrowser } from '../supabase/browser';
+import { analyzeFigure, getAnalysisStatus } from '../api/analysis';
 
 export interface TimelineEntry {
   label: string;
@@ -23,7 +23,8 @@ export interface AdminFigure {
  * Get all figures with admin metadata
  */
 export async function getAllFiguresAdmin(): Promise<AdminFigure[]> {
-  const { data, error } = await supabase
+  const sb = supabaseBrowser();
+  const { data, error } = await sb
     .from('figures')
     .select('*')
     .order('name');
@@ -36,7 +37,8 @@ export async function getAllFiguresAdmin(): Promise<AdminFigure[]> {
  * Get a single figure with timeline
  */
 export async function getFigureWithTimeline(figureId: string) {
-  const { data: figure, error } = await supabase
+  const sb = supabaseBrowser();
+  const { data: figure, error } = await sb
     .from('figures')
     .select('*')
     .eq('id', figureId)
@@ -44,7 +46,7 @@ export async function getFigureWithTimeline(figureId: string) {
 
   if (error) throw error;
 
-  const { data: timeline, error: timelineError } = await supabase
+  const { data: timeline, error: timelineError } = await sb
     .from('timeline_entries')
     .select('*')
     .eq('figure_id', figureId)
@@ -66,7 +68,8 @@ export async function updateFigureFeatured(
   isFeatured: boolean,
   featuredOrder: number | null
 ): Promise<void> {
-  const { error } = await supabase
+  const sb = supabaseBrowser();
+  const { error } = await sb
     .from('figures')
     .update({
       is_featured: isFeatured,
@@ -82,7 +85,8 @@ export async function updateFigureFeatured(
  * Delete a figure
  */
 export async function deleteFigure(figureId: string): Promise<void> {
-  const { error } = await supabase
+  const sb = supabaseBrowser();
+  const { error } = await sb
     .from('figures')
     .delete()
     .eq('id', figureId);
@@ -128,7 +132,8 @@ export async function addNewFigure(
  * Get analysis request history
  */
 export async function getAnalysisHistory(limit = 50) {
-  const { data, error } = await supabase
+  const sb = supabaseBrowser();
+  const { data, error } = await sb
     .from('analysis_requests')
     .select('*')
     .order('created_at', { ascending: false })
@@ -142,7 +147,8 @@ export async function getAnalysisHistory(limit = 50) {
  * Get or create system prompts table and fetch prompts
  */
 export async function getSystemPrompts() {
-  const { data, error } = await supabase
+  const sb = supabaseBrowser();
+  const { data, error } = await sb
     .from('system_prompts')
     .select('*')
     .order('created_at', { ascending: false })
@@ -162,12 +168,13 @@ export async function updateSystemPrompts(prompts: {
   assessor_prompt: string;
   reviewer_prompt?: string;
 }) {
+  const sb = supabaseBrowser();
   // First, try to get existing prompt
   const existing = await getSystemPrompts();
 
   if (existing) {
     // Update existing
-    const { error } = await supabase
+    const { error } = await sb
       .from('system_prompts')
       .update({
         ...prompts,
@@ -178,7 +185,7 @@ export async function updateSystemPrompts(prompts: {
     if (error) throw error;
   } else {
     // Insert new
-    const { error } = await supabase
+    const { error } = await sb
       .from('system_prompts')
       .insert({
         ...prompts,
@@ -192,7 +199,8 @@ export async function updateSystemPrompts(prompts: {
  * Get all users
  */
 export async function getAllUsers() {
-  const { data, error } = await supabase
+  const sb = supabaseBrowser();
+  const { data, error } = await sb
     .from('users')
     .select('*')
     .order('created_at', { ascending: false });
@@ -205,8 +213,9 @@ export async function getAllUsers() {
  * Add a role to a user
  */
 export async function addUserRole(userId: string, role: string) {
+  const sb = supabaseBrowser();
   // Get current roles
-  const { data: userData, error: fetchError } = await supabase
+  const { data: userData, error: fetchError } = await sb
     .from('users')
     .select('roles')
     .eq('id', userId)
@@ -221,7 +230,7 @@ export async function addUserRole(userId: string, role: string) {
 
   const newRoles = [...currentRoles, role];
 
-  const { error } = await supabase
+  const { error } = await sb
     .from('users')
     .update({ roles: newRoles, updated_at: new Date().toISOString() })
     .eq('id', userId);
@@ -233,8 +242,9 @@ export async function addUserRole(userId: string, role: string) {
  * Remove a role from a user
  */
 export async function removeUserRole(userId: string, role: string) {
+  const sb = supabaseBrowser();
   // Get current roles
-  const { data: userData, error: fetchError } = await supabase
+  const { data: userData, error: fetchError } = await sb
     .from('users')
     .select('roles')
     .eq('id', userId)
@@ -245,7 +255,7 @@ export async function removeUserRole(userId: string, role: string) {
   const currentRoles = userData?.roles || [];
   const newRoles = currentRoles.filter((r: string) => r !== role);
 
-  const { error } = await supabase
+  const { error } = await sb
     .from('users')
     .update({ roles: newRoles, updated_at: new Date().toISOString() })
     .eq('id', userId);
@@ -271,8 +281,9 @@ export async function makeAdmin(userId: string) {
  * Create or update user by email (for pre-assigning roles)
  */
 export async function createOrUpdateUserByEmail(email: string, roles: string[]) {
+  const sb = supabaseBrowser();
   // Check if user already exists in users table
-  const { data: existingUser } = await supabase
+  const { data: existingUser } = await sb
     .from('users')
     .select('*')
     .eq('email', email)
@@ -280,7 +291,7 @@ export async function createOrUpdateUserByEmail(email: string, roles: string[]) 
 
   if (existingUser) {
     // User exists, update their roles
-    const { error } = await supabase
+    const { error } = await sb
       .from('users')
       .update({
         roles,
@@ -292,7 +303,7 @@ export async function createOrUpdateUserByEmail(email: string, roles: string[]) 
   } else {
     // User doesn't exist, create a pending user record
     // Database will auto-generate UUID for id
-    const { error } = await supabase
+    const { error } = await sb
       .from('users')
       .insert({
         email,
@@ -308,7 +319,8 @@ export async function createOrUpdateUserByEmail(email: string, roles: string[]) 
  * Get user by email
  */
 export async function getUserByEmail(email: string) {
-  const { data, error } = await supabase
+  const sb = supabaseBrowser();
+  const { data, error } = await sb
     .from('users')
     .select('*')
     .eq('email', email)
