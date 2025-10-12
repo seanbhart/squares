@@ -160,6 +160,6 @@
   }
   
   .scrollHint {
-    bottom: max(1rem, env(safe-area-inset-bottom)); /* Respect safe area */
+    bottom: max(6rem, calc(6rem + env(safe-area-inset-bottom))); /* Well above browser chrome */
   }
 }
