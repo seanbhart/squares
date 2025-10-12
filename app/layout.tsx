@@ -4,7 +4,7 @@ import "./globals.css";
 export const metadata: Metadata = {
   metadataBase: new URL('https://squares.vote'),
   title: {
-    default: "Squares.vote",
+    default: "squares.vote",
     template: "%s | Squares"
   },
   description:
@@ -32,7 +32,7 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: "https://squares.vote",
     siteName: "Squares",
-    title: "Squares.vote",
+    title: "squares.vote",
     description:
       "Political labels are broken. You're not one word—you're many dimensions. Map your positions on Trade, Abortion, Migration, Economics, and Rights.",
     images: [
@@ -40,13 +40,13 @@ export const metadata: Metadata = {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "Squares.vote",
+        alt: "squares.vote",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Squares.vote",
+    title: "squares.vote",
     description:
       "Political labels are broken. You're not one word—you're many dimensions. Map yours with TAME-R.",
     images: ["/twitter-image.png"],

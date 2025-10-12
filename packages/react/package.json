@@ -1,7 +1,7 @@
 {
   "name": "@squares-app/react",
   "version": "2.1.4",
-  "description": "Official React component for Squares.vote embeds",
+  "description": "Official React component for squares.vote embeds",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
@@ -27,7 +27,7 @@
     "component",
     "embed"
   ],
-  "author": "Squares.vote",
+  "author": "squares.vote",
   "license": "MIT",
   "repository": {
     "type": "git",

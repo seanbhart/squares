@@ -582,7 +582,7 @@ export default function FiguresPage() {
 
       <footer className={styles.footer}>
         <p>
-          <Link href="/" className={styles.footerLink}>Squares.vote</Link> • Mapping political positions with <Link href="/" className={styles.footerLink}>TAME-R</Link>
+          <Link href="/" className={styles.footerLink}>squares.vote</Link> • Mapping political positions with <Link href="/" className={styles.footerLink}>TAME-R</Link>
         </p>
         <Link href="/" className={styles.footerButton}>Take the Assessment</Link>
       </footer>

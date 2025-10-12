@@ -9,7 +9,7 @@ const anthropic = new Anthropic({
   apiKey: process.env.CLAUDE_API_KEY,
 });
 
-const ASSESSOR_PROMPT = `You are an expert assistant for Squares.vote, which uses the TAME-R typology to map political positions across five policy dimensions:
+const ASSESSOR_PROMPT = `You are an expert assistant for squares.vote, which uses the TAME-R typology to map political positions across five policy dimensions:
 
 **TAME-R Dimensions:**
 1. **Trade** - Government intervention in EXTERNAL economic interactions. From unrestricted free trade with foreign markets (0) to protectionist tariffs and closed borders to goods/capital (6). This measures barriers to international commerce, NOT domestic economic policy.

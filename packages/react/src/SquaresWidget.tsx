@@ -121,7 +121,7 @@ export function SquaresWidget({ onClose, primaryColor = '#4285f4' }: SquaresWidg
         return (
           <div style={{ minHeight: '400px' }}>
             <h2 style={{ margin: '0 0 1rem 0', color: '#1a1a1a', fontSize: '1.8rem' }}>
-              Welcome to Squares.vote
+              Welcome to squares.vote
             </h2>
             <p style={{ fontSize: '1.1rem', lineHeight: '1.6', color: '#333', marginBottom: '1.5rem' }}>
               Map your political positions across five key policy dimensions using the <strong>TAME-R</strong> framework:
@@ -291,7 +291,7 @@ export function SquaresWidget({ onClose, primaryColor = '#4285f4' }: SquaresWidg
                 e.currentTarget.style.transform = 'translateY(0)';
               }}
             >
-              Explore More at Squares.vote →
+              Explore More at squares.vote →
             </button>
             <p style={{ fontSize: '0.9rem', color: '#666', textAlign: 'center', marginTop: '0.5rem' }}>
               Share your squares on social media

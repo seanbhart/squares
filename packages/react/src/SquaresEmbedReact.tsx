@@ -14,7 +14,7 @@ export interface SquaresEmbedProps {
 }
 
 /**
- * Official React component for embedding Squares.vote widget
+ * Official React component for embedding squares.vote widget
  * 
  * Completely self-contained with full interactive modal.
  * No external dependencies or iframes needed.

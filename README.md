@@ -1,4 +1,4 @@
-# Squares.vote
+# squares.vote
 
 An open-source framework for mapping political positions across key policy dimensions.
 

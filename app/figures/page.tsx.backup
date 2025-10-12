@@ -265,7 +265,7 @@ export default function FiguresPage() {
         <div className={styles.heroContent}>
           <h1 className={styles.title}>Map Your Squares</h1>
           <p className={styles.subtitle}>
-            Squares.vote uses the TAME-R typology to chart political positions across five
+            squares.vote uses the TAME-R typology to chart political positions across five
             policy dimensions. Adjust each slider to reveal your pattern and compare with
             historical figures or modern leaders.
           </p>
@@ -447,7 +447,7 @@ export default function FiguresPage() {
       <footer className={styles.footer}>
         <div className={styles.footerContent}>
           <p>
-            <strong>Squares.vote</strong> is an open-source project for mapping political positions.
+            <strong>squares.vote</strong> is an open-source project for mapping political positions.
           </p>
           <div className={styles.footerLinks}>
             <a href="/embed" className={styles.footerLink}>

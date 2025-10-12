@@ -1,6 +1,6 @@
 # @squares-app/react
 
-Official React component for embedding [Squares.vote](https://squares.vote) widgets.
+Official React component for embedding [squares.vote](https://squares.vote) widgets.
 
 ## Installation
 
@@ -110,6 +110,6 @@ MIT
 
 ## Links
 
-- [Squares.vote](https://squares.vote)
+- [squares.vote](https://squares.vote)
 - [Embed Demo](https://squares.vote/embed)
 - [GitHub](https://github.com/seanbhart/squares)

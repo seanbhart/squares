@@ -1,6 +1,6 @@
 # @squares-app/react
 
-Official React component for embedding Squares.vote widgets with a complete interactive modal experience.
+Official React component for embedding squares.vote widgets with a complete interactive modal experience.
 
 ---
 
