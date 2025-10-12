@@ -41,8 +41,14 @@ export default function LandingPage() {
   }, []);
 
   const handleAnswerChange = (dimensionIndex: number, value: number) => {
-    setAnswers(prev => ({ ...prev, [dimensionIndex]: value }));
+    const newAnswers = { ...answers, [dimensionIndex]: value };
+    setAnswers(newAnswers);
     setTouchedDimensions(prev => new Set(prev).add(dimensionIndex));
+    
+    // Save to localStorage for /figures page
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('userAssessment', JSON.stringify(newAnswers));
+    }
     
     // Auto-scroll to next section after a brief delay
     setTimeout(() => {
