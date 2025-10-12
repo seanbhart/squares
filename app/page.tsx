@@ -171,7 +171,10 @@ export default function Home() {
 
   const featuredFigures = useMemo(() => {
     if (!figuresData) return [];
-    return figuresData.figures.filter(f => figuresData.featured.includes(f.name));
+    // Preserve the order from the featured array
+    return figuresData.featured
+      .map(name => figuresData.figures.find(f => f.name === name))
+      .filter((f): f is typeof figuresData.figures[0] => f !== undefined);
   }, [figuresData]);
 
   const additionalFigures = useMemo(() => {

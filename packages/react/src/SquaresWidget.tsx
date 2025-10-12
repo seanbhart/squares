@@ -130,7 +130,7 @@ export function SquaresWidget({ onClose, primaryColor = '#4285f4' }: SquaresWidg
               {POLICIES.map(policy => (
                 <div key={policy.key} style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', padding: '1rem', background: '#f8f9fa', borderRadius: '8px', fontSize: '1rem' }}>
                   <span style={{ fontSize: '1.5rem' }}>{policy.emoji}</span>
-                  <strong>{policy.label}</strong>
+                  <strong style={{ color: '#1a1a1a' }}>{policy.label}</strong>
                 </div>
               ))}
             </div>
@@ -236,10 +236,10 @@ export function SquaresWidget({ onClose, primaryColor = '#4285f4' }: SquaresWidg
               Your Political Signature
             </h2>
             <div style={{ textAlign: 'center', margin: '2rem 0' }}>
-              <div style={{ fontSize: '3rem', letterSpacing: '0.5rem', marginBottom: '1rem', wordBreak: 'break-all' }}>
+              <div style={{ fontSize: 'clamp(2rem, 8vw, 3rem)', letterSpacing: 'clamp(0.2rem, 1vw, 0.5rem)', marginBottom: '1rem', wordBreak: 'break-all', lineHeight: '1.2' }}>
                 {emojiSignature}
               </div>
-              <div style={{ display: 'flex', justifyContent: 'center', gap: '2.5rem', marginBottom: '2rem', flexWrap: 'wrap' }}>
+              <div style={{ display: 'flex', justifyContent: 'center', gap: 'clamp(0.5rem, 3vw, 2.5rem)', marginBottom: '2rem', flexWrap: 'wrap' }}>
                 {POLICIES.map(p => (
                   <span key={p.key} style={{ fontSize: '0.85rem', color: '#666', fontWeight: 600, whiteSpace: 'nowrap' }}>{p.label}</span>
                 ))}

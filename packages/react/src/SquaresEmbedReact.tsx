@@ -134,15 +134,21 @@ export function SquaresEmbedReact({
                 Martin Luther King Jr.
               </span>
             </div>
-            <div style={{ fontSize: '32px', marginBottom: '12px', letterSpacing: '4px', textAlign: 'center' }}>
-              🟩🟦🟩🟧🟪
-            </div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '11px', color: '#6b7280' }}>
-              <span>Trade</span>
-              <span>Abortion</span>
-              <span>Migration</span>
-              <span>Economics</span>
-              <span>Rights</span>
+            <div style={{ textAlign: 'center' }}>
+              <div style={{ fontSize: 'clamp(24px, 6vw, 32px)', marginBottom: '8px', display: 'flex', justifyContent: 'center', gap: '4px' }}>
+                <span>🟩</span>
+                <span>🟦</span>
+                <span>🟩</span>
+                <span>🟧</span>
+                <span>🟪</span>
+              </div>
+              <div style={{ fontSize: '10px', color: '#6b7280', display: 'flex', justifyContent: 'center', gap: '8px', flexWrap: 'wrap' }}>
+                <span>Trade</span>
+                <span>Abortion</span>
+                <span>Migration</span>
+                <span>Economics</span>
+                <span>Rights</span>
+              </div>
             </div>
           </div>
 
