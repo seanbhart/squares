@@ -1,5 +1,5 @@
 .section {
-  min-height: 100vh;
+  min-height: 100dvh;
   scroll-snap-align: start;
   scroll-snap-stop: always;
   display: flex;
@@ -231,8 +231,13 @@
 
 @media (max-width: 768px) {
   .section {
-    padding: 1rem;
-    padding-bottom: 4rem;
+    padding: 4rem 1rem 8rem; /* Extra space for mobile browser chrome top and bottom */
+    min-height: 100dvh; /* Use dynamic viewport height */
+  }
+  
+  .content {
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
   }
   
   .questionArea {
@@ -270,5 +275,9 @@
   
   .scaleLabels {
     display: none;
+  }
+  
+  .continueHint {
+    bottom: max(6rem, calc(6rem + env(safe-area-inset-bottom))); /* Well above browser chrome */
   }
 }
