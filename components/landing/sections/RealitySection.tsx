@@ -40,7 +40,7 @@ export default function RealitySection() {
           You're not one word.
         </h2>
         <h2 className={styles.headline}>
-          You're five dimensions.
+          You're many dimensions.
         </h2>
 
         <div className={styles.dimensionsGrid} data-visible={isVisible}>

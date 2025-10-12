@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     template: "%s | Squares"
   },
   description:
-    "Political labels are broken. You're not one word—you're five dimensions. Map your positions on Trade, Abortion, Migration, Economics, and Rights with TAME-R.",
+    "Political labels are broken. You're not one word—you're many dimensions. Map your positions on Trade, Abortion, Migration, Economics, and Rights with TAME-R.",
   keywords: [
     "political compass",
     "political spectrum",
@@ -34,7 +34,7 @@ export const metadata: Metadata = {
     siteName: "Squares",
     title: "Squares - Map Your Political Positions with TAME-R",
     description:
-      "Political labels are broken. You're not one word—you're five dimensions. Map your positions on Trade, Abortion, Migration, Economics, and Rights.",
+      "Political labels are broken. You're not one word—you're many dimensions. Map your positions on Trade, Abortion, Migration, Economics, and Rights.",
     images: [
       {
         url: "/og-image.png",
@@ -48,7 +48,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Squares - Map Your Political Positions with TAME-R",
     description:
-      "Political labels are broken. You're not one word—you're five dimensions. Map yours with TAME-R.",
+      "Political labels are broken. You're not one word—you're many dimensions. Map yours with TAME-R.",
     images: ["/twitter-image.png"],
     creator: "@squares-app",
     site: "@squares.vote",
