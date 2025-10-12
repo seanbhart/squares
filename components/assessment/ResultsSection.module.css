@@ -171,9 +171,28 @@
   display: inline-block;
 }
 
+.actionButton[data-primary="true"] {
+  background: var(--accent, #3498db);
+  color: white;
+  border-color: var(--accent, #3498db);
+  font-size: 1.125rem;
+  padding: 1rem 2.5rem;
+  box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
+}
+
+.actionButton[data-secondary="true"] {
+  background: transparent;
+  color: var(--foreground);
+  border-color: var(--foreground-secondary);
+}
+
 .actionButton:hover {
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.actionButton[data-primary="true"]:hover {
+  box-shadow: 0 6px 16px rgba(52, 152, 219, 0.5);
 }
 
 .actionButton[data-secondary="true"] {

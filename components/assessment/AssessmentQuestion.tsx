@@ -14,6 +14,7 @@ interface AssessmentQuestionProps {
   value: number;
   onChange: (value: number) => void;
   completedIndices: number[];
+  hasBeenTouched?: boolean;
 }
 
 export default function AssessmentQuestion({
@@ -26,6 +27,7 @@ export default function AssessmentQuestion({
   value,
   onChange,
   completedIndices,
+  hasBeenTouched = false,
 }: AssessmentQuestionProps) {
   return (
     <section className={styles.section}>
@@ -67,6 +69,8 @@ export default function AssessmentQuestion({
           <div className={styles.scaleContainer}>
             {colorRamp.map((optionLabel, valueIndex) => {
               const isSelected = value === valueIndex;
+              const isCenterOption = valueIndex === 3; // Center is index 3 (0-6 scale)
+              const isTentative = isCenterOption && isSelected && !hasBeenTouched;
               const color = getScoreColor(policyKey, valueIndex);
               
               return (
@@ -74,13 +78,14 @@ export default function AssessmentQuestion({
                   key={valueIndex}
                   className={styles.option}
                   data-selected={isSelected}
+                  data-tentative={isTentative}
                   onClick={() => onChange(valueIndex)}
                 >
                   <div
                     className={styles.optionSquare}
                     style={{ backgroundColor: color }}
                   >
-                    {isSelected && (
+                    {isSelected && !isTentative && (
                       <span className={styles.checkmark}>✓</span>
                     )}
                   </div>

@@ -209,11 +209,11 @@ export default function ScrollAssessment() {
                 Start Over
               </button>
               <a
-                href="/assess"
+                href="/figures"
                 className={styles.actionButton}
                 data-secondary={true}
               >
-                See Detailed View
+                Explore Famous Figures
               </a>
             </div>
           </div>

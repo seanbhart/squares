@@ -136,6 +136,29 @@
   transform: translateY(-2px);
 }
 
+/* Tentative state - center option before user confirms */
+.option[data-tentative="true"] {
+  border: 2px dashed var(--foreground-tertiary, rgba(128, 128, 128, 0.4));
+  background: var(--card-background, rgba(255, 255, 255, 0.03));
+  box-shadow: none;
+  transform: none;
+}
+
+.option[data-tentative="true"] .optionSquare {
+  opacity: 0.6;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.option[data-tentative="true"]:hover {
+  border-style: solid;
+  border-color: var(--accent, #3498db);
+  background: var(--card-hover-background, rgba(52, 152, 219, 0.1));
+}
+
+.option[data-tentative="true"]:hover .optionSquare {
+  opacity: 1;
+}
+
 .optionSquare {
   position: relative;
   width: 60px;
@@ -145,6 +168,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: all 0.3s ease;
 }
 
 .checkmark {

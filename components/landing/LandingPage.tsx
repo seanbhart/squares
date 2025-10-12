@@ -13,6 +13,13 @@ import styles from './LandingPage.module.css';
 export default function LandingPage() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [answers, setAnswers] = useState<Record<number, number>>({});
+  const [touchedDimensions, setTouchedDimensions] = useState<Set<number>>(new Set());
+
+  const handleStartOver = () => {
+    if (containerRef.current) {
+      containerRef.current.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
 
   useEffect(() => {
     // Optional: Add keyboard navigation
@@ -35,6 +42,7 @@ export default function LandingPage() {
 
   const handleAnswerChange = (dimensionIndex: number, value: number) => {
     setAnswers(prev => ({ ...prev, [dimensionIndex]: value }));
+    setTouchedDimensions(prev => new Set(prev).add(dimensionIndex));
     
     // Auto-scroll to next section after a brief delay
     setTimeout(() => {
@@ -55,6 +63,11 @@ export default function LandingPage() {
 
   return (
     <div ref={containerRef} className={styles.container}>
+      {/* Close button - visible on all sections */}
+      <a href="/figures" className={styles.closeButton} aria-label="Close and explore figures">
+        ✕
+      </a>
+
       <ProblemSection />
       <RealitySection />
       <ColorScaleSection />
@@ -73,11 +86,12 @@ export default function LandingPage() {
           value={answers[index] ?? 3}
           onChange={(value) => handleAnswerChange(index, value)}
           completedIndices={completedIndices}
+          hasBeenTouched={touchedDimensions.has(index)}
         />
       ))}
       
       {/* Results */}
-      <ResultsSection answers={answers} />
+      <ResultsSection answers={answers} onStartOver={handleStartOver} />
     </div>
   );
 }

@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import styles from './ProblemSection.module.css';
 
-const LABELS = ['Liberal', 'Conservative', 'Moderate', 'Progressive', 'Libertarian'];
+const LABELS = ['Liberal', 'Conservative', 'Moderate', 'Progressive', 'Libertarian', 'Centrist'];
 
 export default function ProblemSection() {
   const [isAnimating, setIsAnimating] = useState(false);

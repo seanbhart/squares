@@ -124,8 +124,8 @@ Landing Page (/) - Single Seamless Scroll Experience
   ↓ Section 8: Economics (select from 7 options)
   ↓ Section 9: Rights (select from 7 options)
   ↓ Section 10: Results (copy emoji pattern) 🟪🟦🟩🟨🟧
-  ↓ Click "See Detailed View" (optional)
-Assessment Detail Page (/assess) - Full comparison interface
+  ↓ Click "Explore Famous Figures" (optional)
+Figures Page (/figures) - Full comparison interface
   ↓ Compare with historical figures
   ↓ See timelines and evolution
 Share Results
@@ -264,7 +264,7 @@ Education → Keep Scrolling → Assessment → Results
 ### Metrics to Track:
 - Scroll depth (how far users get)
 - Time on each section
-- Click-through rate to /assess
+- Click-through rate to /figures
 - Assessment completion rate
 
 ## Iteration Notes
@@ -300,7 +300,7 @@ npm run dev
 # Navigate to http://localhost:3000
 ```
 
-To go directly to the assessment:
+To go directly to the figures page:
 ```bash
-# Navigate to http://localhost:3000/assess
+# Navigate to http://localhost:3000/figures
 ```

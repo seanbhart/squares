@@ -7,9 +7,10 @@ import { ClipboardIcon, CheckIcon } from '@/components/icons';
 
 interface ResultsSectionProps {
   answers: Record<number, number>;
+  onStartOver?: () => void;
 }
 
-export default function ResultsSection({ answers }: ResultsSectionProps) {
+export default function ResultsSection({ answers, onStartOver }: ResultsSectionProps) {
   const [copyState, setCopyState] = useState<'idle' | 'copied' | 'error'>('idle');
   const copyTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -123,19 +124,27 @@ export default function ResultsSection({ answers }: ResultsSectionProps) {
           )}
 
           <div className={styles.actions}>
+            <a
+              href="/figures"
+              className={styles.actionButton}
+              data-primary={true}
+            >
+              Explore Famous Figures
+            </a>
             <button
               className={styles.actionButton}
-              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+              data-secondary={true}
+              onClick={() => {
+                if (onStartOver) {
+                  onStartOver();
+                } else {
+                  // Fallback for standalone usage
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+              }}
             >
               Start Over
             </button>
-            <a
-              href="/assess"
-              className={styles.actionButton}
-              data-secondary={true}
-            >
-              See Detailed View
-            </a>
           </div>
         </div>
       </div>

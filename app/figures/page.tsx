@@ -1,7 +1,7 @@
 "use client";
 
 import { ChangeEvent, useCallback, useEffect, useMemo, useRef, useState } from "react";
-import styles from "./assess.module.css";
+import styles from "./figures.module.css";
 import ChatModal from "@/components/ChatModal";
 import { POLICIES, getScoreColor, getEmojiSquare, type PolicyKey } from "@/lib/tamer-config";
 import { ClipboardIcon, CheckIcon, SunIcon, MoonIcon } from "@/components/icons";
@@ -102,7 +102,7 @@ const TimelineSquares = ({ values }: { values: number[] }) => {
   );
 };
 
-export default function AssessmentPage() {
+export default function FiguresPage() {
   const [figuresData, setFiguresData] = useState<FiguresData | null>(null);
   const [loading, setLoading] = useState(true);
   const [hasManualEdit, setHasManualEdit] = useState(false);
