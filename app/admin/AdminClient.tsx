@@ -38,6 +38,7 @@ export default function AdminClient({ initialUser }: AdminClientProps) {
   // Figure management state
   const [newFigureName, setNewFigureName] = useState('');
   const [newFigureContext, setNewFigureContext] = useState('');
+  const [isAddingFigure, setIsAddingFigure] = useState(false);
   const [reanalyzeId, setReanalyzeId] = useState<string | null>(null);
   const [draggedFigure, setDraggedFigure] = useState<AdminFigure | null>(null);
   const [selectedFigureForTimeline, setSelectedFigureForTimeline] = useState<AdminFigure | null>(null);
@@ -130,7 +131,9 @@ export default function AdminClient({ initialUser }: AdminClientProps) {
 
   function showMessage(type: 'success' | 'error', text: string) {
     setMessage({ type, text });
-    setTimeout(() => setMessage(null), 5000);
+    // Show success messages longer (6s) since they're important confirmations
+    const duration = type === 'success' ? 6000 : 5000;
+    setTimeout(() => setMessage(null), duration);
   }
 
   async function handleSignOut() {
@@ -194,14 +197,17 @@ export default function AdminClient({ initialUser }: AdminClientProps) {
     if (!newFigureName.trim()) return;
 
     try {
+      setIsAddingFigure(true);
       const { requestId } = await addNewFigure(newFigureName, newFigureContext);
-      showMessage('success', `Analysis started for ${newFigureName} (Request ID: ${requestId})`);
+      showMessage('success', `✓ Analysis started for ${newFigureName}! (Request ID: ${requestId})`);
       setNewFigureName('');
       setNewFigureContext('');
       setTimeout(() => loadData(), 2000);
     } catch (error) {
       console.error('Failed to add figure:', error);
       showMessage('error', 'Failed to add figure');
+    } finally {
+      setIsAddingFigure(false);
     }
   }
 
@@ -394,6 +400,7 @@ export default function AdminClient({ initialUser }: AdminClientProps) {
                   onChange={(e) => setNewFigureName(e.target.value)}
                   className={styles.input}
                   required
+                  disabled={isAddingFigure}
                 />
                 <textarea
                   placeholder="Context notes (optional)"
@@ -401,9 +408,14 @@ export default function AdminClient({ initialUser }: AdminClientProps) {
                   onChange={(e) => setNewFigureContext(e.target.value)}
                   className={styles.textarea}
                   rows={2}
+                  disabled={isAddingFigure}
                 />
-                <button type="submit" className={styles.primaryButton}>
-                  Analyze & Add Figure
+                <button 
+                  type="submit" 
+                  className={styles.primaryButton}
+                  disabled={isAddingFigure}
+                >
+                  {isAddingFigure ? '⏳ Submitting...' : '✓ Analyze & Add Figure'}
                 </button>
               </form>
             </section>

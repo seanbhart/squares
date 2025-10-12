@@ -121,8 +121,29 @@
   font-size: clamp(1.125rem, 2.5vw, 1.5rem);
   font-weight: 600;
   color: var(--foreground);
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
   line-height: 1.4;
+}
+
+.tamerReference {
+  font-size: 0.875rem;
+  color: var(--foreground-secondary);
+  margin-bottom: 1.5rem;
+  opacity: 0.7;
+  font-weight: 500;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.tamerLetter {
+  font-weight: 700;
+  color: var(--foreground);
+}
+
+.tamerDot {
+  white-space: nowrap;
 }
 
 .comparisonSubtext {
@@ -196,6 +217,11 @@
 @media (max-width: 768px) {
   .section {
     padding: 1rem;
+  }
+  
+  .tamerReference {
+    font-size: 0.75rem;
+    margin-bottom: 1.5rem;
   }
   
   .figuresGrid {

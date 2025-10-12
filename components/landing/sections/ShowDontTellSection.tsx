@@ -19,6 +19,9 @@ const FIGURES = [
   { name: 'Susan B. Anthony', img: '🗳️' },
   { name: 'Frederick Douglass', img: '✍️' },
   { name: 'Harriet Tubman', img: '🌟' },
+  { name: 'John F. Kennedy', img: '🎤' },
+  { name: 'Dietrich Bonhoeffer', img: '✝️' },
+  { name: 'Ronald Reagan', img: '🎬' },
 ];
 
 export default function ShowDontTellSection() {
@@ -99,6 +102,18 @@ export default function ShowDontTellSection() {
               <p className={styles.comparisonText}>
                 See the difference?
               </p>
+
+              <div className={styles.tamerReference}>
+                <span className={styles.tamerLetter}>T</span>rade
+                <span className={styles.tamerDot}> • </span>
+                <span className={styles.tamerLetter}>A</span>bortion
+                <span className={styles.tamerDot}> • </span>
+                <span className={styles.tamerLetter}>M</span>igration
+                <span className={styles.tamerDot}> • </span>
+                <span className={styles.tamerLetter}>E</span>conomics
+                <span className={styles.tamerDot}> • </span>
+                <span className={styles.tamerLetter}>R</span>ights
+              </div>
               
               <div className={styles.figuresComparison}>
                 {selectedFigures.map((figureName) => {

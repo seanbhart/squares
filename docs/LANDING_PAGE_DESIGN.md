@@ -43,7 +43,7 @@ The new landing page uses a scroll-snap design to create a captivating, experien
 **Message:** Pick two figures you admire - see how they differ
 
 **Visual:**
-- Grid of 12 historical figures with emoji icons
+- Grid of 15 historical figures with emoji icons
 - Click to select 2 figures
 - Shows side-by-side comparison with actual colored squares
 - TAME-R pattern for each figure displayed with labels

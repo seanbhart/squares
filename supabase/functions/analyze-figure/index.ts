@@ -39,6 +39,7 @@ When providing a TAME-R assessment, format it as JSON:
   "spectrum": [trade, abortion, migration, economics, rights],
   "confidence": 75,
   "reasoning": "detailed explanation with specific evidence",
+  "lifespan": "1809-1865" OR "b. 1961" for living figures,
   "timeline": [
     {
       "label": "Period description",
@@ -47,6 +48,12 @@ When providing a TAME-R assessment, format it as JSON:
     }
   ]
 }
+
+**Lifespan format:**
+- For deceased figures: "YYYY-YYYY" (e.g., "1809-1865")
+- For living figures: "b. YYYY" (e.g., "b. 1961")
+- If birth year unknown but deceased: "d. YYYY" (e.g., "d. 2010")
+- If completely unknown: "Unknown"
 
 The timeline should include 2-4 key periods in the figure's career that show evolution or consistency in their positions.
 
@@ -68,6 +75,7 @@ interface AssessmentResult {
   spectrum: number[];
   confidence: number;
   reasoning: string;
+  lifespan?: string;
   timeline: Array<{
     label: string;
     spectrum: number[];
@@ -190,7 +198,7 @@ serve(async (req) => {
           'insert_figure_with_timeline',
           {
             p_name: figureName,
-            p_lifespan: 'TBD', // Can be updated later
+            p_lifespan: assessment.lifespan || 'Unknown',
             p_spectrum: assessment.spectrum,
             p_is_featured: false,
             p_featured_order: null,
@@ -215,6 +223,14 @@ serve(async (req) => {
 
         if (updateError) {
           throw new Error(`Failed to update figure: ${updateError.message}`);
+        }
+
+        // Update lifespan if provided
+        if (assessment.lifespan) {
+          await supabaseClient
+            .from('figures')
+            .update({ lifespan: assessment.lifespan })
+            .eq('id', figureId);
         }
 
         // Delete old timeline entries
