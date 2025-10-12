@@ -1,11 +1,20 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
 import styles from "./figures.module.css";
 import { POLICIES, getScoreColor, getEmojiSquare } from "@/lib/tamer-config";
-import { ClipboardIcon, CheckIcon } from "@/components/icons";
+import { ClipboardIcon, CheckIcon, MessageCircleIcon } from "@/components/icons";
+import FiguresChatBox, { type Message } from "@/components/FiguresChatBox";
 import type { Figure, FiguresData } from "@/lib/api/figures";
+
+type ChatFigure = {
+  name: string;
+  spectrum: (number | null)[];
+  confidence?: number;
+  reasoning?: string;
+  isFromChat: true;
+};
 
 // Load user's assessment from localStorage
 const loadUserAssessment = (): Record<number, number> | null => {
@@ -23,9 +32,15 @@ export default function FiguresPage() {
   const [figuresData, setFiguresData] = useState<FiguresData | null>(null);
   const [loading, setLoading] = useState(true);
   const [userAssessment, setUserAssessment] = useState<Record<number, number> | null>(null);
-  const [selectedFigure, setSelectedFigure] = useState<Figure | null>(null);
+  const [selectedFigure, setSelectedFigure] = useState<Figure | ChatFigure | null>(null);
   const [shareState, setShareState] = useState<'idle' | 'copied' | 'error'>('idle');
   const [copyState, setCopyState] = useState<'idle' | 'copied' | 'error'>('idle');
+  const [chatMinimized, setChatMinimized] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const [mobileOverlayMode, setMobileOverlayMode] = useState<'figure' | 'chat'>('figure');
+  const [mobileChatOpen, setMobileChatOpen] = useState(false);
+  const [chatMessages, setChatMessages] = useState<Message[]>([]);
+  const detailSectionRef = useRef<HTMLElement>(null);
 
   // Prevent body scroll when overlay is open on mobile
   useEffect(() => {
@@ -40,6 +55,16 @@ export default function FiguresPage() {
       document.body.style.overflow = '';
     };
   }, [selectedFigure]);
+
+  // Detect mobile
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 1024);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   // Load user assessment from localStorage
   useEffect(() => {
@@ -79,8 +104,8 @@ export default function FiguresPage() {
 
   const letters = ['T', 'A', 'M', 'E', 'R'];
 
-  const handleShareFigure = async (figureName: string, spectrum: number[], label?: string) => {
-    const emojiPattern = spectrum.map(value => getEmojiSquare(value)).join('');
+  const handleShareFigure = async (figureName: string, spectrum: (number | null)[], label?: string) => {
+    const emojiPattern = spectrum.map(value => value !== null ? getEmojiSquare(value) : '⬜').join('');
     const shareText = label 
       ? `TAME-R political spectrum for ${figureName} (${label}):\n${emojiPattern}\n\nTrade, Abortion, Migration, Economics, Rights — Map yours at squares.vote`
       : `TAME-R political spectrum for ${figureName}:\n${emojiPattern}\n\nTrade, Abortion, Migration, Economics, Rights — Map yours at squares.vote`;
@@ -103,6 +128,62 @@ export default function FiguresPage() {
       // Could add a toast notification here
     } catch (error) {
       console.error('Failed to copy:', error);
+    }
+  };
+
+  const handleChatSpectrumData = (data: { name: string; spectrum: (number | null)[]; confidence?: number; reasoning?: string }) => {
+    // Try to find figure in database first
+    const existingFigure = figuresData?.figures.find(
+      f => f.name.toLowerCase() === data.name.toLowerCase()
+    );
+
+    if (existingFigure) {
+      // Use existing figure from database
+      setSelectedFigure(existingFigure);
+    } else {
+      // Create temporary chat figure
+      const chatFigure: ChatFigure = {
+        name: data.name,
+        spectrum: data.spectrum,
+        confidence: data.confidence,
+        reasoning: data.reasoning,
+        isFromChat: true
+      };
+      setSelectedFigure(chatFigure);
+    }
+
+    // On desktop, scroll to info box and minimize chat
+    if (!isMobile) {
+      setChatMinimized(true);
+      setTimeout(() => {
+        detailSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 100);
+    } else {
+      // On mobile, switch overlay to figure mode
+      setMobileOverlayMode('figure');
+    }
+  };
+
+  const handleMobileChatOpen = () => {
+    setMobileChatOpen(true);
+    setMobileOverlayMode('chat');
+    setSelectedFigure({ 
+      name: '', 
+      spectrum: [3, 3, 3, 3, 3], 
+      isFromChat: true 
+    } as ChatFigure);
+  };
+
+  const handleMobileChatClose = () => {
+    setMobileChatOpen(false);
+    setSelectedFigure(null);
+  };
+
+  const handleFigureSelect = (figure: Figure) => {
+    setSelectedFigure(figure);
+    // On mobile, ensure we're showing figure info, not chat
+    if (isMobile) {
+      setMobileOverlayMode('figure');
     }
   };
 
@@ -296,7 +377,7 @@ export default function FiguresPage() {
                 value={selectedFigure?.name || ''}
                 onChange={(e) => {
                   const figure = allFigures.find(f => f.name === e.target.value);
-                  if (figure) setSelectedFigure(figure);
+                  if (figure) handleFigureSelect(figure);
                 }}
               >
                 <option value="">Select a figure...</option>
@@ -318,7 +399,7 @@ export default function FiguresPage() {
                   <button
                     className={styles.figureCard}
                     data-selected={selectedFigure?.name === figure.name}
-                    onClick={() => setSelectedFigure(figure)}
+                    onClick={() => handleFigureSelect(figure)}
                   >
                     <h3 className={styles.figureName}>{figure.name}</h3>
                     <p className={styles.figureLifespan}>{figure.lifespan}</p>
@@ -356,22 +437,55 @@ export default function FiguresPage() {
         {/* Right Column: Selected Figure Detail */}
         <main className={styles.rightColumn}>
           {selectedFigure ? (
-            <section className={styles.detailSection} data-mobile-open={!!selectedFigure}>
-              <div className={styles.detailCard}>
-                <div className={styles.detailHeader}>
-                  {/* Mobile close button */}
-                  <button
-                    className={styles.mobileCloseButton}
-                    onClick={() => setSelectedFigure(null)}
-                    aria-label="Close detail view"
-                  >
-                    ←
-                  </button>
-                  
-                  <div className={styles.detailHeaderContent}>
-                    <h2 className={styles.detailTitle}>{selectedFigure.name}</h2>
-                    <p className={styles.detailLifespan}>{selectedFigure.lifespan}</p>
+            <section className={styles.detailSection} data-mobile-open={!!selectedFigure} ref={detailSectionRef}>
+              {/* Chat notification banner */}
+              {'isFromChat' in selectedFigure && selectedFigure.isFromChat && selectedFigure.name && (
+                <div className={styles.chatBanner}>
+                  💬 Generated by Chat
+                </div>
+              )}
+              
+              {/* Mobile chat integration */}
+              {isMobile && mobileOverlayMode === 'chat' && (
+                <div className={styles.mobileChatContainer}>
+                  <div className={styles.mobileChatHeader}>
+                    <button
+                      className={styles.mobileCloseButton}
+                      onClick={handleMobileChatClose}
+                      aria-label="Close chat"
+                    >
+                      ←
+                    </button>
+                    <h2 className={styles.detailTitle}>Chat with Squares</h2>
                   </div>
+                  <FiguresChatBox
+                    onSpectrumData={handleChatSpectrumData}
+                    isMobile={true}
+                    messages={chatMessages}
+                    onMessagesChange={setChatMessages}
+                  />
+                </div>
+              )}
+
+              {/* Figure details (show for non-chat mode or when we have figure data) */}
+              {(!isMobile || mobileOverlayMode === 'figure') && selectedFigure.name && (
+                <div className={styles.detailCard}>
+                  <div className={styles.detailHeader}>
+                    {/* Mobile close button */}
+                    <button
+                      className={styles.mobileCloseButton}
+                      onClick={() => setSelectedFigure(null)}
+                      aria-label="Close detail view"
+                    >
+                      ←
+                    </button>
+                    
+                    <div className={styles.detailHeaderContent}>
+                      <h2 className={styles.detailTitle}>{selectedFigure.name}</h2>
+                      {'lifespan' in selectedFigure && selectedFigure.lifespan && (
+                        <p className={styles.detailLifespan}>{selectedFigure.lifespan}</p>
+                      )}
+                    </div>
                   
                   <button
                     className={styles.shareIconButton}
@@ -385,25 +499,29 @@ export default function FiguresPage() {
             <div className={styles.detailSquares}>
               {selectedFigure.spectrum.map((value, index) => {
                 const policy = POLICIES[index];
-                const color = getScoreColor(policy.key, value);
+                const color = value !== null ? getScoreColor(policy.key, value) : '#ffffff';
+                const label = value !== null ? policy.colorRamp[value] : 'Unknown';
                 return (
                   <div key={policy.key} className={styles.detailSquareItem}>
                     <div
                       className={styles.detailSquare}
-                      style={{ backgroundColor: color }}
+                      style={{ 
+                        backgroundColor: color,
+                        border: value === null ? '2px solid #dee2e6' : undefined
+                      }}
                     >
                       <span className={styles.squareLetter}>{letters[index]}</span>
                     </div>
                     <div className={styles.detailSquareInfo}>
                       <span className={styles.detailSquareLabel}>{policy.label}</span>
-                      <span className={styles.detailSquareValue}>{policy.colorRamp[value]}</span>
+                      <span className={styles.detailSquareValue}>{label}</span>
                     </div>
                   </div>
                 );
               })}
             </div>
 
-            {selectedFigure.timeline && selectedFigure.timeline.length > 0 && (
+            {'timeline' in selectedFigure && selectedFigure.timeline && selectedFigure.timeline.length > 0 && (
               <div className={styles.timeline}>
                 <h3 className={styles.timelineTitle}>Evolution Over Time</h3>
                 {selectedFigure.timeline.map((entry, index) => (
@@ -437,7 +555,21 @@ export default function FiguresPage() {
                 ))}
               </div>
             )}
+
+            {/* Chat reasoning if from chat */}
+            {'isFromChat' in selectedFigure && selectedFigure.isFromChat && selectedFigure.reasoning && (
+              <div className={styles.chatReasoning}>
+                <h3 className={styles.timelineTitle}>AI Assessment Reasoning</h3>
+                <p className={styles.reasoningText}>{selectedFigure.reasoning}</p>
+                {'confidence' in selectedFigure && selectedFigure.confidence && (
+                  <p className={styles.confidenceText}>
+                    Confidence: {selectedFigure.confidence}%
+                  </p>
+                )}
               </div>
+            )}
+              </div>
+            )}
             </section>
           ) : (
             <div className={styles.emptyState}>
@@ -454,6 +586,29 @@ export default function FiguresPage() {
         </p>
         <Link href="/" className={styles.footerButton}>Take the Assessment</Link>
       </footer>
+
+      {/* Desktop Chat */}
+      {!isMobile && (
+        <FiguresChatBox
+          onSpectrumData={handleChatSpectrumData}
+          isMinimized={chatMinimized}
+          onToggleMinimize={() => setChatMinimized(!chatMinimized)}
+          isMobile={false}
+          messages={chatMessages}
+          onMessagesChange={setChatMessages}
+        />
+      )}
+
+      {/* Mobile Chat Button */}
+      {isMobile && !selectedFigure && (
+        <button
+          className={styles.mobileChatButton}
+          onClick={handleMobileChatOpen}
+          aria-label="Open chat"
+        >
+          <MessageCircleIcon />
+        </button>
+      )}
     </main>
   );
 }

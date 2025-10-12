@@ -25,6 +25,7 @@ Each dimension uses a 7-point scale (0-6) representing the level of government i
 - Explain your reasoning clearly, citing specific positions or actions
 - Express confidence levels (0-100%) for each assessment
 - Return types in color coded emoji squares
+- Use ⬜ (white square) for any dimension where you lack sufficient evidence to make a confident assessment
 
 **CRITICAL ASSESSMENT RULES:**
 1. **Actions over words**: Base assessments PRIMARILY on concrete actions taken (votes, policies enacted, executive orders, legislation signed, judicial rulings, business decisions). Rhetoric and campaign promises are ONLY used when no action record exists.
@@ -43,6 +44,7 @@ Each dimension uses a 7-point scale (0-6) representing the level of government i
 * 🟧 4 - Trade: strategic protections | Abortion: limit after first trimester | Migration: reduced quotas | Economics: strong social programs | Rights: traditional definitions only
 * 🟥 5 - Trade: heavy tariffs | Abortion: limit after heartbeat detection | Migration: strict limits only | Economics: extensive public ownership | Rights: no legal recognition
 * ⬛️ 6 - Trade: closed economy | Abortion: no exceptions allowed | Migration: no immigration | Economics: full state control | Rights: criminalization
+* ⬜ Unknown - Use when insufficient evidence exists for that specific dimension
 
 **Confidence Thresholds:**
 - **Living persons**: Only provide assessment if confidence ≥ 50%
@@ -62,7 +64,10 @@ Overall Confidence: [X]%
 Reasoning: [detailed explanation]
 \`\`\`
 
-IMPORTANT: Always include the descriptive label in parentheses after the emoji, not the number.
+IMPORTANT: 
+- Always include the descriptive label in parentheses after the emoji, not the number
+- Use ⬜ (Unknown) for any dimension where you lack sufficient documented evidence
+- Explain why you used ⬜ in your reasoning for that dimension
 
 If confidence is below the threshold, politely decline and explain why you cannot provide a confident assessment.`;
 
@@ -74,6 +79,7 @@ const REVIEWER_PROMPT = `You are a peer reviewer for TAME-R assessments. Your jo
 3. **Extreme Score Justification**: Are scores of 0-1 or 5-6 backed by concrete evidence of active advocacy/implementation?
 4. **No Assumptions**: Are scores based on documented actions, not inferred from party/ideology?
 5. **Logical Consistency**: Do the scores align with the cited evidence?
+6. **Unknown Usage**: Is ⬜ (Unknown) used appropriately for dimensions lacking sufficient evidence, rather than guessing?
 
 **Your Task:**
 Review the assessment below and respond with:
@@ -111,6 +117,55 @@ async function reviewAssessment(userMessage: string, assessment: string): Promis
   return { approved, feedback };
 }
 
+// Helper to extract spectrum data from assessment text
+function extractSpectrumData(assessment: string): {
+  name?: string;
+  spectrum?: (number | null)[];
+  confidence?: number;
+  reasoning?: string;
+} | null {
+  try {
+    // Look for pattern: [Name] [emojis]
+    const nameMatch = assessment.match(/^([^\n\[]+?)(?:\s+[🟪🟦🟩🟨🟧🟥⬛️⬜]+)/m);
+    if (!nameMatch) return null;
+
+    const name = nameMatch[1].trim();
+    
+    // Extract individual dimension scores by finding emoji patterns
+    const spectrum: (number | null)[] = [];
+    const dimensionLines = assessment.match(/(?:Trade|Abortion|Migration|Economics|Rights):\s*([🟪🟦🟩🟨🟧🟥⬛️⬜])/g);
+    
+    if (dimensionLines && dimensionLines.length === 5) {
+      dimensionLines.forEach(line => {
+        const emoji = line.match(/([🟪🟦🟩🟨🟧🟥⬛️⬜])/)?.[1];
+        const emojiToScore: Record<string, number | null> = {
+          '🟪': 0, '🟦': 1, '🟩': 2, '🟨': 3, '🟧': 4, '🟥': 5, '⬛️': 6, '⬛': 6, '⬜': null
+        };
+        if (emoji && emoji in emojiToScore) {
+          spectrum.push(emojiToScore[emoji]);
+        }
+      });
+    }
+
+    // Extract confidence
+    const confidenceMatch = assessment.match(/Overall Confidence:\s*(\d+)%/);
+    const confidence = confidenceMatch ? parseInt(confidenceMatch[1]) : undefined;
+
+    // Extract reasoning
+    const reasoningMatch = assessment.match(/Reasoning:\s*([\s\S]+?)(?:\n\n|$)/);
+    const reasoning = reasoningMatch ? reasoningMatch[1].trim() : undefined;
+
+    if (spectrum.length === 5) {
+      return { name, spectrum, confidence, reasoning };
+    }
+    
+    return null;
+  } catch (error) {
+    console.error("Error extracting spectrum data:", error);
+    return null;
+  }
+}
+
 export async function POST(request: NextRequest) {
   try {
     const { message } = await request.json();
@@ -127,14 +182,20 @@ export async function POST(request: NextRequest) {
       const initialAssessment = await getAssessment(message);
       const review = await reviewAssessment(message, initialAssessment);
 
+      let finalReply: string;
       if (review.approved) {
-        // Return approved assessment
-        return NextResponse.json({ reply: initialAssessment });
+        finalReply = initialAssessment;
       } else {
-        // Reviewer found issues - append feedback for transparency
-        const reply = `${initialAssessment}\n\n---\n**Peer Review Note**: ${review.feedback}`;
-        return NextResponse.json({ reply });
+        finalReply = `${initialAssessment}\n\n---\n**Peer Review Note**: ${review.feedback}`;
       }
+
+      // Try to extract spectrum data
+      const spectrumData = extractSpectrumData(finalReply);
+      
+      return NextResponse.json({ 
+        reply: finalReply,
+        spectrumData: spectrumData || undefined
+      });
     } else {
       // Simple question - single agent response
       const reply = await getAssessment(message);

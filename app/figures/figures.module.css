@@ -64,6 +64,80 @@
   transform: translate(-50%, -50%) rotate(308.57deg) translateY(-50px) rotate(45deg);
 }
 
+/* Chat Styles */
+.chatBanner {
+  background: linear-gradient(135deg, #3498db, #2ecc71);
+  color: white;
+  padding: 0.75rem 1rem;
+  text-align: center;
+  font-weight: 600;
+  font-size: 0.9rem;
+  border-radius: 8px 8px 0 0;
+}
+
+.mobileChatButton {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: #3498db;
+  color: white;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  z-index: 999;
+}
+
+.mobileChatButton:hover {
+  background: #2980b9;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(52, 152, 219, 0.4);
+}
+
+.mobileChatButton svg {
+  width: 24px;
+  height: 24px;
+}
+
+.mobileChatContainer {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.mobileChatHeader {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  border-bottom: 1px solid var(--foreground-tertiary);
+}
+
+.chatReasoning {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background: var(--foreground-tertiary);
+  border-radius: 8px;
+}
+
+.reasoningText {
+  color: var(--foreground-secondary);
+  line-height: 1.6;
+  margin: 0.5rem 0;
+}
+
+.confidenceText {
+  color: var(--foreground);
+  font-weight: 600;
+  margin: 0.5rem 0 0;
+}
+
 /* Hero Section */
 .heroSection {
   padding: 2rem 2rem 1.5rem;

@@ -8,7 +8,7 @@ import type { Figure, FiguresData } from '@/lib/api/figures';
 // Subset of notable figures with diverse positions
 const FIGURES = [
   { name: 'Martin Luther King Jr.', img: '✊🏿' },
-  { name: 'Albert Einstein', img: '🧪' },
+  { name: 'Albert Einstein', img: '⚛️' },
   { name: 'Abraham Lincoln', img: '🎩' },
   { name: 'Mahatma Gandhi', img: '🕊️' },
   { name: 'Nelson Mandela', img: '⚖️' },

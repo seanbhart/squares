@@ -1,0 +1,433 @@
+.chatBox {
+  display: flex;
+  flex-direction: column;
+  background: white;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  width: 400px;
+  max-width: calc(100vw - 4rem);
+  height: 600px;
+  max-height: calc(100vh - 4rem);
+  z-index: 1000;
+}
+
+.chatBox.mobile {
+  position: relative;
+  bottom: auto;
+  right: auto;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  min-height: 400px;
+  border-radius: 0;
+  border: none;
+  border-top: 1px solid var(--foreground-tertiary);
+  box-shadow: none;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  background: white;
+  border-radius: 12px 12px 0 0;
+}
+
+.headerTitle {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+.headerTitle svg {
+  width: 20px;
+  height: 20px;
+}
+
+.headerActions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.iconButton {
+  background: none;
+  border: none;
+  padding: 0.25rem;
+  cursor: pointer;
+  color: #6c757d;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.iconButton:hover {
+  background: #f8f9fa;
+  color: #1a1a1a;
+}
+
+.iconButton svg {
+  width: 20px;
+  height: 20px;
+}
+
+.messages {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem;
+  background: #f8f9fa;
+}
+
+.placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  text-align: center;
+  color: #6c757d;
+  gap: 0.5rem;
+}
+
+.placeholder p {
+  margin: 0;
+}
+
+.examples {
+  font-size: 0.85rem;
+  font-style: italic;
+}
+
+.message {
+  display: flex;
+  max-width: 85%;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.userMessage {
+  align-self: flex-end;
+}
+
+.assistantMessage {
+  align-self: flex-start;
+}
+
+.messageContent {
+  padding: 0.75rem 1rem;
+  border-radius: 1rem;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  font-size: 0.9rem;
+}
+
+.userMessage .messageContent {
+  background: #3498db;
+  color: white;
+  border-bottom-right-radius: 0.25rem;
+}
+
+.assistantMessage .messageContent {
+  background: white;
+  color: #1a1a1a;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-bottom-left-radius: 0.25rem;
+}
+
+/* Markdown Styles */
+.messageContent :global(h1),
+.messageContent :global(h2),
+.messageContent :global(h3),
+.messageContent :global(h4),
+.messageContent :global(h5),
+.messageContent :global(h6) {
+  margin: 0.5em 0 0.3em;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.messageContent :global(h1) { font-size: 1.5em; }
+.messageContent :global(h2) { font-size: 1.3em; }
+.messageContent :global(h3) { font-size: 1.1em; }
+
+/* Reduce spacing between headings and lists */
+.messageContent :global(h1) + :global(ol),
+.messageContent :global(h2) + :global(ol),
+.messageContent :global(h3) + :global(ol),
+.messageContent :global(h4) + :global(ol),
+.messageContent :global(h5) + :global(ol),
+.messageContent :global(h6) + :global(ol),
+.messageContent :global(h1) + :global(ul),
+.messageContent :global(h2) + :global(ul),
+.messageContent :global(h3) + :global(ul),
+.messageContent :global(h4) + :global(ul),
+.messageContent :global(h5) + :global(ul),
+.messageContent :global(h6) + :global(ul),
+.messageContent :global(p) + :global(ol),
+.messageContent :global(p) + :global(ul) {
+  margin-top: 0.3em;
+}
+
+.messageContent :global(p) {
+  margin: 0.3em 0;
+  line-height: 1.5;
+}
+
+.messageContent :global(ul),
+.messageContent :global(ol) {
+  margin: 0.5em 0;
+  padding-left: 1.5em;
+}
+
+.messageContent :global(li) {
+  margin: 0.5em 0;
+  line-height: 1.6;
+}
+
+.messageContent :global(li):first-child {
+  margin-top: 0;
+}
+
+.messageContent :global(li):last-child {
+  margin-bottom: 0;
+}
+
+.messageContent :global(li) :global(p) {
+  margin: 0;
+  display: inline;
+}
+
+.messageContent :global(li) :global(p):first-child {
+  display: inline;
+}
+
+.messageContent :global(li) :global(h1),
+.messageContent :global(li) :global(h2),
+.messageContent :global(li) :global(h3),
+.messageContent :global(li) :global(h4),
+.messageContent :global(li) :global(h5),
+.messageContent :global(li) :global(h6) {
+  margin: 0.2em 0 0.2em;
+}
+
+/* Remove extra spacing from first/last elements */
+.messageContent :global(*:first-child) {
+  margin-top: 0;
+}
+
+.messageContent :global(*:last-child) {
+  margin-bottom: 0;
+}
+
+.messageContent :global(strong) {
+  font-weight: 600;
+}
+
+.messageContent :global(em) {
+  font-style: italic;
+}
+
+.messageContent :global(blockquote) {
+  margin: 0.5em 0;
+  padding-left: 1em;
+  border-left: 3px solid #3498db;
+  color: #6c757d;
+}
+
+.inlineCode {
+  background: rgba(52, 152, 219, 0.1);
+  color: #2980b9;
+  padding: 0.2em 0.4em;
+  border-radius: 3px;
+  font-family: 'Monaco', 'Menlo', 'Courier New', monospace;
+  font-size: 0.9em;
+}
+
+.codeBlock {
+  display: block;
+  background: #f8f9fa;
+  color: #1a1a1a;
+  padding: 0.75em 1em;
+  border-radius: 6px;
+  margin: 0.5em 0;
+  overflow-x: auto;
+  font-family: 'Monaco', 'Menlo', 'Courier New', monospace;
+  font-size: 0.85em;
+  line-height: 1.5;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.markdownLink {
+  color: #3498db;
+  text-decoration: underline;
+  transition: color 0.2s ease;
+}
+
+.markdownLink:hover {
+  color: #2980b9;
+}
+
+.messageContent :global(hr) {
+  margin: 1em 0;
+  border: none;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.messageContent :global(table) {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 0.5em 0;
+}
+
+.messageContent :global(th),
+.messageContent :global(td) {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 0.5em;
+  text-align: left;
+}
+
+.messageContent :global(th) {
+  background: #f8f9fa;
+  font-weight: 600;
+}
+
+.typing {
+  display: inline-block;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.inputForm {
+  display: flex;
+  gap: 0.75rem;
+  padding: 1rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  background: white;
+  border-radius: 0 0 12px 12px;
+}
+
+.mobile .inputForm {
+  border-radius: 0;
+}
+
+.input {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 0.75rem;
+  background: white;
+  color: #1a1a1a;
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+}
+
+.input:focus {
+  outline: none;
+  border-color: #3498db;
+  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+}
+
+.input:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.sendButton {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 0.75rem;
+  background: #3498db;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.sendButton:hover:not(:disabled) {
+  background: #2980b9;
+  transform: translateY(-1px);
+}
+
+.sendButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.minimizedButton {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.25rem;
+  background: #3498db;
+  color: white;
+  border: none;
+  border-radius: 50px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
+  transition: all 0.2s ease;
+  z-index: 1000;
+}
+
+.minimizedButton:hover {
+  background: #2980b9;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(52, 152, 219, 0.4);
+}
+
+.minimizedButton svg {
+  width: 20px;
+  height: 20px;
+}
+
+.minimizedText {
+  font-size: 0.95rem;
+}
+
+@media (max-width: 768px) {
+  .chatBox:not(.mobile) {
+    width: calc(100vw - 2rem);
+    right: 1rem;
+    bottom: 1rem;
+  }
+
+  .minimizedButton {
+    right: 1rem;
+    bottom: 1rem;
+  }
+}
