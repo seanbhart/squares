@@ -249,12 +249,17 @@
 
 @media (max-width: 768px) {
   .section {
-    padding: 1rem;
-    padding-bottom: 8rem; /* Extra space for mobile browser chrome */
+    padding: 4rem 1rem 8rem; /* Extra space for mobile browser chrome top and bottom */
+    min-height: 100dvh; /* Use dynamic viewport height */
+  }
+  
+  .content {
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
   }
   
   .scrollHint {
-    bottom: 1rem; /* Closer to bottom on mobile */
+    bottom: max(1rem, env(safe-area-inset-bottom)); /* Respect safe area */
   }
   
   .tamerReference {

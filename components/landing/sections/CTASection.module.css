@@ -135,7 +135,13 @@
 
 @media (max-width: 768px) {
   .section {
-    padding-bottom: 8rem; /* Extra space for mobile browser chrome */
+    padding: 4rem 1rem 8rem; /* Extra space for mobile browser chrome top and bottom */
+    min-height: 100dvh; /* Use dynamic viewport height */
+  }
+  
+  .content {
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
   }
   
   .ctaButton {
