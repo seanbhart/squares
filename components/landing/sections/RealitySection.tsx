@@ -5,9 +5,9 @@ import styles from './RealitySection.module.css';
 
 const DIMENSIONS = [
   { letter: 'T', word: 'Trade', color: '#9b59b6' },
-  { letter: 'A', word: 'Authority', color: '#3498db' },
-  { letter: 'M', word: 'Markets', color: '#e74c3c' },
-  { letter: 'E', word: 'Equality', color: '#f39c12' },
+  { letter: 'A', word: 'Abortion', color: '#3498db' },
+  { letter: 'M', word: 'Migration', color: '#e74c3c' },
+  { letter: 'E', word: 'Economics', color: '#f39c12' },
   { letter: 'R', word: 'Rights', color: '#2ecc71' },
 ];
 
