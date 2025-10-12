@@ -55,15 +55,34 @@ The new landing page uses a scroll-snap design to create a captivating, experien
 - Demonstrates complexity without overwhelming
 - NOW readers understand what the colors mean!
 
-### Section 5: Call to Action
-**Message:** Where do YOU belong?
+### Sections 5-9: Assessment (Seamless Flow)
+**Message:** Answer each dimension question
 
 **Visual:**
-- Large "Map My Squares" button
-- Key details: "2 minutes • 5 dimensions • Your unique pattern"
-- Privacy note: "No signup required"
+- One full-screen question per dimension
+- Progress dots at top (1 of 5, 2 of 5, etc.)
+- 7 colored options to choose from
+- Auto-advances to next question on selection
+- "Scroll down for next dimension" hint
 
-**Purpose:** Convert interest into action
+**Purpose:** 
+- Capture user's position on all 5 dimensions
+- Maintain engagement through the entire flow
+- No friction - just keep scrolling
+
+### Section 10: Results
+**Message:** Your Squares
+
+**Visual:**
+- 5 colored squares with T-A-M-E-R labels
+- Emoji signature: 🟪🟦🟩🟨🟧
+- Copy to clipboard button
+- "Start Over" and "See Detailed View" actions
+
+**Purpose:** 
+- Show completed pattern
+- Enable easy sharing
+- Provide next steps
 
 ## Technical Implementation
 
@@ -94,15 +113,21 @@ The new landing page uses a scroll-snap design to create a captivating, experien
 ## User Flow
 
 ```
-Landing (/) 
+Landing Page (/) - Single Seamless Scroll Experience
   ↓ Section 1: See problem (labels are broken)
   ↓ Section 2: See solution (5 dimensions)
   ↓ Section 3: Learn color scale (interactive)
   ↓ Section 4: Compare figures (interactive)
-  ↓ Section 5: Click "Map My Squares"
-Assessment (/assess)
-  ↓ Interact with sliders
-  ↓ Get results
+  ↓ Section 5: Trade (select from 7 options) ← Assessment begins
+  ↓ Section 6: Abortion (select from 7 options)
+  ↓ Section 7: Migration (select from 7 options)
+  ↓ Section 8: Economics (select from 7 options)
+  ↓ Section 9: Rights (select from 7 options)
+  ↓ Section 10: Results (copy emoji pattern) 🟪🟦🟩🟨🟧
+  ↓ Click "See Detailed View" (optional)
+Assessment Detail Page (/assess) - Full comparison interface
+  ↓ Compare with historical figures
+  ↓ See timelines and evolution
 Share Results
 ```
 
@@ -110,25 +135,32 @@ Share Results
 
 ```
 components/
-└── landing/
-    ├── LandingPage.tsx                  # Main container
-    ├── LandingPage.module.css           # Scroll-snap container styles
-    └── sections/
-        ├── ProblemSection.tsx           # Section 1: Labels are broken
-        ├── ProblemSection.module.css
-        ├── RealitySection.tsx           # Section 2: 5 dimensions
-        ├── RealitySection.module.css
-        ├── ColorScaleSection.tsx        # Section 3: Color scale explainer
-        ├── ColorScaleSection.module.css
-        ├── ShowDontTellSection.tsx      # Section 4: Figure comparison
-        ├── ShowDontTellSection.module.css
-        ├── CTASection.tsx               # Section 5: CTA
-        └── CTASection.module.css
+├── landing/
+│   ├── LandingPage.tsx                  # Main container (includes assessment)
+│   ├── LandingPage.module.css           # Scroll-snap container styles
+│   └── sections/
+│       ├── ProblemSection.tsx           # Section 1: Labels are broken
+│       ├── ProblemSection.module.css
+│       ├── RealitySection.tsx           # Section 2: 5 dimensions
+│       ├── RealitySection.module.css
+│       ├── ColorScaleSection.tsx        # Section 3: Color scale explainer
+│       ├── ColorScaleSection.module.css
+│       └── ShowDontTellSection.tsx      # Section 4: Figure comparison
+│           └── ShowDontTellSection.module.css
+└── assessment/
+    ├── AssessmentQuestion.tsx           # Single question component (Sections 5-9)
+    ├── AssessmentQuestion.module.css
+    ├── ResultsSection.tsx               # Results display (Section 10)
+    ├── ResultsSection.module.css
+    ├── ScrollAssessment.tsx             # Standalone assessment page (/map)
+    └── ScrollAssessment.module.css
 
 app/
-├── page.tsx                             # Home route → LandingPage
+├── page.tsx                             # Home route → LandingPage (full experience)
+├── map/
+│   └── page.tsx                         # Direct to assessment → ScrollAssessment
 └── assess/
-    ├── page.tsx                         # Assessment tool
+    ├── page.tsx                         # Detailed view with figures/timelines
     └── assess.module.css
 ```
 
@@ -144,15 +176,40 @@ app/
 - Build complexity gradually
 - Never overwhelm
 
-### 3. **Avoiding Political Triggers**
+### 3. **Frictionless Flow**
+- NO "Start Assessment" button needed
+- Education flows directly into action
+- Users are already engaged when they start answering
+- Removes decision fatigue ("Should I take this?")
+
+### 4. **Avoiding Political Triggers**
 - No left/right positioning
 - No partisan examples in hero
 - Figures presented as individuals, not categories
 
-### 4. **Minimal Cognitive Load**
+### 5. **Minimal Cognitive Load**
 - Large fonts, simple messages
 - Generous whitespace
 - Clear visual hierarchy
+
+## Key Innovation: Seamless Assessment Integration
+
+Traditional landing pages follow this pattern:
+```
+Education → CTA Button → New Page → Assessment
+```
+
+We eliminate the friction:
+```
+Education → Keep Scrolling → Assessment → Results
+```
+
+**Benefits:**
+- **Higher completion rates:** Users are already engaged
+- **No bounce:** No opportunity to leave between education and action
+- **Natural progression:** Feels like one continuous experience
+- **Mobile-friendly:** Scroll is the most natural mobile gesture
+- **Maintains momentum:** No interruption in the user journey
 
 ## Animations
 

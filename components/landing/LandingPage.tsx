@@ -1,15 +1,18 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import ProblemSection from './sections/ProblemSection';
 import RealitySection from './sections/RealitySection';
 import ColorScaleSection from './sections/ColorScaleSection';
 import ShowDontTellSection from './sections/ShowDontTellSection';
-import CTASection from './sections/CTASection';
+import AssessmentQuestion from '@/components/assessment/AssessmentQuestion';
+import ResultsSection from '@/components/assessment/ResultsSection';
+import { POLICIES } from '@/lib/tamer-config';
 import styles from './LandingPage.module.css';
 
 export default function LandingPage() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const [answers, setAnswers] = useState<Record<number, number>>({});
 
   useEffect(() => {
     // Optional: Add keyboard navigation
@@ -30,13 +33,51 @@ export default function LandingPage() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
 
+  const handleAnswerChange = (dimensionIndex: number, value: number) => {
+    setAnswers(prev => ({ ...prev, [dimensionIndex]: value }));
+    
+    // Auto-scroll to next section after a brief delay
+    setTimeout(() => {
+      if (containerRef.current) {
+        const sections = containerRef.current.querySelectorAll('section');
+        // Landing sections (4) + current question index + 1 for next
+        const nextSectionIndex = 4 + dimensionIndex + 1;
+        const nextSection = sections[nextSectionIndex];
+        if (nextSection) {
+          nextSection.scrollIntoView({ behavior: 'smooth' });
+        }
+      }
+    }, 300);
+  };
+
+  const completedIndices = Object.keys(answers).map(Number);
+  const letters = ['T', 'A', 'M', 'E', 'R'];
+
   return (
     <div ref={containerRef} className={styles.container}>
       <ProblemSection />
       <RealitySection />
       <ColorScaleSection />
       <ShowDontTellSection />
-      <CTASection />
+      
+      {/* Assessment Questions */}
+      {POLICIES.map((policy, index) => (
+        <AssessmentQuestion
+          key={policy.key}
+          policyKey={policy.key}
+          label={policy.label}
+          colorRamp={policy.colorRamp}
+          letter={letters[index]}
+          currentIndex={index}
+          totalQuestions={POLICIES.length}
+          value={answers[index] ?? 3}
+          onChange={(value) => handleAnswerChange(index, value)}
+          completedIndices={completedIndices}
+        />
+      ))}
+      
+      {/* Results */}
+      <ResultsSection answers={answers} />
     </div>
   );
 }

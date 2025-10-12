@@ -7,8 +7,8 @@ export default function CTASection() {
   const router = useRouter();
 
   const handleStartAssessment = () => {
-    // Navigate to the main assessment page
-    router.push('/assess');
+    // Navigate to the scroll-snap assessment
+    router.push('/map');
   };
 
   return (

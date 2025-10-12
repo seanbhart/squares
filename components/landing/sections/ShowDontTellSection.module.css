@@ -3,10 +3,11 @@
   scroll-snap-align: start;
   scroll-snap-stop: always;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   background: var(--background);
   padding: 2rem;
+  padding-top: 4rem;
   overflow-y: auto;
 }
 

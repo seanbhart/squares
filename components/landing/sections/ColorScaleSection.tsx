@@ -24,11 +24,7 @@ export default function ColorScaleSection() {
                 key={index}
                 className={styles.colorBlock}
                 style={{ backgroundColor: color }}
-              >
-                <span className={styles.colorEmoji}>
-                  {['🟪', '🟦', '🟩', '🟨', '🟧', '🟥', '⬛'][index]}
-                </span>
-              </div>
+              />
             ))}
           </div>
           
@@ -48,22 +44,45 @@ export default function ColorScaleSection() {
             See what the scale means for each dimension:
           </p>
           <div className={styles.dimensionButtons}>
-            {POLICIES.map((policy, index) => (
-              <button
-                key={policy.key}
-                className={styles.dimensionButton}
-                data-active={selectedDimension === index}
-                onClick={() => setSelectedDimension(index)}
-              >
-                <span
-                  className={styles.buttonSquare}
-                  style={{ backgroundColor: COLOR_RAMP[3] }}
+            {POLICIES.map((policy, index) => {
+              // Format labels to be consistent
+              const getDisplayLabel = (label: string) => {
+                if (label === 'Migration / Immigration') {
+                  return { line1: 'Migration /', line2: 'Immigration' };
+                }
+                if (label === 'Rights (civil liberties)') {
+                  return { line1: 'Rights', line2: '(civil liberties)' };
+                }
+                return { line1: label, line2: null };
+              };
+              
+              const displayLabel = getDisplayLabel(policy.label);
+              
+              return (
+                <button
+                  key={policy.key}
+                  className={styles.dimensionButton}
+                  data-active={selectedDimension === index}
+                  onClick={() => setSelectedDimension(index)}
                 >
-                  {dimensionLetters[index]}
-                </span>
-                <span className={styles.buttonLabel}>{policy.label}</span>
-              </button>
-            ))}
+                  <span
+                    className={styles.buttonSquare}
+                    style={{ backgroundColor: COLOR_RAMP[3] }}
+                  >
+                    {dimensionLetters[index]}
+                  </span>
+                  <span className={styles.buttonLabel}>
+                    {displayLabel.line1}
+                    {displayLabel.line2 && (
+                      <>
+                        <br />
+                        {displayLabel.line2}
+                      </>
+                    )}
+                  </span>
+                </button>
+              );
+            })}
           </div>
         </div>
 
