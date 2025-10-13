@@ -4,6 +4,7 @@ import { useEffect, useState, useCallback } from 'react';
 import { sdk } from '@farcaster/miniapp-sdk';
 import AssessmentSlides from './AssessmentSlides';
 import Leaderboard from './Leaderboard';
+import LeaderboardPlaceholder from './LeaderboardPlaceholder';
 import StickySpectrum from './StickySpectrum';
 import styles from './MiniApp.module.css';
 
@@ -260,6 +261,9 @@ export default function MiniAppClient() {
 
       {/* Leaderboard Section - Only visible if user has revealed their spectrum */}
       {isPublic && <Leaderboard currentFid={user?.fid} />}
+      
+      {/* Placeholder - Shows when user hasn't revealed spectrum or doesn't have one */}
+      {!isPublic && <LeaderboardPlaceholder />}
     </div>
   );
 }
