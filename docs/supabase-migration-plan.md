@@ -444,6 +444,31 @@ $$ LANGUAGE plpgsql;
    - Monitor for errors
    - Gradual rollout with feature flag
 
+4. **CI/CD Setup**
+   - Configure GitHub Actions for auto-deployment
+   - Set up Supabase access token
+   - Test automatic deployment workflow
+   - See `docs/supabase-ci-cd-setup.md` for details
+
+---
+
+## Continuous Deployment
+
+Edge Functions can be automatically deployed on git commits (similar to Vercel):
+
+### Quick Setup
+1. Get Supabase access token from dashboard
+2. Add `SUPABASE_ACCESS_TOKEN` and `SUPABASE_PROJECT_ID` to GitHub Secrets
+3. Workflow at `.github/workflows/deploy-supabase.yml` handles deployment
+
+### Features
+- ✅ Auto-deploys on push to `main` when functions change
+- ✅ Manual deployment via GitHub Actions UI
+- ✅ Deployment logs visible in GitHub Actions
+- ✅ Can deploy to multiple environments (staging/production)
+
+See **docs/supabase-ci-cd-setup.md** for complete setup guide.
+
 ---
 
 ## Environment Variables
