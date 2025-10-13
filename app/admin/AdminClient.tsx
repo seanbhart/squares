@@ -196,16 +196,21 @@ export default function AdminClient({ initialUser }: AdminClientProps) {
     e.preventDefault();
     if (!newFigureName.trim()) return;
 
+    const figureName = newFigureName.trim();
+    
     try {
       setIsAddingFigure(true);
-      const { requestId } = await addNewFigure(newFigureName, newFigureContext);
-      showMessage('success', `✓ Analysis started for ${newFigureName}! (Request ID: ${requestId})`);
+      showMessage('success', `🔄 Starting analysis for ${figureName}...`);
+      
+      const { requestId } = await addNewFigure(figureName, newFigureContext);
+      
+      showMessage('success', `✓ Analysis completed for ${figureName}! (Request ID: ${requestId})`);
       setNewFigureName('');
       setNewFigureContext('');
-      setTimeout(() => loadData(), 2000);
+      setTimeout(() => loadData(), 1000);
     } catch (error) {
       console.error('Failed to add figure:', error);
-      showMessage('error', 'Failed to add figure');
+      showMessage('error', `Failed to add ${figureName}: ${error instanceof Error ? error.message : 'Unknown error'}`);
     } finally {
       setIsAddingFigure(false);
     }

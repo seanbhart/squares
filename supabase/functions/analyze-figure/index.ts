@@ -39,7 +39,7 @@ When providing a TAME-R assessment, format it as JSON:
   "spectrum": [trade, abortion, migration, economics, rights],
   "confidence": 75,
   "reasoning": "detailed explanation with specific evidence",
-  "lifespan": "1809-1865" OR "b. 1961" for living figures,
+  "lifespan": "1809-1865",
   "timeline": [
     {
       "label": "Period description",
@@ -49,11 +49,16 @@ When providing a TAME-R assessment, format it as JSON:
   ]
 }
 
-**Lifespan format:**
-- For deceased figures: "YYYY-YYYY" (e.g., "1809-1865")
-- For living figures: "b. YYYY" (e.g., "b. 1961")
+**CRITICAL - Lifespan format (ALWAYS include this field):**
+- For deceased historical figures: "YYYY-YYYY" (e.g., "1809-1865", "1918-1963")
+- For living persons: "b. YYYY" (e.g., "b. 1961", "b. 1942")
 - If birth year unknown but deceased: "d. YYYY" (e.g., "d. 2010")
-- If completely unknown: "Unknown"
+- ONLY use "Unknown" if you truly cannot find ANY birth/death information
+
+**IMPORTANT**: Most historical and public figures have documented birth/death years. Research carefully before using "Unknown". For example:
+- Abraham Lincoln: "1809-1865"
+- Barack Obama: "b. 1961"
+- Martin Luther King Jr.: "1929-1968"
 
 The timeline should include 2-4 key periods in the figure's career that show evolution or consistency in their positions.
 
