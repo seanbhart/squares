@@ -1,11 +1,11 @@
 export const COLOR_RAMP = [
-  "#7c3aed",
-  "#2563eb",
-  "#16a34a",
-  "#eab308",
-  "#f97316",
-  "#dc2626",
-  "#111827",
+  "#9b59b6", // Purple (Trade) - more muted violet
+  "#3498db", // Blue (Abortion) - softer blue
+  "#2ecc71", // Green - muted green
+  "#f39c12", // Yellow/Orange (Economics) - warm amber
+  "#e67e22", // Orange - softer orange
+  "#e74c3c", // Red (Migration) - muted red/coral
+  "#34495e", // Dark slate - softer than black
 ] as const;
 
 export const EMOJI_SQUARES = ["🟪", "🟦", "🟩", "🟨", "🟧", "🟥", "⬛️"] as const;

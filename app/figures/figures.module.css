@@ -25,42 +25,45 @@
   to { transform: rotate(360deg); }
 }
 
-.loadingEmoji {
+.loadingSquare {
   position: absolute;
-  font-size: 2rem;
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
   top: 50%;
   left: 50%;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
-/* Position emojis in a perfect circle with corners pointing inward */
-/* 7 emojis = 360° / 7 = 51.43° intervals */
+/* Position squares in a perfect circle with corners pointing inward */
+/* 7 squares = 360° / 7 = 51.43° intervals */
 /* Each rotated 45° so corner points toward center */
 
-.loadingEmoji:nth-child(1) {
+.loadingSquare:nth-child(1) {
   transform: translate(-50%, -50%) rotate(0deg) translateY(-50px) rotate(45deg);
 }
 
-.loadingEmoji:nth-child(2) {
+.loadingSquare:nth-child(2) {
   transform: translate(-50%, -50%) rotate(51.43deg) translateY(-50px) rotate(45deg);
 }
 
-.loadingEmoji:nth-child(3) {
+.loadingSquare:nth-child(3) {
   transform: translate(-50%, -50%) rotate(102.86deg) translateY(-50px) rotate(45deg);
 }
 
-.loadingEmoji:nth-child(4) {
+.loadingSquare:nth-child(4) {
   transform: translate(-50%, -50%) rotate(154.29deg) translateY(-50px) rotate(45deg);
 }
 
-.loadingEmoji:nth-child(5) {
+.loadingSquare:nth-child(5) {
   transform: translate(-50%, -50%) rotate(205.71deg) translateY(-50px) rotate(45deg);
 }
 
-.loadingEmoji:nth-child(6) {
+.loadingSquare:nth-child(6) {
   transform: translate(-50%, -50%) rotate(257.14deg) translateY(-50px) rotate(45deg);
 }
 
-.loadingEmoji:nth-child(7) {
+.loadingSquare:nth-child(7) {
   transform: translate(-50%, -50%) rotate(308.57deg) translateY(-50px) rotate(45deg);
 }
 

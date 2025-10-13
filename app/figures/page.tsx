@@ -3,7 +3,7 @@
 import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
 import styles from "./figures.module.css";
-import { POLICIES, getScoreColor, getEmojiSquare } from "@/lib/tamer-config";
+import { POLICIES, getScoreColor, getEmojiSquare, COLOR_RAMP } from "@/lib/tamer-config";
 import { ClipboardIcon, CheckIcon, MessageCircleIcon } from "@/components/icons";
 import FiguresChatBox, { type Message } from "@/components/FiguresChatBox";
 import type { Figure, FiguresData } from "@/lib/api/figures";
@@ -240,13 +240,13 @@ export default function FiguresPage() {
       <main className={styles.main}>
         <div className={styles.loadingContainer}>
           <div className={styles.loadingSpinner}>
-            <span className={styles.loadingEmoji}>🟪</span>
-            <span className={styles.loadingEmoji}>🟦</span>
-            <span className={styles.loadingEmoji}>🟩</span>
-            <span className={styles.loadingEmoji}>🟨</span>
-            <span className={styles.loadingEmoji}>🟧</span>
-            <span className={styles.loadingEmoji}>🟥</span>
-            <span className={styles.loadingEmoji}>⬛</span>
+            {COLOR_RAMP.map((color, index) => (
+              <div
+                key={index}
+                className={styles.loadingSquare}
+                style={{ backgroundColor: color }}
+              />
+            ))}
           </div>
         </div>
       </main>
