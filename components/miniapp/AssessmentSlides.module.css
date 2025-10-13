@@ -499,6 +499,175 @@
   margin-top: 0;
 }
 
+/* Dark Mode for Results Slide */
+.darkSlide {
+  background: #1a1a1a;
+  color: #e5e5e5;
+}
+
+.darkSlide .headline {
+  color: #ffffff;
+}
+
+.darkSlide .signatureBox {
+  background: rgba(30, 30, 30, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.darkSlide .emojiLabel {
+  color: #a3a3a3;
+}
+
+.darkSlide .dimensionReference {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.darkSlide .refLabel {
+  color: #737373;
+}
+
+.darkSlide .primaryButton {
+  background: #ffffff;
+  color: #1a1a1a;
+  border-color: #ffffff;
+}
+
+.darkSlide .primaryButton:hover {
+  background: #f5f5f5;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.2);
+}
+
+.darkSlide .secondaryButton {
+  background: transparent;
+  color: #e5e5e5;
+  border: 1.5px solid #525252;
+}
+
+.darkSlide .secondaryButton:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: #737373;
+}
+
+.darkSlide .dimensionLabel {
+  color: #e5e5e5;
+}
+
+.darkSlide .subtext {
+  color: #a3a3a3;
+}
+
+.darkSlide .closeButton {
+  color: #737373;
+}
+
+.darkSlide .closeButton:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #e5e5e5;
+}
+
+/* Dark mode for Step 1 (Spectrum Explanation) */
+.darkSlide .scaleLabels {
+  color: #a3a3a3;
+}
+
+.darkSlide .selectorPrompt {
+  color: #a3a3a3;
+}
+
+.darkSlide .selectorButton {
+  background: rgba(30, 30, 30, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #e5e5e5;
+}
+
+.darkSlide .selectorButton:hover {
+  background: rgba(40, 40, 40, 0.9);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+.darkSlide .selectorButton.active {
+  background: rgba(52, 152, 219, 0.2);
+  border-color: #3498db;
+  color: #ffffff;
+}
+
+.darkSlide .selectorSquare {
+  background: rgba(50, 50, 50, 0.8);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+.darkSlide .selectorSquare span {
+  color: #e5e5e5;
+}
+
+.darkSlide .exampleBox {
+  background: rgba(30, 30, 30, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.darkSlide .exampleBox h3 {
+  color: #ffffff;
+}
+
+.darkSlide .positionItem span:last-child {
+  color: #e5e5e5;
+}
+
+.darkSlide .textButton {
+  color: #a3a3a3;
+}
+
+.darkSlide .textButton:hover {
+  color: #ffffff;
+}
+
+/* Dark mode for Step 2 (Assessment Questions) */
+.darkSlide .dimensionBadge {
+  background: rgba(50, 50, 50, 0.8);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+.darkSlide .dimensionBadge span {
+  color: #e5e5e5;
+}
+
+.darkSlide .dimensionHeader h2 {
+  color: #ffffff;
+}
+
+.darkSlide .dimensionHeader p {
+  color: #a3a3a3;
+}
+
+.darkSlide .optionCard {
+  background: rgba(30, 30, 30, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.darkSlide .optionCard:hover {
+  background: rgba(40, 40, 40, 0.7);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+.darkSlide .optionCard.selected {
+  background: rgba(52, 152, 219, 0.25);
+  border-color: #3498db;
+  box-shadow: 0 2px 12px rgba(52, 152, 219, 0.4);
+}
+
+.darkSlide .optionLabel {
+  color: #e5e5e5;
+}
+
+.darkSlide .interventionScale {
+  color: #737373;
+}
+
+.darkSlide .progress {
+  color: #a3a3a3;
+}
+
 @media (max-width: 640px) {
   .slide {
     padding: 1rem;

@@ -49,14 +49,14 @@ export default function Leaderboard({ currentFid }: LeaderboardProps) {
 
   if (loading) {
     return (
-      <div className={styles.container}>
+      <div className={`${styles.container} ${styles.darkMode}`}>
         <div className={styles.loading}>Loading leaderboard...</div>
       </div>
     );
   }
 
   return (
-    <div className={styles.container}>
+    <div className={`${styles.container} ${styles.darkMode}`}>
       <h2 className={styles.title}>Latest Squares</h2>
 
       <div className={styles.leaderboardList}>

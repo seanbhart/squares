@@ -104,3 +104,52 @@
   background: rgba(87, 83, 78, 0.1);
 }
 
+/* Dark Mode */
+.darkMode {
+  background: #0a0a0a;
+  min-height: 100vh;
+  padding-top: 1rem;
+  padding-bottom: 2rem;
+}
+
+.darkMode .loading {
+  color: #ffffff;
+}
+
+.darkMode .spinner {
+  border-color: rgba(255, 255, 255, 0.1);
+  border-top-color: #ffffff;
+}
+
+.darkMode .modalContent {
+  background: #1a1a1a;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.darkMode .modalContent h2 {
+  color: #ffffff;
+}
+
+.darkMode .modalContent p {
+  color: #a3a3a3;
+}
+
+.darkMode .primaryButton {
+  background: #ffffff;
+  color: #1a1a1a;
+}
+
+.darkMode .primaryButton:hover {
+  background: #f5f5f5;
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.2);
+}
+
+.darkMode .secondaryButton {
+  color: #e5e5e5;
+  border-color: #525252;
+}
+
+.darkMode .secondaryButton:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: #737373;
+}

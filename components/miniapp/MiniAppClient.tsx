@@ -76,7 +76,9 @@ export default function MiniAppClient() {
             };
             setExistingSpectrum(spectrum);
             setHasCompletedOnce(true);
+            setIsPublic(data.spectrum.is_public || false);
             console.log('[Squares] Existing spectrum loaded:', spectrum);
+            console.log('[Squares] is_public:', data.spectrum.is_public);
           } else {
             // New user, show assessment
             setHasCompletedOnce(false);
@@ -177,6 +179,7 @@ export default function MiniAppClient() {
   };
 
   const handleVisibilityChange = useCallback(async (publicVisibility: boolean) => {
+    console.log('[Squares] Visibility changed to:', publicVisibility);
     setIsPublic(publicVisibility);
   }, []);
 
@@ -195,7 +198,7 @@ export default function MiniAppClient() {
 
   if (loading) {
     return (
-      <div className={styles.container}>
+      <div className={`${styles.container} ${styles.darkMode}`}>
         <div className={styles.loading}>
           <div className={styles.spinner}></div>
           <p>Loading...</p>
@@ -205,7 +208,7 @@ export default function MiniAppClient() {
   }
 
   return (
-    <div className={styles.container}>
+    <div className={`${styles.container} ${styles.darkMode}`}>
       {/* Update Prompt Modal */}
       {showUpdatePrompt && (
         <div className={styles.modal}>
@@ -229,6 +232,7 @@ export default function MiniAppClient() {
         <AssessmentSlides
           initialSpectrum={existingSpectrum || undefined}
           initialStep={existingSpectrum ? 3 : 0}
+          initialIsPublic={isPublic}
           onComplete={handleAssessmentComplete}
           onVisibilityChange={handleVisibilityChange}
         />

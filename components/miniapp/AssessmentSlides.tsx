@@ -6,6 +6,7 @@ import styles from './AssessmentSlides.module.css';
 interface AssessmentSlidesProps {
   initialSpectrum?: UserSpectrum;
   initialStep?: number;
+  initialIsPublic?: boolean;
   onComplete: (spectrum: UserSpectrum, isPublic: boolean) => void;
   onVisibilityChange?: (isPublic: boolean) => void;
 }
@@ -47,12 +48,12 @@ function getEmojiSquare(value: number): string {
   return emojis[value] || '🟨';
 }
 
-export default function AssessmentSlides({ initialSpectrum, initialStep = 0, onComplete, onVisibilityChange }: AssessmentSlidesProps) {
+export default function AssessmentSlides({ initialSpectrum, initialStep = 0, initialIsPublic = false, onComplete, onVisibilityChange }: AssessmentSlidesProps) {
   const [step, setStep] = useState(initialStep);
   const [currentDimension, setCurrentDimension] = useState(0);
   const [selectedSpectrumDimension, setSelectedSpectrumDimension] = useState(0);
-  const [isPublic, setIsPublic] = useState(false);
   const [autoSaved, setAutoSaved] = useState(false);
+  const [isPublic, setIsPublic] = useState(initialIsPublic);
   const [hasInitialSpectrum] = useState(!!initialSpectrum);
   const [spectrum, setSpectrum] = useState<SpectrumState>(initialSpectrum ? {
     trade: initialSpectrum.trade,
@@ -72,10 +73,10 @@ export default function AssessmentSlides({ initialSpectrum, initialStep = 0, onC
   useEffect(() => {
     if (step === 3 && !autoSaved && spectrum.trade !== null && spectrum.abortion !== null && 
         spectrum.migration !== null && spectrum.economics !== null && spectrum.rights !== null) {
-      onComplete(spectrum as UserSpectrum, false); // Save as private by default
+      onComplete(spectrum as UserSpectrum, isPublic); // Preserve existing isPublic status
       setAutoSaved(true);
     }
-  }, [step, spectrum, autoSaved, onComplete]);
+  }, [step, spectrum, autoSaved, onComplete, isPublic]);
 
   const handleToggleVisibility = () => {
     const newVisibility = !isPublic;
@@ -139,7 +140,7 @@ export default function AssessmentSlides({ initialSpectrum, initialStep = 0, onC
     switch (step) {
       case 0:
         return (
-          <div className={styles.slide}>
+          <div className={`${styles.slide} ${styles.darkSlide}`}>
             {hasInitialSpectrum && (
               <button onClick={handleClose} className={styles.closeButton} aria-label="Close">
                 ✕
@@ -178,7 +179,7 @@ export default function AssessmentSlides({ initialSpectrum, initialStep = 0, onC
         const colors = ['#9b59b6', '#3498db', '#e74c3c', '#f39c12', '#2ecc71'];
         
         return (
-          <div className={styles.slide}>
+          <div className={`${styles.slide} ${styles.darkSlide}`}>
             <button onClick={handleClose} className={styles.closeButton} aria-label="Close">
               ✕
             </button>
@@ -259,7 +260,7 @@ export default function AssessmentSlides({ initialSpectrum, initialStep = 0, onC
         };
         
         return (
-          <div className={styles.slide}>
+          <div className={`${styles.slide} ${styles.darkSlide}`}>
             <button onClick={handleClose} className={styles.closeButton} aria-label="Close">
               ✕
             </button>
@@ -324,7 +325,7 @@ export default function AssessmentSlides({ initialSpectrum, initialStep = 0, onC
         });
         
         return (
-          <div className={styles.slide}>
+          <div className={`${styles.slide} ${styles.darkSlide}`}>
             <h2 className={styles.headline}>Your Political Spectrum</h2>
             
             <div className={styles.signatureBox}>

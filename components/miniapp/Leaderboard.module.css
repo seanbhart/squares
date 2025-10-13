@@ -173,6 +173,48 @@
   font-size: 0.875rem;
 }
 
+/* Dark Mode for Leaderboard */
+.darkMode {
+  background: transparent;
+  margin-top: 1rem;
+  padding-top: 0;
+}
+
+.darkMode .title {
+  color: #ffffff;
+}
+
+.darkMode .entry {
+  background: rgba(30, 30, 30, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.darkMode .entry:hover {
+  background: rgba(40, 40, 40, 0.9);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+}
+
+.darkMode .entry.currentUser {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.darkMode .displayName {
+  color: #ffffff;
+}
+
+.darkMode .username {
+  color: #a3a3a3;
+}
+
+.darkMode .loading {
+  color: #a3a3a3;
+}
+
+.darkMode .empty {
+  color: #a3a3a3;
+}
+
 @media (max-width: 640px) {
   .entry {
     gap: 0.5rem;
