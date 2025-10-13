@@ -2,6 +2,14 @@
 
 Official React component for embedding [squares.vote](https://squares.vote) widgets.
 
+## What's New in v2.3.1
+
+🎯 **Enhanced Spectrum Slide** - Improved dimension exploration:
+- **Interactive dimension selector** - Click each TAMER dimension to see its spectrum
+- **Dynamic spectrum display** - Shows position labels for the selected dimension
+- **Neutral selection badges** - Uses warm yellow/orange color for selection screens
+- **Better visual hierarchy** - Clearer distinction between explanation and selection slides
+
 ## Installation
 
 ```bash
