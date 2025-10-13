@@ -468,8 +468,8 @@ function SquaresEmbedReact({
   buttonText = "Map Your Squares",
   align = "center",
   maxWidth,
-  primaryColor = "#4285f4",
-  borderRadius = "12px",
+  primaryColor = "#57534e",
+  borderRadius = "16px",
   shadow = true
 }) {
   const [showWidget, setShowWidget] = useState2(false);
@@ -493,22 +493,23 @@ function SquaresEmbedReact({
           backgroundColor: primaryColor,
           color: "white",
           border: "none",
-          padding: "12px 24px",
-          fontSize: "16px",
+          padding: "clamp(12px, 2.5vw, 16px) clamp(20px, 4vw, 32px)",
+          fontSize: "clamp(0.9375rem, 2vw, 1.0625rem)",
           fontWeight: 600,
           borderRadius,
           cursor: "pointer",
-          boxShadow: shadow ? "0 2px 8px rgba(0,0,0,0.1)" : "none",
+          boxShadow: shadow ? "0 1px 3px rgba(0, 0, 0, 0.08)" : "none",
           transition: "all 0.2s ease",
-          width: "100%"
+          width: "100%",
+          fontFamily: '"Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif'
         },
         onMouseOver: (e) => {
-          e.currentTarget.style.opacity = "0.9";
-          e.currentTarget.style.transform = "translateY(-1px)";
+          e.currentTarget.style.transform = "translateY(-2px)";
+          e.currentTarget.style.boxShadow = shadow ? "0 4px 12px rgba(0, 0, 0, 0.12)" : "none";
         },
         onMouseOut: (e) => {
-          e.currentTarget.style.opacity = "1";
           e.currentTarget.style.transform = "translateY(0)";
+          e.currentTarget.style.boxShadow = shadow ? "0 1px 3px rgba(0, 0, 0, 0.08)" : "none";
         }
       },
       buttonText
@@ -518,27 +519,28 @@ function SquaresEmbedReact({
     "div",
     {
       style: {
-        backgroundColor: "white",
-        border: "1px solid #e5e7eb",
+        background: "linear-gradient(180deg, #ffffff 0%, #f9fafb 100%)",
+        border: "1px solid rgba(0, 0, 0, 0.06)",
         borderRadius,
-        padding: "24px",
-        boxShadow: shadow ? "0 4px 12px rgba(0,0,0,0.1)" : "none"
+        padding: "clamp(20px, 4vw, 32px)",
+        boxShadow: shadow ? "0 4px 12px rgba(0, 0, 0, 0.08)" : "none",
+        fontFamily: '"Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif'
       }
     },
-    /* @__PURE__ */ React2.createElement("div", { style: { marginBottom: "20px" } }, /* @__PURE__ */ React2.createElement("h3", { style: { margin: "0 0 8px 0", fontSize: "20px", fontWeight: 600, color: "#111827" } }, "Map Your Political Positions"), /* @__PURE__ */ React2.createElement("p", { style: { margin: 0, fontSize: "14px", color: "#6b7280", lineHeight: "1.5" } }, "Use the TAME-R framework to visualize where you stand on 5 key policy dimensions")),
+    /* @__PURE__ */ React2.createElement("div", { style: { marginBottom: "24px" } }, /* @__PURE__ */ React2.createElement("h3", { style: { margin: "0 0 12px 0", fontSize: "clamp(1.375rem, 3vw, 1.75rem)", fontWeight: 700, color: "#292524", lineHeight: 1.2 } }, "Map Your Political Positions"), /* @__PURE__ */ React2.createElement("p", { style: { margin: 0, fontSize: "clamp(0.9375rem, 2vw, 1rem)", color: "#78716c", lineHeight: "1.5" } }, "Use the TAME-R framework to visualize where you stand on 5 key policy dimensions")),
     /* @__PURE__ */ React2.createElement(
       "div",
       {
         style: {
-          backgroundColor: "#f9fafb",
-          border: "1px solid #e5e7eb",
-          borderRadius: "8px",
-          padding: "16px",
-          marginBottom: "20px"
+          background: "rgba(249, 250, 251, 0.6)",
+          border: "1px solid rgba(0, 0, 0, 0.06)",
+          borderRadius: "12px",
+          padding: "clamp(16px, 3vw, 20px)",
+          marginBottom: "24px"
         }
       },
-      /* @__PURE__ */ React2.createElement("div", { style: { marginBottom: "12px", display: "flex", alignItems: "center", gap: "8px" } }, /* @__PURE__ */ React2.createElement("span", { style: { fontSize: "12px", fontWeight: 600, color: "#6b7280", textTransform: "uppercase" } }, "Example:"), /* @__PURE__ */ React2.createElement("span", { style: { fontSize: "14px", fontWeight: 600, color: "#111827" } }, "Martin Luther King Jr.")),
-      /* @__PURE__ */ React2.createElement("div", { style: { textAlign: "center" } }, /* @__PURE__ */ React2.createElement("div", { style: { fontSize: "clamp(24px, 6vw, 32px)", marginBottom: "8px", display: "flex", justifyContent: "center", gap: "4px" } }, /* @__PURE__ */ React2.createElement("span", null, "\u{1F7E9}"), /* @__PURE__ */ React2.createElement("span", null, "\u{1F7E6}"), /* @__PURE__ */ React2.createElement("span", null, "\u{1F7E9}"), /* @__PURE__ */ React2.createElement("span", null, "\u{1F7E7}"), /* @__PURE__ */ React2.createElement("span", null, "\u{1F7EA}")), /* @__PURE__ */ React2.createElement("div", { style: { fontSize: "10px", color: "#6b7280", display: "flex", justifyContent: "center", gap: "8px", flexWrap: "wrap" } }, /* @__PURE__ */ React2.createElement("span", null, "Trade"), /* @__PURE__ */ React2.createElement("span", null, "Abortion"), /* @__PURE__ */ React2.createElement("span", null, "Migration"), /* @__PURE__ */ React2.createElement("span", null, "Economics"), /* @__PURE__ */ React2.createElement("span", null, "Rights")))
+      /* @__PURE__ */ React2.createElement("div", { style: { marginBottom: "12px", display: "flex", alignItems: "center", gap: "8px", flexWrap: "wrap" } }, /* @__PURE__ */ React2.createElement("span", { style: { fontSize: "0.8125rem", fontWeight: 600, color: "#a8a29e", textTransform: "uppercase", letterSpacing: "0.05em" } }, "EXAMPLE:"), /* @__PURE__ */ React2.createElement("span", { style: { fontSize: "clamp(0.9375rem, 2vw, 1rem)", fontWeight: 600, color: "#292524" } }, "Martin Luther King Jr.")),
+      /* @__PURE__ */ React2.createElement("div", { style: { textAlign: "center" } }, /* @__PURE__ */ React2.createElement("div", { style: { fontSize: "clamp(2rem, 6vw, 2.5rem)", marginBottom: "12px", display: "flex", justifyContent: "center", gap: "clamp(4px, 1vw, 8px)" } }, /* @__PURE__ */ React2.createElement("span", null, "\u{1F7E9}"), /* @__PURE__ */ React2.createElement("span", null, "\u{1F7E6}"), /* @__PURE__ */ React2.createElement("span", null, "\u{1F7E9}"), /* @__PURE__ */ React2.createElement("span", null, "\u{1F7E7}"), /* @__PURE__ */ React2.createElement("span", null, "\u{1F7EA}")), /* @__PURE__ */ React2.createElement("div", { style: { fontSize: "0.6875rem", color: "#78716c", display: "flex", justifyContent: "center", gap: "clamp(8px, 2vw, 16px)", flexWrap: "wrap", fontWeight: 500 } }, /* @__PURE__ */ React2.createElement("span", null, "Trade"), /* @__PURE__ */ React2.createElement("span", null, "Abortion"), /* @__PURE__ */ React2.createElement("span", null, "Migration"), /* @__PURE__ */ React2.createElement("span", null, "Economics"), /* @__PURE__ */ React2.createElement("span", null, "Rights")))
     ),
     /* @__PURE__ */ React2.createElement(
       "button",
@@ -548,27 +550,28 @@ function SquaresEmbedReact({
           backgroundColor: primaryColor,
           color: "white",
           border: "none",
-          padding: "12px 24px",
-          fontSize: "16px",
+          padding: "clamp(12px, 2.5vw, 16px) clamp(20px, 4vw, 32px)",
+          fontSize: "clamp(0.9375rem, 2vw, 1.0625rem)",
           fontWeight: 600,
-          borderRadius: "8px",
+          borderRadius: "12px",
           cursor: "pointer",
           width: "100%",
-          marginBottom: "12px",
-          transition: "all 0.2s ease"
+          marginBottom: "16px",
+          transition: "all 0.2s ease",
+          boxShadow: "0 1px 3px rgba(0, 0, 0, 0.08)"
         },
         onMouseOver: (e) => {
-          e.currentTarget.style.opacity = "0.9";
-          e.currentTarget.style.transform = "translateY(-1px)";
+          e.currentTarget.style.transform = "translateY(-2px)";
+          e.currentTarget.style.boxShadow = "0 4px 12px rgba(0, 0, 0, 0.12)";
         },
         onMouseOut: (e) => {
-          e.currentTarget.style.opacity = "1";
           e.currentTarget.style.transform = "translateY(0)";
+          e.currentTarget.style.boxShadow = "0 1px 3px rgba(0, 0, 0, 0.08)";
         }
       },
       buttonText
     ),
-    /* @__PURE__ */ React2.createElement("p", { style: { margin: 0, fontSize: "12px", color: "#9ca3af", textAlign: "center" } }, "Takes less than 2 minutes \xB7 Free & open source")
+    /* @__PURE__ */ React2.createElement("p", { style: { margin: 0, fontSize: "0.8125rem", color: "#a8a29e", textAlign: "center", lineHeight: 1.5 } }, "Takes less than 2 minutes \xB7 Free & open source")
   )), showWidget && /* @__PURE__ */ React2.createElement(SquaresWidget, { onClose: () => setShowWidget(false), primaryColor }));
 }
 export {
