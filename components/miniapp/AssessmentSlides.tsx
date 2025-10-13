@@ -7,8 +7,10 @@ interface AssessmentSlidesProps {
   initialSpectrum?: UserSpectrum;
   initialStep?: number;
   initialIsPublic?: boolean;
+  hideSpectrumCard?: boolean;
   onComplete: (spectrum: UserSpectrum, isPublic: boolean) => void;
   onVisibilityChange?: (isPublic: boolean) => void;
+  onStepChange?: (step: number) => void;
 }
 
 interface UserSpectrum {
@@ -48,7 +50,7 @@ function getEmojiSquare(value: number): string {
   return emojis[value] || '🟨';
 }
 
-export default function AssessmentSlides({ initialSpectrum, initialStep = 0, initialIsPublic = false, onComplete, onVisibilityChange }: AssessmentSlidesProps) {
+export default function AssessmentSlides({ initialSpectrum, initialStep = 0, initialIsPublic = false, hideSpectrumCard = false, onComplete, onVisibilityChange, onStepChange }: AssessmentSlidesProps) {
   const [step, setStep] = useState(initialStep);
   const [currentDimension, setCurrentDimension] = useState(0);
   const [selectedSpectrumDimension, setSelectedSpectrumDimension] = useState(0);
@@ -68,6 +70,13 @@ export default function AssessmentSlides({ initialSpectrum, initialStep = 0, ini
     economics: null,
     rights: null,
   });
+
+  // Notify parent of step changes
+  useEffect(() => {
+    if (onStepChange) {
+      onStepChange(step);
+    }
+  }, [step, onStepChange]);
 
   // Auto-save when reaching step 3 (results)
   useEffect(() => {
@@ -325,27 +334,29 @@ export default function AssessmentSlides({ initialSpectrum, initialStep = 0, ini
         });
         
         return (
-          <div className={`${styles.slide} ${styles.darkSlide}`}>
-            <h2 className={styles.headline}>Your Political Spectrum</h2>
+          <div className={`${styles.resultsContainer} ${styles.darkSlide}`}>
+            {!hideSpectrumCard && <h2 className={styles.headline}>Your Political Spectrum</h2>}
             
-            <div className={styles.signatureBox}>
-              <div className={styles.emojiRow}>
-                {emojiSignature.map((emoji, i) => (
-                  <div key={i} className={styles.emojiColumn}>
-                    <span className={styles.largeEmoji}>{emoji}</span>
-                    <span className={styles.emojiLabel}>{['T', 'A', 'M', 'E', 'R'][i]}</span>
-                  </div>
-                ))}
+            {!hideSpectrumCard && (
+              <div className={styles.signatureBox}>
+                <div className={styles.emojiRow}>
+                  {emojiSignature.map((emoji, i) => (
+                    <div key={i} className={styles.emojiColumn}>
+                      <span className={styles.largeEmoji}>{emoji}</span>
+                      <span className={styles.emojiLabel}>{['T', 'A', 'M', 'E', 'R'][i]}</span>
+                    </div>
+                  ))}
+                </div>
+                
+                <div className={styles.dimensionReference}>
+                  {POLICIES.map((policy, i) => (
+                    <span key={policy.key} className={styles.refLabel}>
+                      {policy.label}
+                    </span>
+                  ))}
+                </div>
               </div>
-              
-              <div className={styles.dimensionReference}>
-                {POLICIES.map((policy, i) => (
-                  <span key={policy.key} className={styles.refLabel}>
-                    {policy.label}
-                  </span>
-                ))}
-              </div>
-            </div>
+            )}
 
             <div className={styles.resultsButtons}>
               <button 

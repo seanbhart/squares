@@ -44,15 +44,29 @@ export async function GET(request: NextRequest) {
       throw error;
     }
 
+    // TESTING: Duplicate entries to test scrolling (remove this in production)
+    let leaderboardData = data || [];
+    if (leaderboardData.length > 0) {
+      const testEntries = [];
+      for (let i = 0; i < 20; i++) {
+        const duplicated = leaderboardData.map((entry) => ({
+          ...entry,
+          fid: entry.fid + (i + 1) * 1000000, // Unique FID for each duplicate
+        }));
+        testEntries.push(...duplicated);
+      }
+      leaderboardData = [...leaderboardData, ...testEntries];
+    }
+
     // Calculate some aggregate stats
     const stats = {
-      totalUsers: data?.length || 0,
-      avgDiversity: data?.reduce((sum, user) => sum + (user.diversity_score || 0), 0) / (data?.length || 1),
-      avgUpdates: data?.reduce((sum, user) => sum + user.times_updated, 0) / (data?.length || 1),
+      totalUsers: leaderboardData.length,
+      avgDiversity: leaderboardData.reduce((sum, user) => sum + (user.diversity_score || 0), 0) / (leaderboardData.length || 1),
+      avgUpdates: leaderboardData.reduce((sum, user) => sum + user.times_updated, 0) / (leaderboardData.length || 1),
     };
 
     return NextResponse.json({
-      leaderboard: data || [],
+      leaderboard: leaderboardData,
       stats,
     });
   } catch (error) {

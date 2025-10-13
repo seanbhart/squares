@@ -4,6 +4,7 @@ import { useEffect, useState, useCallback } from 'react';
 import { sdk } from '@farcaster/miniapp-sdk';
 import AssessmentSlides from './AssessmentSlides';
 import Leaderboard from './Leaderboard';
+import StickySpectrum from './StickySpectrum';
 import styles from './MiniApp.module.css';
 
 interface FarcasterUser {
@@ -30,6 +31,14 @@ export default function MiniAppClient() {
   const [pendingSpectrum, setPendingSpectrum] = useState<UserSpectrum | null>(null);
   const [hasCompletedOnce, setHasCompletedOnce] = useState(false);
   const [isPublic, setIsPublic] = useState(false);
+  const [currentStep, setCurrentStep] = useState<number>(0);
+
+  // Update current step when existing spectrum is loaded
+  useEffect(() => {
+    if (existingSpectrum) {
+      setCurrentStep(3); // Results slide
+    }
+  }, [existingSpectrum]);
 
   // Initialize Farcaster SDK
   useEffect(() => {
@@ -183,6 +192,10 @@ export default function MiniAppClient() {
     setIsPublic(publicVisibility);
   }, []);
 
+  const handleStepChange = useCallback((step: number) => {
+    setCurrentStep(step);
+  }, []);
+
   const handleConfirmUpdate = async () => {
     if (pendingSpectrum) {
       await saveSpectrum(pendingSpectrum, isPublic);
@@ -227,6 +240,11 @@ export default function MiniAppClient() {
         </div>
       )}
 
+      {/* Sticky Spectrum Header - Shows when on results slide (step 3) */}
+      {existingSpectrum && currentStep === 3 && (
+        <StickySpectrum spectrum={existingSpectrum} />
+      )}
+
       {/* Assessment Slides - Always visible at top */}
       {showAssessment && (
         <AssessmentSlides
@@ -235,6 +253,8 @@ export default function MiniAppClient() {
           initialIsPublic={isPublic}
           onComplete={handleAssessmentComplete}
           onVisibilityChange={handleVisibilityChange}
+          onStepChange={handleStepChange}
+          hideSpectrumCard={currentStep === 3}
         />
       )}
 
