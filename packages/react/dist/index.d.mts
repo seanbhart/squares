@@ -33,9 +33,11 @@ interface SquaresEmbedProps {
 declare function SquaresEmbedReact({ variant, buttonText, align, maxWidth, primaryColor, borderRadius, shadow, }: SquaresEmbedProps): React.JSX.Element;
 
 interface SquaresWidgetProps {
-    onClose: () => void;
+    onClose: (spectrum?: Record<string, number>) => void;
     primaryColor?: string;
+    initialSpectrum?: Record<string, number>;
+    initialStep?: number;
 }
-declare function SquaresWidget({ onClose, primaryColor }: SquaresWidgetProps): React.JSX.Element;
+declare function SquaresWidget({ onClose, primaryColor, initialSpectrum, initialStep, }: SquaresWidgetProps): React.JSX.Element;
 
-export { type SquaresEmbedProps, SquaresEmbedReact, SquaresWidget };
+export { type SquaresEmbedProps, SquaresEmbedReact, SquaresWidget, type SquaresWidgetProps };

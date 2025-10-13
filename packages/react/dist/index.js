@@ -98,9 +98,14 @@ function getEmojiSquare(value) {
   const emojis = ["\u{1F7EA}", "\u{1F7E6}", "\u{1F7E9}", "\u{1F7E8}", "\u{1F7E7}", "\u{1F7E5}", "\u2B1B\uFE0F"];
   return emojis[value] || "\u{1F7E8}";
 }
-function SquaresWidget({ onClose, primaryColor = "#57534e" }) {
-  const [step, setStep] = (0, import_react.useState)(0);
-  const [spectrum, setSpectrum] = (0, import_react.useState)({
+function SquaresWidget({
+  onClose,
+  primaryColor = "#57534e",
+  initialSpectrum,
+  initialStep = 0
+}) {
+  const [step, setStep] = (0, import_react.useState)(initialStep);
+  const [spectrum, setSpectrum] = (0, import_react.useState)(initialSpectrum || {
     trade: 3,
     abortion: 3,
     migration: 3,
@@ -314,7 +319,7 @@ function SquaresWidget({ onClose, primaryColor = "#57534e" }) {
         ), /* @__PURE__ */ import_react.default.createElement("span", { style: { color: "#e5e7eb" } }, "\u2022"), /* @__PURE__ */ import_react.default.createElement(
           "button",
           {
-            onClick: onClose,
+            onClick: () => onClose(spectrum),
             style: {
               background: "none",
               border: "none",
@@ -356,7 +361,7 @@ function SquaresWidget({ onClose, primaryColor = "#57534e" }) {
         zIndex: 1e4,
         animation: "fadeIn 0.3s ease-out"
       },
-      onClick: onClose
+      onClick: () => onClose()
     },
     /* @__PURE__ */ import_react.default.createElement("style", null, `
         @keyframes fadeIn {
@@ -415,7 +420,7 @@ function SquaresWidget({ onClose, primaryColor = "#57534e" }) {
       /* @__PURE__ */ import_react.default.createElement(
         "button",
         {
-          onClick: onClose,
+          onClick: () => onClose(),
           style: {
             position: "absolute",
             top: "1.25rem",

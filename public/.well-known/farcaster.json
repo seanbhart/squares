@@ -1,0 +1,31 @@
+{
+  "accountAssociation": {
+    "header": "eyJmaWQiOjQ2MTIsInR5cGUiOiJhdXRoIiwia2V5IjoiMHhCNzBGZjQyMDgwQjVlNUIyOEIzNkEyMmUxMTA2NzJmNUU2ZkIwRGZEIn0",
+    "payload": "eyJkb21haW4iOiI5NzM3NGExODMwNmEubmdyb2stZnJlZS5hcHAifQ",
+    "signature": "2eUxB69ItcLRZDvwKHQ3U4+yQxoH58TzL3M1SGbSjD5HsI0A6wamhNhBgPnFLcQDgwDeyDQSvi4Zgh8FXixKexw="
+  },
+  "miniapp": {
+    "version": "1",
+    "name": "Squares Political Spectrum",
+    "iconUrl": "https://97374a18306a.ngrok-free.app/logo.png",
+    "homeUrl": "https://97374a18306a.ngrok-free.app/miniapp",
+    "imageUrl": "https://97374a18306a.ngrok-free.app/og-image.png",
+    "buttonTitle": "Map Your Squares",
+    "splashImageUrl": "https://97374a18306a.ngrok-free.app/logo.png",
+    "splashBackgroundColor": "#f9fafb",
+    "webhookUrl": "https://97374a18306a.ngrok-free.app/api/farcaster/webhook",
+    "subtitle": "Map your political views",
+    "description": "Map your political positions across Trade, Abortion, Migration, Economics, and Rights using the TAME-R framework. See where you stand compared to the community.",
+    "screenshotUrls": [
+      "https://97374a18306a.ngrok-free.app/screenshot1.png",
+      "https://97374a18306a.ngrok-free.app/screenshot2.png"
+    ],
+    "primaryCategory": "social",
+    "tags": ["politics", "spectrum", "assessment", "community", "leaderboard"],
+    "heroImageUrl": "https://97374a18306a.ngrok-free.app/og-image.png",
+    "tagline": "Map your political dimensions",
+    "ogTitle": "Squares Political Spectrum",
+    "ogDescription": "You're not one word—you're many dimensions. Map your positions with TAME-R.",
+    "ogImageUrl": "https://97374a18306a.ngrok-free.app/og-image.png"
+  }
+}

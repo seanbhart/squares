@@ -2,9 +2,11 @@
 
 import React, { useState, useCallback } from 'react';
 
-interface SquaresWidgetProps {
-  onClose: () => void;
+export interface SquaresWidgetProps {
+  onClose: (spectrum?: Record<string, number>) => void;
   primaryColor?: string;
+  initialSpectrum?: Record<string, number>;
+  initialStep?: number;
 }
 
 const POLICIES = [
@@ -92,9 +94,14 @@ function getEmojiSquare(value: number): string {
   return emojis[value] || '🟨';
 }
 
-export function SquaresWidget({ onClose, primaryColor = '#57534e' }: SquaresWidgetProps) {
-  const [step, setStep] = useState(0);
-  const [spectrum, setSpectrum] = useState<Record<string, number>>({
+export function SquaresWidget({ 
+  onClose, 
+  primaryColor = '#57534e',
+  initialSpectrum,
+  initialStep = 0,
+}: SquaresWidgetProps) {
+  const [step, setStep] = useState(initialStep);
+  const [spectrum, setSpectrum] = useState<Record<string, number>>(initialSpectrum || {
     trade: 3,
     abortion: 3,
     migration: 3,
@@ -435,7 +442,7 @@ export function SquaresWidget({ onClose, primaryColor = '#57534e' }: SquaresWidg
               <span style={{ color: '#e5e7eb' }}>•</span>
               
               <button
-                onClick={onClose}
+                onClick={() => onClose(spectrum)}
                 style={{
                   background: 'none',
                   border: 'none',
@@ -481,7 +488,7 @@ export function SquaresWidget({ onClose, primaryColor = '#57534e' }: SquaresWidg
         zIndex: 10000,
         animation: 'fadeIn 0.3s ease-out'
       }}
-      onClick={onClose}
+      onClick={() => onClose()}
     >
       <style>{`
         @keyframes fadeIn {
@@ -536,7 +543,7 @@ export function SquaresWidget({ onClose, primaryColor = '#57534e' }: SquaresWidg
         onClick={(e) => e.stopPropagation()}
       >
         <button 
-          onClick={onClose}
+          onClick={() => onClose()}
           style={{
             position: 'absolute',
             top: '1.25rem',
