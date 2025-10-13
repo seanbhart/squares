@@ -225,7 +225,8 @@ function SquaresWidget({ onClose, primaryColor = "#57534e" }) {
               fontWeight: 600,
               cursor: "pointer",
               transition: "all 0.2s",
-              width: "100%"
+              width: "100%",
+              marginBottom: "1rem"
             },
             onMouseOver: (e) => {
               e.currentTarget.style.background = primaryColor;
@@ -239,7 +240,65 @@ function SquaresWidget({ onClose, primaryColor = "#57534e" }) {
             }
           },
           "Take the Full Assessment \u2192"
-        ));
+        ), /* @__PURE__ */ React.createElement("div", { style: { display: "flex", justifyContent: "center", gap: "1.5rem", marginTop: "0.5rem" } }, /* @__PURE__ */ React.createElement(
+          "button",
+          {
+            onClick: () => {
+              setStep(0);
+              setCurrentDimension(0);
+              setSpectrum({
+                trade: 3,
+                abortion: 3,
+                migration: 3,
+                economics: 3,
+                rights: 3
+              });
+            },
+            style: {
+              background: "none",
+              border: "none",
+              color: "#78716c",
+              fontSize: "0.875rem",
+              fontWeight: 500,
+              cursor: "pointer",
+              padding: "0.5rem 1rem",
+              transition: "all 0.2s",
+              textDecoration: "underline",
+              textUnderlineOffset: "2px"
+            },
+            onMouseOver: (e) => {
+              e.currentTarget.style.color = "#292524";
+            },
+            onMouseOut: (e) => {
+              e.currentTarget.style.color = "#78716c";
+            }
+          },
+          "Start Over"
+        ), /* @__PURE__ */ React.createElement("span", { style: { color: "#e5e7eb" } }, "\u2022"), /* @__PURE__ */ React.createElement(
+          "button",
+          {
+            onClick: onClose,
+            style: {
+              background: "none",
+              border: "none",
+              color: "#78716c",
+              fontSize: "0.875rem",
+              fontWeight: 500,
+              cursor: "pointer",
+              padding: "0.5rem 1rem",
+              transition: "all 0.2s",
+              textDecoration: "underline",
+              textUnderlineOffset: "2px"
+            },
+            onMouseOver: (e) => {
+              e.currentTarget.style.color = "#292524";
+            },
+            onMouseOut: (e) => {
+              e.currentTarget.style.color = "#78716c";
+            }
+          },
+          "Close"
+        )));
       default:
         return null;
     }

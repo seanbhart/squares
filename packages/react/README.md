@@ -2,15 +2,14 @@
 
 Official React component for embedding [squares.vote](https://squares.vote) widgets.
 
-## What's New in v2.3.2
+## What's New in v2.3.3
 
-🎨 **Updated Preview Card Styling** - Widget preview now matches the slide design:
-- **Inter font** - Consistent typography across all components
-- **Gradient backgrounds** - Subtle white-to-gray gradient like the modal
-- **Refined color palette** - Uses #292524, #78716c, #a8a29e for text
-- **Improved spacing** - Better responsive padding and margins with clamp()
-- **Softer shadows** - Subtle shadow effects matching the site aesthetic
-- **Enhanced button states** - Smooth hover animations with improved feedback
+🔄 **Final Slide Enhancements** - Better user control on results screen:
+- **Start Over button** - Subtle text link to restart the assessment
+- **Close button** - Second subtle option to dismiss the widget
+- **Clean layout** - Options separated by bullet point for clarity
+- **Resets state** - Start Over properly resets all dimensions to defaults
+- **Hover feedback** - Subtle color change on hover for both options
 
 ## Installation
 

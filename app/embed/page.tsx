@@ -54,7 +54,7 @@ function MyComponent() {
         </svg>
         Back to squares.vote
       </a>
-      <h1>squares.vote Embed Demo</h1>
+      <h1>squares.vote embed demo</h1>
       <p>Choose the embed style that works best for your website.</p>
       
       <div className={styles.demo}>
