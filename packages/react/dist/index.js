@@ -110,9 +110,16 @@ var POSITION_LABELS = {
     "criminalization"
   ]
 };
-function getEmojiSquare(value) {
-  const emojis = ["\u{1F7EA}", "\u{1F7E6}", "\u{1F7E9}", "\u{1F7E8}", "\u{1F7E7}", "\u{1F7E5}", "\u2B1B\uFE0F"];
-  return emojis[value] || "\u{1F7E8}";
+function ColorSquare({ value, size = "48px", showBorder = true }) {
+  return /* @__PURE__ */ import_react.default.createElement("div", { style: {
+    width: size,
+    height: size,
+    borderRadius: size === "48px" ? "10px" : size === "32px" ? "8px" : "12px",
+    backgroundColor: COLOR_RAMP[value],
+    boxShadow: "0 4px 12px rgba(0, 0, 0, 0.3)",
+    border: showBorder ? "1px solid rgba(255, 255, 255, 0.1)" : "none",
+    flexShrink: 0
+  } });
 }
 function SquaresWidget({
   onClose,
@@ -131,29 +138,32 @@ function SquaresWidget({
   const [copied, setCopied] = (0, import_react.useState)(false);
   const [currentDimension, setCurrentDimension] = (0, import_react.useState)(0);
   const [selectedSpectrumDimension, setSelectedSpectrumDimension] = (0, import_react.useState)(0);
-  const emojiSignature = POLICIES.map((p) => getEmojiSquare(spectrum[p.key])).join("");
+  const getSignatureText = () => {
+    const letters = ["T", "A", "M", "E", "R"];
+    return POLICIES.map((p, i) => `${letters[i]}${spectrum[p.key]}`).join(" ");
+  };
   const handleCopy = (0, import_react.useCallback)(async () => {
     try {
-      await navigator.clipboard.writeText(emojiSignature);
+      await navigator.clipboard.writeText(getSignatureText());
       setCopied(true);
       setTimeout(() => setCopied(false), 2e3);
     } catch (error) {
       console.error("Failed to copy:", error);
     }
-  }, [emojiSignature]);
+  }, [spectrum]);
   const renderStep = () => {
     switch (step) {
       case 0:
-        return /* @__PURE__ */ import_react.default.createElement("div", { style: { minHeight: "400px", display: "flex", flexDirection: "column", justifyContent: "center" } }, /* @__PURE__ */ import_react.default.createElement("h2", { style: { margin: "0 0 3rem 0", color: "#292524", fontSize: "clamp(2rem, 5vw, 3rem)", fontWeight: 700, lineHeight: 1.2, textAlign: "center" } }, "You're not one word.", /* @__PURE__ */ import_react.default.createElement("br", null), "You're many dimensions."), /* @__PURE__ */ import_react.default.createElement("div", { style: { display: "flex", justifyContent: "center", gap: "1rem", margin: "2rem 0", flexWrap: "wrap" } }, POLICIES.map((policy, index) => {
+        return /* @__PURE__ */ import_react.default.createElement("div", { style: { minHeight: "400px", display: "flex", flexDirection: "column", justifyContent: "center" } }, /* @__PURE__ */ import_react.default.createElement("h2", { style: { margin: "0 0 3rem 0", color: "#ffffff", fontSize: "clamp(2rem, 5vw, 3rem)", fontWeight: 700, lineHeight: 1.2, textAlign: "center" } }, "You're not one word.", /* @__PURE__ */ import_react.default.createElement("br", null), "You're many dimensions."), /* @__PURE__ */ import_react.default.createElement("div", { style: { display: "flex", justifyContent: "center", gap: "1rem", margin: "2rem 0", flexWrap: "wrap" } }, POLICIES.map((policy, index) => {
           const letters = ["T", "A", "M", "E", "R"];
           const colors = [COLOR_RAMP[0], COLOR_RAMP[1], COLOR_RAMP[6], COLOR_RAMP[4], COLOR_RAMP[2]];
-          return /* @__PURE__ */ import_react.default.createElement("div", { key: policy.key, style: { display: "flex", flexDirection: "column", alignItems: "center", gap: "0.5rem" } }, /* @__PURE__ */ import_react.default.createElement("div", { style: { width: "80px", height: "80px", borderRadius: "12px", backgroundColor: colors[index], display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 4px 12px rgba(0, 0, 0, 0.15)" } }, /* @__PURE__ */ import_react.default.createElement("span", { style: { fontSize: "2.5rem", color: "white", fontWeight: 900 } }, letters[index])), /* @__PURE__ */ import_react.default.createElement("span", { style: { color: "#292524", fontSize: "0.875rem", fontWeight: 600 } }, policy.label.split(" ")[0]));
-        })), /* @__PURE__ */ import_react.default.createElement("p", { style: { fontSize: "1rem", color: "#78716c", textAlign: "center", marginTop: "2rem", lineHeight: 1.6 } }, "TAME-R measures where you stand on five", /* @__PURE__ */ import_react.default.createElement("br", null), "independent policy dimensions."));
+          return /* @__PURE__ */ import_react.default.createElement("div", { key: policy.key, style: { display: "flex", flexDirection: "column", alignItems: "center", gap: "0.5rem" } }, /* @__PURE__ */ import_react.default.createElement("div", { style: { width: "80px", height: "80px", borderRadius: "12px", backgroundColor: colors[index], display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 4px 12px rgba(0, 0, 0, 0.3)", border: "1px solid rgba(255, 255, 255, 0.1)" } }, /* @__PURE__ */ import_react.default.createElement("span", { style: { fontSize: "2.5rem", color: "white", fontWeight: 900 } }, letters[index])), /* @__PURE__ */ import_react.default.createElement("span", { style: { color: "#ffffff", fontSize: "0.875rem", fontWeight: 600 } }, policy.label.split(" ")[0]));
+        })), /* @__PURE__ */ import_react.default.createElement("p", { style: { fontSize: "1rem", color: "#a3a3a3", textAlign: "center", marginTop: "2rem", lineHeight: 1.6 } }, "TAME-R measures where you stand on five", /* @__PURE__ */ import_react.default.createElement("br", null), "independent policy dimensions."));
       case 1: {
         const selectedPolicy = POLICIES[selectedSpectrumDimension];
         const letters = ["T", "A", "M", "E", "R"];
         const colors = [COLOR_RAMP[0], COLOR_RAMP[1], COLOR_RAMP[6], COLOR_RAMP[4], COLOR_RAMP[2]];
-        return /* @__PURE__ */ import_react.default.createElement("div", { style: { minHeight: "400px", display: "flex", flexDirection: "column", justifyContent: "center" } }, /* @__PURE__ */ import_react.default.createElement("h2", { style: { margin: "0 0 2rem 0", color: "#292524", fontSize: "clamp(2rem, 5vw, 2.5rem)", fontWeight: 700, lineHeight: 1.2, textAlign: "center" } }, "Each dimension uses a", /* @__PURE__ */ import_react.default.createElement("br", null), "7-color spectrum"), /* @__PURE__ */ import_react.default.createElement("div", { style: { margin: "1.5rem 0" } }, /* @__PURE__ */ import_react.default.createElement("div", { style: { display: "flex", gap: "4px", marginBottom: "1rem", justifyContent: "center" } }, ["\u{1F7EA}", "\u{1F7E6}", "\u{1F7E9}", "\u{1F7E8}", "\u{1F7E7}", "\u{1F7E5}", "\u2B1B\uFE0F"].map((emoji, i) => /* @__PURE__ */ import_react.default.createElement("div", { key: i, style: { width: "48px", height: "48px", fontSize: "2.5rem", display: "flex", alignItems: "center", justifyContent: "center" } }, emoji))), /* @__PURE__ */ import_react.default.createElement("div", { style: { display: "flex", justifyContent: "space-between", alignItems: "center", gap: "0.5rem", marginBottom: "1.5rem" } }, /* @__PURE__ */ import_react.default.createElement("span", { style: { fontSize: "0.875rem", color: "#78716c", fontWeight: 600 } }, "Minimal intervention"), /* @__PURE__ */ import_react.default.createElement("span", { style: { fontSize: "1.25rem", color: "#a8a29e" } }, "\u2192"), /* @__PURE__ */ import_react.default.createElement("span", { style: { fontSize: "0.875rem", color: "#78716c", fontWeight: 600 } }, "Total control"))), /* @__PURE__ */ import_react.default.createElement("p", { style: { fontSize: "0.9375rem", color: "#78716c", textAlign: "center", marginBottom: "1rem" } }, "See what the scale means for each dimension:"), /* @__PURE__ */ import_react.default.createElement("div", { style: { display: "flex", justifyContent: "center", gap: "0.75rem", marginBottom: "1.5rem", flexWrap: "wrap" } }, POLICIES.map((policy, index) => /* @__PURE__ */ import_react.default.createElement(
+        return /* @__PURE__ */ import_react.default.createElement("div", { style: { minHeight: "400px", display: "flex", flexDirection: "column", justifyContent: "center" } }, /* @__PURE__ */ import_react.default.createElement("h2", { style: { margin: "0 0 2rem 0", color: "#ffffff", fontSize: "clamp(2rem, 5vw, 2.5rem)", fontWeight: 700, lineHeight: 1.2, textAlign: "center" } }, "Each dimension uses a", /* @__PURE__ */ import_react.default.createElement("br", null), "7-color spectrum"), /* @__PURE__ */ import_react.default.createElement("div", { style: { margin: "1.5rem 0" } }, /* @__PURE__ */ import_react.default.createElement("div", { style: { display: "flex", gap: "0.5rem", marginBottom: "1rem", justifyContent: "center" } }, COLOR_RAMP.map((color, i) => /* @__PURE__ */ import_react.default.createElement(ColorSquare, { key: i, value: i, size: "48px" }))), /* @__PURE__ */ import_react.default.createElement("div", { style: { display: "flex", justifyContent: "space-between", alignItems: "center", gap: "0.5rem", marginBottom: "1.5rem" } }, /* @__PURE__ */ import_react.default.createElement("span", { style: { fontSize: "0.875rem", color: "#a3a3a3", fontWeight: 600 } }, "Minimal intervention"), /* @__PURE__ */ import_react.default.createElement("span", { style: { fontSize: "1.25rem", color: "#737373" } }, "\u2192"), /* @__PURE__ */ import_react.default.createElement("span", { style: { fontSize: "0.875rem", color: "#a3a3a3", fontWeight: 600 } }, "Total control"))), /* @__PURE__ */ import_react.default.createElement("p", { style: { fontSize: "0.9375rem", color: "#a3a3a3", textAlign: "center", marginBottom: "1rem" } }, "See what the scale means for each dimension:"), /* @__PURE__ */ import_react.default.createElement("div", { style: { display: "flex", justifyContent: "center", gap: "0.75rem", marginBottom: "1.5rem", flexWrap: "wrap" } }, POLICIES.map((policy, index) => /* @__PURE__ */ import_react.default.createElement(
           "button",
           {
             key: policy.key,
@@ -164,23 +174,25 @@ function SquaresWidget({
               alignItems: "center",
               gap: "0.375rem",
               padding: "0.75rem 1rem",
-              background: selectedSpectrumDimension === index ? "rgba(52, 152, 219, 0.1)" : "rgba(249, 250, 251, 0.6)",
-              border: selectedSpectrumDimension === index ? "2px solid #1f6adb" : "1px solid rgba(0, 0, 0, 0.06)",
+              background: selectedSpectrumDimension === index ? "rgba(255, 255, 255, 0.08)" : "rgba(30, 30, 30, 0.8)",
+              border: selectedSpectrumDimension === index ? "1px solid rgba(255, 255, 255, 0.3)" : "1px solid rgba(255, 255, 255, 0.1)",
               borderRadius: "12px",
               cursor: "pointer",
               transition: "all 0.2s",
-              minWidth: "80px"
+              minWidth: "80px",
+              boxShadow: selectedSpectrumDimension === index ? "0 4px 16px rgba(255, 255, 255, 0.15)" : "none"
             }
           },
-          /* @__PURE__ */ import_react.default.createElement("div", { style: { width: "40px", height: "40px", borderRadius: "8px", backgroundColor: colors[index], display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 2px 8px rgba(0, 0, 0, 0.15)" } }, /* @__PURE__ */ import_react.default.createElement("span", { style: { fontSize: "1.25rem", color: "white", fontWeight: 900 } }, letters[index])),
-          /* @__PURE__ */ import_react.default.createElement("span", { style: { fontSize: "0.75rem", color: "#292524", fontWeight: 600 } }, policy.label.split(" ")[0])
-        ))), /* @__PURE__ */ import_react.default.createElement("div", { style: { background: "rgba(249, 250, 251, 0.6)", borderRadius: "12px", padding: "1.5rem", border: "1px solid rgba(0, 0, 0, 0.06)" } }, /* @__PURE__ */ import_react.default.createElement("h3", { style: { margin: "0 0 1rem 0", fontSize: "1.125rem", color: "#292524", fontWeight: 600, textAlign: "center" } }, selectedPolicy.label), /* @__PURE__ */ import_react.default.createElement("div", { style: { display: "flex", flexDirection: "column", gap: "0.5rem" } }, POSITION_LABELS[selectedPolicy.key].map((label, index) => /* @__PURE__ */ import_react.default.createElement("div", { key: index, style: { display: "flex", alignItems: "center", gap: "1rem" } }, /* @__PURE__ */ import_react.default.createElement("span", { style: { fontSize: "1.5rem" } }, getEmojiSquare(index)), /* @__PURE__ */ import_react.default.createElement("span", { style: { fontSize: "0.875rem", color: "#292524", flex: 1 } }, label))))));
+          /* @__PURE__ */ import_react.default.createElement("div", { style: { width: "40px", height: "40px", borderRadius: "8px", backgroundColor: colors[index], display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 2px 8px rgba(0, 0, 0, 0.3)", border: "1px solid rgba(255, 255, 255, 0.1)" } }, /* @__PURE__ */ import_react.default.createElement("span", { style: { fontSize: "1.25rem", color: "white", fontWeight: 900 } }, letters[index])),
+          /* @__PURE__ */ import_react.default.createElement("span", { style: { fontSize: "0.75rem", color: "#ffffff", fontWeight: 600 } }, policy.label.split(" ")[0])
+        ))), /* @__PURE__ */ import_react.default.createElement("div", { style: { background: "rgba(30, 30, 30, 0.8)", borderRadius: "12px", padding: "1.5rem", border: "1px solid rgba(255, 255, 255, 0.1)" } }, /* @__PURE__ */ import_react.default.createElement("h3", { style: { margin: "0 0 1rem 0", fontSize: "1.125rem", color: "#ffffff", fontWeight: 600, textAlign: "center" } }, selectedPolicy.label), /* @__PURE__ */ import_react.default.createElement("div", { style: { display: "flex", flexDirection: "column", gap: "0.75rem" } }, POSITION_LABELS[selectedPolicy.key].map((label, index) => /* @__PURE__ */ import_react.default.createElement("div", { key: index, style: { display: "flex", alignItems: "center", gap: "1rem" } }, /* @__PURE__ */ import_react.default.createElement(ColorSquare, { value: index, size: "32px" }), /* @__PURE__ */ import_react.default.createElement("span", { style: { fontSize: "0.875rem", color: "#ffffff", flex: 1 } }, label))))));
       }
       case 2: {
         const policy = POLICIES[currentDimension];
         const letters = ["T", "A", "M", "E", "R"];
+        const colors = [COLOR_RAMP[0], COLOR_RAMP[1], COLOR_RAMP[6], COLOR_RAMP[4], COLOR_RAMP[2]];
         const isLastDimension = currentDimension === POLICIES.length - 1;
-        return /* @__PURE__ */ import_react.default.createElement("div", { style: { minHeight: "400px", display: "flex", flexDirection: "column", justifyContent: "center" } }, /* @__PURE__ */ import_react.default.createElement("div", { style: { textAlign: "center", marginBottom: "2rem" } }, /* @__PURE__ */ import_react.default.createElement("div", { style: { display: "inline-block", marginBottom: "1rem" } }, /* @__PURE__ */ import_react.default.createElement("div", { style: { width: "80px", height: "80px", borderRadius: "16px", backgroundColor: "#f0ad4e", display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 8px 24px rgba(240, 173, 78, 0.3)" } }, /* @__PURE__ */ import_react.default.createElement("span", { style: { fontSize: "3rem", color: "white", fontWeight: 900 } }, letters[currentDimension]))), /* @__PURE__ */ import_react.default.createElement("h2", { style: { margin: "0 0 1rem 0", color: "#292524", fontSize: "clamp(1.75rem, 4vw, 2.5rem)", fontWeight: 800 } }, policy.label), /* @__PURE__ */ import_react.default.createElement("p", { style: { fontSize: "1rem", color: "#78716c", marginBottom: "2rem" } }, "Where do you stand on government intervention?")), /* @__PURE__ */ import_react.default.createElement("div", { style: { display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(120px, 1fr))", gap: "0.75rem", marginBottom: "2rem" } }, POSITION_LABELS[policy.key].map((label, valueIndex) => {
+        return /* @__PURE__ */ import_react.default.createElement("div", { style: { minHeight: "400px", display: "flex", flexDirection: "column", justifyContent: "center" } }, /* @__PURE__ */ import_react.default.createElement("div", { style: { textAlign: "center", marginBottom: "2rem" } }, /* @__PURE__ */ import_react.default.createElement("div", { style: { display: "inline-block", marginBottom: "1rem" } }, /* @__PURE__ */ import_react.default.createElement("div", { style: { width: "80px", height: "80px", borderRadius: "16px", backgroundColor: colors[currentDimension], display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 8px 24px rgba(0, 0, 0, 0.3)", border: "1px solid rgba(255, 255, 255, 0.1)" } }, /* @__PURE__ */ import_react.default.createElement("span", { style: { fontSize: "3rem", color: "white", fontWeight: 900 } }, letters[currentDimension]))), /* @__PURE__ */ import_react.default.createElement("h2", { style: { margin: "0 0 1rem 0", color: "#ffffff", fontSize: "clamp(1.75rem, 4vw, 2.5rem)", fontWeight: 800 } }, policy.label), /* @__PURE__ */ import_react.default.createElement("p", { style: { fontSize: "1rem", color: "#a3a3a3", marginBottom: "2rem" } }, "Where do you stand on government intervention?")), /* @__PURE__ */ import_react.default.createElement("div", { style: { display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(120px, 1fr))", gap: "0.75rem", marginBottom: "2rem" } }, POSITION_LABELS[policy.key].map((label, valueIndex) => {
           const isSelected = spectrum[policy.key] === valueIndex;
           return /* @__PURE__ */ import_react.default.createElement(
             "button",
@@ -193,31 +205,41 @@ function SquaresWidget({
                 alignItems: "center",
                 gap: "0.75rem",
                 padding: "1rem 0.75rem",
-                background: isSelected ? "rgba(52, 152, 219, 0.15)" : "rgba(249, 250, 251, 0.6)",
-                border: isSelected ? "2px solid #1f6adb" : "1px solid rgba(0, 0, 0, 0.06)",
+                background: isSelected ? "rgba(255, 255, 255, 0.08)" : "rgba(30, 30, 30, 0.8)",
+                border: isSelected ? "1px solid rgba(255, 255, 255, 0.3)" : "1px solid rgba(255, 255, 255, 0.1)",
                 borderRadius: "12px",
                 cursor: "pointer",
                 transition: "all 0.2s",
-                boxShadow: isSelected ? "0 4px 16px rgba(52, 152, 219, 0.3)" : "none"
+                boxShadow: isSelected ? "0 4px 16px rgba(255, 255, 255, 0.15)" : "none"
               }
             },
-            /* @__PURE__ */ import_react.default.createElement("div", { style: { fontSize: "2rem" } }, getEmojiSquare(valueIndex)),
-            /* @__PURE__ */ import_react.default.createElement("span", { style: { fontSize: "0.8125rem", color: "#292524", textAlign: "center", lineHeight: 1.3, fontWeight: 500 } }, label)
+            /* @__PURE__ */ import_react.default.createElement(ColorSquare, { value: valueIndex, size: "60px" }),
+            /* @__PURE__ */ import_react.default.createElement("span", { style: { fontSize: "0.8125rem", color: "#ffffff", textAlign: "center", lineHeight: 1.3, fontWeight: 500 } }, label)
           );
-        })), /* @__PURE__ */ import_react.default.createElement("div", { style: { display: "flex", justifyContent: "space-between", fontSize: "0.75rem", color: "#a8a29e", marginBottom: "1.5rem", fontWeight: 500, textTransform: "uppercase", letterSpacing: "0.05em" } }, /* @__PURE__ */ import_react.default.createElement("span", null, "Minimal intervention"), /* @__PURE__ */ import_react.default.createElement("span", null, "Total control")), /* @__PURE__ */ import_react.default.createElement("div", { style: { textAlign: "center" } }, !isLastDimension ? /* @__PURE__ */ import_react.default.createElement(
+        })), /* @__PURE__ */ import_react.default.createElement("div", { style: { display: "flex", justifyContent: "space-between", fontSize: "0.75rem", color: "#a3a3a3", marginBottom: "1.5rem", fontWeight: 500, textTransform: "uppercase", letterSpacing: "0.05em" } }, /* @__PURE__ */ import_react.default.createElement("span", null, "Minimal intervention"), /* @__PURE__ */ import_react.default.createElement("span", null, "Total control")), /* @__PURE__ */ import_react.default.createElement("div", { style: { textAlign: "center" } }, !isLastDimension ? /* @__PURE__ */ import_react.default.createElement(
           "button",
           {
             onClick: () => setCurrentDimension(currentDimension + 1),
             style: {
               padding: "1rem 2rem",
-              background: primaryColor,
-              color: "white",
+              background: "#e5e5e5",
+              color: "#212121",
               border: "none",
               borderRadius: "12px",
               fontSize: "1rem",
               fontWeight: 600,
               cursor: "pointer",
-              boxShadow: "0 1px 3px rgba(0, 0, 0, 0.08)"
+              boxShadow: "0 4px 12px rgba(255, 255, 255, 0.2)"
+            },
+            onMouseOver: (e) => {
+              e.currentTarget.style.background = "#ffffff";
+              e.currentTarget.style.transform = "translateY(-2px)";
+              e.currentTarget.style.boxShadow = "0 6px 16px rgba(255, 255, 255, 0.3)";
+            },
+            onMouseOut: (e) => {
+              e.currentTarget.style.background = "#e5e5e5";
+              e.currentTarget.style.transform = "translateY(0)";
+              e.currentTarget.style.boxShadow = "0 4px 12px rgba(255, 255, 255, 0.2)";
             }
           },
           "Next Dimension \u2192"
@@ -227,28 +249,38 @@ function SquaresWidget({
             onClick: () => setStep(3),
             style: {
               padding: "1rem 2rem",
-              background: primaryColor,
-              color: "white",
+              background: "#e5e5e5",
+              color: "#212121",
               border: "none",
               borderRadius: "12px",
               fontSize: "1rem",
               fontWeight: 600,
               cursor: "pointer",
-              boxShadow: "0 1px 3px rgba(0, 0, 0, 0.08)"
+              boxShadow: "0 4px 12px rgba(255, 255, 255, 0.2)"
+            },
+            onMouseOver: (e) => {
+              e.currentTarget.style.background = "#ffffff";
+              e.currentTarget.style.transform = "translateY(-2px)";
+              e.currentTarget.style.boxShadow = "0 6px 16px rgba(255, 255, 255, 0.3)";
+            },
+            onMouseOut: (e) => {
+              e.currentTarget.style.background = "#e5e5e5";
+              e.currentTarget.style.transform = "translateY(0)";
+              e.currentTarget.style.boxShadow = "0 4px 12px rgba(255, 255, 255, 0.2)";
             }
           },
           "See Your Results \u2192"
         )));
       }
       case 3:
-        return /* @__PURE__ */ import_react.default.createElement("div", { style: { minHeight: "400px", display: "flex", flexDirection: "column", justifyContent: "center" } }, /* @__PURE__ */ import_react.default.createElement("h2", { style: { margin: "0 0 3rem 0", color: "#292524", fontSize: "clamp(2rem, 5vw, 3rem)", fontWeight: 700, lineHeight: 1.2, textAlign: "center" } }, "Your Political Signature"), /* @__PURE__ */ import_react.default.createElement("div", { style: { textAlign: "center", margin: "2rem 0", padding: "2.5rem 2rem", background: "rgba(249, 250, 251, 0.6)", borderRadius: "16px", border: "1px solid rgba(0, 0, 0, 0.06)" } }, /* @__PURE__ */ import_react.default.createElement("div", { style: { fontSize: "clamp(3rem, 10vw, 4rem)", letterSpacing: "clamp(0.4rem, 1.5vw, 0.8rem)", marginBottom: "2rem", wordBreak: "break-all", lineHeight: "1.4" } }, emojiSignature), /* @__PURE__ */ import_react.default.createElement("div", { style: { display: "flex", justifyContent: "center", gap: "clamp(1rem, 4vw, 2.5rem)", flexWrap: "wrap", marginBottom: "0.5rem" } }, ["T", "A", "M", "E", "R"].map((letter, i) => /* @__PURE__ */ import_react.default.createElement("span", { key: letter, style: { fontSize: "0.875rem", color: "#78716c", fontWeight: 600, letterSpacing: "0.02em" } }, letter)))), /* @__PURE__ */ import_react.default.createElement(
+        return /* @__PURE__ */ import_react.default.createElement("div", { style: { minHeight: "400px", display: "flex", flexDirection: "column", justifyContent: "center" } }, /* @__PURE__ */ import_react.default.createElement("h2", { style: { margin: "0 0 3rem 0", color: "#ffffff", fontSize: "clamp(2rem, 5vw, 3rem)", fontWeight: 700, lineHeight: 1.2, textAlign: "center" } }, "Your Political Signature"), /* @__PURE__ */ import_react.default.createElement("div", { style: { textAlign: "center", margin: "2rem 0", padding: "2.5rem 2rem", background: "rgba(30, 30, 30, 0.8)", borderRadius: "16px", border: "1px solid rgba(255, 255, 255, 0.1)" } }, /* @__PURE__ */ import_react.default.createElement("div", { style: { display: "flex", justifyContent: "center", gap: "clamp(0.75rem, 2vw, 1.5rem)", flexWrap: "wrap", marginBottom: "2rem" } }, POLICIES.map((policy, i) => /* @__PURE__ */ import_react.default.createElement("div", { key: policy.key, style: { display: "flex", flexDirection: "column", alignItems: "center", gap: "0.5rem" } }, /* @__PURE__ */ import_react.default.createElement(ColorSquare, { value: spectrum[policy.key], size: "64px" }), /* @__PURE__ */ import_react.default.createElement("span", { style: { fontSize: "0.75rem", color: "#a3a3a3", fontWeight: 600, letterSpacing: "0.02em" } }, ["T", "A", "M", "E", "R"][i])))), /* @__PURE__ */ import_react.default.createElement("div", { style: { fontSize: "0.9rem", color: "#737373", fontFamily: "monospace" } }, getSignatureText())), /* @__PURE__ */ import_react.default.createElement(
           "button",
           {
             onClick: handleCopy,
             style: {
               padding: "1.125rem 2rem",
-              background: primaryColor,
-              color: "white",
+              background: "#e5e5e5",
+              color: "#212121",
               border: "none",
               borderRadius: "12px",
               fontSize: "1.0625rem",
@@ -257,18 +289,20 @@ function SquaresWidget({
               transition: "all 0.2s",
               width: "100%",
               marginBottom: "1rem",
-              boxShadow: "0 1px 3px rgba(0, 0, 0, 0.08)"
+              boxShadow: "0 4px 12px rgba(255, 255, 255, 0.2)"
             },
             onMouseOver: (e) => {
+              e.currentTarget.style.background = "#ffffff";
               e.currentTarget.style.transform = "translateY(-2px)";
-              e.currentTarget.style.boxShadow = "0 4px 12px rgba(0, 0, 0, 0.12)";
+              e.currentTarget.style.boxShadow = "0 6px 16px rgba(255, 255, 255, 0.3)";
             },
             onMouseOut: (e) => {
+              e.currentTarget.style.background = "#e5e5e5";
               e.currentTarget.style.transform = "translateY(0)";
-              e.currentTarget.style.boxShadow = "0 1px 3px rgba(0, 0, 0, 0.08)";
+              e.currentTarget.style.boxShadow = "0 4px 12px rgba(255, 255, 255, 0.2)";
             }
           },
-          copied ? "\u2713 Copied!" : "Copy to Clipboard"
+          copied ? "\u2713 Copied!" : "Copy Signature"
         ), /* @__PURE__ */ import_react.default.createElement(
           "button",
           {
@@ -276,8 +310,8 @@ function SquaresWidget({
             style: {
               padding: "1.125rem 2rem",
               background: "transparent",
-              color: primaryColor,
-              border: `2px solid ${primaryColor}`,
+              color: "#e5e5e5",
+              border: "2px solid #525252",
               borderRadius: "12px",
               fontSize: "1.0625rem",
               fontWeight: 600,
@@ -287,13 +321,13 @@ function SquaresWidget({
               marginBottom: "1rem"
             },
             onMouseOver: (e) => {
-              e.currentTarget.style.background = primaryColor;
-              e.currentTarget.style.color = "white";
+              e.currentTarget.style.background = "rgba(255, 255, 255, 0.05)";
+              e.currentTarget.style.borderColor = "#737373";
               e.currentTarget.style.transform = "translateY(-2px)";
             },
             onMouseOut: (e) => {
               e.currentTarget.style.background = "transparent";
-              e.currentTarget.style.color = primaryColor;
+              e.currentTarget.style.borderColor = "#525252";
               e.currentTarget.style.transform = "translateY(0)";
             }
           },
@@ -315,7 +349,7 @@ function SquaresWidget({
             style: {
               background: "none",
               border: "none",
-              color: "#78716c",
+              color: "#a3a3a3",
               fontSize: "0.875rem",
               fontWeight: 500,
               cursor: "pointer",
@@ -325,21 +359,21 @@ function SquaresWidget({
               textUnderlineOffset: "2px"
             },
             onMouseOver: (e) => {
-              e.currentTarget.style.color = "#292524";
+              e.currentTarget.style.color = "#ffffff";
             },
             onMouseOut: (e) => {
-              e.currentTarget.style.color = "#78716c";
+              e.currentTarget.style.color = "#a3a3a3";
             }
           },
           "Start Over"
-        ), /* @__PURE__ */ import_react.default.createElement("span", { style: { color: "#e5e7eb" } }, "\u2022"), /* @__PURE__ */ import_react.default.createElement(
+        ), /* @__PURE__ */ import_react.default.createElement("span", { style: { color: "#525252" } }, "\u2022"), /* @__PURE__ */ import_react.default.createElement(
           "button",
           {
             onClick: () => onClose(spectrum),
             style: {
               background: "none",
               border: "none",
-              color: "#78716c",
+              color: "#a3a3a3",
               fontSize: "0.875rem",
               fontWeight: 500,
               cursor: "pointer",
@@ -349,10 +383,10 @@ function SquaresWidget({
               textUnderlineOffset: "2px"
             },
             onMouseOver: (e) => {
-              e.currentTarget.style.color = "#292524";
+              e.currentTarget.style.color = "#ffffff";
             },
             onMouseOut: (e) => {
-              e.currentTarget.style.color = "#78716c";
+              e.currentTarget.style.color = "#a3a3a3";
             }
           },
           "Close"
@@ -419,7 +453,7 @@ function SquaresWidget({
       "div",
       {
         style: {
-          background: "linear-gradient(180deg, #ffffff 0%, #f9fafb 100%)",
+          background: "#212121",
           borderRadius: "20px",
           maxWidth: "640px",
           width: "92%",
@@ -427,9 +461,10 @@ function SquaresWidget({
           overflowY: "auto",
           padding: "clamp(1.5rem, 4vw, 2.5rem)",
           position: "relative",
-          boxShadow: "0 20px 60px rgba(0, 0, 0, 0.15), 0 0 1px rgba(0, 0, 0, 0.05)",
+          boxShadow: "0 20px 60px rgba(0, 0, 0, 0.5)",
           animation: "slideUp 0.3s ease-out",
-          fontFamily: '"Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif'
+          fontFamily: '"Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
+          border: "1px solid rgba(255, 255, 255, 0.1)"
         },
         onClick: (e) => e.stopPropagation()
       },
@@ -441,11 +476,11 @@ function SquaresWidget({
             position: "absolute",
             top: "1.25rem",
             right: "1.25rem",
-            background: "rgba(249, 250, 251, 0.8)",
-            border: "1px solid rgba(0, 0, 0, 0.06)",
+            background: "rgba(30, 30, 30, 0.8)",
+            border: "1px solid rgba(255, 255, 255, 0.1)",
             fontSize: "1.5rem",
             cursor: "pointer",
-            color: "#78716c",
+            color: "#a3a3a3",
             lineHeight: 1,
             padding: 0,
             width: "36px",
@@ -457,14 +492,14 @@ function SquaresWidget({
             transition: "all 0.2s"
           },
           onMouseOver: (e) => {
-            e.currentTarget.style.background = "#292524";
+            e.currentTarget.style.background = "rgba(40, 40, 40, 0.9)";
             e.currentTarget.style.color = "#ffffff";
-            e.currentTarget.style.borderColor = "#292524";
+            e.currentTarget.style.borderColor = "rgba(255, 255, 255, 0.2)";
           },
           onMouseOut: (e) => {
-            e.currentTarget.style.background = "rgba(249, 250, 251, 0.8)";
-            e.currentTarget.style.color = "#78716c";
-            e.currentTarget.style.borderColor = "rgba(0, 0, 0, 0.06)";
+            e.currentTarget.style.background = "rgba(30, 30, 30, 0.8)";
+            e.currentTarget.style.color = "#a3a3a3";
+            e.currentTarget.style.borderColor = "rgba(255, 255, 255, 0.1)";
           }
         },
         "\xD7"
@@ -477,12 +512,12 @@ function SquaresWidget({
             width: i === step ? "32px" : "10px",
             height: "10px",
             borderRadius: "6px",
-            background: i === step ? primaryColor : i < step ? "rgba(87, 83, 78, 0.3)" : "rgba(168, 162, 158, 0.2)",
+            background: i === step ? "#e5e5e5" : i < step ? "rgba(229, 229, 229, 0.3)" : "rgba(115, 115, 115, 0.3)",
             transition: "all 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
             transform: i === step ? "scale(1)" : "scale(0.9)"
           }
         }
-      ))), step === 2 && /* @__PURE__ */ import_react.default.createElement("div", { style: { textAlign: "center" } }, /* @__PURE__ */ import_react.default.createElement("div", { style: { fontSize: "0.8125rem", color: "#78716c", fontWeight: 600, marginBottom: "0.5rem" } }, "Dimension ", currentDimension + 1, " of ", POLICIES.length), /* @__PURE__ */ import_react.default.createElement("div", { style: { display: "flex", gap: "0.375rem", justifyContent: "center" } }, POLICIES.map((_, i) => /* @__PURE__ */ import_react.default.createElement(
+      ))), step === 2 && /* @__PURE__ */ import_react.default.createElement("div", { style: { textAlign: "center" } }, /* @__PURE__ */ import_react.default.createElement("div", { style: { fontSize: "0.8125rem", color: "#a3a3a3", fontWeight: 600, marginBottom: "0.5rem" } }, "Dimension ", currentDimension + 1, " of ", POLICIES.length), /* @__PURE__ */ import_react.default.createElement("div", { style: { display: "flex", gap: "0.375rem", justifyContent: "center" } }, POLICIES.map((_, i) => /* @__PURE__ */ import_react.default.createElement(
         "div",
         {
           key: i,
@@ -490,33 +525,35 @@ function SquaresWidget({
             width: "8px",
             height: "8px",
             borderRadius: "50%",
-            background: i <= currentDimension ? primaryColor : "rgba(168, 162, 158, 0.2)",
+            background: i <= currentDimension ? "#e5e5e5" : "rgba(115, 115, 115, 0.3)",
             transition: "all 0.3s"
           }
         }
       ))))),
       renderStep(),
-      step !== 2 && step !== 3 && /* @__PURE__ */ import_react.default.createElement("div", { style: { display: "flex", justifyContent: "space-between", gap: "1rem", marginTop: "2.5rem", paddingTop: "2rem", borderTop: "1px solid rgba(0, 0, 0, 0.06)" } }, step > 0 && /* @__PURE__ */ import_react.default.createElement(
+      step !== 2 && step !== 3 && /* @__PURE__ */ import_react.default.createElement("div", { style: { display: "flex", justifyContent: "space-between", gap: "1rem", marginTop: "2.5rem", paddingTop: "2rem", borderTop: "1px solid rgba(255, 255, 255, 0.1)" } }, step > 0 && /* @__PURE__ */ import_react.default.createElement(
         "button",
         {
           onClick: () => setStep(step - 1),
           style: {
             padding: "0.875rem 1.75rem",
-            border: "1px solid rgba(0, 0, 0, 0.1)",
+            border: "1px solid rgba(255, 255, 255, 0.15)",
             borderRadius: "12px",
             fontSize: "1rem",
             fontWeight: 600,
             cursor: "pointer",
             transition: "all 0.2s",
             background: "transparent",
-            color: "#292524"
+            color: "#e5e5e5"
           },
           onMouseOver: (e) => {
-            e.currentTarget.style.background = "rgba(249, 250, 251, 0.8)";
+            e.currentTarget.style.background = "rgba(255, 255, 255, 0.05)";
+            e.currentTarget.style.borderColor = "rgba(255, 255, 255, 0.2)";
             e.currentTarget.style.transform = "translateY(-1px)";
           },
           onMouseOut: (e) => {
             e.currentTarget.style.background = "transparent";
+            e.currentTarget.style.borderColor = "rgba(255, 255, 255, 0.15)";
             e.currentTarget.style.transform = "translateY(0)";
           }
         },
@@ -533,44 +570,48 @@ function SquaresWidget({
             fontWeight: 600,
             cursor: "pointer",
             transition: "all 0.2s",
-            background: primaryColor,
-            color: "white",
+            background: "#e5e5e5",
+            color: "#212121",
             marginLeft: "auto",
-            boxShadow: "0 1px 3px rgba(0, 0, 0, 0.08)"
+            boxShadow: "0 4px 12px rgba(255, 255, 255, 0.2)"
           },
           onMouseOver: (e) => {
+            e.currentTarget.style.background = "#ffffff";
             e.currentTarget.style.transform = "translateY(-2px)";
-            e.currentTarget.style.boxShadow = "0 4px 12px rgba(0, 0, 0, 0.12)";
+            e.currentTarget.style.boxShadow = "0 6px 16px rgba(255, 255, 255, 0.3)";
           },
           onMouseOut: (e) => {
+            e.currentTarget.style.background = "#e5e5e5";
             e.currentTarget.style.transform = "translateY(0)";
-            e.currentTarget.style.boxShadow = "0 1px 3px rgba(0, 0, 0, 0.08)";
+            e.currentTarget.style.boxShadow = "0 4px 12px rgba(255, 255, 255, 0.2)";
           }
         },
         "Continue \u2192"
       )),
-      step === 2 && currentDimension > 0 && /* @__PURE__ */ import_react.default.createElement("div", { style: { marginTop: "2rem", paddingTop: "2rem", borderTop: "1px solid rgba(0, 0, 0, 0.06)", textAlign: "center" } }, /* @__PURE__ */ import_react.default.createElement(
+      step === 2 && currentDimension > 0 && /* @__PURE__ */ import_react.default.createElement("div", { style: { marginTop: "2rem", paddingTop: "2rem", borderTop: "1px solid rgba(255, 255, 255, 0.1)", textAlign: "center" } }, /* @__PURE__ */ import_react.default.createElement(
         "button",
         {
           onClick: () => setCurrentDimension(currentDimension - 1),
           style: {
             padding: "0.75rem 1.5rem",
-            border: "1px solid rgba(0, 0, 0, 0.1)",
+            border: "1px solid rgba(255, 255, 255, 0.15)",
             borderRadius: "12px",
             fontSize: "0.9375rem",
             fontWeight: 600,
             cursor: "pointer",
             transition: "all 0.2s",
             background: "transparent",
-            color: "#78716c"
+            color: "#a3a3a3"
           },
           onMouseOver: (e) => {
-            e.currentTarget.style.background = "rgba(249, 250, 251, 0.8)";
-            e.currentTarget.style.color = "#292524";
+            e.currentTarget.style.background = "rgba(255, 255, 255, 0.05)";
+            e.currentTarget.style.borderColor = "rgba(255, 255, 255, 0.2)";
+            e.currentTarget.style.color = "#ffffff";
           },
           onMouseOut: (e) => {
             e.currentTarget.style.background = "transparent";
-            e.currentTarget.style.color = "#78716c";
+            e.currentTarget.style.borderColor = "rgba(255, 255, 255, 0.15)";
+            e.currentTarget.style.color = "#a3a3a3";
           }
         },
         "\u2190 Previous dimension"
