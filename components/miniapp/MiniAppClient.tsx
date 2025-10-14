@@ -43,6 +43,21 @@ export default function MiniAppClient() {
 
   // Initialize Farcaster SDK
   useEffect(() => {
+    let readyCalled = false;
+    
+    // Fallback: call ready after 2 seconds no matter what to dismiss splash screen
+    const readyTimeout = setTimeout(async () => {
+      if (!readyCalled) {
+        console.log('[Squares] Timeout - calling ready() as fallback');
+        try {
+          await sdk.actions.ready();
+          readyCalled = true;
+        } catch (e) {
+          console.error('[Squares] Failed to call ready() in timeout:', e);
+        }
+      }
+    }, 2000);
+    
     const init = async () => {
       try {
         console.log('[Squares] Initializing Farcaster SDK...');
@@ -55,8 +70,12 @@ export default function MiniAppClient() {
         console.log('[Squares] User info:', userInfo);
 
         // Signal that the app is ready FIRST to dismiss splash screen
-        await sdk.actions.ready();
-        console.log('[Squares] App signaled ready');
+        if (!readyCalled) {
+          await sdk.actions.ready();
+          readyCalled = true;
+          clearTimeout(readyTimeout);
+          console.log('[Squares] App signaled ready');
+        }
 
         if (userInfo) {
           const farcasterUser: FarcasterUser = {
@@ -97,7 +116,11 @@ export default function MiniAppClient() {
         }
       } catch (error) {
         console.error('[Squares] Failed to initialize mini app:', error);
-        await sdk.actions.ready();
+        if (!readyCalled) {
+          await sdk.actions.ready();
+          readyCalled = true;
+          clearTimeout(readyTimeout);
+        }
       } finally {
         setLoading(false);
         console.log('[Squares] Initialization complete');
@@ -105,6 +128,10 @@ export default function MiniAppClient() {
     };
 
     init();
+    
+    return () => {
+      clearTimeout(readyTimeout);
+    };
   }, []);
 
   const handleAssessmentComplete = useCallback(async (spectrum: UserSpectrum, publicVisibility: boolean) => {

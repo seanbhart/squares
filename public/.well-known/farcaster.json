@@ -1,31 +1,28 @@
 {
   "accountAssociation": {
-    "header": "eyJmaWQiOjQ2MTIsInR5cGUiOiJjdXN0b2R5Iiwia2V5IjoiMHhmQmFkOGM0NUM2Njk3MDYwNzFBNEYwNTAyZDMyMzcxQzMwNjM5NzFiIn0",
-    "payload": "eyJkb21haW4iOiI1N2IyOTNmNTUxNDAubmdyb2stZnJlZS5hcHAifQ",
-    "signature": "a9H+giN857qh6or9bCuvbfhqU3T/Xt1EUUAiA/gGOs4KJLU63l+RiXGsjvkA1DH2WFT655sqA3CBI7ebdXHfyxw="
+    "header": "eyJmaWQiOjQ2MTIsInR5cGUiOiJhdXRoIiwia2V5IjoiMHhCNzBGZjQyMDgwQjVlNUIyOEIzNkEyMmUxMTA2NzJmNUU2ZkIwRGZEIn0",
+    "payload": "eyJkb21haW4iOiJzcXVhcmVzLnZvdGUifQ",
+    "signature": "d5Tg2N6FumXh3m4t2UMDEkXxgGvaquaOyyxCTkDT9uxoGn8d/KBDCakXDBC4ZGE3qalyt9GI7GLPHlL1edxeoRs="
   },
   "miniapp": {
     "version": "1",
     "name": "Squares Political Spectrum",
-    "iconUrl": "https://57b293f55140.ngrok-free.app/logo.png",
-    "homeUrl": "https://57b293f55140.ngrok-free.app/miniapp",
-    "imageUrl": "https://57b293f55140.ngrok-free.app/og-image.png",
+    "iconUrl": "https://squares.vote/logo.png",
+    "homeUrl": "https://squares.vote/miniapp",
+    "imageUrl": "https://squares.vote/og-image.png",
     "buttonTitle": "Map Your Squares",
-    "splashImageUrl": "https://57b293f55140.ngrok-free.app/logo.png",
-    "splashBackgroundColor": "#f9fafb",
-    "webhookUrl": "https://57b293f55140.ngrok-free.app/api/farcaster/webhook",
+    "splashImageUrl": "https://squares.vote/splash-image.png",
+    "splashBackgroundColor": "#1a1a1a",
+    "webhookUrl": "https://squares.vote/api/farcaster/webhook",
     "subtitle": "Map your political views",
     "description": "Map your political positions across Trade, Abortion, Migration, Economics, and Rights using the TAME-R framework. See where you stand compared to the community.",
-    "screenshotUrls": [
-      "https://57b293f55140.ngrok-free.app/screenshot1.png",
-      "https://57b293f55140.ngrok-free.app/screenshot2.png"
-    ],
+    "screenshotUrls": [],
     "primaryCategory": "social",
     "tags": ["politics", "spectrum", "assessment", "community", "leaderboard"],
-    "heroImageUrl": "https://57b293f55140.ngrok-free.app/og-image.png",
+    "heroImageUrl": "https://squares.vote/hero-image.png",
     "tagline": "Map your political dimensions",
     "ogTitle": "Squares Political Spectrum",
     "ogDescription": "You're not one word—you're many dimensions. Map your positions with TAME-R.",
-    "ogImageUrl": "https://57b293f55140.ngrok-free.app/og-image.png"
+    "ogImageUrl": "https://squares.vote/og-image.png"
   }
 }
