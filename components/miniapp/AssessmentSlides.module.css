@@ -238,7 +238,7 @@
 
 .selectorButton.active {
   background: rgba(52, 152, 219, 0.1);
-  border-color: #3498db;
+  border-color: #1f6adb;
   border-width: 1.5px;
 }
 
@@ -384,7 +384,7 @@
 
 .optionCard.selected {
   background: rgba(52, 152, 219, 0.15);
-  border: 1.5px solid #3498db;
+  border: 1.5px solid #1f6adb;
   box-shadow: 0 2px 8px rgba(52, 152, 219, 0.25);
 }
 
@@ -600,7 +600,7 @@
 
 .darkSlide .selectorButton.active {
   background: rgba(52, 152, 219, 0.2);
-  border-color: #3498db;
+  border-color: #1f6adb;
   color: #ffffff;
 }
 
@@ -664,7 +664,7 @@
 
 .darkSlide .optionCard.selected {
   background: rgba(52, 152, 219, 0.25);
-  border-color: #3498db;
+  border-color: #1f6adb;
   box-shadow: 0 2px 12px rgba(52, 152, 219, 0.4);
 }
 

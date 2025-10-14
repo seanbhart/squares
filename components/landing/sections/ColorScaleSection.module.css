@@ -120,7 +120,7 @@
 }
 
 .dimensionButton[data-active="true"] {
-  border-color: var(--accent, #3498db);
+  border-color: var(--accent, #1f6adb);
   background: var(--card-selected-background, rgba(52, 152, 219, 0.1));
   box-shadow: 0 4px 16px rgba(52, 152, 219, 0.3);
 }

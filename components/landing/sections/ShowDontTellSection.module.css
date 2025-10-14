@@ -59,7 +59,7 @@
 }
 
 .figureCard[data-selected="true"] {
-  border-color: var(--accent, #3498db);
+  border-color: var(--accent, #1f6adb);
   background: var(--card-selected-background, rgba(52, 152, 219, 0.1));
   box-shadow: 0 4px 16px rgba(52, 152, 219, 0.3);
 }
@@ -83,7 +83,7 @@
   right: 0.5rem;
   width: 28px;
   height: 28px;
-  background: var(--accent, #3498db);
+  background: var(--accent, #1f6adb);
   color: white;
   border-radius: 50%;
   display: flex;
@@ -99,7 +99,7 @@
   padding: 2rem;
   background: var(--card-background, rgba(255, 255, 255, 0.05));
   border-radius: 16px;
-  border: 2px solid var(--accent, #3498db);
+  border: 2px solid var(--accent, #1f6adb);
   animation: fadeInUp 0.5s ease;
 }
 

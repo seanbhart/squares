@@ -17,6 +17,16 @@ const POLICIES = [
   { key: 'rights', label: 'Rights', emoji: '🏳️‍🌈' },
 ];
 
+const COLOR_RAMP = [
+  "#7e568e", // Purple (Trade)
+  "#1f6adb", // Blue (Abortion)
+  "#398a34", // Green
+  "#eab308", // Yellow/Orange (Economics)
+  "#e67e22", // Orange
+  "#c0392b", // Red (Migration)
+  "#383b3d", // Dark slate
+] as const;
+
 const POSITION_LABELS: Record<string, string[]> = {
   trade: [
     'free trade',
@@ -136,7 +146,7 @@ export function SquaresWidget({
             <div style={{ display: 'flex', justifyContent: 'center', gap: '1rem', margin: '2rem 0', flexWrap: 'wrap' }}>
               {POLICIES.map((policy, index) => {
                 const letters = ['T', 'A', 'M', 'E', 'R'];
-                const colors = ['#9b59b6', '#3498db', '#e74c3c', '#f39c12', '#2ecc71'];
+                const colors = [COLOR_RAMP[0], COLOR_RAMP[1], COLOR_RAMP[6], COLOR_RAMP[4], COLOR_RAMP[2]];
                 return (
                   <div key={policy.key} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem' }}>
                     <div style={{ width: '80px', height: '80px', borderRadius: '12px', backgroundColor: colors[index], display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)' }}>
@@ -156,7 +166,7 @@ export function SquaresWidget({
       case 1: {
         const selectedPolicy = POLICIES[selectedSpectrumDimension];
         const letters = ['T', 'A', 'M', 'E', 'R'];
-        const colors = ['#9b59b6', '#3498db', '#e74c3c', '#f39c12', '#2ecc71'];
+        const colors = [COLOR_RAMP[0], COLOR_RAMP[1], COLOR_RAMP[6], COLOR_RAMP[4], COLOR_RAMP[2]];
         
         return (
           <div style={{ minHeight: '400px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
@@ -196,7 +206,7 @@ export function SquaresWidget({
                     gap: '0.375rem',
                     padding: '0.75rem 1rem',
                     background: selectedSpectrumDimension === index ? 'rgba(52, 152, 219, 0.1)' : 'rgba(249, 250, 251, 0.6)',
-                    border: selectedSpectrumDimension === index ? '2px solid #3498db' : '1px solid rgba(0, 0, 0, 0.06)',
+                    border: selectedSpectrumDimension === index ? '2px solid #1f6adb' : '1px solid rgba(0, 0, 0, 0.06)',
                     borderRadius: '12px',
                     cursor: 'pointer',
                     transition: 'all 0.2s',
@@ -263,7 +273,7 @@ export function SquaresWidget({
                       gap: '0.75rem',
                       padding: '1rem 0.75rem',
                       background: isSelected ? 'rgba(52, 152, 219, 0.15)' : 'rgba(249, 250, 251, 0.6)',
-                      border: isSelected ? '2px solid #3498db' : '1px solid rgba(0, 0, 0, 0.06)',
+                      border: isSelected ? '2px solid #1f6adb' : '1px solid rgba(0, 0, 0, 0.06)',
                       borderRadius: '12px',
                       cursor: 'pointer',
                       transition: 'all 0.2s',

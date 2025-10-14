@@ -145,7 +145,7 @@
 }
 
 .userMessage .messageContent {
-  background: #3498db;
+  background: #1f6adb;
   color: white;
   border-bottom-right-radius: 0.25rem;
 }
@@ -253,7 +253,7 @@
 .messageContent :global(blockquote) {
   margin: 0.5em 0;
   padding-left: 1em;
-  border-left: 3px solid #3498db;
+  border-left: 3px solid #1f6adb;
   color: #6c757d;
 }
 
@@ -281,7 +281,7 @@
 }
 
 .markdownLink {
-  color: #3498db;
+  color: #1f6adb;
   text-decoration: underline;
   transition: color 0.2s ease;
 }
@@ -354,7 +354,7 @@
 
 .input:focus {
   outline: none;
-  border-color: #3498db;
+  border-color: #1f6adb;
   box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
 }
 
@@ -367,7 +367,7 @@
   padding: 0.75rem 1.5rem;
   border: none;
   border-radius: 0.75rem;
-  background: #3498db;
+  background: #1f6adb;
   color: white;
   font-weight: 600;
   cursor: pointer;
@@ -393,7 +393,7 @@
   align-items: center;
   gap: 0.5rem;
   padding: 0.75rem 1.25rem;
-  background: #3498db;
+  background: #1f6adb;
   color: white;
   border: none;
   border-radius: 50px;

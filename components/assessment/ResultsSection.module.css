@@ -109,7 +109,7 @@
   align-items: center;
   gap: 0.5rem;
   padding: 0.75rem 1.5rem;
-  background: var(--accent, #3498db);
+  background: var(--accent, #1f6adb);
   color: white;
   border: none;
   border-radius: 8px;
@@ -130,7 +130,7 @@
 }
 
 .copyButton[data-state="copied"] {
-  background: var(--success, #2ecc71);
+  background: var(--success, #398a34);
 }
 
 .copyButtonText {
@@ -145,7 +145,7 @@
 
 .incompleteMessage {
   font-size: 1rem;
-  color: var(--warning, #f39c12);
+  color: var(--warning, #eab308);
   margin-bottom: 2rem;
   font-style: italic;
 }
@@ -172,9 +172,9 @@
 }
 
 .actionButton[data-primary="true"] {
-  background: var(--accent, #3498db);
+  background: var(--accent, #1f6adb);
   color: white;
-  border-color: var(--accent, #3498db);
+  border-color: var(--accent, #1f6adb);
   font-size: 1.125rem;
   padding: 1rem 2.5rem;
   box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);

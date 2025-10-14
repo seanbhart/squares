@@ -53,7 +53,7 @@
 }
 
 .progressDot[data-complete="true"]:not([style*="backgroundColor"]) {
-  background: var(--success, #2ecc71);
+  background: var(--success, #398a34);
 }
 
 .questionArea {
@@ -130,7 +130,7 @@
 }
 
 .option[data-selected="true"] {
-  border-color: var(--accent, #3498db);
+  border-color: var(--accent, #1f6adb);
   background: var(--card-selected-background, rgba(52, 152, 219, 0.15));
   box-shadow: 0 4px 16px rgba(52, 152, 219, 0.3);
   transform: translateY(-2px);
@@ -151,7 +151,7 @@
 
 .option[data-tentative="true"]:hover {
   border-style: solid;
-  border-color: var(--accent, #3498db);
+  border-color: var(--accent, #1f6adb);
   background: var(--card-hover-background, rgba(52, 152, 219, 0.1));
 }
 

@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import styles from './AssessmentSlides.module.css';
+import { COLOR_RAMP } from '@/lib/tamer-config';
 
 interface AssessmentSlidesProps {
   initialSpectrum?: UserSpectrum;
@@ -162,7 +163,7 @@ export default function AssessmentSlides({ initialSpectrum, initialStep = 0, ini
             <div className={styles.dimensionsGrid}>
               {POLICIES.map((policy, index) => {
                 const letters = ['T', 'A', 'M', 'E', 'R'];
-                const colors = ['#9b59b6', '#3498db', '#e74c3c', '#f39c12', '#2ecc71'];
+                const colors = [COLOR_RAMP[0], COLOR_RAMP[1], COLOR_RAMP[6], COLOR_RAMP[4], COLOR_RAMP[2]];
                 return (
                   <div key={policy.key} className={styles.dimensionCard}>
                     <div className={styles.dimensionSquareColored} style={{ backgroundColor: colors[index] }}>
@@ -185,7 +186,7 @@ export default function AssessmentSlides({ initialSpectrum, initialStep = 0, ini
       case 1: {
         const selectedPolicy = POLICIES[selectedSpectrumDimension];
         const letters = ['T', 'A', 'M', 'E', 'R'];
-        const colors = ['#9b59b6', '#3498db', '#e74c3c', '#f39c12', '#2ecc71'];
+        const colors = [COLOR_RAMP[0], COLOR_RAMP[1], COLOR_RAMP[6], COLOR_RAMP[4], COLOR_RAMP[2]];
         
         return (
           <div className={`${styles.slide} ${styles.darkSlide}`}>

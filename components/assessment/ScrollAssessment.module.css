@@ -71,13 +71,13 @@
 }
 
 .progressDot[data-current="true"] {
-  background: var(--accent, #3498db);
+  background: var(--accent, #1f6adb);
   transform: scale(1.3);
   box-shadow: 0 0 0 4px rgba(52, 152, 219, 0.2);
 }
 
 .progressDot[data-complete="true"] {
-  background: var(--success, #2ecc71);
+  background: var(--success, #398a34);
 }
 
 .questionArea {
@@ -143,7 +143,7 @@
 }
 
 .option[data-selected="true"] {
-  border-color: var(--accent, #3498db);
+  border-color: var(--accent, #1f6adb);
   background: var(--card-selected-background, rgba(52, 152, 219, 0.15));
   box-shadow: 0 4px 16px rgba(52, 152, 219, 0.3);
   transform: translateY(-2px);
@@ -295,7 +295,7 @@
   align-items: center;
   gap: 0.5rem;
   padding: 0.75rem 1.5rem;
-  background: var(--accent, #3498db);
+  background: var(--accent, #1f6adb);
   color: white;
   border: none;
   border-radius: 8px;
@@ -316,7 +316,7 @@
 }
 
 .copyButton[data-state="copied"] {
-  background: var(--success, #2ecc71);
+  background: var(--success, #398a34);
 }
 
 .copyButtonText {
@@ -331,7 +331,7 @@
 
 .incompleteMessage {
   font-size: 1rem;
-  color: var(--warning, #f39c12);
+  color: var(--warning, #eab308);
   margin-bottom: 2rem;
   font-style: italic;
 }

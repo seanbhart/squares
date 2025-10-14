@@ -4,11 +4,11 @@ import { useEffect, useState } from 'react';
 import styles from './RealitySection.module.css';
 
 const DIMENSIONS = [
-  { letter: 'T', word: 'Trade', color: '#9b59b6' },
-  { letter: 'A', word: 'Abortion', color: '#3498db' },
-  { letter: 'M', word: 'Migration', color: '#e74c3c' },
-  { letter: 'E', word: 'Economics', color: '#f39c12' },
-  { letter: 'R', word: 'Rights', color: '#2ecc71' },
+  { letter: 'T', word: 'Trade', color: '#7e568e' },
+  { letter: 'A', word: 'Abortion', color: '#1f6adb' },
+  { letter: 'M', word: 'Migration', color: '#c0392b' },
+  { letter: 'E', word: 'Economics', color: '#eab308' },
+  { letter: 'R', word: 'Rights', color: '#398a34' },
 ];
 
 export default function RealitySection() {

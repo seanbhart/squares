@@ -47,6 +47,22 @@ var POLICIES = [
   { key: "economics", label: "Economics", emoji: "\u{1F4B0}" },
   { key: "rights", label: "Rights", emoji: "\u{1F3F3}\uFE0F\u200D\u{1F308}" }
 ];
+var COLOR_RAMP = [
+  "#7e568e",
+  // Purple (Trade)
+  "#1f6adb",
+  // Blue (Abortion)
+  "#398a34",
+  // Green
+  "#eab308",
+  // Yellow/Orange (Economics)
+  "#e67e22",
+  // Orange
+  "#c0392b",
+  // Red (Migration)
+  "#383b3d"
+  // Dark slate
+];
 var POSITION_LABELS = {
   trade: [
     "free trade",
@@ -130,13 +146,13 @@ function SquaresWidget({
       case 0:
         return /* @__PURE__ */ import_react.default.createElement("div", { style: { minHeight: "400px", display: "flex", flexDirection: "column", justifyContent: "center" } }, /* @__PURE__ */ import_react.default.createElement("h2", { style: { margin: "0 0 3rem 0", color: "#292524", fontSize: "clamp(2rem, 5vw, 3rem)", fontWeight: 700, lineHeight: 1.2, textAlign: "center" } }, "You're not one word.", /* @__PURE__ */ import_react.default.createElement("br", null), "You're many dimensions."), /* @__PURE__ */ import_react.default.createElement("div", { style: { display: "flex", justifyContent: "center", gap: "1rem", margin: "2rem 0", flexWrap: "wrap" } }, POLICIES.map((policy, index) => {
           const letters = ["T", "A", "M", "E", "R"];
-          const colors = ["#9b59b6", "#3498db", "#e74c3c", "#f39c12", "#2ecc71"];
+          const colors = [COLOR_RAMP[0], COLOR_RAMP[1], COLOR_RAMP[6], COLOR_RAMP[4], COLOR_RAMP[2]];
           return /* @__PURE__ */ import_react.default.createElement("div", { key: policy.key, style: { display: "flex", flexDirection: "column", alignItems: "center", gap: "0.5rem" } }, /* @__PURE__ */ import_react.default.createElement("div", { style: { width: "80px", height: "80px", borderRadius: "12px", backgroundColor: colors[index], display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 4px 12px rgba(0, 0, 0, 0.15)" } }, /* @__PURE__ */ import_react.default.createElement("span", { style: { fontSize: "2.5rem", color: "white", fontWeight: 900 } }, letters[index])), /* @__PURE__ */ import_react.default.createElement("span", { style: { color: "#292524", fontSize: "0.875rem", fontWeight: 600 } }, policy.label.split(" ")[0]));
         })), /* @__PURE__ */ import_react.default.createElement("p", { style: { fontSize: "1rem", color: "#78716c", textAlign: "center", marginTop: "2rem", lineHeight: 1.6 } }, "TAME-R measures where you stand on five", /* @__PURE__ */ import_react.default.createElement("br", null), "independent policy dimensions."));
       case 1: {
         const selectedPolicy = POLICIES[selectedSpectrumDimension];
         const letters = ["T", "A", "M", "E", "R"];
-        const colors = ["#9b59b6", "#3498db", "#e74c3c", "#f39c12", "#2ecc71"];
+        const colors = [COLOR_RAMP[0], COLOR_RAMP[1], COLOR_RAMP[6], COLOR_RAMP[4], COLOR_RAMP[2]];
         return /* @__PURE__ */ import_react.default.createElement("div", { style: { minHeight: "400px", display: "flex", flexDirection: "column", justifyContent: "center" } }, /* @__PURE__ */ import_react.default.createElement("h2", { style: { margin: "0 0 2rem 0", color: "#292524", fontSize: "clamp(2rem, 5vw, 2.5rem)", fontWeight: 700, lineHeight: 1.2, textAlign: "center" } }, "Each dimension uses a", /* @__PURE__ */ import_react.default.createElement("br", null), "7-color spectrum"), /* @__PURE__ */ import_react.default.createElement("div", { style: { margin: "1.5rem 0" } }, /* @__PURE__ */ import_react.default.createElement("div", { style: { display: "flex", gap: "4px", marginBottom: "1rem", justifyContent: "center" } }, ["\u{1F7EA}", "\u{1F7E6}", "\u{1F7E9}", "\u{1F7E8}", "\u{1F7E7}", "\u{1F7E5}", "\u2B1B\uFE0F"].map((emoji, i) => /* @__PURE__ */ import_react.default.createElement("div", { key: i, style: { width: "48px", height: "48px", fontSize: "2.5rem", display: "flex", alignItems: "center", justifyContent: "center" } }, emoji))), /* @__PURE__ */ import_react.default.createElement("div", { style: { display: "flex", justifyContent: "space-between", alignItems: "center", gap: "0.5rem", marginBottom: "1.5rem" } }, /* @__PURE__ */ import_react.default.createElement("span", { style: { fontSize: "0.875rem", color: "#78716c", fontWeight: 600 } }, "Minimal intervention"), /* @__PURE__ */ import_react.default.createElement("span", { style: { fontSize: "1.25rem", color: "#a8a29e" } }, "\u2192"), /* @__PURE__ */ import_react.default.createElement("span", { style: { fontSize: "0.875rem", color: "#78716c", fontWeight: 600 } }, "Total control"))), /* @__PURE__ */ import_react.default.createElement("p", { style: { fontSize: "0.9375rem", color: "#78716c", textAlign: "center", marginBottom: "1rem" } }, "See what the scale means for each dimension:"), /* @__PURE__ */ import_react.default.createElement("div", { style: { display: "flex", justifyContent: "center", gap: "0.75rem", marginBottom: "1.5rem", flexWrap: "wrap" } }, POLICIES.map((policy, index) => /* @__PURE__ */ import_react.default.createElement(
           "button",
           {
@@ -149,7 +165,7 @@ function SquaresWidget({
               gap: "0.375rem",
               padding: "0.75rem 1rem",
               background: selectedSpectrumDimension === index ? "rgba(52, 152, 219, 0.1)" : "rgba(249, 250, 251, 0.6)",
-              border: selectedSpectrumDimension === index ? "2px solid #3498db" : "1px solid rgba(0, 0, 0, 0.06)",
+              border: selectedSpectrumDimension === index ? "2px solid #1f6adb" : "1px solid rgba(0, 0, 0, 0.06)",
               borderRadius: "12px",
               cursor: "pointer",
               transition: "all 0.2s",
@@ -178,7 +194,7 @@ function SquaresWidget({
                 gap: "0.75rem",
                 padding: "1rem 0.75rem",
                 background: isSelected ? "rgba(52, 152, 219, 0.15)" : "rgba(249, 250, 251, 0.6)",
-                border: isSelected ? "2px solid #3498db" : "1px solid rgba(0, 0, 0, 0.06)",
+                border: isSelected ? "2px solid #1f6adb" : "1px solid rgba(0, 0, 0, 0.06)",
                 borderRadius: "12px",
                 cursor: "pointer",
                 transition: "all 0.2s",
