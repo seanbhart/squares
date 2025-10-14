@@ -111,6 +111,10 @@
   transition: all 0.3s ease;
   min-width: 120px;
   min-height: 140px;
+  color: var(--foreground);
+  -webkit-tap-highlight-color: transparent;
+  -webkit-appearance: none;
+  font-family: inherit;
 }
 
 .dimensionButton:hover {
@@ -142,7 +146,7 @@
 .buttonLabel {
   font-size: 0.875rem;
   font-weight: 600;
-  color: var(--foreground);
+  color: inherit;
   text-align: center;
   line-height: 1.3;
   min-height: 2.6em;

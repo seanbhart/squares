@@ -46,6 +46,7 @@
   border-radius: 50%;
   font-size: 1.5rem;
   font-weight: 300;
+  line-height: 1;
   text-decoration: none;
   z-index: 1000;
   transition: all 0.2s ease;
@@ -69,5 +70,6 @@
     width: 40px;
     height: 40px;
     font-size: 1.25rem;
+    line-height: 1;
   }
 }
