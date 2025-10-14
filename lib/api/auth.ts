@@ -100,12 +100,10 @@ export async function validateApiKey(
   }
   
   // Update last_used_at (fire and forget, don't wait)
-  supabase
+  void supabase
     .from('api_keys')
     .update({ last_used_at: new Date().toISOString() })
-    .eq('id', key.id)
-    .then(() => {})
-    .catch(() => {});
+    .eq('id', key.id);
   
   return { key, plainKey: apiKey };
 }
