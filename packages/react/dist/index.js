@@ -309,7 +309,7 @@ function SquaresWidget({
               e.currentTarget.style.boxShadow = "0 4px 12px rgba(255, 255, 255, 0.2)";
             }
           },
-          copied ? "\u2713 Copied!" : "Copy Spectrum"
+          copied ? "\u2713 Copied!" : "Copy Spectrum as Emojis"
         ), /* @__PURE__ */ import_react.default.createElement(
           "button",
           {
@@ -485,10 +485,10 @@ function SquaresWidget({
             right: "1.25rem",
             background: "rgba(30, 30, 30, 0.8)",
             border: "1px solid rgba(255, 255, 255, 0.1)",
-            fontSize: "1.5rem",
+            fontSize: "1.75rem",
             cursor: "pointer",
             color: "#a3a3a3",
-            lineHeight: 1,
+            lineHeight: "1",
             padding: 0,
             width: "36px",
             height: "36px",
@@ -496,7 +496,8 @@ function SquaresWidget({
             alignItems: "center",
             justifyContent: "center",
             borderRadius: "50%",
-            transition: "all 0.2s"
+            transition: "all 0.2s",
+            fontFamily: "system-ui, -apple-system, sans-serif"
           },
           onMouseOver: (e) => {
             e.currentTarget.style.background = "rgba(40, 40, 40, 0.9)";
@@ -628,6 +629,33 @@ function SquaresWidget({
 }
 
 // src/SquaresEmbedReact.tsx
+var COLOR_RAMP2 = [
+  "#7e568e",
+  // Purple
+  "#1f6adb",
+  // Blue
+  "#398a34",
+  // Green
+  "#eab308",
+  // Yellow
+  "#e67e22",
+  // Orange
+  "#c0392b",
+  // Red
+  "#383b3d"
+  // Dark slate
+];
+function ColorSquare2({ value, size = 48 }) {
+  return /* @__PURE__ */ import_react2.default.createElement("div", { style: {
+    width: `${size}px`,
+    height: `${size}px`,
+    borderRadius: "8px",
+    backgroundColor: COLOR_RAMP2[value],
+    boxShadow: "0 2px 8px rgba(0, 0, 0, 0.3)",
+    border: "1px solid rgba(255, 255, 255, 0.1)",
+    flexShrink: 0
+  } });
+}
 function SquaresEmbedReact({
   variant = "card",
   buttonText = "Map Your Squares",
@@ -705,7 +733,7 @@ function SquaresEmbedReact({
         }
       },
       /* @__PURE__ */ import_react2.default.createElement("div", { style: { marginBottom: "12px", display: "flex", alignItems: "center", gap: "8px", flexWrap: "wrap" } }, /* @__PURE__ */ import_react2.default.createElement("span", { style: { fontSize: "0.8125rem", fontWeight: 600, color: "#737373", textTransform: "uppercase", letterSpacing: "0.05em" } }, "EXAMPLE:"), /* @__PURE__ */ import_react2.default.createElement("span", { style: { fontSize: "clamp(0.9375rem, 2vw, 1rem)", fontWeight: 600, color: "#ffffff" } }, "Martin Luther King Jr.")),
-      /* @__PURE__ */ import_react2.default.createElement("div", { style: { textAlign: "center" } }, /* @__PURE__ */ import_react2.default.createElement("div", { style: { fontSize: "clamp(2rem, 6vw, 2.5rem)", marginBottom: "12px", display: "flex", justifyContent: "center", gap: "clamp(4px, 1vw, 8px)" } }, /* @__PURE__ */ import_react2.default.createElement("span", null, "\u{1F7E9}"), /* @__PURE__ */ import_react2.default.createElement("span", null, "\u{1F7E6}"), /* @__PURE__ */ import_react2.default.createElement("span", null, "\u{1F7E9}"), /* @__PURE__ */ import_react2.default.createElement("span", null, "\u{1F7E7}"), /* @__PURE__ */ import_react2.default.createElement("span", null, "\u{1F7EA}")), /* @__PURE__ */ import_react2.default.createElement("div", { style: { fontSize: "0.6875rem", color: "#a3a3a3", display: "flex", justifyContent: "center", gap: "clamp(8px, 2vw, 16px)", flexWrap: "wrap", fontWeight: 500 } }, /* @__PURE__ */ import_react2.default.createElement("span", null, "Trade"), /* @__PURE__ */ import_react2.default.createElement("span", null, "Abortion"), /* @__PURE__ */ import_react2.default.createElement("span", null, "Migration"), /* @__PURE__ */ import_react2.default.createElement("span", null, "Economics"), /* @__PURE__ */ import_react2.default.createElement("span", null, "Rights")))
+      /* @__PURE__ */ import_react2.default.createElement("div", { style: { textAlign: "center" } }, /* @__PURE__ */ import_react2.default.createElement("div", { style: { marginBottom: "12px", display: "flex", justifyContent: "center", gap: "clamp(6px, 1.5vw, 12px)" } }, /* @__PURE__ */ import_react2.default.createElement(ColorSquare2, { value: 2, size: 48 }), /* @__PURE__ */ import_react2.default.createElement(ColorSquare2, { value: 1, size: 48 }), /* @__PURE__ */ import_react2.default.createElement(ColorSquare2, { value: 2, size: 48 }), /* @__PURE__ */ import_react2.default.createElement(ColorSquare2, { value: 4, size: 48 }), /* @__PURE__ */ import_react2.default.createElement(ColorSquare2, { value: 0, size: 48 })), /* @__PURE__ */ import_react2.default.createElement("div", { style: { fontSize: "0.6875rem", color: "#a3a3a3", display: "flex", justifyContent: "center", gap: "clamp(8px, 2vw, 16px)", flexWrap: "wrap", fontWeight: 500 } }, /* @__PURE__ */ import_react2.default.createElement("span", null, "Trade"), /* @__PURE__ */ import_react2.default.createElement("span", null, "Abortion"), /* @__PURE__ */ import_react2.default.createElement("span", null, "Migration"), /* @__PURE__ */ import_react2.default.createElement("span", null, "Economics"), /* @__PURE__ */ import_react2.default.createElement("span", null, "Rights")))
     ),
     /* @__PURE__ */ import_react2.default.createElement(
       "button",

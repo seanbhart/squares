@@ -3,6 +3,30 @@
 import React, { useState } from 'react';
 import { SquaresWidget } from './SquaresWidget';
 
+const COLOR_RAMP = [
+  "#7e568e", // Purple
+  "#1f6adb", // Blue
+  "#398a34", // Green
+  "#eab308", // Yellow
+  "#e67e22", // Orange
+  "#c0392b", // Red
+  "#383b3d", // Dark slate
+] as const;
+
+function ColorSquare({ value, size = 48 }: { value: number; size?: number }) {
+  return (
+    <div style={{
+      width: `${size}px`,
+      height: `${size}px`,
+      borderRadius: '8px',
+      backgroundColor: COLOR_RAMP[value],
+      boxShadow: '0 2px 8px rgba(0, 0, 0, 0.3)',
+      border: '1px solid rgba(255, 255, 255, 0.1)',
+      flexShrink: 0
+    }} />
+  );
+}
+
 export interface SquaresEmbedProps {
   variant?: 'card' | 'button';
   buttonText?: string;
@@ -137,12 +161,12 @@ export function SquaresEmbedReact({
               </span>
             </div>
             <div style={{ textAlign: 'center' }}>
-              <div style={{ fontSize: 'clamp(2rem, 6vw, 2.5rem)', marginBottom: '12px', display: 'flex', justifyContent: 'center', gap: 'clamp(4px, 1vw, 8px)' }}>
-                <span>🟩</span>
-                <span>🟦</span>
-                <span>🟩</span>
-                <span>🟧</span>
-                <span>🟪</span>
+              <div style={{ marginBottom: '12px', display: 'flex', justifyContent: 'center', gap: 'clamp(6px, 1.5vw, 12px)' }}>
+                <ColorSquare value={2} size={48} />
+                <ColorSquare value={1} size={48} />
+                <ColorSquare value={2} size={48} />
+                <ColorSquare value={4} size={48} />
+                <ColorSquare value={0} size={48} />
               </div>
               <div style={{ fontSize: '0.6875rem', color: '#a3a3a3', display: 'flex', justifyContent: 'center', gap: 'clamp(8px, 2vw, 16px)', flexWrap: 'wrap', fontWeight: 500 }}>
                 <span>Trade</span>

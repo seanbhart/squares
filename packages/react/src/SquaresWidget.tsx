@@ -425,7 +425,7 @@ export function SquaresWidget({
                 e.currentTarget.style.boxShadow = '0 4px 12px rgba(255, 255, 255, 0.2)';
               }}
             >
-              {copied ? '✓ Copied!' : 'Copy Spectrum'}
+              {copied ? '✓ Copied!' : 'Copy Spectrum as Emojis'}
             </button>
             
             <button 
@@ -604,10 +604,10 @@ export function SquaresWidget({
             right: '1.25rem',
             background: 'rgba(30, 30, 30, 0.8)',
             border: '1px solid rgba(255, 255, 255, 0.1)',
-            fontSize: '1.5rem',
+            fontSize: '1.75rem',
             cursor: 'pointer',
             color: '#a3a3a3',
-            lineHeight: 1,
+            lineHeight: '1',
             padding: 0,
             width: '36px',
             height: '36px',
@@ -615,7 +615,8 @@ export function SquaresWidget({
             alignItems: 'center',
             justifyContent: 'center',
             borderRadius: '50%',
-            transition: 'all 0.2s'
+            transition: 'all 0.2s',
+            fontFamily: 'system-ui, -apple-system, sans-serif'
           }}
           onMouseOver={(e) => {
             e.currentTarget.style.background = 'rgba(40, 40, 40, 0.9)';
