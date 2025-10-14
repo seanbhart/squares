@@ -96,63 +96,73 @@
 .scaleContainer {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  gap: 1rem;
+  gap: 0.75rem;
   margin-bottom: 1.5rem;
-  max-width: 1200px;
+  max-width: 100%;
   margin-left: auto;
   margin-right: auto;
-}
-
-/* Wrap to fewer columns on narrower screens */
-@media (max-width: 1200px) {
-  .scaleContainer {
-    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-  }
 }
 
 .option {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.75rem;
-  padding: 1.25rem 0.75rem;
-  background: var(--surface, rgba(30, 30, 30, 0.8));
-  border: 1px solid var(--border, rgba(255, 255, 255, 0.1));
+  gap: 0.625rem;
+  padding: 0.875rem 0.5rem;
+  background: transparent;
+  border: 1px solid var(--border, rgba(255, 255, 255, 0.15));
   border-radius: 12px;
   cursor: pointer;
   transition: all 0.3s ease;
 }
 
+/* Center option (index 3, 4th child) always has dashed border */
+.option:nth-child(4) {
+  border-style: dashed;
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
 .option:hover {
-  transform: translateY(-4px);
-  border-color: var(--border-strong, rgba(255, 255, 255, 0.2));
-  background: var(--surface-hover, rgba(40, 40, 40, 0.9));
+  transform: translateY(-2px);
+  border-color: var(--border-strong, rgba(255, 255, 255, 0.3));
+  background: rgba(255, 255, 255, 0.03);
+}
+
+/* Center option becomes solid on hover */
+.option:nth-child(4):hover {
+  border-style: solid;
 }
 
 .option[data-selected="true"] {
-  border-color: var(--border-strong, rgba(255, 255, 255, 0.3));
-  background: rgba(255, 255, 255, 0.08);
-  box-shadow: 0 4px 16px rgba(255, 255, 255, 0.15);
-  transform: translateY(-2px);
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: none;
+  transform: none;
+}
+
+/* Selected center option gets solid border */
+.option[data-selected="true"]:nth-child(4) {
+  border-style: solid;
+  border-width: 2px;
 }
 
 /* Tentative state - center option before user confirms */
 .option[data-tentative="true"] {
   border: 1px dashed rgba(255, 255, 255, 0.2);
-  background: var(--surface, rgba(30, 30, 30, 0.6));
+  background: transparent;
   box-shadow: none;
   transform: none;
 }
 
 .option[data-tentative="true"] .optionSquare {
-  opacity: 0.6;
+  opacity: 0.7;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .option[data-tentative="true"]:hover {
   border-style: solid;
   border-color: var(--border-strong, rgba(255, 255, 255, 0.3));
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.03);
 }
 
 .option[data-tentative="true"]:hover .optionSquare {
@@ -186,8 +196,8 @@
 }
 
 .optionLabel {
-  font-size: 0.875rem;
-  font-weight: 500;
+  font-size: 0.75rem;
+  font-weight: 400;
   color: var(--foreground);
   text-align: center;
   line-height: 1.3;

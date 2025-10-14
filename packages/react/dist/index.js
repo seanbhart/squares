@@ -199,8 +199,21 @@ function SquaresWidget({
         const letters = ["T", "A", "M", "E", "R"];
         const colors = [COLOR_RAMP[0], COLOR_RAMP[1], COLOR_RAMP[6], COLOR_RAMP[4], COLOR_RAMP[2]];
         const isLastDimension = currentDimension === POLICIES.length - 1;
-        return /* @__PURE__ */ import_react.default.createElement("div", { style: { minHeight: "400px", display: "flex", flexDirection: "column", justifyContent: "center" } }, /* @__PURE__ */ import_react.default.createElement("div", { style: { textAlign: "center", marginBottom: "2rem" } }, /* @__PURE__ */ import_react.default.createElement("div", { style: { display: "inline-block", marginBottom: "1rem" } }, /* @__PURE__ */ import_react.default.createElement("div", { style: { width: "80px", height: "80px", borderRadius: "16px", backgroundColor: "#333333", display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 8px 24px rgba(0, 0, 0, 0.3)", border: "1px solid rgba(255, 255, 255, 0.15)" } }, /* @__PURE__ */ import_react.default.createElement("span", { style: { fontSize: "3rem", color: "#e5e5e5", fontWeight: 900 } }, letters[currentDimension]))), /* @__PURE__ */ import_react.default.createElement("h2", { style: { margin: "0 0 1rem 0", color: "#ffffff", fontSize: "clamp(1.75rem, 4vw, 2.5rem)", fontWeight: 800 } }, policy.label), /* @__PURE__ */ import_react.default.createElement("p", { style: { fontSize: "1rem", color: "#a3a3a3", marginBottom: "2rem" } }, "Where do you stand on government intervention?")), /* @__PURE__ */ import_react.default.createElement("div", { style: { display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(120px, 1fr))", gap: "0.75rem", marginBottom: "2rem" } }, POSITION_LABELS[policy.key].map((label, valueIndex) => {
+        return /* @__PURE__ */ import_react.default.createElement("div", { style: { minHeight: "400px", display: "flex", flexDirection: "column", justifyContent: "center" } }, /* @__PURE__ */ import_react.default.createElement("div", { style: { textAlign: "center", marginBottom: "2rem" } }, /* @__PURE__ */ import_react.default.createElement("div", { style: { fontSize: "0.875rem", color: "#a3a3a3", fontWeight: 600, marginBottom: "0.75rem", letterSpacing: "0.1em" } }, currentDimension + 1, " OF ", POLICIES.length), /* @__PURE__ */ import_react.default.createElement("div", { style: { display: "flex", justifyContent: "center", gap: "0.5rem", marginBottom: "2rem" } }, POLICIES.map((_, i) => /* @__PURE__ */ import_react.default.createElement(
+          "div",
+          {
+            key: i,
+            style: {
+              width: "8px",
+              height: "8px",
+              borderRadius: "50%",
+              backgroundColor: i === currentDimension ? "#737373" : "#404040",
+              transition: "background-color 0.2s"
+            }
+          }
+        ))), /* @__PURE__ */ import_react.default.createElement("div", { style: { display: "inline-block", marginBottom: "1rem" } }, /* @__PURE__ */ import_react.default.createElement("div", { style: { width: "80px", height: "80px", borderRadius: "16px", backgroundColor: "#333333", display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 8px 24px rgba(0, 0, 0, 0.3)", border: "1px solid rgba(255, 255, 255, 0.15)" } }, /* @__PURE__ */ import_react.default.createElement("span", { style: { fontSize: "3rem", color: "#e5e5e5", fontWeight: 900 } }, letters[currentDimension]))), /* @__PURE__ */ import_react.default.createElement("h2", { style: { margin: "0 0 1rem 0", color: "#ffffff", fontSize: "clamp(1.75rem, 4vw, 2.5rem)", fontWeight: 800 } }, policy.label), /* @__PURE__ */ import_react.default.createElement("p", { style: { fontSize: "1rem", color: "#a3a3a3", marginBottom: "2rem" } }, "Where do you stand on government intervention?")), /* @__PURE__ */ import_react.default.createElement("div", { style: { display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(120px, 1fr))", gap: "0.75rem", marginBottom: "2rem" } }, POSITION_LABELS[policy.key].map((label, valueIndex) => {
           const isSelected = spectrum[policy.key] === valueIndex;
+          const isCenter = valueIndex === 3;
           return /* @__PURE__ */ import_react.default.createElement(
             "button",
             {
@@ -210,20 +223,20 @@ function SquaresWidget({
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
-                gap: "0.75rem",
-                padding: "1rem 0.75rem",
-                background: isSelected ? "rgba(255, 255, 255, 0.08)" : "rgba(30, 30, 30, 0.8)",
-                border: isSelected ? "1px solid rgba(255, 255, 255, 0.3)" : "1px solid rgba(255, 255, 255, 0.1)",
+                gap: "0.625rem",
+                padding: "0.875rem 0.5rem",
+                background: isSelected ? "rgba(255, 255, 255, 0.05)" : "transparent",
+                border: isSelected ? "2px solid rgba(255, 255, 255, 0.4)" : isCenter ? "1px dashed rgba(255, 255, 255, 0.2)" : "1px solid rgba(255, 255, 255, 0.15)",
                 borderRadius: "12px",
                 cursor: "pointer",
                 transition: "all 0.2s",
-                boxShadow: isSelected ? "0 4px 16px rgba(255, 255, 255, 0.15)" : "none"
+                boxShadow: "none"
               }
             },
             /* @__PURE__ */ import_react.default.createElement(ColorSquare, { value: valueIndex, size: "60px" }),
-            /* @__PURE__ */ import_react.default.createElement("span", { style: { fontSize: "0.8125rem", color: "#ffffff", textAlign: "center", lineHeight: 1.3, fontWeight: 500 } }, label)
+            /* @__PURE__ */ import_react.default.createElement("span", { style: { fontSize: "0.75rem", color: "#ffffff", textAlign: "center", lineHeight: 1.3, fontWeight: 400 } }, label)
           );
-        })), /* @__PURE__ */ import_react.default.createElement("div", { style: { textAlign: "center", marginTop: "1.5rem" } }, !isLastDimension ? /* @__PURE__ */ import_react.default.createElement(
+        })), /* @__PURE__ */ import_react.default.createElement("div", { style: { textAlign: "center", marginTop: "1.5rem", marginBottom: "1.5rem", fontSize: "0.875rem", color: "#a3a3a3", fontWeight: 500 } }, /* @__PURE__ */ import_react.default.createElement("span", null, "Minimal intervention"), /* @__PURE__ */ import_react.default.createElement("span", { style: { margin: "0 0.75rem" } }, "\u2192"), /* @__PURE__ */ import_react.default.createElement("span", null, "Total control")), /* @__PURE__ */ import_react.default.createElement("div", { style: { textAlign: "center", marginTop: "1.5rem" } }, !isLastDimension ? /* @__PURE__ */ import_react.default.createElement(
           "button",
           {
             onClick: () => setCurrentDimension(currentDimension + 1),
@@ -280,7 +293,7 @@ function SquaresWidget({
         )));
       }
       case 3:
-        return /* @__PURE__ */ import_react.default.createElement("div", { style: { minHeight: "400px", display: "flex", flexDirection: "column", justifyContent: "center" } }, /* @__PURE__ */ import_react.default.createElement("h2", { style: { margin: "0 0 3rem 0", color: "#ffffff", fontSize: "clamp(2rem, 5vw, 3rem)", fontWeight: 700, lineHeight: 1.2, textAlign: "center" } }, "Your Political Spectrum"), /* @__PURE__ */ import_react.default.createElement("div", { style: { textAlign: "center", margin: "2rem 0", padding: "2.5rem 2rem", background: "rgba(30, 30, 30, 0.8)", borderRadius: "16px", border: "1px solid rgba(255, 255, 255, 0.1)" } }, /* @__PURE__ */ import_react.default.createElement("div", { style: { display: "flex", justifyContent: "center", gap: "clamp(0.75rem, 2vw, 1.5rem)", flexWrap: "wrap", marginBottom: "1.5rem" } }, POLICIES.map((policy, i) => /* @__PURE__ */ import_react.default.createElement("div", { key: policy.key, style: { display: "flex", flexDirection: "column", alignItems: "center", gap: "0.5rem" } }, /* @__PURE__ */ import_react.default.createElement(ColorSquare, { value: spectrum[policy.key], size: "64px" }), /* @__PURE__ */ import_react.default.createElement("span", { style: { fontSize: "0.75rem", color: "#a3a3a3", fontWeight: 600, letterSpacing: "0.02em" } }, ["T", "A", "M", "E", "R"][i])))), /* @__PURE__ */ import_react.default.createElement("div", { style: { display: "flex", justifyContent: "center", gap: "clamp(0.75rem, 2vw, 1.5rem)", flexWrap: "wrap", paddingTop: "1rem", borderTop: "1px solid rgba(255, 255, 255, 0.1)" } }, POLICIES.map((policy) => /* @__PURE__ */ import_react.default.createElement("span", { key: policy.key, style: { fontSize: "0.6875rem", color: "#737373", fontWeight: 500, textTransform: "lowercase" } }, policy.label))), /* @__PURE__ */ import_react.default.createElement("div", { style: { fontSize: "2rem", marginTop: "1.5rem", paddingTop: "1.5rem", borderTop: "1px solid rgba(255, 255, 255, 0.1)", display: "flex", justifyContent: "center", gap: "0.5rem" } }, POLICIES.map((policy) => /* @__PURE__ */ import_react.default.createElement("span", { key: policy.key }, getEmojiSquare(spectrum[policy.key]))))), /* @__PURE__ */ import_react.default.createElement(
+        return /* @__PURE__ */ import_react.default.createElement("div", { style: { minHeight: "400px", display: "flex", flexDirection: "column", justifyContent: "center" } }, /* @__PURE__ */ import_react.default.createElement("h2", { style: { margin: "0 0 3rem 0", color: "#ffffff", fontSize: "clamp(2rem, 5vw, 3rem)", fontWeight: 700, lineHeight: 1.2, textAlign: "center" } }, "Your Political Spectrum"), /* @__PURE__ */ import_react.default.createElement("div", { style: { textAlign: "center", margin: "2rem 0", padding: "2.5rem 2rem", background: "rgba(30, 30, 30, 0.8)", borderRadius: "16px", border: "1px solid rgba(255, 255, 255, 0.1)" } }, /* @__PURE__ */ import_react.default.createElement("div", { style: { display: "flex", justifyContent: "center", gap: "clamp(0.5rem, 1.5vw, 1rem)", flexWrap: "wrap", marginBottom: "1.5rem" } }, POLICIES.map((policy, i) => /* @__PURE__ */ import_react.default.createElement("div", { key: policy.key, style: { display: "flex", flexDirection: "column", alignItems: "center", gap: "0.5rem" } }, /* @__PURE__ */ import_react.default.createElement(ColorSquare, { value: spectrum[policy.key], size: "64px" }), /* @__PURE__ */ import_react.default.createElement("span", { style: { fontSize: "0.75rem", color: "#a3a3a3", fontWeight: 600, letterSpacing: "0.02em" } }, ["T", "A", "M", "E", "R"][i])))), /* @__PURE__ */ import_react.default.createElement("div", { style: { display: "flex", justifyContent: "center", gap: "clamp(0.5rem, 1.5vw, 1rem)", flexWrap: "wrap", paddingTop: "1rem", borderTop: "1px solid rgba(255, 255, 255, 0.1)" } }, POLICIES.map((policy) => /* @__PURE__ */ import_react.default.createElement("span", { key: policy.key, style: { fontSize: "0.6875rem", color: "#737373", fontWeight: 500, textTransform: "lowercase" } }, policy.label))), /* @__PURE__ */ import_react.default.createElement("div", { style: { fontSize: "2rem", marginTop: "1.5rem", paddingTop: "1.5rem", borderTop: "1px solid rgba(255, 255, 255, 0.1)", display: "flex", justifyContent: "center", gap: "0.125rem" } }, POLICIES.map((policy) => /* @__PURE__ */ import_react.default.createElement("span", { key: policy.key }, getEmojiSquare(spectrum[policy.key]))))), /* @__PURE__ */ import_react.default.createElement(
           "button",
           {
             onClick: handleCopy,

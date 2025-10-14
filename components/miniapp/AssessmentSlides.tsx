@@ -285,6 +285,25 @@ export default function AssessmentSlides({ initialSpectrum, initialStep = 0, ini
             <button onClick={handleClose} className={styles.closeButton} aria-label="Close">
               ✕
             </button>
+            <div style={{ textAlign: 'center', marginBottom: '1rem' }}>
+              <div style={{ fontSize: '0.875rem', color: '#a3a3a3', fontWeight: 600, marginBottom: '0.75rem', letterSpacing: '0.1em' }}>
+                {currentDimension + 1} OF {POLICIES.length}
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'center', gap: '0.5rem', marginBottom: '1rem' }}>
+                {POLICIES.map((_, i) => (
+                  <div 
+                    key={i}
+                    style={{ 
+                      width: '8px', 
+                      height: '8px', 
+                      borderRadius: '50%', 
+                      backgroundColor: i === currentDimension ? '#737373' : '#404040',
+                      transition: 'background-color 0.2s'
+                    }} 
+                  />
+                ))}
+              </div>
+            </div>
             <div className={styles.dimensionHeader}>
               <div className={styles.dimensionBadge}>
                 <span>{letters[currentDimension]}</span>
@@ -313,6 +332,7 @@ export default function AssessmentSlides({ initialSpectrum, initialStep = 0, ini
 
             <div className={styles.interventionScale}>
               <span>Minimal intervention</span>
+              <span>→</span>
               <span>Total control</span>
             </div>
 
