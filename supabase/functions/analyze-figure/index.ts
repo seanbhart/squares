@@ -7,7 +7,7 @@ const FALLBACK_ASSESSOR_PROMPT = `You are an expert assistant for squares.vote, 
 
 **TAME-R Dimensions:**
 1. **Trade** - Government intervention in EXTERNAL economic interactions. From unrestricted free trade with foreign markets (0) to protectionist tariffs and closed borders to goods/capital (6). This measures barriers to international commerce, NOT domestic economic policy.
-2. **Abortion** - From partial birth abortion allowed (0) to no exceptions (6)
+2. **Abortion** - From no gestational limit (0) to total ban (6)
 3. **Migration/Immigration** - From open borders (0) to no immigration (6)
 4. **Economics** - DOMESTIC capital ownership and economic planning. From pure private ownership/free market (0) to full state ownership/central planning (6). This measures public vs. private control of production, NOT trade policy.
 5. **Rights (civil liberties)** - From full legal equality (0) to criminalization (6)

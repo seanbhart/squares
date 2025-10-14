@@ -38,13 +38,13 @@ const POSITION_LABELS: Record<string, string[]> = {
     'closed economy'
   ],
   abortion: [
-    'partial birth abortion',
-    'limit after viability',
-    'limit after third trimester',
+    'no gestational limit',
     'limit after second trimester',
+    'limit after viability',
+    'limit after 15 weeks',
     'limit after first trimester',
     'limit after heartbeat detection',
-    'no exceptions allowed'
+    'total ban'
   ],
   migration: [
     'open borders',
@@ -396,6 +396,11 @@ export function SquaresWidget({
                   </span>
                 ))}
               </div>
+              <div style={{ fontSize: '2rem', marginTop: '1.5rem', paddingTop: '1.5rem', borderTop: '1px solid rgba(255, 255, 255, 0.1)', display: 'flex', justifyContent: 'center', gap: '0.5rem' }}>
+                {POLICIES.map((policy) => (
+                  <span key={policy.key}>{getEmojiSquare(spectrum[policy.key])}</span>
+                ))}
+              </div>
             </div>
 
             <button 
@@ -600,33 +605,34 @@ export function SquaresWidget({
           onClick={() => onClose()}
           style={{
             position: 'absolute',
-            top: '1.25rem',
-            right: '1.25rem',
-            background: 'rgba(30, 30, 30, 0.8)',
-            border: '1px solid rgba(255, 255, 255, 0.1)',
-            fontSize: '1.75rem',
+            top: '1rem',
+            right: '1rem',
+            background: 'transparent',
+            border: '1px solid rgba(255, 255, 255, 0.15)',
+            fontSize: '1.5rem',
             cursor: 'pointer',
-            color: '#a3a3a3',
+            color: '#737373',
             lineHeight: '1',
             padding: 0,
-            width: '36px',
-            height: '36px',
+            width: '40px',
+            height: '40px',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
             borderRadius: '50%',
             transition: 'all 0.2s',
-            fontFamily: 'system-ui, -apple-system, sans-serif'
+            fontFamily: 'system-ui, -apple-system, sans-serif',
+            fontWeight: 300
           }}
           onMouseOver={(e) => {
-            e.currentTarget.style.background = 'rgba(40, 40, 40, 0.9)';
-            e.currentTarget.style.color = '#ffffff';
-            e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.2)';
+            e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)';
+            e.currentTarget.style.color = '#e5e5e5';
+            e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.3)';
           }}
           onMouseOut={(e) => {
-            e.currentTarget.style.background = 'rgba(30, 30, 30, 0.8)';
-            e.currentTarget.style.color = '#a3a3a3';
-            e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.1)';
+            e.currentTarget.style.background = 'transparent';
+            e.currentTarget.style.color = '#737373';
+            e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.15)';
           }}
         >
           ×

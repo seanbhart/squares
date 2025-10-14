@@ -165,13 +165,13 @@ Trade
 * ⬛️ closed economy
 
 Abortion
-* 🟪 partial birth abortion
-* 🟦 limit after viability
-* 🟩 limit after third trimester
-* 🟨 limit after second trimester
+* 🟪 no gestational limit
+* 🟦 limit after second trimester
+* 🟩 limit after viability
+* 🟨 limit after 15 weeks
 * 🟧 limit after first trimester
 * 🟥 limit after heartbeat detection
-* ⬛️ no exceptions allowed
+* ⬛️ total ban
 
 Migration / Immigration
 * 🟪 open borders
@@ -212,13 +212,13 @@ Rights (civil liberties, e.g. LGBTQ+ rights)
 * ⬛️ **Closed economy** - Import restrictions, self-sufficiency focus, limited trade
 
 **Abortion**
-* 🟪 **Partial birth abortion** - Legalize partial birth abortion
-* 🟦 **Limit after viability** - Legalize abortion after viability, but before birth
-* 🟩 **Limit after third trimester** - Legalize abortion after third trimester, but before birth
-* 🟨 **Limit after second trimester** - Legalize abortion after second trimester, but before birth
-* 🟧 **Limit after first trimester** - Legalize abortion after first trimester, but before birth
-* 🟥 **Limit after heartbeat detection** - Legalize abortion after heartbeat detection, but before birth
-* ⬛️ **No exceptions allowed** - No abortion unless to save mother's life
+* 🟪 **No gestational limit** - Legal abortion at any point in pregnancy
+* 🟦 **Limit after second trimester** - Legal abortion up to ~28 weeks
+* 🟩 **Limit after viability** - Legal abortion up to fetal viability (~24 weeks)
+* 🟨 **Limit after 15 weeks** - Legal abortion up to 15 weeks gestation
+* 🟧 **Limit after first trimester** - Legal abortion up to ~12-13 weeks
+* 🟥 **Limit after heartbeat detection** - Legal abortion up to ~6 weeks (heartbeat detection)
+* ⬛️ **Total ban** - No legal abortion except to save mother's life
 
 **Migration / Immigration**
 * 🟪 **Open borders** - No restrictions, visa-free travel, easy pathways to citizenship
@@ -265,7 +265,7 @@ Rights (civil liberties, e.g. LGBTQ+ rights)
 
 **Margaret Thatcher (1925-2013)** 🟪🟩🟥🟦🟧
 - Trade: 🟪 Free trade
-- Abortion: 🟩 Limit after third trimester
+- Abortion: 🟩 Limit after viability
 - Migration: 🟥 Strict limits only
 - Economics: 🟦 Minimal regulation
 - Rights: 🟧 Traditional definitions only
@@ -279,14 +279,14 @@ Rights (civil liberties, e.g. LGBTQ+ rights)
 
 **Barry Goldwater (1909-1998)** 🟦🟩🟨🟦🟦
 - Trade: 🟦 Minimal tariffs
-- Abortion: 🟩 Limit after third trimester
+- Abortion: 🟩 Limit after viability
 - Migration: 🟨 Current restrictions
 - Economics: 🟦 Minimal regulation
 - Rights: 🟦 Protections with few limits
 
 **Eleanor Roosevelt (1884-1962)** 🟩🟨🟦🟧🟪
 - Trade: 🟩 Selective trade agreements
-- Abortion: 🟨 Limit after second trimester
+- Abortion: 🟨 Limit after 15 weeks
 - Migration: 🟦 Easy pathways to citizenship
 - Economics: 🟧 Strong social programs
 - Rights: 🟪 Full legal equality
@@ -328,7 +328,7 @@ Rights (civil liberties, e.g. LGBTQ+ rights)
 
 **Bill Clinton (b. 1946)** 🟦🟩🟩🟩🟩
 - Trade: 🟦 Minimal tariffs
-- Abortion: 🟩 Limit after third trimester
+- Abortion: 🟩 Limit after viability
 - Migration: 🟩 Expanded quotas
 - Economics: 🟩 Market-based with safety net
 - Rights: 🟩 Protections with some limits
@@ -342,14 +342,14 @@ Rights (civil liberties, e.g. LGBTQ+ rights)
 
 **Barack Obama (b. 1961)** 🟩🟦🟦🟧🟪
 - Trade: 🟩 Selective trade agreements
-- Abortion: 🟦 Limit after viability
+- Abortion: 🟦 Limit after second trimester
 - Migration: 🟦 Easy pathways to citizenship
 - Economics: 🟧 Strong social programs
 - Rights: 🟪 Full legal equality
 
 **Donald Trump (b. 1946)** 🟥🟩🟥🟦🟨
 - Trade: 🟥 Heavy tariffs
-- Abortion: 🟩 Limit after third trimester
+- Abortion: 🟩 Limit after viability
 - Migration: 🟥 Strict limits only
 - Economics: 🟦 Minimal regulation
 - Rights: 🟨 Tolerance without endorsement

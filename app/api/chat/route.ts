@@ -10,7 +10,7 @@ const ASSESSOR_PROMPT = `You are an expert assistant for squares.vote, which use
 
 **TAME-R Dimensions:**
 1. **Trade** - Government intervention in EXTERNAL economic interactions. From unrestricted free trade with foreign markets (0) to protectionist tariffs and closed borders to goods/capital (6). This measures barriers to international commerce, NOT domestic economic policy.
-2. **Abortion** - From partial birth abortion allowed (0) to no exceptions (6)
+2. **Abortion** - From no gestational limit (0) to total ban (6)
 3. **Migration/Immigration** - From open borders (0) to no immigration (6)
 4. **Economics** - DOMESTIC capital ownership and economic planning. From pure private ownership/free market (0) to full state ownership/central planning (6). This measures public vs. private control of production, NOT trade policy.
 5. **Rights (civil liberties)** - From full legal equality (0) to criminalization (6)
@@ -37,13 +37,13 @@ Each dimension uses a 7-point scale (0-6) representing the level of government i
 7. **Require evidence for extremes**: Only assign scores of 0-1 or 5-6 if there is specific, documented evidence of the figure actively advocating for or implementing those extreme positions, OR if their tightly-connected community explicitly advocates for them.
 
 **Color Code & Labels:**
-* 🟪 0 - Trade: free trade | Abortion: partial birth abortion | Migration: open borders | Economics: pure free market | Rights: full legal equality
-* 🟦 1 - Trade: minimal tariffs | Abortion: limit after viability | Migration: easy pathways to citizenship | Economics: minimal regulation | Rights: protections with few limits
-* 🟩 2 - Trade: selective trade agreements | Abortion: limit after third trimester | Migration: expanded quotas | Economics: market-based with safety net | Rights: protections with some limits
-* 🟨 3 - Trade: balanced tariffs | Abortion: limit after second trimester | Migration: current restrictions | Economics: balanced public-private | Rights: tolerance without endorsement
+* 🟪 0 - Trade: free trade | Abortion: no gestational limit | Migration: open borders | Economics: pure free market | Rights: full legal equality
+* 🟦 1 - Trade: minimal tariffs | Abortion: limit after second trimester | Migration: easy pathways to citizenship | Economics: minimal regulation | Rights: protections with few limits
+* 🟩 2 - Trade: selective trade agreements | Abortion: limit after viability | Migration: expanded quotas | Economics: market-based with safety net | Rights: protections with some limits
+* 🟨 3 - Trade: balanced tariffs | Abortion: limit after 15 weeks | Migration: current restrictions | Economics: balanced public-private | Rights: tolerance without endorsement
 * 🟧 4 - Trade: strategic protections | Abortion: limit after first trimester | Migration: reduced quotas | Economics: strong social programs | Rights: traditional definitions only
 * 🟥 5 - Trade: heavy tariffs | Abortion: limit after heartbeat detection | Migration: strict limits only | Economics: extensive public ownership | Rights: no legal recognition
-* ⬛️ 6 - Trade: closed economy | Abortion: no exceptions allowed | Migration: no immigration | Economics: full state control | Rights: criminalization
+* ⬛️ 6 - Trade: closed economy | Abortion: total ban | Migration: no immigration | Economics: full state control | Rights: criminalization
 * ⬜ Unknown - Use when insufficient evidence exists for that specific dimension
 
 **Confidence Thresholds:**

@@ -40,7 +40,7 @@ const POLICIES = [
 
 const POSITION_LABELS: Record<string, string[]> = {
   trade: ['free trade', 'minimal tariffs', 'selective trade agreements', 'balanced tariffs', 'strategic protections', 'heavy tariffs', 'closed economy'],
-  abortion: ['partial birth abortion', 'limit after viability', 'limit after third trimester', 'limit after second trimester', 'limit after first trimester', 'limit after heartbeat detection', 'no exceptions allowed'],
+  abortion: ['no gestational limit', 'limit after second trimester', 'limit after viability', 'limit after 15 weeks', 'limit after first trimester', 'limit after heartbeat detection', 'total ban'],
   migration: ['open borders', 'easy pathways to citizenship', 'expanded quotas', 'current restrictions', 'reduced quotas', 'strict limits only', 'no immigration'],
   economics: ['pure free market', 'minimal regulation', 'market-based with safety net', 'balanced public-private', 'strong social programs', 'extensive public ownership', 'full state control'],
   rights: ['full legal equality', 'protections with few limits', 'protections with some limits', 'tolerance without endorsement', 'traditional definitions only', 'no legal recognition', 'criminalization']

@@ -74,13 +74,13 @@ var POSITION_LABELS = {
     "closed economy"
   ],
   abortion: [
-    "partial birth abortion",
-    "limit after viability",
-    "limit after third trimester",
+    "no gestational limit",
     "limit after second trimester",
+    "limit after viability",
+    "limit after 15 weeks",
     "limit after first trimester",
     "limit after heartbeat detection",
-    "no exceptions allowed"
+    "total ban"
   ],
   migration: [
     "open borders",
@@ -280,7 +280,7 @@ function SquaresWidget({
         )));
       }
       case 3:
-        return /* @__PURE__ */ import_react.default.createElement("div", { style: { minHeight: "400px", display: "flex", flexDirection: "column", justifyContent: "center" } }, /* @__PURE__ */ import_react.default.createElement("h2", { style: { margin: "0 0 3rem 0", color: "#ffffff", fontSize: "clamp(2rem, 5vw, 3rem)", fontWeight: 700, lineHeight: 1.2, textAlign: "center" } }, "Your Political Spectrum"), /* @__PURE__ */ import_react.default.createElement("div", { style: { textAlign: "center", margin: "2rem 0", padding: "2.5rem 2rem", background: "rgba(30, 30, 30, 0.8)", borderRadius: "16px", border: "1px solid rgba(255, 255, 255, 0.1)" } }, /* @__PURE__ */ import_react.default.createElement("div", { style: { display: "flex", justifyContent: "center", gap: "clamp(0.75rem, 2vw, 1.5rem)", flexWrap: "wrap", marginBottom: "1.5rem" } }, POLICIES.map((policy, i) => /* @__PURE__ */ import_react.default.createElement("div", { key: policy.key, style: { display: "flex", flexDirection: "column", alignItems: "center", gap: "0.5rem" } }, /* @__PURE__ */ import_react.default.createElement(ColorSquare, { value: spectrum[policy.key], size: "64px" }), /* @__PURE__ */ import_react.default.createElement("span", { style: { fontSize: "0.75rem", color: "#a3a3a3", fontWeight: 600, letterSpacing: "0.02em" } }, ["T", "A", "M", "E", "R"][i])))), /* @__PURE__ */ import_react.default.createElement("div", { style: { display: "flex", justifyContent: "center", gap: "clamp(0.75rem, 2vw, 1.5rem)", flexWrap: "wrap", paddingTop: "1rem", borderTop: "1px solid rgba(255, 255, 255, 0.1)" } }, POLICIES.map((policy) => /* @__PURE__ */ import_react.default.createElement("span", { key: policy.key, style: { fontSize: "0.6875rem", color: "#737373", fontWeight: 500, textTransform: "lowercase" } }, policy.label)))), /* @__PURE__ */ import_react.default.createElement(
+        return /* @__PURE__ */ import_react.default.createElement("div", { style: { minHeight: "400px", display: "flex", flexDirection: "column", justifyContent: "center" } }, /* @__PURE__ */ import_react.default.createElement("h2", { style: { margin: "0 0 3rem 0", color: "#ffffff", fontSize: "clamp(2rem, 5vw, 3rem)", fontWeight: 700, lineHeight: 1.2, textAlign: "center" } }, "Your Political Spectrum"), /* @__PURE__ */ import_react.default.createElement("div", { style: { textAlign: "center", margin: "2rem 0", padding: "2.5rem 2rem", background: "rgba(30, 30, 30, 0.8)", borderRadius: "16px", border: "1px solid rgba(255, 255, 255, 0.1)" } }, /* @__PURE__ */ import_react.default.createElement("div", { style: { display: "flex", justifyContent: "center", gap: "clamp(0.75rem, 2vw, 1.5rem)", flexWrap: "wrap", marginBottom: "1.5rem" } }, POLICIES.map((policy, i) => /* @__PURE__ */ import_react.default.createElement("div", { key: policy.key, style: { display: "flex", flexDirection: "column", alignItems: "center", gap: "0.5rem" } }, /* @__PURE__ */ import_react.default.createElement(ColorSquare, { value: spectrum[policy.key], size: "64px" }), /* @__PURE__ */ import_react.default.createElement("span", { style: { fontSize: "0.75rem", color: "#a3a3a3", fontWeight: 600, letterSpacing: "0.02em" } }, ["T", "A", "M", "E", "R"][i])))), /* @__PURE__ */ import_react.default.createElement("div", { style: { display: "flex", justifyContent: "center", gap: "clamp(0.75rem, 2vw, 1.5rem)", flexWrap: "wrap", paddingTop: "1rem", borderTop: "1px solid rgba(255, 255, 255, 0.1)" } }, POLICIES.map((policy) => /* @__PURE__ */ import_react.default.createElement("span", { key: policy.key, style: { fontSize: "0.6875rem", color: "#737373", fontWeight: 500, textTransform: "lowercase" } }, policy.label))), /* @__PURE__ */ import_react.default.createElement("div", { style: { fontSize: "2rem", marginTop: "1.5rem", paddingTop: "1.5rem", borderTop: "1px solid rgba(255, 255, 255, 0.1)", display: "flex", justifyContent: "center", gap: "0.5rem" } }, POLICIES.map((policy) => /* @__PURE__ */ import_react.default.createElement("span", { key: policy.key }, getEmojiSquare(spectrum[policy.key]))))), /* @__PURE__ */ import_react.default.createElement(
           "button",
           {
             onClick: handleCopy,
@@ -481,33 +481,34 @@ function SquaresWidget({
           onClick: () => onClose(),
           style: {
             position: "absolute",
-            top: "1.25rem",
-            right: "1.25rem",
-            background: "rgba(30, 30, 30, 0.8)",
-            border: "1px solid rgba(255, 255, 255, 0.1)",
-            fontSize: "1.75rem",
+            top: "1rem",
+            right: "1rem",
+            background: "transparent",
+            border: "1px solid rgba(255, 255, 255, 0.15)",
+            fontSize: "1.5rem",
             cursor: "pointer",
-            color: "#a3a3a3",
+            color: "#737373",
             lineHeight: "1",
             padding: 0,
-            width: "36px",
-            height: "36px",
+            width: "40px",
+            height: "40px",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
             borderRadius: "50%",
             transition: "all 0.2s",
-            fontFamily: "system-ui, -apple-system, sans-serif"
+            fontFamily: "system-ui, -apple-system, sans-serif",
+            fontWeight: 300
           },
           onMouseOver: (e) => {
-            e.currentTarget.style.background = "rgba(40, 40, 40, 0.9)";
-            e.currentTarget.style.color = "#ffffff";
-            e.currentTarget.style.borderColor = "rgba(255, 255, 255, 0.2)";
+            e.currentTarget.style.background = "rgba(255, 255, 255, 0.05)";
+            e.currentTarget.style.color = "#e5e5e5";
+            e.currentTarget.style.borderColor = "rgba(255, 255, 255, 0.3)";
           },
           onMouseOut: (e) => {
-            e.currentTarget.style.background = "rgba(30, 30, 30, 0.8)";
-            e.currentTarget.style.color = "#a3a3a3";
-            e.currentTarget.style.borderColor = "rgba(255, 255, 255, 0.1)";
+            e.currentTarget.style.background = "transparent";
+            e.currentTarget.style.color = "#737373";
+            e.currentTarget.style.borderColor = "rgba(255, 255, 255, 0.15)";
           }
         },
         "\xD7"
