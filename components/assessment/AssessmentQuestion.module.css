@@ -114,6 +114,10 @@
   border-radius: 12px;
   cursor: pointer;
   transition: all 0.3s ease;
+  color: var(--foreground);
+  -webkit-tap-highlight-color: transparent;
+  -webkit-appearance: none;
+  font-family: inherit;
 }
 
 /* Center option (index 3, 4th child) always has dashed border */
@@ -198,7 +202,7 @@
 .optionLabel {
   font-size: 0.75rem;
   font-weight: 400;
-  color: var(--foreground);
+  color: inherit;
   text-align: center;
   line-height: 1.3;
 }

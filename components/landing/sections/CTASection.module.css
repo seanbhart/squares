@@ -47,6 +47,9 @@
   transition: all 0.3s ease;
   box-shadow: 0 8px 24px var(--shadow-light, rgba(255, 255, 255, 0.2));
   margin-bottom: 2rem;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-appearance: none;
+  font-family: inherit;
 }
 
 .ctaButton:hover {
@@ -61,11 +64,13 @@
 
 .buttonText {
   line-height: 1;
+  color: inherit;
 }
 
 .buttonIcon {
   font-size: 2rem;
   transition: transform 0.3s ease;
+  color: inherit;
 }
 
 .ctaButton:hover .buttonIcon {
@@ -122,6 +127,7 @@
   color: var(--foreground-secondary);
   text-decoration: none;
   transition: color 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .footerLink:hover {
