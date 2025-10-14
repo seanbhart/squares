@@ -101,13 +101,20 @@ function SquaresWidget({
   const [copied, setCopied] = useState(false);
   const [currentDimension, setCurrentDimension] = useState(0);
   const [selectedSpectrumDimension, setSelectedSpectrumDimension] = useState(0);
+  const getEmojiSquare = (value) => {
+    const emojis = ["\u{1F7EA}", "\u{1F7E6}", "\u{1F7E9}", "\u{1F7E8}", "\u{1F7E7}", "\u{1F7E5}", "\u2B1B\uFE0F"];
+    return emojis[value] || "\u{1F7E8}";
+  };
   const getSignatureText = () => {
     const letters = ["T", "A", "M", "E", "R"];
     return POLICIES.map((p, i) => `${letters[i]}${spectrum[p.key]}`).join(" ");
   };
+  const getEmojiText = () => {
+    return POLICIES.map((p) => getEmojiSquare(spectrum[p.key])).join(" ");
+  };
   const handleCopy = useCallback(async () => {
     try {
-      await navigator.clipboard.writeText(getSignatureText());
+      await navigator.clipboard.writeText(getEmojiText());
       setCopied(true);
       setTimeout(() => setCopied(false), 2e3);
     } catch (error) {
@@ -236,7 +243,7 @@ function SquaresWidget({
         )));
       }
       case 3:
-        return /* @__PURE__ */ React.createElement("div", { style: { minHeight: "400px", display: "flex", flexDirection: "column", justifyContent: "center" } }, /* @__PURE__ */ React.createElement("h2", { style: { margin: "0 0 3rem 0", color: "#ffffff", fontSize: "clamp(2rem, 5vw, 3rem)", fontWeight: 700, lineHeight: 1.2, textAlign: "center" } }, "Your Political Spectrum"), /* @__PURE__ */ React.createElement("div", { style: { textAlign: "center", margin: "2rem 0", padding: "2.5rem 2rem", background: "rgba(30, 30, 30, 0.8)", borderRadius: "16px", border: "1px solid rgba(255, 255, 255, 0.1)" } }, /* @__PURE__ */ React.createElement("div", { style: { display: "flex", justifyContent: "center", gap: "clamp(0.75rem, 2vw, 1.5rem)", flexWrap: "wrap", marginBottom: "1.5rem" } }, POLICIES.map((policy, i) => /* @__PURE__ */ React.createElement("div", { key: policy.key, style: { display: "flex", flexDirection: "column", alignItems: "center", gap: "0.5rem" } }, /* @__PURE__ */ React.createElement(ColorSquare, { value: spectrum[policy.key], size: "64px" }), /* @__PURE__ */ React.createElement("span", { style: { fontSize: "0.75rem", color: "#a3a3a3", fontWeight: 600, letterSpacing: "0.02em" } }, ["T", "A", "M", "E", "R"][i])))), /* @__PURE__ */ React.createElement("div", { style: { display: "flex", justifyContent: "center", gap: "clamp(0.75rem, 2vw, 1.5rem)", flexWrap: "wrap", marginBottom: "1rem", paddingTop: "1rem", borderTop: "1px solid rgba(255, 255, 255, 0.1)" } }, POLICIES.map((policy) => /* @__PURE__ */ React.createElement("span", { key: policy.key, style: { fontSize: "0.6875rem", color: "#737373", fontWeight: 500, textTransform: "lowercase" } }, policy.label))), /* @__PURE__ */ React.createElement("div", { style: { fontSize: "0.9rem", color: "#737373", fontFamily: "monospace" } }, getSignatureText())), /* @__PURE__ */ React.createElement(
+        return /* @__PURE__ */ React.createElement("div", { style: { minHeight: "400px", display: "flex", flexDirection: "column", justifyContent: "center" } }, /* @__PURE__ */ React.createElement("h2", { style: { margin: "0 0 3rem 0", color: "#ffffff", fontSize: "clamp(2rem, 5vw, 3rem)", fontWeight: 700, lineHeight: 1.2, textAlign: "center" } }, "Your Political Spectrum"), /* @__PURE__ */ React.createElement("div", { style: { textAlign: "center", margin: "2rem 0", padding: "2.5rem 2rem", background: "rgba(30, 30, 30, 0.8)", borderRadius: "16px", border: "1px solid rgba(255, 255, 255, 0.1)" } }, /* @__PURE__ */ React.createElement("div", { style: { display: "flex", justifyContent: "center", gap: "clamp(0.75rem, 2vw, 1.5rem)", flexWrap: "wrap", marginBottom: "1.5rem" } }, POLICIES.map((policy, i) => /* @__PURE__ */ React.createElement("div", { key: policy.key, style: { display: "flex", flexDirection: "column", alignItems: "center", gap: "0.5rem" } }, /* @__PURE__ */ React.createElement(ColorSquare, { value: spectrum[policy.key], size: "64px" }), /* @__PURE__ */ React.createElement("span", { style: { fontSize: "0.75rem", color: "#a3a3a3", fontWeight: 600, letterSpacing: "0.02em" } }, ["T", "A", "M", "E", "R"][i])))), /* @__PURE__ */ React.createElement("div", { style: { display: "flex", justifyContent: "center", gap: "clamp(0.75rem, 2vw, 1.5rem)", flexWrap: "wrap", paddingTop: "1rem", borderTop: "1px solid rgba(255, 255, 255, 0.1)" } }, POLICIES.map((policy) => /* @__PURE__ */ React.createElement("span", { key: policy.key, style: { fontSize: "0.6875rem", color: "#737373", fontWeight: 500, textTransform: "lowercase" } }, policy.label)))), /* @__PURE__ */ React.createElement(
           "button",
           {
             onClick: handleCopy,
@@ -265,7 +272,7 @@ function SquaresWidget({
               e.currentTarget.style.boxShadow = "0 4px 12px rgba(255, 255, 255, 0.2)";
             }
           },
-          copied ? "\u2713 Copied!" : "Copy Signature"
+          copied ? "\u2713 Copied!" : "Copy Spectrum"
         ), /* @__PURE__ */ React.createElement(
           "button",
           {
@@ -640,36 +647,36 @@ function SquaresEmbedReact({
     "div",
     {
       style: {
-        background: "linear-gradient(180deg, #ffffff 0%, #f9fafb 100%)",
-        border: "1px solid rgba(0, 0, 0, 0.06)",
+        background: "#212121",
+        border: "1px solid rgba(255, 255, 255, 0.1)",
         borderRadius,
         padding: "clamp(20px, 4vw, 32px)",
-        boxShadow: shadow ? "0 4px 12px rgba(0, 0, 0, 0.08)" : "none",
+        boxShadow: shadow ? "0 4px 12px rgba(0, 0, 0, 0.4)" : "none",
         fontFamily: '"Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif'
       }
     },
-    /* @__PURE__ */ React2.createElement("div", { style: { marginBottom: "24px" } }, /* @__PURE__ */ React2.createElement("h3", { style: { margin: "0 0 12px 0", fontSize: "clamp(1.375rem, 3vw, 1.75rem)", fontWeight: 700, color: "#292524", lineHeight: 1.2 } }, "Map Your Political Positions"), /* @__PURE__ */ React2.createElement("p", { style: { margin: 0, fontSize: "clamp(0.9375rem, 2vw, 1rem)", color: "#78716c", lineHeight: "1.5" } }, "Use the TAME-R framework to visualize where you stand on 5 key policy dimensions")),
+    /* @__PURE__ */ React2.createElement("div", { style: { marginBottom: "24px" } }, /* @__PURE__ */ React2.createElement("h3", { style: { margin: "0 0 12px 0", fontSize: "clamp(1.375rem, 3vw, 1.75rem)", fontWeight: 700, color: "#ffffff", lineHeight: 1.2 } }, "Map Your Political Positions"), /* @__PURE__ */ React2.createElement("p", { style: { margin: 0, fontSize: "clamp(0.9375rem, 2vw, 1rem)", color: "#a3a3a3", lineHeight: "1.5" } }, "Use the TAME-R framework to visualize where you stand on 5 key policy dimensions")),
     /* @__PURE__ */ React2.createElement(
       "div",
       {
         style: {
-          background: "rgba(249, 250, 251, 0.6)",
-          border: "1px solid rgba(0, 0, 0, 0.06)",
+          background: "rgba(30, 30, 30, 0.8)",
+          border: "1px solid rgba(255, 255, 255, 0.1)",
           borderRadius: "12px",
           padding: "clamp(16px, 3vw, 20px)",
           marginBottom: "24px"
         }
       },
-      /* @__PURE__ */ React2.createElement("div", { style: { marginBottom: "12px", display: "flex", alignItems: "center", gap: "8px", flexWrap: "wrap" } }, /* @__PURE__ */ React2.createElement("span", { style: { fontSize: "0.8125rem", fontWeight: 600, color: "#a8a29e", textTransform: "uppercase", letterSpacing: "0.05em" } }, "EXAMPLE:"), /* @__PURE__ */ React2.createElement("span", { style: { fontSize: "clamp(0.9375rem, 2vw, 1rem)", fontWeight: 600, color: "#292524" } }, "Martin Luther King Jr.")),
-      /* @__PURE__ */ React2.createElement("div", { style: { textAlign: "center" } }, /* @__PURE__ */ React2.createElement("div", { style: { fontSize: "clamp(2rem, 6vw, 2.5rem)", marginBottom: "12px", display: "flex", justifyContent: "center", gap: "clamp(4px, 1vw, 8px)" } }, /* @__PURE__ */ React2.createElement("span", null, "\u{1F7E9}"), /* @__PURE__ */ React2.createElement("span", null, "\u{1F7E6}"), /* @__PURE__ */ React2.createElement("span", null, "\u{1F7E9}"), /* @__PURE__ */ React2.createElement("span", null, "\u{1F7E7}"), /* @__PURE__ */ React2.createElement("span", null, "\u{1F7EA}")), /* @__PURE__ */ React2.createElement("div", { style: { fontSize: "0.6875rem", color: "#78716c", display: "flex", justifyContent: "center", gap: "clamp(8px, 2vw, 16px)", flexWrap: "wrap", fontWeight: 500 } }, /* @__PURE__ */ React2.createElement("span", null, "Trade"), /* @__PURE__ */ React2.createElement("span", null, "Abortion"), /* @__PURE__ */ React2.createElement("span", null, "Migration"), /* @__PURE__ */ React2.createElement("span", null, "Economics"), /* @__PURE__ */ React2.createElement("span", null, "Rights")))
+      /* @__PURE__ */ React2.createElement("div", { style: { marginBottom: "12px", display: "flex", alignItems: "center", gap: "8px", flexWrap: "wrap" } }, /* @__PURE__ */ React2.createElement("span", { style: { fontSize: "0.8125rem", fontWeight: 600, color: "#737373", textTransform: "uppercase", letterSpacing: "0.05em" } }, "EXAMPLE:"), /* @__PURE__ */ React2.createElement("span", { style: { fontSize: "clamp(0.9375rem, 2vw, 1rem)", fontWeight: 600, color: "#ffffff" } }, "Martin Luther King Jr.")),
+      /* @__PURE__ */ React2.createElement("div", { style: { textAlign: "center" } }, /* @__PURE__ */ React2.createElement("div", { style: { fontSize: "clamp(2rem, 6vw, 2.5rem)", marginBottom: "12px", display: "flex", justifyContent: "center", gap: "clamp(4px, 1vw, 8px)" } }, /* @__PURE__ */ React2.createElement("span", null, "\u{1F7E9}"), /* @__PURE__ */ React2.createElement("span", null, "\u{1F7E6}"), /* @__PURE__ */ React2.createElement("span", null, "\u{1F7E9}"), /* @__PURE__ */ React2.createElement("span", null, "\u{1F7E7}"), /* @__PURE__ */ React2.createElement("span", null, "\u{1F7EA}")), /* @__PURE__ */ React2.createElement("div", { style: { fontSize: "0.6875rem", color: "#a3a3a3", display: "flex", justifyContent: "center", gap: "clamp(8px, 2vw, 16px)", flexWrap: "wrap", fontWeight: 500 } }, /* @__PURE__ */ React2.createElement("span", null, "Trade"), /* @__PURE__ */ React2.createElement("span", null, "Abortion"), /* @__PURE__ */ React2.createElement("span", null, "Migration"), /* @__PURE__ */ React2.createElement("span", null, "Economics"), /* @__PURE__ */ React2.createElement("span", null, "Rights")))
     ),
     /* @__PURE__ */ React2.createElement(
       "button",
       {
         onClick: handleClick,
         style: {
-          backgroundColor: primaryColor,
-          color: "white",
+          backgroundColor: "#e5e5e5",
+          color: "#212121",
           border: "none",
           padding: "clamp(12px, 2.5vw, 16px) clamp(20px, 4vw, 32px)",
           fontSize: "clamp(0.9375rem, 2vw, 1.0625rem)",
@@ -679,20 +686,22 @@ function SquaresEmbedReact({
           width: "100%",
           marginBottom: "16px",
           transition: "all 0.2s ease",
-          boxShadow: "0 1px 3px rgba(0, 0, 0, 0.08)"
+          boxShadow: "0 4px 12px rgba(255, 255, 255, 0.2)"
         },
         onMouseOver: (e) => {
+          e.currentTarget.style.backgroundColor = "#ffffff";
           e.currentTarget.style.transform = "translateY(-2px)";
-          e.currentTarget.style.boxShadow = "0 4px 12px rgba(0, 0, 0, 0.12)";
+          e.currentTarget.style.boxShadow = "0 6px 16px rgba(255, 255, 255, 0.3)";
         },
         onMouseOut: (e) => {
+          e.currentTarget.style.backgroundColor = "#e5e5e5";
           e.currentTarget.style.transform = "translateY(0)";
-          e.currentTarget.style.boxShadow = "0 1px 3px rgba(0, 0, 0, 0.08)";
+          e.currentTarget.style.boxShadow = "0 4px 12px rgba(255, 255, 255, 0.2)";
         }
       },
       buttonText
     ),
-    /* @__PURE__ */ React2.createElement("p", { style: { margin: 0, fontSize: "0.8125rem", color: "#a8a29e", textAlign: "center", lineHeight: 1.5 } }, "Takes less than 2 minutes \xB7 Free & open source")
+    /* @__PURE__ */ React2.createElement("p", { style: { margin: 0, fontSize: "0.8125rem", color: "#737373", textAlign: "center", lineHeight: 1.5 } }, "Takes less than 2 minutes \xB7 Free & open source")
   )), showWidget && /* @__PURE__ */ React2.createElement(SquaresWidget, { onClose: () => setShowWidget(false), primaryColor }));
 }
 export {

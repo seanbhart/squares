@@ -102,37 +102,37 @@ export function SquaresEmbedReact({
       <div style={containerStyle}>
         <div
           style={{
-            background: 'linear-gradient(180deg, #ffffff 0%, #f9fafb 100%)',
-            border: '1px solid rgba(0, 0, 0, 0.06)',
+            background: '#212121',
+            border: '1px solid rgba(255, 255, 255, 0.1)',
             borderRadius,
             padding: 'clamp(20px, 4vw, 32px)',
-            boxShadow: shadow ? '0 4px 12px rgba(0, 0, 0, 0.08)' : 'none',
+            boxShadow: shadow ? '0 4px 12px rgba(0, 0, 0, 0.4)' : 'none',
             fontFamily: '"Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
           }}
         >
           <div style={{ marginBottom: '24px' }}>
-            <h3 style={{ margin: '0 0 12px 0', fontSize: 'clamp(1.375rem, 3vw, 1.75rem)', fontWeight: 700, color: '#292524', lineHeight: 1.2 }}>
+            <h3 style={{ margin: '0 0 12px 0', fontSize: 'clamp(1.375rem, 3vw, 1.75rem)', fontWeight: 700, color: '#ffffff', lineHeight: 1.2 }}>
               Map Your Political Positions
             </h3>
-            <p style={{ margin: 0, fontSize: 'clamp(0.9375rem, 2vw, 1rem)', color: '#78716c', lineHeight: '1.5' }}>
+            <p style={{ margin: 0, fontSize: 'clamp(0.9375rem, 2vw, 1rem)', color: '#a3a3a3', lineHeight: '1.5' }}>
               Use the TAME-R framework to visualize where you stand on 5 key policy dimensions
             </p>
           </div>
 
           <div
             style={{
-              background: 'rgba(249, 250, 251, 0.6)',
-              border: '1px solid rgba(0, 0, 0, 0.06)',
+              background: 'rgba(30, 30, 30, 0.8)',
+              border: '1px solid rgba(255, 255, 255, 0.1)',
               borderRadius: '12px',
               padding: 'clamp(16px, 3vw, 20px)',
               marginBottom: '24px',
             }}
           >
             <div style={{ marginBottom: '12px', display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
-              <span style={{ fontSize: '0.8125rem', fontWeight: 600, color: '#a8a29e', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+              <span style={{ fontSize: '0.8125rem', fontWeight: 600, color: '#737373', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
                 EXAMPLE:
               </span>
-              <span style={{ fontSize: 'clamp(0.9375rem, 2vw, 1rem)', fontWeight: 600, color: '#292524' }}>
+              <span style={{ fontSize: 'clamp(0.9375rem, 2vw, 1rem)', fontWeight: 600, color: '#ffffff' }}>
                 Martin Luther King Jr.
               </span>
             </div>
@@ -144,7 +144,7 @@ export function SquaresEmbedReact({
                 <span>🟧</span>
                 <span>🟪</span>
               </div>
-              <div style={{ fontSize: '0.6875rem', color: '#78716c', display: 'flex', justifyContent: 'center', gap: 'clamp(8px, 2vw, 16px)', flexWrap: 'wrap', fontWeight: 500 }}>
+              <div style={{ fontSize: '0.6875rem', color: '#a3a3a3', display: 'flex', justifyContent: 'center', gap: 'clamp(8px, 2vw, 16px)', flexWrap: 'wrap', fontWeight: 500 }}>
                 <span>Trade</span>
                 <span>Abortion</span>
                 <span>Migration</span>
@@ -157,8 +157,8 @@ export function SquaresEmbedReact({
           <button
             onClick={handleClick}
             style={{
-              backgroundColor: primaryColor,
-              color: 'white',
+              backgroundColor: '#e5e5e5',
+              color: '#212121',
               border: 'none',
               padding: 'clamp(12px, 2.5vw, 16px) clamp(20px, 4vw, 32px)',
               fontSize: 'clamp(0.9375rem, 2vw, 1.0625rem)',
@@ -168,21 +168,23 @@ export function SquaresEmbedReact({
               width: '100%',
               marginBottom: '16px',
               transition: 'all 0.2s ease',
-              boxShadow: '0 1px 3px rgba(0, 0, 0, 0.08)',
+              boxShadow: '0 4px 12px rgba(255, 255, 255, 0.2)',
             }}
             onMouseOver={(e) => {
+              e.currentTarget.style.backgroundColor = '#ffffff';
               e.currentTarget.style.transform = 'translateY(-2px)';
-              e.currentTarget.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.12)';
+              e.currentTarget.style.boxShadow = '0 6px 16px rgba(255, 255, 255, 0.3)';
             }}
             onMouseOut={(e) => {
+              e.currentTarget.style.backgroundColor = '#e5e5e5';
               e.currentTarget.style.transform = 'translateY(0)';
-              e.currentTarget.style.boxShadow = '0 1px 3px rgba(0, 0, 0, 0.08)';
+              e.currentTarget.style.boxShadow = '0 4px 12px rgba(255, 255, 255, 0.2)';
             }}
           >
             {buttonText}
           </button>
 
-          <p style={{ margin: 0, fontSize: '0.8125rem', color: '#a8a29e', textAlign: 'center', lineHeight: 1.5 }}>
+          <p style={{ margin: 0, fontSize: '0.8125rem', color: '#737373', textAlign: 'center', lineHeight: 1.5 }}>
             Takes less than 2 minutes · Free & open source
           </p>
         </div>

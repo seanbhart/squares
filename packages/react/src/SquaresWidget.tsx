@@ -131,14 +131,23 @@ export function SquaresWidget({
   const [currentDimension, setCurrentDimension] = useState(0);
   const [selectedSpectrumDimension, setSelectedSpectrumDimension] = useState(0);
 
+  const getEmojiSquare = (value: number): string => {
+    const emojis = ['🟪', '🟦', '🟩', '🟨', '🟧', '🟥', '⬛️'];
+    return emojis[value] || '🟨';
+  };
+
   const getSignatureText = () => {
     const letters = ['T', 'A', 'M', 'E', 'R'];
     return POLICIES.map((p, i) => `${letters[i]}${spectrum[p.key]}`).join(' ');
   };
 
+  const getEmojiText = () => {
+    return POLICIES.map((p) => getEmojiSquare(spectrum[p.key])).join(' ');
+  };
+
   const handleCopy = useCallback(async () => {
     try {
-      await navigator.clipboard.writeText(getSignatureText());
+      await navigator.clipboard.writeText(getEmojiText());
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch (error) {
@@ -380,15 +389,12 @@ export function SquaresWidget({
                   </div>
                 ))}
               </div>
-              <div style={{ display: 'flex', justifyContent: 'center', gap: 'clamp(0.75rem, 2vw, 1.5rem)', flexWrap: 'wrap', marginBottom: '1rem', paddingTop: '1rem', borderTop: '1px solid rgba(255, 255, 255, 0.1)' }}>
+              <div style={{ display: 'flex', justifyContent: 'center', gap: 'clamp(0.75rem, 2vw, 1.5rem)', flexWrap: 'wrap', paddingTop: '1rem', borderTop: '1px solid rgba(255, 255, 255, 0.1)' }}>
                 {POLICIES.map((policy) => (
                   <span key={policy.key} style={{ fontSize: '0.6875rem', color: '#737373', fontWeight: 500, textTransform: 'lowercase' }}>
                     {policy.label}
                   </span>
                 ))}
-              </div>
-              <div style={{ fontSize: '0.9rem', color: '#737373', fontFamily: 'monospace' }}>
-                {getSignatureText()}
               </div>
             </div>
 
@@ -419,7 +425,7 @@ export function SquaresWidget({
                 e.currentTarget.style.boxShadow = '0 4px 12px rgba(255, 255, 255, 0.2)';
               }}
             >
-              {copied ? '✓ Copied!' : 'Copy Signature'}
+              {copied ? '✓ Copied!' : 'Copy Spectrum'}
             </button>
             
             <button 
