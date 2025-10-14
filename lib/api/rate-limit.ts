@@ -207,18 +207,18 @@ export async function getUsageStats(apiKey: ApiKey) {
 export function cleanupRateLimitStore() {
   const now = Math.floor(Date.now() / 1000);
   
-  for (const [keyId, keyStore] of rateLimitStore.entries()) {
-    for (const [windowKey, entry] of keyStore.entries()) {
+  rateLimitStore.forEach((keyStore, keyId) => {
+    keyStore.forEach((entry, windowKey) => {
       if (entry.resetAt < now) {
         keyStore.delete(windowKey);
       }
-    }
+    });
     
     // Remove empty key stores
     if (keyStore.size === 0) {
       rateLimitStore.delete(keyId);
     }
-  }
+  });
 }
 
 // Clean up every 5 minutes
