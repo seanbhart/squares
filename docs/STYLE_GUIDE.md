@@ -43,13 +43,13 @@
 
 ```css
 /* COLOR_RAMP - Used for all political position indicators */
---spectrum-0: #8B5CF6;  /* Purple - Most progressive/minimal intervention */
---spectrum-1: #3B82F6;  /* Blue */
---spectrum-2: #10B981;  /* Green */
---spectrum-3: #EAB308;  /* Yellow - Balanced/center */
---spectrum-4: #F97316;  /* Orange */
---spectrum-5: #EF4444;  /* Red */
---spectrum-6: #171717;  /* Black - Most conservative/maximal intervention */
+--spectrum-0: #7e568e;  /* Purple - Most progressive/minimal intervention */
+--spectrum-1: #1f6adb;  /* Blue */
+--spectrum-2: #398a34;  /* Green */
+--spectrum-3: #eab308;  /* Yellow - Balanced/center */
+--spectrum-4: #e67e22;  /* Orange */
+--spectrum-5: #c0392b;  /* Red */
+--spectrum-6: #383b3d;  /* Dark slate - Most conservative/maximal intervention */
 ```
 
 **Usage**: Applied to colored squares, option buttons, and badge elements to indicate political positions.
@@ -57,29 +57,34 @@
 ### UI Colors (Dark Mode Default)
 
 ```css
-/* Backgrounds */
---background-primary: #171717;      /* Main app background */
---background-secondary: #212121;    /* Card/container backgrounds */
---background-tertiary: #262626;     /* Elevated surfaces */
---background-input: rgba(26, 26, 26, 0.95);  /* Form inputs, sticky elements */
+/* Backgrounds - from globals.css */
+--bg-primary: #212121;              /* Main page background */
+--bg-secondary: #1A1A1A;            /* Secondary background */
+--surface: rgba(30, 30, 30, 0.8);   /* Cards, info boxes */
+--surface-hover: rgba(40, 40, 40, 0.9); /* Hover state for cards/dropdowns */
+--surface-lighter: rgba(50, 50, 50, 0.3); /* Timeline entries */
 
-/* Foreground/Text */
---foreground-primary: #ffffff;      /* Primary text */
---foreground-secondary: #e5e5e5;    /* Secondary text */
---foreground-muted: #a3a3a3;        /* Muted/helper text */
---foreground-disabled: #737373;     /* Disabled states */
+/* Text/Foreground */
+--text-primary: #ffffff;            /* Primary text */
+--text-secondary: #a3a3a3;          /* Muted/helper text */
+--text-muted: #737373;              /* Disabled states */
 
 /* Borders */
---border-default: rgba(255, 255, 255, 0.15);
---border-strong: rgba(255, 255, 255, 0.3);
---border-subtle: rgba(255, 255, 255, 0.1);
---border-dashed: rgba(255, 255, 255, 0.2);  /* For center/balanced options */
+--border: rgba(255, 255, 255, 0.1); /* Default borders */
+--border-strong: rgba(255, 255, 255, 0.15); /* Emphasized borders */
+--border-light: rgba(255, 255, 255, 0.05);  /* Subtle borders */
 
-/* Interactive States */
---success-green: #398a34;           /* Copy success, confirmations */
---neutral-gray: #525252;            /* Secondary buttons */
---hover-overlay: rgba(255, 255, 255, 0.05);
---selected-overlay: rgba(255, 255, 255, 0.08);
+/* Interactive/Accent Colors */
+--accent: #e5e5e5;                  /* Primary buttons */
+--accent-hover: #ffffff;            /* Primary button hover */
+--accent-text: #212121;             /* Text on accent backgrounds */
+--neutral-button: #525252;          /* Secondary buttons, chat button */
+--neutral-button-hover: #737373;    /* Neutral button hover */
+
+/* Shadows */
+--shadow: rgba(0, 0, 0, 0.3);       /* Standard shadows */
+--shadow-strong: rgba(0, 0, 0, 0.4); /* Stronger shadows */
+--shadow-light: rgba(255, 255, 255, 0.2); /* Light shadows */
 ```
 
 ### Light Mode Overrides
@@ -421,6 +426,183 @@ The core visual element of the Squares brand.
   background: #398a34;  /* If background button */
 }
 ```
+
+---
+
+## Page-Specific Patterns
+
+### Figures Page
+
+The Figures page uses a consistent dark theme with card-based layouts for displaying historical political figures.
+
+**All colors verified from actual CSS files.**
+
+#### Background Colors
+
+```css
+/* Main page background */
+.main {
+  background: #212121;
+  color: #ffffff;
+}
+
+/* Card backgrounds - All use same surface color */
+.userCard,
+.detailCard,
+.figureCard,
+.emojiSignature,
+.chatReasoning,
+.emptyState {
+  background: rgba(30, 30, 30, 0.8);
+}
+
+/* Card borders */
+.userCard,
+.detailCard {
+  border: 2px solid rgba(255, 255, 255, 0.15);
+  border-radius: 16px;
+}
+
+.figureCard,
+.emojiSignature,
+.chatReasoning {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px; /* emojiSignature, chatReasoning */
+  border-radius: 12px; /* figureCard */
+}
+
+.emptyState {
+  border: 2px dashed rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+}
+
+/* Timeline entries - lighter background */
+.timelineEntry {
+  background: rgba(50, 50, 50, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+}
+
+/* Chat box */
+.chatBox {
+  background: #212121;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Chat message area - uses --bg-secondary */
+.messages {
+  background: #1a1a1a;
+}
+
+/* Chat message bubbles */
+.userMessage {
+  background: #e5e5e5;
+  color: #212121;
+}
+
+.assistantMessage {
+  background: rgba(30, 30, 30, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+}
+
+/* Chat header and input form */
+.header,
+.inputForm {
+  background: rgba(30, 30, 30, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Form inputs */
+.dropdown {
+  background: rgba(30, 30, 30, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.dropdown:hover {
+  background: rgba(40, 40, 40, 0.9);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.input {
+  background: rgba(40, 40, 40, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+```
+
+#### Interactive Elements
+
+```css
+/* Chat button */
+.mobileChatButton,
+.minimizedButton {
+  background: #525252;
+  color: white;
+}
+
+.mobileChatButton:hover,
+.minimizedButton:hover {
+  background: #737373;
+}
+
+/* Share button gradient */
+.chatBanner {
+  background: linear-gradient(135deg, #525252, #737373);
+}
+```
+
+#### Selected States
+
+```css
+.figureCard[data-selected="true"] {
+  border-color: rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 4px 16px rgba(255, 255, 255, 0.15);
+}
+```
+
+#### Mobile Overlay
+
+```css
+.mobileOverlay {
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(4px);
+}
+```
+
+### Embed Page
+
+The embed documentation page uses a simplified **2-layer background system** for maximum clarity.
+
+**All colors verified from actual CSS files.**
+
+#### Background Hierarchy
+
+```css
+/* Layer 1: Page background only */
+.container {
+  background: var(--bg-primary); /* #212121 */
+}
+
+/* Demo and features sections have no background - use page background */
+.demo,
+.features {
+  background: transparent;
+  border: none;
+}
+
+/* Layer 2: Code blocks only */
+.code,
+.codeDetails summary {
+  background: var(--bg-secondary); /* #1A1A1A */
+  border: 1px solid var(--border);
+}
+
+/* React embed components render with their own backgrounds */
+/* Card variant: #212121 outer, #1A1A1A inner example area */
+```
+
+**Design principle**: Minimize background layers. Only add a different background color when functionally necessary (code blocks). Let the embed component itself provide visual structure.
 
 ---
 

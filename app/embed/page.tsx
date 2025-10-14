@@ -60,9 +60,7 @@ function MyComponent() {
       <div className={styles.demo}>
         <h2>Option 1: Card Embed (Recommended)</h2>
         <p>Self-contained with explanation and example. Best for first-time visitors.</p>
-        <div className={styles.preview}>
-          <SquaresEmbedReact variant="card" />
-        </div>
+        <SquaresEmbedReact variant="card" />
         <details className={styles.codeDetails}>
           <summary>Show embed code</summary>
           <div className={styles.codeWrapper}>
@@ -90,9 +88,7 @@ function MyComponent() {
       <div className={styles.demo}>
         <h2>Option 2: Button Only</h2>
         <p>Minimal embed for sites where context is already provided.</p>
-        <div className={styles.preview}>
-          <SquaresEmbedReact variant="button" />
-        </div>
+        <SquaresEmbedReact variant="button" />
         <details className={styles.codeDetails}>
           <summary>Show embed code</summary>
           <div className={styles.codeWrapper}>

@@ -145,7 +145,7 @@ export function SquaresEmbedReact({
 
           <div
             style={{
-              background: 'rgba(30, 30, 30, 0.8)',
+              background: '#1A1A1A',
               border: '1px solid rgba(255, 255, 255, 0.1)',
               borderRadius: '12px',
               padding: 'clamp(16px, 3vw, 20px)',

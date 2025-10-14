@@ -2,7 +2,7 @@
   max-width: 800px;
   margin: 0 auto;
   padding: 2rem;
-  background: #212121;
+  background: var(--bg-primary);
   min-height: 100vh;
   color: #ffffff;
 }
@@ -45,16 +45,16 @@
 
 .demo {
   margin: 2rem 0;
-  padding: 2rem;
-  background: rgba(30, 30, 30, 0.8);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 8px;
+  padding: 1.5rem;
+  background: transparent;
+  border: none;
+  border-radius: 0;
 }
 
 @media (max-width: 768px) {
   .demo {
-    padding: 1rem;
-    margin: 1rem 0;
+    padding: 1rem 0;
+    margin: 1.5rem 0;
   }
 }
 
@@ -66,22 +66,7 @@
 
 .demo > p {
   color: #a3a3a3;
-  margin-bottom: 1.5rem;
-}
-
-.preview {
-  display: flex;
-  justify-content: center;
-  padding: 2rem;
-  background: #1a1a1a;
-  border-radius: 8px;
-  margin-bottom: 1rem;
-}
-
-@media (max-width: 768px) {
-  .preview {
-    padding: 1rem 0.5rem;
-  }
+  margin-bottom: 2rem;
 }
 
 .codeDetails {
@@ -91,7 +76,7 @@
 .codeDetails summary {
   cursor: pointer;
   padding: 0.75rem;
-  background: rgba(20, 20, 20, 0.8);
+  background: var(--bg-secondary);
   border-radius: 4px;
   font-weight: 600;
   user-select: none;
@@ -99,7 +84,7 @@
 }
 
 .codeDetails summary:hover {
-  background: rgba(40, 40, 40, 0.9);
+  background: var(--surface-hover);
 }
 
 .codeWrapper {
@@ -134,8 +119,8 @@
 }
 
 .code {
-  background: #1a202c;
-  color: #e2e8f0;
+  background: var(--bg-secondary);
+  color: #e5e5e5;
   padding: 1.5rem;
   padding-right: 4rem;
   border-radius: 8px;
@@ -144,6 +129,7 @@
   font-size: 0.9rem;
   line-height: 1.6;
   margin: 0;
+  border: 1px solid var(--border);
 }
 
 @media (max-width: 768px) {
@@ -156,10 +142,10 @@
 
 .features {
   margin: 3rem 0;
-  padding: 2rem;
-  background: rgba(30, 30, 30, 0.8);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 8px;
+  padding: 0;
+  background: transparent;
+  border: none;
+  border-radius: 0;
 }
 
 .optionsTable {
@@ -193,7 +179,7 @@
 .optionsTable th {
   font-weight: 600;
   color: #ffffff;
-  background: rgba(20, 20, 20, 0.8);
+  background: var(--bg-secondary);
 }
 
 .optionsTable td {
@@ -201,7 +187,7 @@
 }
 
 .optionsTable code {
-  background: rgba(20, 20, 20, 0.8);
+  background: var(--bg-secondary);
   padding: 0.2rem 0.4rem;
   border-radius: 4px;
   font-family: 'Monaco', 'Menlo', monospace;
@@ -210,7 +196,7 @@
 }
 
 .optionsTable tbody tr:hover {
-  background: rgba(40, 40, 40, 0.5);
+  background: var(--surface-hover);
 }
 
 .features h2 {

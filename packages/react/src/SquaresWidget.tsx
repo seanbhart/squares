@@ -230,7 +230,10 @@ export function SquaresWidget({
                     cursor: 'pointer',
                     transition: 'all 0.2s',
                     minWidth: '80px',
-                    boxShadow: selectedSpectrumDimension === index ? '0 4px 16px rgba(255, 255, 255, 0.15)' : 'none'
+                    boxShadow: selectedSpectrumDimension === index ? '0 4px 16px rgba(255, 255, 255, 0.15)' : 'none',
+                    color: '#ffffff',
+                    WebkitTapHighlightColor: 'transparent',
+                    fontFamily: 'inherit'
                   }}
                 >
                   <div style={{ width: '40px', height: '40px', borderRadius: '8px', backgroundColor: '#333333', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 2px 8px rgba(0, 0, 0, 0.3)', border: '1px solid rgba(255, 255, 255, 0.15)' }}>
@@ -590,6 +593,15 @@ export function SquaresWidget({
             transform: translateY(0);
             opacity: 1;
           }
+        }
+        button {
+          -webkit-tap-highlight-color: transparent;
+          -webkit-appearance: none;
+          appearance: none;
+          font-family: inherit;
+        }
+        button, button * {
+          color: inherit;
         }
         input[type="range"]::-webkit-slider-thumb {
           -webkit-appearance: none;
