@@ -92,9 +92,9 @@
   gap: 1.5rem;
   margin: 3rem 0 2rem;
   padding: 1.5rem;
-  background: var(--card-background, rgba(255, 255, 255, 0.05));
+  background: var(--surface, rgba(30, 30, 30, 0.8));
   border-radius: 16px;
-  border: 2px solid var(--foreground-tertiary, rgba(128, 128, 128, 0.2));
+  border: 1px solid var(--border, rgba(255, 255, 255, 0.1));
   flex-wrap: wrap;
 }
 
@@ -109,8 +109,8 @@
   align-items: center;
   gap: 0.5rem;
   padding: 0.75rem 1.5rem;
-  background: var(--accent, #1f6adb);
-  color: white;
+  background: var(--accent, #e5e5e5);
+  color: var(--accent-text, #212121);
   border: none;
   border-radius: 8px;
   font-size: 1rem;
@@ -121,7 +121,8 @@
 
 .copyButton:hover:not(:disabled) {
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(52, 152, 219, 0.4);
+  background: var(--accent-hover, #ffffff);
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.3);
 }
 
 .copyButton:disabled {
@@ -161,9 +162,9 @@
   padding: 0.875rem 2rem;
   font-size: 1rem;
   font-weight: 600;
-  background: var(--foreground);
-  color: var(--background);
-  border: 2px solid var(--foreground);
+  background: var(--accent, #e5e5e5);
+  color: var(--accent-text, #212121);
+  border: 2px solid var(--accent, #e5e5e5);
   border-radius: 8px;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -172,32 +173,34 @@
 }
 
 .actionButton[data-primary="true"] {
-  background: var(--accent, #1f6adb);
-  color: white;
-  border-color: var(--accent, #1f6adb);
+  background: var(--accent, #e5e5e5);
+  color: var(--accent-text, #212121);
+  border-color: var(--accent, #e5e5e5);
   font-size: 1.125rem;
   padding: 1rem 2.5rem;
-  box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.2);
 }
 
 .actionButton[data-secondary="true"] {
   background: transparent;
-  color: var(--foreground);
-  border-color: var(--foreground-secondary);
+  color: var(--text-primary, #ffffff);
+  border-color: var(--neutral-button, #525252);
 }
 
 .actionButton:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  background: var(--accent-hover, #ffffff);
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.3);
 }
 
 .actionButton[data-primary="true"]:hover {
-  box-shadow: 0 6px 16px rgba(52, 152, 219, 0.5);
+  background: var(--accent-hover, #ffffff);
+  box-shadow: 0 6px 16px rgba(255, 255, 255, 0.3);
 }
 
-.actionButton[data-secondary="true"] {
-  background: transparent;
-  color: var(--foreground);
+.actionButton[data-secondary="true"]:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: var(--neutral-button-hover, #737373);
 }
 
 @media (max-width: 768px) {

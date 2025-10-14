@@ -40,9 +40,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(30, 30, 30, 0.9);
   backdrop-filter: blur(10px);
-  color: var(--foreground, #333);
+  color: #e5e5e5;
   border-radius: 50%;
   font-size: 1.5rem;
   font-weight: 300;
@@ -50,14 +50,16 @@
   z-index: 1000;
   transition: all 0.2s ease;
   cursor: pointer;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
 .closeButton:hover {
-  background: white;
+  background: rgba(40, 40, 40, 0.95);
+  color: #ffffff;
   transform: scale(1.05);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  border-color: rgba(255, 255, 255, 0.2);
 }
 
 @media (max-width: 768px) {

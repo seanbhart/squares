@@ -6,7 +6,7 @@
   height: 60px;
   border-radius: 50%;
   border: none;
-  background: var(--accent);
+  background: var(--neutral-button, #525252);
   color: white;
   font-size: 1.75rem;
   cursor: pointer;
@@ -20,6 +20,7 @@
 
 .floatingButton:hover {
   transform: scale(1.1);
+  background: var(--neutral-button-hover, #737373);
   box-shadow: 0 6px 24px var(--shadow-strong);
 }
 

@@ -104,8 +104,8 @@
   align-items: center;
   gap: 0.5rem;
   padding: 1rem;
-  background: var(--card-background, rgba(255, 255, 255, 0.05));
-  border: 2px solid transparent;
+  background: var(--surface, rgba(30, 30, 30, 0.8));
+  border: 1px solid var(--border, rgba(255, 255, 255, 0.1));
   border-radius: 12px;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -115,14 +115,14 @@
 
 .dimensionButton:hover {
   transform: translateY(-2px);
-  border-color: var(--foreground-secondary);
-  background: var(--card-hover-background, rgba(255, 255, 255, 0.1));
+  border-color: var(--border-strong, rgba(255, 255, 255, 0.2));
+  background: var(--surface-hover, rgba(40, 40, 40, 0.9));
 }
 
 .dimensionButton[data-active="true"] {
-  border-color: var(--accent, #1f6adb);
-  background: var(--card-selected-background, rgba(52, 152, 219, 0.1));
-  box-shadow: 0 4px 16px rgba(52, 152, 219, 0.3);
+  border-color: var(--border-strong, rgba(255, 255, 255, 0.3));
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 4px 16px rgba(255, 255, 255, 0.15);
 }
 
 .buttonSquare {
@@ -154,9 +154,9 @@
 .exampleScale {
   margin-top: 2rem;
   padding: 2rem;
-  background: var(--card-background, rgba(255, 255, 255, 0.05));
+  background: var(--surface, rgba(30, 30, 30, 0.8));
   border-radius: 16px;
-  border: 2px solid var(--foreground-tertiary, rgba(128, 128, 128, 0.2));
+  border: 1px solid var(--border, rgba(255, 255, 255, 0.1));
 }
 
 .exampleTitle {
