@@ -1,7 +1,8 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import styles from './Leaderboard.module.css';
+import { ClipboardIcon, CheckIcon } from '@/components/icons';
 
 interface LeaderboardEntry {
   fid: number;
@@ -30,6 +31,7 @@ function getEmojiSquare(value: number): string {
 export default function Leaderboard({ currentFid }: LeaderboardProps) {
   const [leaderboard, setLeaderboard] = useState<LeaderboardEntry[]>([]);
   const [loading, setLoading] = useState(true);
+  const [copiedFid, setCopiedFid] = useState<number | null>(null);
 
   useEffect(() => {
     fetchLeaderboard();
@@ -46,6 +48,26 @@ export default function Leaderboard({ currentFid }: LeaderboardProps) {
       setLoading(false);
     }
   };
+
+  const handleCopyEntry = useCallback(async (entry: LeaderboardEntry) => {
+    const emojis = [
+      entry.trade_score,
+      entry.abortion_score,
+      entry.migration_score,
+      entry.economics_score,
+      entry.rights_score,
+    ].map(score => getEmojiSquare(score)).join('');
+    
+    const text = entry.username ? `${emojis} @${entry.username}` : emojis;
+    
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopiedFid(entry.fid);
+      setTimeout(() => setCopiedFid(null), 2000);
+    } catch (error) {
+      console.error('Failed to copy:', error);
+    }
+  }, []);
 
   if (loading) {
     return (
@@ -95,6 +117,23 @@ export default function Leaderboard({ currentFid }: LeaderboardProps) {
                   {getEmojiSquare(score)}
                 </span>
               ))}
+              <button
+                onClick={() => handleCopyEntry(entry)}
+                style={{
+                  background: 'transparent',
+                  border: 'none',
+                  cursor: 'pointer',
+                  padding: '0 0.25rem',
+                  color: copiedFid === entry.fid ? '#398a34' : '#737373',
+                  transition: 'all 0.2s',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}
+                title="Copy squares"
+              >
+                {copiedFid === entry.fid ? <CheckIcon /> : <ClipboardIcon />}
+              </button>
             </div>
           </div>
         ))}

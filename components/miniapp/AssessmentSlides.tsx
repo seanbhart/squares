@@ -1,14 +1,16 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import styles from './AssessmentSlides.module.css';
 import { COLOR_RAMP } from '@/lib/tamer-config';
+import { ClipboardIcon, CheckIcon } from '@/components/icons';
 
 interface AssessmentSlidesProps {
   initialSpectrum?: UserSpectrum;
   initialStep?: number;
   initialIsPublic?: boolean;
   hideSpectrumCard?: boolean;
+  username?: string;
   onComplete: (spectrum: UserSpectrum, isPublic: boolean) => void;
   onVisibilityChange?: (isPublic: boolean) => void;
   onStepChange?: (step: number) => void;
@@ -60,7 +62,7 @@ function ColorSquare({ value, size = 36 }: { value: number; size?: number }) {
   );
 }
 
-export default function AssessmentSlides({ initialSpectrum, initialStep = 0, initialIsPublic = false, hideSpectrumCard = false, onComplete, onVisibilityChange, onStepChange }: AssessmentSlidesProps) {
+export default function AssessmentSlides({ initialSpectrum, initialStep = 0, initialIsPublic = false, hideSpectrumCard = false, username, onComplete, onVisibilityChange, onStepChange }: AssessmentSlidesProps) {
   const [step, setStep] = useState(initialStep);
   const [currentDimension, setCurrentDimension] = useState(0);
   const [selectedSpectrumDimension, setSelectedSpectrumDimension] = useState(0);
@@ -137,6 +139,31 @@ export default function AssessmentSlides({ initialSpectrum, initialStep = 0, ini
       rights: null,
     });
   };
+
+  const getEmojiSquare = (value: number) => {
+    const emojis = ['🟪', '🟦', '🟩', '🟨', '🟧', '🟥', '⬛️'];
+    return emojis[value] || '🟨';
+  };
+
+  const [copiedSpectrum, setCopiedSpectrum] = useState(false);
+
+  const handleCopySpectrum = useCallback(async () => {
+    if (spectrum.trade === null || spectrum.abortion === null || spectrum.migration === null || 
+        spectrum.economics === null || spectrum.rights === null) {
+      return;
+    }
+    
+    const emojis = POLICIES.map((p) => getEmojiSquare(spectrum[p.key as keyof SpectrumState]!)).join('');
+    const text = username ? `${emojis} @${username}` : emojis;
+    
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopiedSpectrum(true);
+      setTimeout(() => setCopiedSpectrum(false), 2000);
+    } catch (error) {
+      console.error('Failed to copy:', error);
+    }
+  }, [spectrum, username]);
 
   const handleClose = () => {
     if (hasInitialSpectrum && initialSpectrum) {
@@ -380,6 +407,23 @@ export default function AssessmentSlides({ initialSpectrum, initialStep = 0, ini
                       </div>
                     );
                   })}
+                  <button 
+                    onClick={handleCopySpectrum}
+                    style={{
+                      background: 'transparent',
+                      border: 'none',
+                      cursor: 'pointer',
+                      padding: '0.5rem',
+                      color: copiedSpectrum ? '#398a34' : '#a3a3a3',
+                      transition: 'all 0.2s',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center'
+                    }}
+                    title="Copy squares"
+                  >
+                    {copiedSpectrum ? <CheckIcon /> : <ClipboardIcon />}
+                  </button>
                 </div>
                 
                 <div className={styles.dimensionReference}>

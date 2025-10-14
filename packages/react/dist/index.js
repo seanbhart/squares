@@ -147,7 +147,7 @@ function SquaresWidget({
     return POLICIES.map((p, i) => `${letters[i]}${spectrum[p.key]}`).join(" ");
   };
   const getEmojiText = () => {
-    return POLICIES.map((p) => getEmojiSquare(spectrum[p.key])).join(" ");
+    return POLICIES.map((p) => getEmojiSquare(spectrum[p.key])).join("");
   };
   const handleCopy = (0, import_react.useCallback)(async () => {
     try {

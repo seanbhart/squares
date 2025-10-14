@@ -252,6 +252,7 @@ export default function MiniAppClient() {
           initialSpectrum={existingSpectrum || undefined}
           initialStep={existingSpectrum ? 3 : 0}
           initialIsPublic={isPublic}
+          username={user?.username}
           onComplete={handleAssessmentComplete}
           onVisibilityChange={handleVisibilityChange}
           onStepChange={handleStepChange}

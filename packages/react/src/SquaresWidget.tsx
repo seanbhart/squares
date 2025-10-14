@@ -142,7 +142,7 @@ export function SquaresWidget({
   };
 
   const getEmojiText = () => {
-    return POLICIES.map((p) => getEmojiSquare(spectrum[p.key])).join(' ');
+    return POLICIES.map((p) => getEmojiSquare(spectrum[p.key])).join('');
   };
 
   const handleCopy = useCallback(async () => {
