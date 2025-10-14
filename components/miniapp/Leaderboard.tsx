@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import styles from './Leaderboard.module.css';
+import { COLOR_RAMP } from '@/lib/tamer-config';
 
 interface LeaderboardEntry {
   fid: number;
@@ -22,9 +23,18 @@ interface LeaderboardProps {
   currentFid?: number;
 }
 
-function getEmojiSquare(value: number): string {
-  const emojis = ['🟪', '🟦', '🟩', '🟨', '🟧', '🟥', '⬛️'];
-  return emojis[value] || '🟨';
+function ColorSquare({ value, size = 28 }: { value: number; size?: number }) {
+  return (
+    <div style={{
+      width: `${size}px`,
+      height: `${size}px`,
+      borderRadius: '6px',
+      backgroundColor: COLOR_RAMP[value],
+      boxShadow: '0 1px 4px rgba(0, 0, 0, 0.3)',
+      border: '1px solid rgba(255, 255, 255, 0.1)',
+      flexShrink: 0
+    }} />
+  );
 }
 
 export default function Leaderboard({ currentFid }: LeaderboardProps) {
@@ -91,9 +101,9 @@ export default function Leaderboard({ currentFid }: LeaderboardProps) {
                 entry.economics_score,
                 entry.rights_score,
               ].map((score, idx) => (
-                <span key={idx} className={styles.square}>
-                  {getEmojiSquare(score)}
-                </span>
+                <div key={idx} className={styles.square}>
+                  <ColorSquare value={score} size={28} />
+                </div>
               ))}
             </div>
           </div>

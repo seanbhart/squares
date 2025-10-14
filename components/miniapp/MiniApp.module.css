@@ -1,6 +1,6 @@
 .container {
   min-height: 100vh;
-  background: linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+  background: #212121;
   padding: 1rem;
   font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
@@ -11,14 +11,14 @@
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  color: var(--text-primary);
+  color: #ffffff;
 }
 
 .spinner {
   width: 40px;
   height: 40px;
-  border: 3px solid var(--border);
-  border-top-color: var(--accent);
+  border: 3px solid rgba(255, 255, 255, 0.1);
+  border-top-color: #ffffff;
   border-radius: 50%;
   animation: spin 1s linear infinite;
   margin-bottom: 1rem;
@@ -43,24 +43,25 @@
 }
 
 .modalContent {
-  background: linear-gradient(180deg, #ffffff 0%, #f9fafb 100%);
+  background: #1a1a1a;
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 20px;
   padding: 2rem;
   max-width: 400px;
   width: 100%;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
 }
 
 .modalContent h2 {
   margin: 0 0 1rem 0;
-  color: #292524;
+  color: #ffffff;
   font-size: 1.5rem;
   font-weight: 700;
 }
 
 .modalContent p {
   margin: 0 0 1.5rem 0;
-  color: #78716c;
+  color: #a3a3a3;
   line-height: 1.6;
 }
 
@@ -72,8 +73,8 @@
 .primaryButton {
   flex: 1;
   padding: 0.875rem 1.5rem;
-  background: #57534e;
-  color: white;
+  background: #ffffff;
+  color: #1a1a1a;
   border: none;
   border-radius: 12px;
   font-size: 1rem;
@@ -83,16 +84,17 @@
 }
 
 .primaryButton:hover {
+  background: #f5f5f5;
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.2);
 }
 
 .secondaryButton {
   flex: 1;
   padding: 0.875rem 1.5rem;
   background: transparent;
-  color: #57534e;
-  border: 2px solid #57534e;
+  color: #e5e5e5;
+  border: 2px solid #525252;
   border-radius: 12px;
   font-size: 1rem;
   font-weight: 600;
@@ -101,7 +103,8 @@
 }
 
 .secondaryButton:hover {
-  background: rgba(87, 83, 78, 0.1);
+  background: rgba(255, 255, 255, 0.05);
+  border-color: #737373;
 }
 
 /* Dark Mode */

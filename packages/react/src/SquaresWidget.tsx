@@ -193,10 +193,10 @@ export function SquaresWidget({
                 ))}
               </div>
               
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '0.5rem', marginBottom: '1.5rem' }}>
-                <span style={{ fontSize: '0.875rem', color: '#a3a3a3', fontWeight: 600 }}>Minimal intervention</span>
-                <span style={{ fontSize: '1.25rem', color: '#737373' }}>→</span>
-                <span style={{ fontSize: '0.875rem', color: '#a3a3a3', fontWeight: 600 }}>Total control</span>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '0.25rem', marginBottom: '1.5rem', maxWidth: '480px', margin: '0 auto 1.5rem' }}>
+                <span style={{ fontSize: '0.75rem', color: '#a3a3a3', fontWeight: 600 }}>Minimal intervention</span>
+                <span style={{ fontSize: '1rem', color: '#737373' }}>→</span>
+                <span style={{ fontSize: '0.75rem', color: '#a3a3a3', fontWeight: 600 }}>Total control</span>
               </div>
             </div>
 
@@ -224,8 +224,8 @@ export function SquaresWidget({
                     boxShadow: selectedSpectrumDimension === index ? '0 4px 16px rgba(255, 255, 255, 0.15)' : 'none'
                   }}
                 >
-                  <div style={{ width: '40px', height: '40px', borderRadius: '8px', backgroundColor: colors[index], display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 2px 8px rgba(0, 0, 0, 0.3)', border: '1px solid rgba(255, 255, 255, 0.1)' }}>
-                    <span style={{ fontSize: '1.25rem', color: 'white', fontWeight: 900 }}>{letters[index]}</span>
+                  <div style={{ width: '40px', height: '40px', borderRadius: '8px', backgroundColor: '#333333', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 2px 8px rgba(0, 0, 0, 0.3)', border: '1px solid rgba(255, 255, 255, 0.15)' }}>
+                    <span style={{ fontSize: '1.25rem', color: '#e5e5e5', fontWeight: 900 }}>{letters[index]}</span>
                   </div>
                   <span style={{ fontSize: '0.75rem', color: '#ffffff', fontWeight: 600 }}>{policy.label.split(' ')[0]}</span>
                 </button>
@@ -259,8 +259,8 @@ export function SquaresWidget({
           <div style={{ minHeight: '400px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
             <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
               <div style={{ display: 'inline-block', marginBottom: '1rem' }}>
-                <div style={{ width: '80px', height: '80px', borderRadius: '16px', backgroundColor: colors[currentDimension], display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 8px 24px rgba(0, 0, 0, 0.3)', border: '1px solid rgba(255, 255, 255, 0.1)' }}>
-                  <span style={{ fontSize: '3rem', color: 'white', fontWeight: 900 }}>{letters[currentDimension]}</span>
+                <div style={{ width: '80px', height: '80px', borderRadius: '16px', backgroundColor: '#333333', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 8px 24px rgba(0, 0, 0, 0.3)', border: '1px solid rgba(255, 255, 255, 0.15)' }}>
+                  <span style={{ fontSize: '3rem', color: '#e5e5e5', fontWeight: 900 }}>{letters[currentDimension]}</span>
                 </div>
               </div>
               <h2 style={{ margin: '0 0 1rem 0', color: '#ffffff', fontSize: 'clamp(1.75rem, 4vw, 2.5rem)', fontWeight: 800 }}>
@@ -301,12 +301,7 @@ export function SquaresWidget({
               })}
             </div>
 
-            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem', color: '#a3a3a3', marginBottom: '1.5rem', fontWeight: 500, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-              <span>Minimal intervention</span>
-              <span>Total control</span>
-            </div>
-
-            <div style={{ textAlign: 'center' }}>
+            <div style={{ textAlign: 'center', marginTop: '1.5rem' }}>
               {!isLastDimension ? (
                 <button
                   onClick={() => setCurrentDimension(currentDimension + 1)}
@@ -371,11 +366,11 @@ export function SquaresWidget({
         return (
           <div style={{ minHeight: '400px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
             <h2 style={{ margin: '0 0 3rem 0', color: '#ffffff', fontSize: 'clamp(2rem, 5vw, 3rem)', fontWeight: 700, lineHeight: 1.2, textAlign: 'center' }}>
-              Your Political Signature
+              Your Political Spectrum
             </h2>
             
             <div style={{ textAlign: 'center', margin: '2rem 0', padding: '2.5rem 2rem', background: 'rgba(30, 30, 30, 0.8)', borderRadius: '16px', border: '1px solid rgba(255, 255, 255, 0.1)' }}>
-              <div style={{ display: 'flex', justifyContent: 'center', gap: 'clamp(0.75rem, 2vw, 1.5rem)', flexWrap: 'wrap', marginBottom: '2rem' }}>
+              <div style={{ display: 'flex', justifyContent: 'center', gap: 'clamp(0.75rem, 2vw, 1.5rem)', flexWrap: 'wrap', marginBottom: '1.5rem' }}>
                 {POLICIES.map((policy, i) => (
                   <div key={policy.key} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem' }}>
                     <ColorSquare value={spectrum[policy.key]} size="64px" />
@@ -383,6 +378,13 @@ export function SquaresWidget({
                       {['T', 'A', 'M', 'E', 'R'][i]}
                     </span>
                   </div>
+                ))}
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'center', gap: 'clamp(0.75rem, 2vw, 1.5rem)', flexWrap: 'wrap', marginBottom: '1rem', paddingTop: '1rem', borderTop: '1px solid rgba(255, 255, 255, 0.1)' }}>
+                {POLICIES.map((policy) => (
+                  <span key={policy.key} style={{ fontSize: '0.6875rem', color: '#737373', fontWeight: 500, textTransform: 'lowercase' }}>
+                    {policy.label}
+                  </span>
                 ))}
               </div>
               <div style={{ fontSize: '0.9rem', color: '#737373', fontFamily: 'monospace' }}>

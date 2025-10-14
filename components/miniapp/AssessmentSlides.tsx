@@ -46,9 +46,18 @@ const POSITION_LABELS: Record<string, string[]> = {
   rights: ['full legal equality', 'protections with few limits', 'protections with some limits', 'tolerance without endorsement', 'traditional definitions only', 'no legal recognition', 'criminalization']
 };
 
-function getEmojiSquare(value: number): string {
-  const emojis = ['🟪', '🟦', '🟩', '🟨', '🟧', '🟥', '⬛️'];
-  return emojis[value] || '🟨';
+function ColorSquare({ value, size = 36 }: { value: number; size?: number }) {
+  return (
+    <div style={{
+      width: `${size}px`,
+      height: `${size}px`,
+      borderRadius: size >= 48 ? '10px' : '8px',
+      backgroundColor: COLOR_RAMP[value],
+      boxShadow: '0 2px 8px rgba(0, 0, 0, 0.3)',
+      border: '1px solid rgba(255, 255, 255, 0.1)',
+      flexShrink: 0
+    }} />
+  );
 }
 
 export default function AssessmentSlides({ initialSpectrum, initialStep = 0, initialIsPublic = false, hideSpectrumCard = false, onComplete, onVisibilityChange, onStepChange }: AssessmentSlidesProps) {
@@ -199,8 +208,8 @@ export default function AssessmentSlides({ initialSpectrum, initialStep = 0, ini
             
             <div className={styles.colorScale}>
               <div className={styles.emojiRow}>
-                {['🟪', '🟦', '🟩', '🟨', '🟧', '🟥', '⬛️'].map((emoji, i) => (
-                  <span key={i} className={styles.emojiSquare}>{emoji}</span>
+                {COLOR_RAMP.map((color, i) => (
+                  <ColorSquare key={i} value={i} size={36} />
                 ))}
               </div>
               
@@ -235,7 +244,9 @@ export default function AssessmentSlides({ initialSpectrum, initialStep = 0, ini
               <div className={styles.positionsList}>
                 {POSITION_LABELS[selectedPolicy.key].map((label, index) => (
                   <div key={index} className={styles.positionItem}>
-                    <span className={styles.positionEmoji}>{getEmojiSquare(index)}</span>
+                    <div className={styles.positionEmoji}>
+                      <ColorSquare value={index} size={28} />
+                    </div>
                     <span>{label}</span>
                   </div>
                 ))}
@@ -292,7 +303,7 @@ export default function AssessmentSlides({ initialSpectrum, initialStep = 0, ini
                     className={`${styles.optionCard} ${isSelected ? styles.selected : ''}`}
                   >
                     <div className={styles.optionEmoji}>
-                      {getEmojiSquare(valueIndex)}
+                      <ColorSquare value={valueIndex} size={48} />
                     </div>
                     <span className={styles.optionLabel}>{label}</span>
                   </button>
@@ -329,11 +340,6 @@ export default function AssessmentSlides({ initialSpectrum, initialStep = 0, ini
       }
 
       case 3: {
-        const emojiSignature = POLICIES.map(p => {
-          const value = spectrum[p.key as keyof SpectrumState];
-          return value !== null ? getEmojiSquare(value) : '⬜';
-        });
-        
         return (
           <div className={`${styles.resultsContainer} ${styles.darkSlide}`}>
             {!hideSpectrumCard && <h2 className={styles.headline}>Your Political Spectrum</h2>}
@@ -341,12 +347,19 @@ export default function AssessmentSlides({ initialSpectrum, initialStep = 0, ini
             {!hideSpectrumCard && (
               <div className={styles.signatureBox}>
                 <div className={styles.emojiRow}>
-                  {emojiSignature.map((emoji, i) => (
-                    <div key={i} className={styles.emojiColumn}>
-                      <span className={styles.largeEmoji}>{emoji}</span>
-                      <span className={styles.emojiLabel}>{['T', 'A', 'M', 'E', 'R'][i]}</span>
-                    </div>
-                  ))}
+                  {POLICIES.map((policy, i) => {
+                    const value = spectrum[policy.key as keyof SpectrumState];
+                    return (
+                      <div key={i} className={styles.emojiColumn}>
+                        {value !== null ? (
+                          <ColorSquare value={value} size={56} />
+                        ) : (
+                          <div style={{ width: '56px', height: '56px', borderRadius: '10px', backgroundColor: '#333', border: '1px solid rgba(255, 255, 255, 0.1)' }} />
+                        )}
+                        <span className={styles.emojiLabel}>{['T', 'A', 'M', 'E', 'R'][i]}</span>
+                      </div>
+                    );
+                  })}
                 </div>
                 
                 <div className={styles.dimensionReference}>
