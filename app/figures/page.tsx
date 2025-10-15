@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
-import LoadingSpinner from "@/components/LoadingSpinner";
+import FullPageLoadingSpinner from "@/components/FullPageLoadingSpinner";
 import styles from "./figures.module.css";
 import { POLICIES, getScoreColor, getEmojiSquare } from "@/lib/tamer-config";
 import { ClipboardIcon, CheckIcon, MessageCircleIcon } from "@/components/icons";
@@ -237,7 +237,7 @@ export default function FiguresPage() {
   };
 
   if (loading) {
-    return <LoadingSpinner />;
+    return <FullPageLoadingSpinner />;
   }
 
   // Featured figures in the correct order from featured array

@@ -5,7 +5,7 @@ import AssessmentSlides from './AssessmentSlides';
 import Leaderboard from './Leaderboard';
 import LeaderboardPlaceholder from './LeaderboardPlaceholder';
 import StickySpectrum from './StickySpectrum';
-import LoadingSpinner from '@/components/LoadingSpinner';
+import FullPageLoadingSpinner from '@/components/FullPageLoadingSpinner';
 import styles from './MiniApp.module.css';
 
 interface FarcasterUser {
@@ -251,7 +251,7 @@ export default function MiniAppClient() {
   };
 
   if (loading) {
-    return <LoadingSpinner />;
+    return <FullPageLoadingSpinner />;
   }
 
   return (

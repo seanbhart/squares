@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import LoadingSpinner from '@/components/LoadingSpinner';
+import FullPageLoadingSpinner from '@/components/FullPageLoadingSpinner';
 import type { Figure, FiguresData } from '@/lib/api/figures';
 
 export default function TestApiPage() {
@@ -37,7 +37,7 @@ export default function TestApiPage() {
   }, []);
 
   if (loading) {
-    return <LoadingSpinner />;
+    return <FullPageLoadingSpinner />;
   }
 
   if (error) {

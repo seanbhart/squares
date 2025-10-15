@@ -45,15 +45,8 @@
 .loadingState {
   padding: 2rem 1rem;
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
-  min-height: 300px;
-}
-
-/* Override LoadingSpinner's full viewport styles when inside loadingState */
-.loadingState :global(.loadingContainer) {
-  min-height: auto;
-  padding: 2rem 1rem;
 }
 
 .leaderboardList {
