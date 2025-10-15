@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useState, useCallback } from 'react';
-import { sdk } from '@farcaster/miniapp-sdk';
 import AssessmentSlides from './AssessmentSlides';
 import Leaderboard from './Leaderboard';
 import LeaderboardPlaceholder from './LeaderboardPlaceholder';
@@ -41,26 +40,32 @@ export default function MiniAppClient() {
     }
   }, [existingSpectrum]);
 
-  // Initialize Farcaster SDK
+  // Initialize Farcaster SDK (lazy loaded as recommended for SSR-friendly apps)
   useEffect(() => {
     let readyCalled = false;
-    
-    // Fallback: call ready after 2 seconds no matter what to dismiss splash screen
-    const readyTimeout = setTimeout(async () => {
-      if (!readyCalled) {
-        console.log('[Squares] Timeout - calling ready() as fallback');
-        try {
-          await sdk.actions.ready();
-          readyCalled = true;
-        } catch (e) {
-          console.error('[Squares] Failed to call ready() in timeout:', e);
-        }
-      }
-    }, 2000);
+    let readyTimeout: NodeJS.Timeout | null = null;
     
     const init = async () => {
       try {
-        console.log('[Squares] Initializing Farcaster SDK...');
+        console.log('[Squares] Lazy loading Farcaster SDK...');
+        
+        // Dynamically import SDK (recommended for hybrid apps)
+        const { sdk } = await import('@farcaster/miniapp-sdk');
+        
+        // Fallback: call ready after 2 seconds no matter what to dismiss splash screen
+        readyTimeout = setTimeout(async () => {
+          if (!readyCalled) {
+            console.log('[Squares] Timeout - calling ready() as fallback');
+            try {
+              await sdk.actions.ready();
+              readyCalled = true;
+            } catch (e) {
+              console.error('[Squares] Failed to call ready() in timeout:', e);
+            }
+          }
+        }, 2000);
+        
+        console.log('[Squares] SDK loaded, initializing...');
         
         // Get context from Farcaster
         const context = await sdk.context;
@@ -73,7 +78,7 @@ export default function MiniAppClient() {
         if (!readyCalled) {
           await sdk.actions.ready();
           readyCalled = true;
-          clearTimeout(readyTimeout);
+          if (readyTimeout) clearTimeout(readyTimeout);
           console.log('[Squares] App signaled ready');
         }
 
@@ -116,11 +121,17 @@ export default function MiniAppClient() {
         }
       } catch (error) {
         console.error('[Squares] Failed to initialize mini app:', error);
-        if (!readyCalled) {
-          await sdk.actions.ready();
-          readyCalled = true;
-          clearTimeout(readyTimeout);
+        // Try to call ready even on error, but SDK might not be loaded
+        try {
+          const { sdk } = await import('@farcaster/miniapp-sdk');
+          if (!readyCalled) {
+            await sdk.actions.ready();
+            readyCalled = true;
+          }
+        } catch (e) {
+          console.error('[Squares] Could not load SDK in error handler:', e);
         }
+        if (readyTimeout) clearTimeout(readyTimeout);
       } finally {
         setLoading(false);
         console.log('[Squares] Initialization complete');
@@ -130,7 +141,7 @@ export default function MiniAppClient() {
     init();
     
     return () => {
-      clearTimeout(readyTimeout);
+      if (readyTimeout) clearTimeout(readyTimeout);
     };
   }, []);
 
@@ -201,6 +212,7 @@ export default function MiniAppClient() {
         
         // Add mini app if not already added
         try {
+          const { sdk } = await import('@farcaster/miniapp-sdk');
           await sdk.actions.addMiniApp();
           console.log('[Squares] Mini app added');
         } catch (e) {
