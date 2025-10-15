@@ -20,19 +20,26 @@ import {
   updateSystemPrompts,
   type AdminFigure,
 } from '@/lib/admin/api';
-import {
-  getAllNotificationTokens,
-  getNotificationStats,
-  sendTestNotification,
-  sendBroadcastNotification,
-  deleteNotificationToken,
-  getNotificationTokensWithUserInfo,
-  type NotificationTokenRecord,
-  type NotificationStats,
-} from '@/lib/admin/notifications';
 import { spectrumArrayToEmojis } from '@/lib/utils/spectrum';
 import ConfirmModal from '@/components/ConfirmModal';
 import styles from './admin.module.css';
+
+// Types for notifications
+interface NotificationTokenRecord {
+  fid: number
+  notification_url: string
+  notification_token: string
+  enabled: boolean
+  created_at: string
+  updated_at: string
+  username?: string
+}
+
+interface NotificationStats {
+  total_tokens: number
+  enabled_tokens: number
+  disabled_tokens: number
+}
 
 interface AdminClientProps {
   initialUser: any;
@@ -116,12 +123,14 @@ export default function AdminClient({ initialUser }: AdminClientProps) {
 
   async function loadNotifications() {
     try {
-      const [tokens, stats] = await Promise.all([
-        getNotificationTokensWithUserInfo(),
-        getNotificationStats(),
+      const [tokensRes, statsRes] = await Promise.all([
+        fetch('/api/admin/notifications?action=list'),
+        fetch('/api/admin/notifications?action=stats'),
       ]);
-      setNotificationTokens(tokens);
-      setNotificationStats(stats);
+      const tokensData = await tokensRes.json();
+      const statsData = await statsRes.json();
+      setNotificationTokens(tokensData.tokens || []);
+      setNotificationStats(statsData);
     } catch (error) {
       console.error('Failed to load notifications:', error);
       showMessage('error', 'Failed to load notifications');
@@ -131,8 +140,13 @@ export default function AdminClient({ initialUser }: AdminClientProps) {
   async function handleTestNotification(fid: number) {
     try {
       setTestingFid(fid);
-      const success = await sendTestNotification(fid);
-      if (success) {
+      const response = await fetch('/api/admin/notifications', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'test', fid }),
+      });
+      const data = await response.json();
+      if (data.success) {
         showMessage('success', `Test notification sent to FID ${fid}`);
       } else {
         showMessage('error', 'Failed to send test notification - user may have disabled notifications');
@@ -157,11 +171,17 @@ export default function AdminClient({ initialUser }: AdminClientProps) {
 
     try {
       setIsSendingBroadcast(true);
-      const result = await sendBroadcastNotification(
-        broadcastTitle,
-        broadcastBody,
-        broadcastUrl
-      );
+      const response = await fetch('/api/admin/notifications', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          action: 'broadcast',
+          title: broadcastTitle,
+          body: broadcastBody,
+          targetUrl: broadcastUrl,
+        }),
+      });
+      const result = await response.json();
       showMessage('success', `Broadcast sent! ${result.sent} succeeded, ${result.failed} failed`);
       setBroadcastTitle('');
       setBroadcastBody('');
@@ -180,7 +200,9 @@ export default function AdminClient({ initialUser }: AdminClientProps) {
       message: `Remove notification token for FID ${fid}? They will need to re-add the miniapp to enable notifications again.`,
       onConfirm: async () => {
         try {
-          await deleteNotificationToken(fid);
+          await fetch(`/api/admin/notifications?fid=${fid}`, {
+            method: 'DELETE',
+          });
           showMessage('success', `Deleted notification token for FID ${fid}`);
           loadNotifications();
         } catch (error) {
