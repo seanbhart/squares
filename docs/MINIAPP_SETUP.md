@@ -164,7 +164,7 @@ export const metadata: Metadata = {
 
 Generate the signature for your domain:
 
-1. Go to https://warpcast.com/~/developers
+1. Go to https://farcaster.xyz/~/developers
 2. Find your mini app
 3. Update domain to `squares.vote`
 4. Copy new `header`, `payload`, and `signature`
@@ -238,4 +238,4 @@ These fields are deprecated and have been removed:
 - **Specification**: https://miniapps.farcaster.xyz/docs/specification
 - **Publishing Guide**: https://miniapps.farcaster.xyz/docs/guides/publishing
 - **SDK Reference**: https://miniapps.farcaster.xyz/docs/sdk
-- **Developer Console**: https://warpcast.com/~/developers
+- **Developer Console**: https://farcaster.xyz/~/developers

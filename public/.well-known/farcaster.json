@@ -24,6 +24,6 @@
     "ogTitle": "Squares Political Personality",
     "ogDescription": "You're not one word. Square your politics into shareable emojis.",
     "ogImageUrl": "https://farcaster.squares.vote/og-image.png",
-    "castShareUrl": "https://warpcast.com/~/compose?text=Just%20squared%20my%20politics%20with%20Squares!%20%F0%9F%9F%A6%F0%9F%9F%A9%F0%9F%9F%A6%F0%9F%9F%A9%F0%9F%9F%A6%0A%0ATry%20it%3A&embeds[]=https://farcaster.squares.vote/miniapp"
+    "castShareUrl": "https://farcaster.squares.vote/miniapp/share"
   }
 }

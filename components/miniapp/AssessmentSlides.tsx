@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from 'react';
 import styles from './AssessmentSlides.module.css';
 import { COLOR_RAMP } from '@/lib/tamer-config';
 import { ClipboardIcon, CheckIcon } from '@/components/icons';
+import { sdk } from '@farcaster/miniapp-sdk';
 
 interface AssessmentSlidesProps {
   initialSpectrum?: UserSpectrum;
@@ -146,6 +147,25 @@ export default function AssessmentSlides({ initialSpectrum, initialStep = 0, ini
   };
 
   const [copiedSpectrum, setCopiedSpectrum] = useState(false);
+
+  const handleShare = useCallback(async () => {
+    if (spectrum.trade === null || spectrum.abortion === null || spectrum.migration === null || 
+        spectrum.economics === null || spectrum.rights === null) {
+      return;
+    }
+    
+    const emojis = POLICIES.map((p) => getEmojiSquare(spectrum[p.key as keyof SpectrumState]!)).join('');
+    const shareText = `Just squared my politics with Squares! ${emojis}\n\nTry it:`;
+    
+    try {
+      await sdk.actions.composeCast({
+        text: shareText,
+        embeds: ['https://farcaster.squares.vote/miniapp'],
+      });
+    } catch (error) {
+      console.error('Failed to share:', error);
+    }
+  }, [spectrum]);
 
   const handleCopySpectrum = useCallback(async () => {
     if (spectrum.trade === null || spectrum.abortion === null || spectrum.migration === null || 
@@ -443,8 +463,19 @@ export default function AssessmentSlides({ initialSpectrum, initialStep = 0, ini
 
             <div className={styles.resultsButtons}>
               <button 
-                onClick={handleToggleVisibility} 
+                onClick={handleShare}
                 className={styles.primaryButton}
+                style={{
+                  background: 'linear-gradient(135deg, #8B5CF6 0%, #7C3AED 100%)',
+                  marginBottom: '0.75rem'
+                }}
+              >
+                Share Your Squares
+              </button>
+
+              <button 
+                onClick={handleToggleVisibility} 
+                className={styles.secondaryButton}
               >
                 {isPublic ? 'Hide from Community' : 'Reveal to Community'}
               </button>
