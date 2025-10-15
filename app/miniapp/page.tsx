@@ -9,11 +9,11 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Squares Political Spectrum',
     description: "You're not one word—your politics are unique. Square your political personality into shareable emojis.",
-    url: 'https://www.squares.vote/miniapp',
+    url: 'https://farcaster.squares.vote/miniapp',
     siteName: 'Squares',
     images: [
       {
-        url: 'https://www.squares.vote/og-image.png',
+        url: 'https://farcaster.squares.vote/og-image.png',
         width: 1200,
         height: 630,
         alt: 'Squares Political Spectrum',
@@ -26,19 +26,19 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Squares Political Spectrum',
     description: "You're not one word—your politics are unique. Square your political personality into shareable emojis.",
-    images: ['https://www.squares.vote/og-image.png'],
+    images: ['https://farcaster.squares.vote/og-image.png'],
   },
   other: {
     'fc:miniapp': JSON.stringify({
       version: '1',
-      imageUrl: 'https://www.squares.vote/miniapp-image.png',
+      imageUrl: 'https://farcaster.squares.vote/miniapp-image.png',
       button: {
         title: 'Square Your Political Personality',
         action: {
           type: 'launch_frame',
           name: 'Squares Political Spectrum',
-          url: 'https://www.squares.vote/miniapp',
-          splashImageUrl: 'https://www.squares.vote/splash-200x200.png',
+          url: 'https://farcaster.squares.vote/miniapp',
+          splashImageUrl: 'https://farcaster.squares.vote/splash-200x200.png',
           splashBackgroundColor: '#121113',
         },
       },

@@ -1,29 +1,29 @@
 {
   "accountAssociation": {
     "header": "eyJmaWQiOjQ2MTIsInR5cGUiOiJhdXRoIiwia2V5IjoiMHhCNzBGZjQyMDgwQjVlNUIyOEIzNkEyMmUxMTA2NzJmNUU2ZkIwRGZEIn0",
-    "payload": "eyJkb21haW4iOiJzcXVhcmVzLnZvdGUifQ",
-    "signature": "d5Tg2N6FumXh3m4t2UMDEkXxgGvaquaOyyxCTkDT9uxoGn8d/KBDCakXDBC4ZGE3qalyt9GI7GLPHlL1edxeoRs="
+    "payload": "eyJkb21haW4iOiJmYXJjYXN0ZXIuc3F1YXJlcy52b3RlIn0",
+    "signature": "7JnP/7VfexzpkIwgxIVV84Sd4uGYufgx1BsyPTzPoENf9YKcRVh16wwq8QBQoiEmsk25HiA7gdHT1L3Xi95pthw="
   },
   "miniapp": {
     "version": "1",
     "name": "Squares Political Personality",
-    "homeUrl": "https://www.squares.vote/miniapp",
-    "iconUrl": "https://www.squares.vote/icon-1024x1024.png",
-    "imageUrl": "https://www.squares.vote/miniapp-image.png",
+    "homeUrl": "https://farcaster.squares.vote/miniapp",
+    "iconUrl": "https://farcaster.squares.vote/icon-1024x1024.png",
+    "imageUrl": "https://farcaster.squares.vote/miniapp-image.png",
     "buttonTitle": "Square Your Politics",
-    "splashImageUrl": "https://www.squares.vote/splash-200x200.png",
+    "splashImageUrl": "https://farcaster.squares.vote/splash-200x200.png",
     "splashBackgroundColor": "#121113",
-    "webhookUrl": "https://www.squares.vote/api/farcaster/webhook",
+    "webhookUrl": "https://farcaster.squares.vote/api/farcaster/webhook",
     "subtitle": "Square your politics",
     "description": "Square your politics into shareable emojis. Find your Square friends!",
     "screenshotUrls": [],
     "primaryCategory": "social",
     "tags": ["politics", "spectrum", "assessment", "personality", "community"],
-    "heroImageUrl": "https://www.squares.vote/hero-image.png",
+    "heroImageUrl": "https://farcaster.squares.vote/hero-image.png",
     "tagline": "Your politics, Squared",
     "ogTitle": "Squares Political Personality",
     "ogDescription": "You're not one word. Square your politics into shareable emojis.",
-    "ogImageUrl": "https://www.squares.vote/og-image.png",
-    "castShareUrl": "https://warpcast.com/~/compose?text=Just%20squared%20my%20politics%20with%20Squares!%20%F0%9F%9F%A6%F0%9F%9F%A9%F0%9F%9F%A6%F0%9F%9F%A9%F0%9F%9F%A6%0A%0ATry%20it%3A&embeds[]=https://www.squares.vote/miniapp"
+    "ogImageUrl": "https://farcaster.squares.vote/og-image.png",
+    "castShareUrl": "https://warpcast.com/~/compose?text=Just%20squared%20my%20politics%20with%20Squares!%20%F0%9F%9F%A6%F0%9F%9F%A9%F0%9F%9F%A6%F0%9F%9F%A9%F0%9F%9F%A6%0A%0ATry%20it%3A&embeds[]=https://farcaster.squares.vote/miniapp"
   }
 }
