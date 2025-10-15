@@ -176,9 +176,10 @@ export default function AssessmentSlides({ initialSpectrum, initialStep = 0, ini
     const shareText = `Just squared my politics with Squares! ${emojis}\n\nTry it:`;
     
     try {
+      // Add cache-busting parameter to force Farcaster to re-crawl
       await sdk.actions.composeCast({
         text: shareText,
-        embeds: ['https://farcaster.squares.vote/miniapp'],
+        embeds: ['https://farcaster.squares.vote/miniapp?v=2'],
       });
     } catch (error) {
       console.error('Failed to share:', error);

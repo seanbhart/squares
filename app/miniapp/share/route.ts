@@ -8,7 +8,7 @@ export async function GET(request: Request) {
     ? encodeURIComponent(`Just squared my politics with Squares! ${emojis}\n\nTry it:`)
     : encodeURIComponent(`Just squared my politics with Squares!\n\nTry it:`)
   
-  const embedUrl = encodeURIComponent('https://farcaster.squares.vote/miniapp')
+  const embedUrl = encodeURIComponent('https://farcaster.squares.vote/miniapp?v=2')
   
   return redirect(
     `https://farcaster.xyz/~/compose?text=${shareText}&embeds[]=${embedUrl}`
