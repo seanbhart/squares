@@ -33,7 +33,7 @@ export const metadata: Metadata = {
       version: '1',
       imageUrl: 'https://farcaster.squares.vote/miniapp-image.png',
       button: {
-        title: 'Square Your Political Personality',
+        title: 'Square Your Politics',
         action: {
           type: 'launch_frame',
           name: 'Squares Political Spectrum',
