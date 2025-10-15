@@ -723,3 +723,72 @@
   gap: 1rem;
   margin-top: 2rem;
 }
+
+/* Notifications */
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.statCard {
+  background: var(--background);
+  border: 2px solid var(--border-strong);
+  border-radius: 8px;
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.statValue {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: var(--accent);
+  margin-bottom: 0.5rem;
+}
+
+.statLabel {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.broadcastForm {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  background: var(--background);
+  border: 2px solid var(--border-strong);
+  border-radius: 8px;
+  padding: 1.5rem;
+}
+
+.tokenList {
+  margin-top: 1rem;
+}
+
+.tokenActions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.enabledBadge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  background: #10b981;
+  color: white;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.disabledBadge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  background: #6b7280;
+  color: white;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  font-weight: 500;
+}

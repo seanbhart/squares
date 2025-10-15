@@ -20,6 +20,16 @@ import {
   updateSystemPrompts,
   type AdminFigure,
 } from '@/lib/admin/api';
+import {
+  getAllNotificationTokens,
+  getNotificationStats,
+  sendTestNotification,
+  sendBroadcastNotification,
+  deleteNotificationToken,
+  getNotificationTokensWithUserInfo,
+  type NotificationTokenRecord,
+  type NotificationStats,
+} from '@/lib/admin/notifications';
 import { spectrumArrayToEmojis } from '@/lib/utils/spectrum';
 import ConfirmModal from '@/components/ConfirmModal';
 import styles from './admin.module.css';
@@ -33,7 +43,16 @@ export default function AdminClient({ initialUser }: AdminClientProps) {
   const [figures, setFigures] = useState<AdminFigure[]>([]);
   const [analysisHistory, setAnalysisHistory] = useState<any[]>([]);
   const [users, setUsers] = useState<any[]>([]);
-  const [activeTab, setActiveTab] = useState<'figures' | 'analysis' | 'admins' | 'prompts'>('figures');
+  const [activeTab, setActiveTab] = useState<'figures' | 'analysis' | 'admins' | 'prompts' | 'notifications'>('figures');
+  
+  // Notifications state
+  const [notificationTokens, setNotificationTokens] = useState<Array<NotificationTokenRecord & { username?: string }>>([]);
+  const [notificationStats, setNotificationStats] = useState<NotificationStats>({ total_tokens: 0, enabled_tokens: 0, disabled_tokens: 0 });
+  const [broadcastTitle, setBroadcastTitle] = useState('');
+  const [broadcastBody, setBroadcastBody] = useState('');
+  const [broadcastUrl, setBroadcastUrl] = useState('https://farcaster.squares.vote/miniapp');
+  const [isSendingBroadcast, setIsSendingBroadcast] = useState(false);
+  const [testingFid, setTestingFid] = useState<number | null>(null);
   
   // Figure management state
   const [newFigureName, setNewFigureName] = useState('');
@@ -93,6 +112,84 @@ export default function AdminClient({ initialUser }: AdminClientProps) {
       console.error('Failed to load data:', error);
       showMessage('error', 'Failed to load data');
     }
+  }
+
+  async function loadNotifications() {
+    try {
+      const [tokens, stats] = await Promise.all([
+        getNotificationTokensWithUserInfo(),
+        getNotificationStats(),
+      ]);
+      setNotificationTokens(tokens);
+      setNotificationStats(stats);
+    } catch (error) {
+      console.error('Failed to load notifications:', error);
+      showMessage('error', 'Failed to load notifications');
+    }
+  }
+
+  async function handleTestNotification(fid: number) {
+    try {
+      setTestingFid(fid);
+      const success = await sendTestNotification(fid);
+      if (success) {
+        showMessage('success', `Test notification sent to FID ${fid}`);
+      } else {
+        showMessage('error', 'Failed to send test notification - user may have disabled notifications');
+      }
+    } catch (error) {
+      console.error('Failed to send test notification:', error);
+      showMessage('error', 'Failed to send test notification');
+    } finally {
+      setTestingFid(null);
+    }
+  }
+
+  async function handleBroadcastNotification() {
+    if (!broadcastTitle.trim() || !broadcastBody.trim()) {
+      showMessage('error', 'Title and body are required');
+      return;
+    }
+
+    if (!confirm(`Send notification to all ${notificationStats.enabled_tokens} users with notifications enabled?`)) {
+      return;
+    }
+
+    try {
+      setIsSendingBroadcast(true);
+      const result = await sendBroadcastNotification(
+        broadcastTitle,
+        broadcastBody,
+        broadcastUrl
+      );
+      showMessage('success', `Broadcast sent! ${result.sent} succeeded, ${result.failed} failed`);
+      setBroadcastTitle('');
+      setBroadcastBody('');
+    } catch (error) {
+      console.error('Failed to send broadcast:', error);
+      showMessage('error', 'Failed to send broadcast');
+    } finally {
+      setIsSendingBroadcast(false);
+    }
+  }
+
+  async function handleDeleteToken(fid: number) {
+    setConfirmModal({
+      isOpen: true,
+      title: 'Delete Notification Token',
+      message: `Remove notification token for FID ${fid}? They will need to re-add the miniapp to enable notifications again.`,
+      onConfirm: async () => {
+        try {
+          await deleteNotificationToken(fid);
+          showMessage('success', `Deleted notification token for FID ${fid}`);
+          loadNotifications();
+        } catch (error) {
+          console.error('Failed to delete token:', error);
+          showMessage('error', 'Failed to delete token');
+        }
+        setConfirmModal({ ...confirmModal, isOpen: false });
+      },
+    });
   }
 
   async function loadPrompts() {
@@ -389,6 +486,15 @@ export default function AdminClient({ initialUser }: AdminClientProps) {
           onClick={() => setActiveTab('prompts')}
         >
           AI Prompts
+        </button>
+        <button
+          className={activeTab === 'notifications' ? styles.activeTab : ''}
+          onClick={() => {
+            setActiveTab('notifications');
+            loadNotifications();
+          }}
+        >
+          Notifications ({notificationStats.enabled_tokens})
         </button>
       </nav>
 
@@ -737,6 +843,124 @@ export default function AdminClient({ initialUser }: AdminClientProps) {
               >
                 {promptsLoading ? 'Saving...' : promptsSaved ? '✓ Saved!' : 'Save Prompts'}
               </button>
+            </div>
+          </section>
+        </div>
+      )}
+
+      {activeTab === 'notifications' && (
+        <div className={styles.content}>
+          <section className={styles.section}>
+            <h2>Notification Stats</h2>
+            <div className={styles.statsGrid}>
+              <div className={styles.statCard}>
+                <div className={styles.statValue}>{notificationStats.total_tokens}</div>
+                <div className={styles.statLabel}>Total Users</div>
+              </div>
+              <div className={styles.statCard}>
+                <div className={styles.statValue}>{notificationStats.enabled_tokens}</div>
+                <div className={styles.statLabel}>Enabled</div>
+              </div>
+              <div className={styles.statCard}>
+                <div className={styles.statValue}>{notificationStats.disabled_tokens}</div>
+                <div className={styles.statLabel}>Disabled</div>
+              </div>
+            </div>
+          </section>
+
+          <section className={styles.section}>
+            <h2>Broadcast Notification</h2>
+            <p className={styles.note}>
+              Send a notification to all {notificationStats.enabled_tokens} users with notifications enabled.
+            </p>
+            <div className={styles.broadcastForm}>
+              <input
+                type="text"
+                placeholder="Notification title"
+                value={broadcastTitle}
+                onChange={(e) => setBroadcastTitle(e.target.value)}
+                className={styles.input}
+                maxLength={50}
+              />
+              <textarea
+                placeholder="Notification body"
+                value={broadcastBody}
+                onChange={(e) => setBroadcastBody(e.target.value)}
+                className={styles.textarea}
+                rows={3}
+                maxLength={150}
+              />
+              <input
+                type="url"
+                placeholder="Target URL (where users go when clicking)"
+                value={broadcastUrl}
+                onChange={(e) => setBroadcastUrl(e.target.value)}
+                className={styles.input}
+              />
+              <button
+                onClick={handleBroadcastNotification}
+                className={styles.primaryButton}
+                disabled={isSendingBroadcast || !broadcastTitle.trim() || !broadcastBody.trim()}
+              >
+                {isSendingBroadcast ? 'Sending...' : `Send to ${notificationStats.enabled_tokens} Users`}
+              </button>
+            </div>
+          </section>
+
+          <section className={styles.section}>
+            <h2>Notification Tokens</h2>
+            <p className={styles.note}>
+              Manage users who have added the miniapp and enabled notifications.
+            </p>
+            <div className={styles.tokenList}>
+              {notificationTokens.length === 0 ? (
+                <p className={styles.note}>No notification tokens yet. Users will appear here when they add the miniapp.</p>
+              ) : (
+                <div className={styles.userTable}>
+                  <div className={styles.tableHeader}>
+                    <div className={styles.tableCol}>FID</div>
+                    <div className={styles.tableCol}>Username</div>
+                    <div className={styles.tableCol}>Status</div>
+                    <div className={styles.tableCol}>Updated</div>
+                    <div className={styles.tableCol}>Actions</div>
+                  </div>
+                  {notificationTokens.map((token) => (
+                    <div key={token.fid} className={styles.tableRow}>
+                      <div className={styles.tableCol}>{token.fid}</div>
+                      <div className={styles.tableCol}>
+                        {token.username ? `@${token.username}` : '-'}
+                      </div>
+                      <div className={styles.tableCol}>
+                        <span className={token.enabled ? styles.enabledBadge : styles.disabledBadge}>
+                          {token.enabled ? 'Enabled' : 'Disabled'}
+                        </span>
+                      </div>
+                      <div className={styles.tableCol}>
+                        {new Date(token.updated_at).toLocaleDateString()}
+                      </div>
+                      <div className={styles.tableCol}>
+                        <div className={styles.tokenActions}>
+                          {token.enabled && (
+                            <button
+                              onClick={() => handleTestNotification(token.fid)}
+                              className={styles.button}
+                              disabled={testingFid === token.fid}
+                            >
+                              {testingFid === token.fid ? 'Sending...' : 'Test'}
+                            </button>
+                          )}
+                          <button
+                            onClick={() => handleDeleteToken(token.fid)}
+                            className={styles.dangerButton}
+                          >
+                            Delete
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           </section>
         </div>

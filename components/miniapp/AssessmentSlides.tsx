@@ -70,6 +70,8 @@ export default function AssessmentSlides({ initialSpectrum, initialStep = 0, ini
   const [autoSaved, setAutoSaved] = useState(false);
   const [isPublic, setIsPublic] = useState(initialIsPublic);
   const [hasInitialSpectrum] = useState(!!initialSpectrum);
+  const [copiedSpectrum, setCopiedSpectrum] = useState(false);
+  const [hasPromptedAddMiniApp, setHasPromptedAddMiniApp] = useState(false);
   const [spectrum, setSpectrum] = useState<SpectrumState>(initialSpectrum ? {
     trade: initialSpectrum.trade,
     abortion: initialSpectrum.abortion,
@@ -97,8 +99,15 @@ export default function AssessmentSlides({ initialSpectrum, initialStep = 0, ini
         spectrum.migration !== null && spectrum.economics !== null && spectrum.rights !== null) {
       onComplete(spectrum as UserSpectrum, isPublic); // Preserve existing isPublic status
       setAutoSaved(true);
+      
+      // Prompt to add miniapp if first time completing (not if returning user)
+      if (!hasInitialSpectrum && !hasPromptedAddMiniApp) {
+        setTimeout(() => {
+          handleAddMiniApp();
+        }, 1500); // Wait a moment after showing results
+      }
     }
-  }, [step, spectrum, autoSaved, onComplete, isPublic]);
+  }, [step, spectrum, autoSaved, onComplete, isPublic, hasInitialSpectrum, hasPromptedAddMiniApp]);
 
   const handleToggleVisibility = () => {
     const newVisibility = !isPublic;
@@ -146,7 +155,16 @@ export default function AssessmentSlides({ initialSpectrum, initialStep = 0, ini
     return emojis[value] || '🟨';
   };
 
-  const [copiedSpectrum, setCopiedSpectrum] = useState(false);
+  const handleAddMiniApp = useCallback(async () => {
+    try {
+      await sdk.actions.addMiniApp();
+      setHasPromptedAddMiniApp(true);
+      console.log('[Squares] Add miniapp prompt shown');
+    } catch (error) {
+      console.error('[Squares] Failed to prompt add miniapp:', error);
+      setHasPromptedAddMiniApp(true); // Don't spam if it fails
+    }
+  }, []);
 
   const handleShare = useCallback(async () => {
     if (spectrum.trade === null || spectrum.abortion === null || spectrum.migration === null || 
