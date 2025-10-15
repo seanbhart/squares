@@ -50,7 +50,7 @@ export async function POST(request: NextRequest) {
     switch (event) {
       case 'frame_added':
       case 'miniapp_added':
-        // User added your frame/miniapp - notifications enabled by default
+        // User added/installed your frame/miniapp - notifications enabled by default
         if (notificationDetails) {
           const { error } = await supabase
             .from('notification_tokens')
@@ -58,6 +58,7 @@ export async function POST(request: NextRequest) {
               fid,
               notification_url: notificationDetails.url,
               notification_token: notificationDetails.token,
+              app_installed: true,
               enabled: true,
               updated_at: new Date().toISOString(),
             }, {
@@ -69,12 +70,30 @@ export async function POST(request: NextRequest) {
             throw error
           }
           
-          console.log(`[Webhook] Saved notification token for FID ${fid}`)
+          console.log(`[Webhook] App installed with notifications enabled for FID ${fid}`)
+        } else {
+          // No notification details, but app was added - mark as installed
+          const { error } = await supabase
+            .from('notification_tokens')
+            .upsert({
+              fid,
+              app_installed: true,
+              enabled: false, // No token = notifications not available
+              updated_at: new Date().toISOString(),
+            }, {
+              onConflict: 'fid'
+            })
+          
+          if (error) {
+            console.error('[Webhook] Error marking app as installed:', error)
+          } else {
+            console.log(`[Webhook] App installed (no notifications) for FID ${fid}`)
+          }
         }
         break
         
       case 'notifications_enabled':
-        // User re-enabled notifications
+        // User enabled notifications (app should still be installed)
         if (notificationDetails) {
           // Have new token details - upsert
           const { error } = await supabase
@@ -83,6 +102,7 @@ export async function POST(request: NextRequest) {
               fid,
               notification_url: notificationDetails.url,
               notification_token: notificationDetails.token,
+              app_installed: true, // If enabling notifications, app must be installed
               enabled: true,
               updated_at: new Date().toISOString(),
             }, {
@@ -94,12 +114,13 @@ export async function POST(request: NextRequest) {
             throw error
           }
           
-          console.log(`[Webhook] Enabled notifications for FID ${fid} (with new token)`)
+          console.log(`[Webhook] Notifications enabled for FID ${fid} (with new token)`)
         } else {
           // No new token details - just update enabled flag
           const { error } = await supabase
             .from('notification_tokens')
             .update({ 
+              app_installed: true, // Ensure app_installed is true
               enabled: true,
               updated_at: new Date().toISOString(),
             })
@@ -108,13 +129,13 @@ export async function POST(request: NextRequest) {
           if (error) {
             console.error('[Webhook] Error enabling notifications:', error)
           } else {
-            console.log(`[Webhook] Enabled notifications for FID ${fid} (existing token)`)
+            console.log(`[Webhook] Notifications enabled for FID ${fid} (existing token)`)
           }
         }
         break
         
       case 'notifications_disabled':
-        // User disabled notifications - mark as disabled (but keep token for potential re-enable)
+        // User disabled notifications - mark as disabled (but app might still be installed)
         const { error: disableError, data: disableData } = await supabase
           .from('notification_tokens')
           .update({ 
@@ -127,26 +148,33 @@ export async function POST(request: NextRequest) {
         if (disableError) {
           console.error('[Webhook] Error disabling notifications:', disableError)
         } else if (!disableData || disableData.length === 0) {
-          console.log(`[Webhook] No token found to disable for FID ${fid} (user may have never added the app)`)
+          console.log(`[Webhook] No record found to disable for FID ${fid} (user may have never added the app)`)
         } else {
-          console.log(`[Webhook] Disabled notifications for FID ${fid}`)
+          console.log(`[Webhook] Notifications disabled for FID ${fid} (app still installed: ${disableData[0].app_installed})`)
         }
         break
         
       case 'frame_removed':
       case 'miniapp_removed':
-        // User removed your frame/miniapp - delete token
-        const { error: deleteError } = await supabase
+        // User removed/uninstalled your frame/miniapp - mark as not installed
+        // We keep the record for historical tracking but mark app_installed = false
+        const { error: removeError, data: removeData } = await supabase
           .from('notification_tokens')
-          .delete()
+          .update({
+            app_installed: false,
+            enabled: false, // If app is removed, notifications are definitely disabled
+            updated_at: new Date().toISOString(),
+          })
           .eq('fid', fid)
+          .select()
         
-        if (deleteError) {
-          console.error('[Webhook] Error deleting notification token:', deleteError)
-          throw deleteError
+        if (removeError) {
+          console.error('[Webhook] Error marking app as removed:', removeError)
+        } else if (!removeData || removeData.length === 0) {
+          console.log(`[Webhook] No record found for FID ${fid} to mark as removed`)
+        } else {
+          console.log(`[Webhook] App uninstalled for FID ${fid}`)
         }
-        
-        console.log(`[Webhook] Deleted notification token for FID ${fid}`)
         break
         
       default:

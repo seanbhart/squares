@@ -29,6 +29,7 @@ interface NotificationTokenRecord {
   fid: number
   notification_url: string
   notification_token: string
+  app_installed: boolean
   enabled: boolean
   created_at: string
   updated_at: string
@@ -37,6 +38,8 @@ interface NotificationTokenRecord {
 
 interface NotificationStats {
   total_tokens: number
+  app_installed: number
+  app_removed: number
   enabled_tokens: number
   disabled_tokens: number
 }
@@ -54,7 +57,7 @@ export default function AdminClient({ initialUser }: AdminClientProps) {
   
   // Notifications state
   const [notificationTokens, setNotificationTokens] = useState<Array<NotificationTokenRecord & { username?: string }>>([]);
-  const [notificationStats, setNotificationStats] = useState<NotificationStats>({ total_tokens: 0, enabled_tokens: 0, disabled_tokens: 0 });
+  const [notificationStats, setNotificationStats] = useState<NotificationStats>({ total_tokens: 0, app_installed: 0, app_removed: 0, enabled_tokens: 0, disabled_tokens: 0 });
   const [broadcastTitle, setBroadcastTitle] = useState('');
   const [broadcastBody, setBroadcastBody] = useState('');
   const [broadcastUrl, setBroadcastUrl] = useState('https://farcaster.squares.vote/miniapp');
@@ -877,15 +880,23 @@ export default function AdminClient({ initialUser }: AdminClientProps) {
             <div className={styles.statsGrid}>
               <div className={styles.statCard}>
                 <div className={styles.statValue}>{notificationStats.total_tokens}</div>
-                <div className={styles.statLabel}>Total Users</div>
+                <div className={styles.statLabel}>Total Records</div>
+              </div>
+              <div className={styles.statCard}>
+                <div className={styles.statValue}>{notificationStats.app_installed}</div>
+                <div className={styles.statLabel}>App Installed</div>
+              </div>
+              <div className={styles.statCard}>
+                <div className={styles.statValue}>{notificationStats.app_removed}</div>
+                <div className={styles.statLabel}>App Removed</div>
               </div>
               <div className={styles.statCard}>
                 <div className={styles.statValue}>{notificationStats.enabled_tokens}</div>
-                <div className={styles.statLabel}>Enabled</div>
+                <div className={styles.statLabel}>Notifications Enabled</div>
               </div>
               <div className={styles.statCard}>
                 <div className={styles.statValue}>{notificationStats.disabled_tokens}</div>
-                <div className={styles.statLabel}>Disabled</div>
+                <div className={styles.statLabel}>Notifications Disabled</div>
               </div>
             </div>
           </section>
@@ -942,7 +953,8 @@ export default function AdminClient({ initialUser }: AdminClientProps) {
                   <div className={styles.tableHeader}>
                     <div className={styles.tableCol}>FID</div>
                     <div className={styles.tableCol}>Username</div>
-                    <div className={styles.tableCol}>Status</div>
+                    <div className={styles.tableCol}>App Status</div>
+                    <div className={styles.tableCol}>Notifications</div>
                     <div className={styles.tableCol}>Updated</div>
                     <div className={styles.tableCol}>Actions</div>
                   </div>
@@ -953,8 +965,13 @@ export default function AdminClient({ initialUser }: AdminClientProps) {
                         {token.username ? `@${token.username}` : '-'}
                       </div>
                       <div className={styles.tableCol}>
+                        <span className={token.app_installed ? styles.enabledBadge : styles.disabledBadge}>
+                          {token.app_installed ? 'Installed' : 'Removed'}
+                        </span>
+                      </div>
+                      <div className={styles.tableCol}>
                         <span className={token.enabled ? styles.enabledBadge : styles.disabledBadge}>
-                          {token.enabled ? 'Enabled' : 'Disabled'}
+                          {token.enabled ? 'On' : 'Off'}
                         </span>
                       </div>
                       <div className={styles.tableCol}>
@@ -962,7 +979,7 @@ export default function AdminClient({ initialUser }: AdminClientProps) {
                       </div>
                       <div className={styles.tableCol}>
                         <div className={styles.tokenActions}>
-                          {token.enabled && (
+                          {token.enabled && token.app_installed && (
                             <button
                               onClick={() => handleTestNotification(token.fid)}
                               className={styles.button}

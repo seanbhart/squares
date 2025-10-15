@@ -5,6 +5,7 @@ export interface NotificationTokenRecord {
   fid: number
   notification_url: string
   notification_token: string
+  app_installed: boolean
   enabled: boolean
   created_at: string
   updated_at: string
@@ -12,6 +13,8 @@ export interface NotificationTokenRecord {
 
 export interface NotificationStats {
   total_tokens: number
+  app_installed: number
+  app_removed: number
   enabled_tokens: number
   disabled_tokens: number
 }
@@ -43,7 +46,7 @@ export async function getNotificationStats(): Promise<NotificationStats> {
   
   const { data, error } = await supabase
     .from('notification_tokens')
-    .select('enabled')
+    .select('app_installed, enabled')
   
   if (error) {
     console.error('Error fetching notification stats:', error)
@@ -51,11 +54,15 @@ export async function getNotificationStats(): Promise<NotificationStats> {
   }
   
   const total_tokens = data?.length || 0
+  const app_installed = data?.filter(t => t.app_installed).length || 0
+  const app_removed = data?.filter(t => !t.app_installed).length || 0
   const enabled_tokens = data?.filter(t => t.enabled).length || 0
   const disabled_tokens = total_tokens - enabled_tokens
   
   return {
     total_tokens,
+    app_installed,
+    app_removed,
     enabled_tokens,
     disabled_tokens,
   }
