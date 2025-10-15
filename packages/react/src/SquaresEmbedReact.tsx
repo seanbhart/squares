@@ -3,6 +3,18 @@
 import React, { useState } from 'react';
 import { SquaresWidget } from './SquaresWidget';
 
+// Theme colors matching app/globals.css
+const COLORS = {
+  bgPrimary: '#121113',
+  bgSecondary: '#1A191B',
+  textPrimary: '#ffffff',
+  textSecondary: '#B8B8B9',
+  textMuted: '#7A797B',
+  accent: '#e5e5e5',
+  accentText: '#121113',
+  border: 'rgba(255, 255, 255, 0.08)',
+} as const;
+
 const COLOR_RAMP = [
   "#7e568e", // Purple
   "#1f6adb", // Blue
@@ -126,8 +138,8 @@ export function SquaresEmbedReact({
       <div style={containerStyle}>
         <div
           style={{
-            background: '#212121',
-            border: '1px solid rgba(255, 255, 255, 0.1)',
+            background: COLORS.bgPrimary,
+            border: `1px solid ${COLORS.border}`,
             borderRadius,
             padding: 'clamp(20px, 4vw, 32px)',
             boxShadow: shadow ? '0 4px 12px rgba(0, 0, 0, 0.4)' : 'none',
@@ -135,28 +147,28 @@ export function SquaresEmbedReact({
           }}
         >
           <div style={{ marginBottom: '24px' }}>
-            <h3 style={{ margin: '0 0 12px 0', fontSize: 'clamp(1.375rem, 3vw, 1.75rem)', fontWeight: 700, color: '#ffffff', lineHeight: 1.2 }}>
+            <h3 style={{ margin: '0 0 12px 0', fontSize: 'clamp(1.375rem, 3vw, 1.75rem)', fontWeight: 700, color: COLORS.textPrimary, lineHeight: 1.2 }}>
               Map Your Political Positions
             </h3>
-            <p style={{ margin: 0, fontSize: 'clamp(0.9375rem, 2vw, 1rem)', color: '#a3a3a3', lineHeight: '1.5' }}>
+            <p style={{ margin: 0, fontSize: 'clamp(0.9375rem, 2vw, 1rem)', color: COLORS.textSecondary, lineHeight: '1.5' }}>
               Use the TAME-R framework to visualize where you stand on 5 key policy dimensions
             </p>
           </div>
 
           <div
             style={{
-              background: '#1A1A1A',
-              border: '1px solid rgba(255, 255, 255, 0.1)',
+              background: COLORS.bgSecondary,
+              border: `1px solid ${COLORS.border}`,
               borderRadius: '12px',
               padding: 'clamp(16px, 3vw, 20px)',
               marginBottom: '24px',
             }}
           >
             <div style={{ marginBottom: '12px', display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
-              <span style={{ fontSize: '0.8125rem', fontWeight: 600, color: '#737373', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+              <span style={{ fontSize: '0.8125rem', fontWeight: 600, color: COLORS.textMuted, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
                 EXAMPLE:
               </span>
-              <span style={{ fontSize: 'clamp(0.9375rem, 2vw, 1rem)', fontWeight: 600, color: '#ffffff' }}>
+              <span style={{ fontSize: 'clamp(0.9375rem, 2vw, 1rem)', fontWeight: 600, color: COLORS.textPrimary }}>
                 Martin Luther King Jr.
               </span>
             </div>
@@ -168,7 +180,7 @@ export function SquaresEmbedReact({
                 <ColorSquare value={4} size={48} />
                 <ColorSquare value={0} size={48} />
               </div>
-              <div style={{ fontSize: '0.6875rem', color: '#a3a3a3', display: 'flex', justifyContent: 'center', gap: 'clamp(8px, 2vw, 16px)', flexWrap: 'wrap', fontWeight: 500 }}>
+              <div style={{ fontSize: '0.6875rem', color: COLORS.textSecondary, display: 'flex', justifyContent: 'center', gap: 'clamp(8px, 2vw, 16px)', flexWrap: 'wrap', fontWeight: 500 }}>
                 <span>Trade</span>
                 <span>Abortion</span>
                 <span>Migration</span>
@@ -181,8 +193,8 @@ export function SquaresEmbedReact({
           <button
             onClick={handleClick}
             style={{
-              backgroundColor: '#e5e5e5',
-              color: '#212121',
+              backgroundColor: COLORS.accent,
+              color: COLORS.accentText,
               border: 'none',
               padding: 'clamp(12px, 2.5vw, 16px) clamp(20px, 4vw, 32px)',
               fontSize: 'clamp(0.9375rem, 2vw, 1.0625rem)',
@@ -200,7 +212,7 @@ export function SquaresEmbedReact({
               e.currentTarget.style.boxShadow = '0 6px 16px rgba(255, 255, 255, 0.3)';
             }}
             onMouseOut={(e) => {
-              e.currentTarget.style.backgroundColor = '#e5e5e5';
+              e.currentTarget.style.backgroundColor = COLORS.accent;
               e.currentTarget.style.transform = 'translateY(0)';
               e.currentTarget.style.boxShadow = '0 4px 12px rgba(255, 255, 255, 0.2)';
             }}
@@ -208,7 +220,7 @@ export function SquaresEmbedReact({
             {buttonText}
           </button>
 
-          <p style={{ margin: 0, fontSize: '0.8125rem', color: '#737373', textAlign: 'center', lineHeight: 1.5 }}>
+          <p style={{ margin: 0, fontSize: '0.8125rem', color: COLORS.textMuted, textAlign: 'center', lineHeight: 1.5 }}>
             Takes less than 2 minutes · Free & open source
           </p>
         </div>

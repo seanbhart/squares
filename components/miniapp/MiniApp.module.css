@@ -1,6 +1,6 @@
 .container {
   min-height: 100vh;
-  background: #212121;
+  background: var(--bg-primary);
   padding: 1rem;
   font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
@@ -11,7 +11,7 @@
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  color: #ffffff;
+  color: var(--text-primary);
 }
 
 .spinner {
@@ -43,8 +43,8 @@
 }
 
 .modalContent {
-  background: #1a1a1a;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
   border-radius: 20px;
   padding: 2rem;
   max-width: 400px;
@@ -54,14 +54,14 @@
 
 .modalContent h2 {
   margin: 0 0 1rem 0;
-  color: #ffffff;
+  color: var(--text-primary);
   font-size: 1.5rem;
   font-weight: 700;
 }
 
 .modalContent p {
   margin: 0 0 1.5rem 0;
-  color: #a3a3a3;
+  color: var(--text-secondary);
   line-height: 1.6;
 }
 
@@ -74,7 +74,7 @@
   flex: 1;
   padding: 0.875rem 1.5rem;
   background: #ffffff;
-  color: #1a1a1a;
+  color: var(--bg-secondary);
   border: none;
   border-radius: 12px;
   font-size: 1rem;
@@ -109,14 +109,14 @@
 
 /* Dark Mode */
 .darkMode {
-  background: #212121;
+  background: var(--bg-primary);
   min-height: 100vh;
   padding-top: 1rem;
   padding-bottom: 2rem;
 }
 
 .darkMode .loading {
-  color: #ffffff;
+  color: var(--text-primary);
 }
 
 .darkMode .spinner {
@@ -125,21 +125,21 @@
 }
 
 .darkMode .modalContent {
-  background: #1a1a1a;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
 }
 
 .darkMode .modalContent h2 {
-  color: #ffffff;
+  color: var(--text-primary);
 }
 
 .darkMode .modalContent p {
-  color: #a3a3a3;
+  color: var(--text-secondary);
 }
 
 .darkMode .primaryButton {
   background: #ffffff;
-  color: #1a1a1a;
+  color: var(--bg-secondary);
 }
 
 .darkMode .primaryButton:hover {

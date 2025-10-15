@@ -9,6 +9,20 @@ export interface SquaresWidgetProps {
   initialStep?: number;
 }
 
+// Theme colors matching app/globals.css
+const COLORS = {
+  bgPrimary: '#121113',
+  bgSecondary: '#1A191B',
+  surface: 'rgba(24, 23, 25, 0.85)',
+  textPrimary: '#ffffff',
+  textSecondary: '#B8B8B9',
+  textMuted: '#7A797B',
+  accent: '#e5e5e5',
+  accentText: '#121113',
+  border: 'rgba(255, 255, 255, 0.08)',
+  borderStrong: 'rgba(255, 255, 255, 0.12)',
+} as const;
+
 const POLICIES = [
   { key: 'trade', label: 'Trade', emoji: '🌐' },
   { key: 'abortion', label: 'Abortion', emoji: '🤰' },
@@ -160,7 +174,7 @@ export function SquaresWidget({
       case 0:
         return (
           <div style={{ minHeight: '400px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-            <h2 style={{ margin: '0 0 3rem 0', color: '#ffffff', fontSize: 'clamp(2rem, 5vw, 3rem)', fontWeight: 700, lineHeight: 1.2, textAlign: 'center' }}>
+            <h2 style={{ margin: '0 0 3rem 0', color: COLORS.textPrimary, fontSize: 'clamp(2rem, 5vw, 3rem)', fontWeight: 700, lineHeight: 1.2, textAlign: 'center' }}>
               You're not one word.<br />
               You're many dimensions.
             </h2>
@@ -173,12 +187,12 @@ export function SquaresWidget({
                     <div style={{ width: '80px', height: '80px', borderRadius: '12px', backgroundColor: colors[index], display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 4px 12px rgba(0, 0, 0, 0.3)', border: '1px solid rgba(255, 255, 255, 0.1)' }}>
                       <span style={{ fontSize: '2.5rem', color: 'white', fontWeight: 900 }}>{letters[index]}</span>
                     </div>
-                    <span style={{ color: '#ffffff', fontSize: '0.875rem', fontWeight: 600 }}>{policy.label.split(' ')[0]}</span>
+                    <span style={{ color: COLORS.textPrimary, fontSize: '0.875rem', fontWeight: 600 }}>{policy.label.split(' ')[0]}</span>
                   </div>
                 );
               })}
             </div>
-            <p style={{ fontSize: '1rem', color: '#a3a3a3', textAlign: 'center', marginTop: '2rem', lineHeight: 1.6 }}>
+            <p style={{ fontSize: '1rem', color: COLORS.textSecondary, textAlign: 'center', marginTop: '2rem', lineHeight: 1.6 }}>
               TAME-R measures where you stand on five<br />independent policy dimensions.
             </p>
           </div>
@@ -191,7 +205,7 @@ export function SquaresWidget({
         
         return (
           <div style={{ minHeight: '400px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-            <h2 style={{ margin: '0 0 2rem 0', color: '#ffffff', fontSize: 'clamp(2rem, 5vw, 2.5rem)', fontWeight: 700, lineHeight: 1.2, textAlign: 'center' }}>
+            <h2 style={{ margin: '0 0 2rem 0', color: COLORS.textPrimary, fontSize: 'clamp(2rem, 5vw, 2.5rem)', fontWeight: 700, lineHeight: 1.2, textAlign: 'center' }}>
               Each dimension uses a<br />7-color spectrum
             </h2>
             
@@ -203,13 +217,13 @@ export function SquaresWidget({
               </div>
               
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '0.25rem', marginBottom: '1.5rem', maxWidth: '480px', margin: '0 auto 1.5rem' }}>
-                <span style={{ fontSize: '0.75rem', color: '#a3a3a3', fontWeight: 600 }}>Minimal intervention</span>
-                <span style={{ fontSize: '1rem', color: '#737373' }}>→</span>
-                <span style={{ fontSize: '0.75rem', color: '#a3a3a3', fontWeight: 600 }}>Total control</span>
+                <span style={{ fontSize: '0.75rem', color: COLORS.textSecondary, fontWeight: 600 }}>Minimal intervention</span>
+                <span style={{ fontSize: '1rem', color: COLORS.textMuted }}>→</span>
+                <span style={{ fontSize: '0.75rem', color: COLORS.textSecondary, fontWeight: 600 }}>Total control</span>
               </div>
             </div>
 
-            <p style={{ fontSize: '0.9375rem', color: '#a3a3a3', textAlign: 'center', marginBottom: '1rem' }}>
+            <p style={{ fontSize: '0.9375rem', color: COLORS.textSecondary, textAlign: 'center', marginBottom: '1rem' }}>
               See what the scale means for each dimension:
             </p>
 
@@ -231,28 +245,28 @@ export function SquaresWidget({
                     transition: 'all 0.2s',
                     minWidth: '80px',
                     boxShadow: selectedSpectrumDimension === index ? '0 4px 16px rgba(255, 255, 255, 0.15)' : 'none',
-                    color: '#ffffff',
+                    color: COLORS.textPrimary,
                     WebkitTapHighlightColor: 'transparent',
                     fontFamily: 'inherit'
                   }}
                 >
                   <div style={{ width: '40px', height: '40px', borderRadius: '8px', backgroundColor: '#333333', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 2px 8px rgba(0, 0, 0, 0.3)', border: '1px solid rgba(255, 255, 255, 0.15)' }}>
-                    <span style={{ fontSize: '1.25rem', color: '#e5e5e5', fontWeight: 900 }}>{letters[index]}</span>
+                    <span style={{ fontSize: '1.25rem', color: COLORS.accent, fontWeight: 900 }}>{letters[index]}</span>
                   </div>
-                  <span style={{ fontSize: '0.75rem', color: '#ffffff', fontWeight: 600 }}>{policy.label.split(' ')[0]}</span>
+                  <span style={{ fontSize: '0.75rem', color: COLORS.textPrimary, fontWeight: 600 }}>{policy.label.split(' ')[0]}</span>
                 </button>
               ))}
             </div>
 
             <div style={{ background: 'rgba(30, 30, 30, 0.8)', borderRadius: '12px', padding: '1.5rem', border: '1px solid rgba(255, 255, 255, 0.1)' }}>
-              <h3 style={{ margin: '0 0 1rem 0', fontSize: '1.125rem', color: '#ffffff', fontWeight: 600, textAlign: 'center' }}>
+              <h3 style={{ margin: '0 0 1rem 0', fontSize: '1.125rem', color: COLORS.textPrimary, fontWeight: 600, textAlign: 'center' }}>
                 {selectedPolicy.label}
               </h3>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
                 {POSITION_LABELS[selectedPolicy.key].map((label, index) => (
                   <div key={index} style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
                     <ColorSquare value={index} size="32px" />
-                    <span style={{ fontSize: '0.875rem', color: '#ffffff', flex: 1 }}>{label}</span>
+                    <span style={{ fontSize: '0.875rem', color: COLORS.textPrimary, flex: 1 }}>{label}</span>
                   </div>
                 ))}
               </div>
@@ -270,7 +284,7 @@ export function SquaresWidget({
         return (
           <div style={{ minHeight: '400px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
             <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
-              <div style={{ fontSize: '0.875rem', color: '#a3a3a3', fontWeight: 600, marginBottom: '0.75rem', letterSpacing: '0.1em' }}>
+              <div style={{ fontSize: '0.875rem', color: COLORS.textSecondary, fontWeight: 600, marginBottom: '0.75rem', letterSpacing: '0.1em' }}>
                 {currentDimension + 1} OF {POLICIES.length}
               </div>
               <div style={{ display: 'flex', justifyContent: 'center', gap: '0.5rem', marginBottom: '2rem' }}>
@@ -289,13 +303,13 @@ export function SquaresWidget({
               </div>
               <div style={{ display: 'inline-block', marginBottom: '1rem' }}>
                 <div style={{ width: '80px', height: '80px', borderRadius: '16px', backgroundColor: '#333333', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 8px 24px rgba(0, 0, 0, 0.3)', border: '1px solid rgba(255, 255, 255, 0.15)' }}>
-                  <span style={{ fontSize: '3rem', color: '#e5e5e5', fontWeight: 900 }}>{letters[currentDimension]}</span>
+                  <span style={{ fontSize: '3rem', color: COLORS.accent, fontWeight: 900 }}>{letters[currentDimension]}</span>
                 </div>
               </div>
-              <h2 style={{ margin: '0 0 1rem 0', color: '#ffffff', fontSize: 'clamp(1.75rem, 4vw, 2.5rem)', fontWeight: 800 }}>
+              <h2 style={{ margin: '0 0 1rem 0', color: COLORS.textPrimary, fontSize: 'clamp(1.75rem, 4vw, 2.5rem)', fontWeight: 800 }}>
                 {policy.label}
               </h2>
-              <p style={{ fontSize: '1rem', color: '#a3a3a3', marginBottom: '2rem' }}>
+              <p style={{ fontSize: '1rem', color: COLORS.textSecondary, marginBottom: '2rem' }}>
                 Where do you stand on government intervention?
               </p>
             </div>
@@ -327,7 +341,7 @@ export function SquaresWidget({
                     }}
                   >
                     <ColorSquare value={valueIndex} size="60px" />
-                    <span style={{ fontSize: '0.75rem', color: '#ffffff', textAlign: 'center', lineHeight: 1.3, fontWeight: 400 }}>
+                    <span style={{ fontSize: '0.75rem', color: COLORS.textPrimary, textAlign: 'center', lineHeight: 1.3, fontWeight: 400 }}>
                       {label}
                     </span>
                   </button>
@@ -335,7 +349,7 @@ export function SquaresWidget({
               })}
             </div>
 
-            <div style={{ textAlign: 'center', marginTop: '1.5rem', marginBottom: '1.5rem', fontSize: '0.875rem', color: '#a3a3a3', fontWeight: 500 }}>
+            <div style={{ textAlign: 'center', marginTop: '1.5rem', marginBottom: '1.5rem', fontSize: '0.875rem', color: COLORS.textSecondary, fontWeight: 500 }}>
               <span>Minimal intervention</span>
               <span style={{ margin: '0 0.75rem' }}>→</span>
               <span>Total control</span>
@@ -348,7 +362,7 @@ export function SquaresWidget({
                   style={{
                     padding: '1rem 2rem',
                     background: '#e5e5e5',
-                    color: '#212121',
+                    color: COLORS.accentText,
                     border: 'none',
                     borderRadius: '12px',
                     fontSize: '1rem',
@@ -375,7 +389,7 @@ export function SquaresWidget({
                   style={{
                     padding: '1rem 2rem',
                     background: '#e5e5e5',
-                    color: '#212121',
+                    color: COLORS.accentText,
                     border: 'none',
                     borderRadius: '12px',
                     fontSize: '1rem',
@@ -405,7 +419,7 @@ export function SquaresWidget({
       case 3:
         return (
           <div style={{ minHeight: '400px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-            <h2 style={{ margin: '0 0 3rem 0', color: '#ffffff', fontSize: 'clamp(2rem, 5vw, 3rem)', fontWeight: 700, lineHeight: 1.2, textAlign: 'center' }}>
+            <h2 style={{ margin: '0 0 3rem 0', color: COLORS.textPrimary, fontSize: 'clamp(2rem, 5vw, 3rem)', fontWeight: 700, lineHeight: 1.2, textAlign: 'center' }}>
               Your Political Spectrum
             </h2>
             
@@ -414,7 +428,7 @@ export function SquaresWidget({
                 {POLICIES.map((policy, i) => (
                   <div key={policy.key} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem' }}>
                     <ColorSquare value={spectrum[policy.key]} size="64px" />
-                    <span style={{ fontSize: '0.75rem', color: '#a3a3a3', fontWeight: 600, letterSpacing: '0.02em' }}>
+                    <span style={{ fontSize: '0.75rem', color: COLORS.textSecondary, fontWeight: 600, letterSpacing: '0.02em' }}>
                       {['T', 'A', 'M', 'E', 'R'][i]}
                     </span>
                   </div>
@@ -422,7 +436,7 @@ export function SquaresWidget({
               </div>
               <div style={{ display: 'flex', justifyContent: 'center', gap: 'clamp(0.5rem, 1.5vw, 1rem)', flexWrap: 'wrap', paddingTop: '1rem', borderTop: '1px solid rgba(255, 255, 255, 0.1)' }}>
                 {POLICIES.map((policy) => (
-                  <span key={policy.key} style={{ fontSize: '0.6875rem', color: '#737373', fontWeight: 500, textTransform: 'lowercase' }}>
+                  <span key={policy.key} style={{ fontSize: '0.6875rem', color: COLORS.textMuted, fontWeight: 500, textTransform: 'lowercase' }}>
                     {policy.label}
                   </span>
                 ))}
@@ -439,7 +453,7 @@ export function SquaresWidget({
               style={{
                 padding: '1.125rem 2rem',
                 background: '#e5e5e5',
-                color: '#212121',
+                color: COLORS.accentText,
                 border: 'none',
                 borderRadius: '12px',
                 fontSize: '1.0625rem',
@@ -469,7 +483,7 @@ export function SquaresWidget({
               style={{
                 padding: '1.125rem 2rem',
                 background: 'transparent',
-                color: '#e5e5e5',
+                color: COLORS.accent,
                 border: '2px solid #525252',
                 borderRadius: '12px',
                 fontSize: '1.0625rem',
@@ -509,7 +523,7 @@ export function SquaresWidget({
                 style={{
                   background: 'none',
                   border: 'none',
-                  color: '#a3a3a3',
+                  color: COLORS.textSecondary,
                   fontSize: '0.875rem',
                   fontWeight: 500,
                   cursor: 'pointer',
@@ -535,7 +549,7 @@ export function SquaresWidget({
                 style={{
                   background: 'none',
                   border: 'none',
-                  color: '#a3a3a3',
+                  color: COLORS.textSecondary,
                   fontSize: '0.875rem',
                   fontWeight: 500,
                   cursor: 'pointer',
@@ -651,7 +665,7 @@ export function SquaresWidget({
             border: '1px solid rgba(255, 255, 255, 0.15)',
             fontSize: '1.5rem',
             cursor: 'pointer',
-            color: '#737373',
+            color: COLORS.textMuted,
             lineHeight: '1',
             padding: 0,
             width: '40px',
@@ -697,7 +711,7 @@ export function SquaresWidget({
           
           {step === 2 && (
             <div style={{ textAlign: 'center' }}>
-              <div style={{ fontSize: '0.8125rem', color: '#a3a3a3', fontWeight: 600, marginBottom: '0.5rem' }}>
+              <div style={{ fontSize: '0.8125rem', color: COLORS.textSecondary, fontWeight: 600, marginBottom: '0.5rem' }}>
                 Dimension {currentDimension + 1} of {POLICIES.length}
               </div>
               <div style={{ display: 'flex', gap: '0.375rem', justifyContent: 'center' }}>
@@ -734,7 +748,7 @@ export function SquaresWidget({
                   cursor: 'pointer',
                   transition: 'all 0.2s',
                   background: 'transparent',
-                  color: '#e5e5e5'
+                  color: COLORS.accent
                 }}
                 onMouseOver={(e) => {
                   e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)';
@@ -761,7 +775,7 @@ export function SquaresWidget({
                 cursor: 'pointer',
                 transition: 'all 0.2s',
                 background: '#e5e5e5',
-                color: '#212121',
+                color: COLORS.accentText,
                 marginLeft: 'auto',
                 boxShadow: '0 4px 12px rgba(255, 255, 255, 0.2)'
               }}
@@ -794,7 +808,7 @@ export function SquaresWidget({
                 cursor: 'pointer',
                 transition: 'all 0.2s',
                 background: 'transparent',
-                color: '#a3a3a3'
+                color: COLORS.textSecondary
               }}
               onMouseOver={(e) => {
                 e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)';

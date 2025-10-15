@@ -174,38 +174,38 @@
 }
 
 .darkMode .title {
-  color: #ffffff;
+  color: var(--text-primary);
 }
 
 .darkMode .entry {
-  background: rgba(30, 30, 30, 0.8);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: var(--surface);
+  border: 1px solid var(--border);
 }
 
 .darkMode .entry:hover {
-  background: rgba(40, 40, 40, 0.9);
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+  background: var(--surface-hover);
+  box-shadow: 0 2px 12px var(--shadow);
 }
 
 .darkMode .entry.currentUser {
   background: rgba(255, 255, 255, 0.05);
-  border-color: rgba(255, 255, 255, 0.2);
+  border-color: var(--border-strong);
 }
 
 .darkMode .displayName {
-  color: #ffffff;
+  color: var(--text-primary);
 }
 
 .darkMode .username {
-  color: #a3a3a3;
+  color: var(--text-secondary);
 }
 
 .darkMode .loading {
-  color: #a3a3a3;
+  color: var(--text-secondary);
 }
 
 .darkMode .empty {
-  color: #a3a3a3;
+  color: var(--text-secondary);
 }
 
 @media (max-width: 640px) {
