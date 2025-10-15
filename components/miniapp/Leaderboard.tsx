@@ -43,17 +43,6 @@ export default function Leaderboard({ currentFid }: LeaderboardProps) {
       const data = await response.json();
       const entries = data.leaderboard || [];
       
-      // TEMP: Duplicate first entry 20 times for testing
-      if (entries.length > 0) {
-        const firstEntry = entries[0];
-        for (let i = 0; i < 20; i++) {
-          entries.push({
-            ...firstEntry,
-            fid: firstEntry.fid + i + 1000 // Give unique FIDs
-          });
-        }
-      }
-      
       // Pin current user to top if they exist in the leaderboard
       if (currentFid) {
         const currentUserIndex = entries.findIndex((e: LeaderboardEntry) => e.fid === currentFid);
