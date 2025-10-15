@@ -415,6 +415,21 @@
   justify-content: center;
 }
 
+.checkmark {
+  position: absolute;
+  font-size: 2rem;
+  color: white;
+  font-weight: 900;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  animation: checkmarkPop 0.3s ease;
+}
+
+@keyframes checkmarkPop {
+  0% { transform: scale(0); }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
 .optionLabel {
   font-size: 0.75rem;
   color: #e5e5e5;

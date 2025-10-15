@@ -349,7 +349,12 @@ export default function AssessmentSlides({ initialSpectrum, initialStep = 0, ini
                     className={`${styles.optionCard} ${isSelected ? styles.selected : ''}`}
                   >
                     <div className={styles.optionEmoji}>
-                      <ColorSquare value={valueIndex} size={48} />
+                      <div style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        <ColorSquare value={valueIndex} size={48} />
+                        {isSelected && (
+                          <span className={styles.checkmark}>✓</span>
+                        )}
+                      </div>
                     </div>
                     <span className={styles.optionLabel}>{label}</span>
                   </button>

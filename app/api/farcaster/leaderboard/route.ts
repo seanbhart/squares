@@ -44,19 +44,7 @@ export async function GET(request: NextRequest) {
       throw error;
     }
 
-    // TESTING: Duplicate entries to test scrolling (remove this in production)
-    let leaderboardData = data || [];
-    if (leaderboardData.length > 0) {
-      const testEntries = [];
-      for (let i = 0; i < 20; i++) {
-        const duplicated = leaderboardData.map((entry) => ({
-          ...entry,
-          fid: entry.fid + (i + 1) * 1000000, // Unique FID for each duplicate
-        }));
-        testEntries.push(...duplicated);
-      }
-      leaderboardData = [...leaderboardData, ...testEntries];
-    }
+    const leaderboardData = data || [];
 
     // Calculate some aggregate stats
     const stats = {
