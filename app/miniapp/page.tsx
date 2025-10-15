@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   description: 'Map your political positions across Trade, Abortion, Migration, Economics, and Rights using the TAME-R framework.',
   openGraph: {
     title: 'Squares Political Spectrum',
-    description: "You're not one word—you're many dimensions. Map your positions with TAME-R.",
+    description: "You're not one word—you're many dimensions. Map your political positions with TAME-R.",
     url: 'https://www.squares.vote/miniapp',
     siteName: 'Squares',
     images: [
@@ -29,11 +29,20 @@ export const metadata: Metadata = {
     images: ['https://www.squares.vote/og-image.png'],
   },
   other: {
-    'fc:frame': 'vNext',
-    'fc:frame:image': 'https://www.squares.vote/og-image.png',
-    'fc:frame:button:1': 'Map Your Squares',
-    'fc:frame:button:1:action': 'link',
-    'fc:frame:button:1:target': 'https://www.squares.vote/miniapp',
+    'fc:miniapp': JSON.stringify({
+      version: '1',
+      imageUrl: 'https://www.squares.vote/miniapp-image.png',
+      button: {
+        title: 'Map Your Political Squares',
+        action: {
+          type: 'launch_frame',
+          name: 'Squares Political Spectrum',
+          url: 'https://www.squares.vote/miniapp',
+          splashImageUrl: 'https://www.squares.vote/splash-200x200.png',
+          splashBackgroundColor: '#121113',
+        },
+      },
+    }),
   },
 };
 

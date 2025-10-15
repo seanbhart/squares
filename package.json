@@ -15,6 +15,7 @@
     "@squares-app/react": "^2.5.10",
     "@supabase/ssr": "^0.7.0",
     "@supabase/supabase-js": "^2.75.0",
+    "@vercel/speed-insights": "^1.2.0",
     "next": "^14.2.33",
     "react": "18.3.1",
     "react-dom": "18.3.1",
