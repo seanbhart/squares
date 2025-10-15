@@ -9,18 +9,21 @@
     "name": "Squares Political Spectrum",
     "homeUrl": "https://www.squares.vote/miniapp",
     "iconUrl": "https://www.squares.vote/icon-1024x1024.png",
+    "imageUrl": "https://www.squares.vote/miniapp-image.png",
+    "buttonTitle": "Square Your Political Personality",
     "splashImageUrl": "https://www.squares.vote/splash-200x200.png",
     "splashBackgroundColor": "#121113",
     "webhookUrl": "https://www.squares.vote/api/farcaster/webhook",
-    "subtitle": "Map your political personality",
-    "description": "Discover your political personality across Trade, Abortion, Migration, Economics, and Rights using TAME-R. See where you stand compared to the community.",
+    "subtitle": "Square your political personality",
+    "description": "Square your political personality into shareable emojis. Find your Square friends!",
     "screenshotUrls": [],
     "primaryCategory": "social",
     "tags": ["politics", "spectrum", "assessment", "personality", "community"],
     "heroImageUrl": "https://www.squares.vote/hero-image.png",
-    "tagline": "Map your political dimensions",
+    "tagline": "Square your political personality",
     "ogTitle": "Squares Political Spectrum",
-    "ogDescription": "You're not one word—you're many dimensions. Map your positions with TAME-R.",
-    "ogImageUrl": "https://www.squares.vote/og-image.png"
+    "ogDescription": "You're not one word—your politics are unique. Square your political personality into shareable emojis.",
+    "ogImageUrl": "https://www.squares.vote/og-image.png",
+    "castShareUrl": "https://warpcast.com/~/compose?text=Just%20squared%20my%20political%20personality%20with%20Squares!%20%F0%9F%9F%A6%F0%9F%9F%A9%F0%9F%9F%A6%F0%9F%9F%A9%F0%9F%9F%A6%0A%0ATry%20it%3A&embeds[]=https://www.squares.vote/miniapp"
   }
 }

@@ -72,7 +72,7 @@ export interface SquaresEmbedProps {
  */
 export function SquaresEmbedReact({
   variant = 'card',
-  buttonText = 'Map Your Squares',
+  buttonText = 'Square Your Political Personality',
   align = 'center',
   maxWidth,
   primaryColor = '#57534e',
@@ -148,10 +148,10 @@ export function SquaresEmbedReact({
         >
           <div style={{ marginBottom: '24px' }}>
             <h3 style={{ margin: '0 0 12px 0', fontSize: 'clamp(1.375rem, 3vw, 1.75rem)', fontWeight: 700, color: COLORS.textPrimary, lineHeight: 1.2 }}>
-              Map Your Political Positions
+              Square Your Political Personality
             </h3>
             <p style={{ margin: 0, fontSize: 'clamp(0.9375rem, 2vw, 1rem)', color: COLORS.textSecondary, lineHeight: '1.5' }}>
-              Use the TAME-R framework to visualize where you stand on 5 key policy dimensions
+              Square yourself across five political dimensions
             </p>
           </div>
 

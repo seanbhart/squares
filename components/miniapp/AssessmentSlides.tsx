@@ -194,7 +194,7 @@ export default function AssessmentSlides({ initialSpectrum, initialStep = 0, ini
             )}
             <h2 className={styles.headline}>
               You're not one word.<br />
-              You're many dimensions.
+              Your politics are unique.
             </h2>
             <div className={styles.dimensionsGrid}>
               {POLICIES.map((policy, index) => {
@@ -211,7 +211,7 @@ export default function AssessmentSlides({ initialSpectrum, initialStep = 0, ini
               })}
             </div>
             <p className={styles.subtext}>
-              TAME-R measures where you stand on five<br />independent policy dimensions.
+              Square yourself across five<br />political dimensions.
             </p>
             <button onClick={() => setStep(1)} className={styles.primaryButton}>
               Continue →

@@ -14,7 +14,7 @@ export default function ColorScaleSection() {
     <section className={styles.section}>
       <div className={styles.content}>
         <h2 className={styles.headline}>
-          Each dimension uses a 7-color spectrum
+          Each Square uses a 7-color spectrum
         </h2>
 
         <div className={styles.scaleExplainer}>
@@ -41,7 +41,7 @@ export default function ColorScaleSection() {
 
         <div className={styles.dimensionSelector}>
           <p className={styles.selectorPrompt}>
-            See what the scale means for each dimension:
+            See what the scale means for each Square:
           </p>
           <div className={styles.dimensionButtons}>
             {POLICIES.map((policy, index) => {

@@ -136,16 +136,16 @@ function SquaresWidget({
   const renderStep = () => {
     switch (step) {
       case 0:
-        return /* @__PURE__ */ React.createElement("div", { style: { minHeight: "400px", display: "flex", flexDirection: "column", justifyContent: "center" } }, /* @__PURE__ */ React.createElement("h2", { style: { margin: "0 0 3rem 0", color: COLORS.textPrimary, fontSize: "clamp(2rem, 5vw, 3rem)", fontWeight: 700, lineHeight: 1.2, textAlign: "center" } }, "You're not one word.", /* @__PURE__ */ React.createElement("br", null), "You're many dimensions."), /* @__PURE__ */ React.createElement("div", { style: { display: "flex", justifyContent: "center", gap: "1rem", margin: "2rem 0", flexWrap: "wrap" } }, POLICIES.map((policy, index) => {
+        return /* @__PURE__ */ React.createElement("div", { style: { minHeight: "400px", display: "flex", flexDirection: "column", justifyContent: "center" } }, /* @__PURE__ */ React.createElement("h2", { style: { margin: "0 0 3rem 0", color: COLORS.textPrimary, fontSize: "clamp(2rem, 5vw, 3rem)", fontWeight: 700, lineHeight: 1.2, textAlign: "center" } }, "You're not one word.", /* @__PURE__ */ React.createElement("br", null), "Your politics are unique."), /* @__PURE__ */ React.createElement("div", { style: { display: "flex", justifyContent: "center", gap: "1rem", margin: "2rem 0", flexWrap: "wrap" } }, POLICIES.map((policy, index) => {
           const letters = ["T", "A", "M", "E", "R"];
           const colors = [COLOR_RAMP[0], COLOR_RAMP[1], COLOR_RAMP[6], COLOR_RAMP[4], COLOR_RAMP[2]];
           return /* @__PURE__ */ React.createElement("div", { key: policy.key, style: { display: "flex", flexDirection: "column", alignItems: "center", gap: "0.5rem" } }, /* @__PURE__ */ React.createElement("div", { style: { width: "80px", height: "80px", borderRadius: "12px", backgroundColor: colors[index], display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 4px 12px rgba(0, 0, 0, 0.3)", border: `1px solid ${COLORS.border}` } }, /* @__PURE__ */ React.createElement("span", { style: { fontSize: "2.5rem", color: "white", fontWeight: 900 } }, letters[index])), /* @__PURE__ */ React.createElement("span", { style: { color: COLORS.textPrimary, fontSize: "0.875rem", fontWeight: 600 } }, policy.label.split(" ")[0]));
-        })), /* @__PURE__ */ React.createElement("p", { style: { fontSize: "1rem", color: COLORS.textSecondary, textAlign: "center", marginTop: "2rem", lineHeight: 1.6 } }, "TAME-R measures where you stand on five", /* @__PURE__ */ React.createElement("br", null), "independent policy dimensions."));
+        })), /* @__PURE__ */ React.createElement("p", { style: { fontSize: "1rem", color: COLORS.textSecondary, textAlign: "center", marginTop: "2rem", lineHeight: 1.6 } }, "Square your", /* @__PURE__ */ React.createElement("br", null), "political personality."));
       case 1: {
         const selectedPolicy = POLICIES[selectedSpectrumDimension];
         const letters = ["T", "A", "M", "E", "R"];
         const colors = [COLOR_RAMP[0], COLOR_RAMP[1], COLOR_RAMP[6], COLOR_RAMP[4], COLOR_RAMP[2]];
-        return /* @__PURE__ */ React.createElement("div", { style: { minHeight: "400px", display: "flex", flexDirection: "column", justifyContent: "center" } }, /* @__PURE__ */ React.createElement("h2", { style: { margin: "0 0 2rem 0", color: COLORS.textPrimary, fontSize: "clamp(2rem, 5vw, 2.5rem)", fontWeight: 700, lineHeight: 1.2, textAlign: "center" } }, "Each dimension uses a", /* @__PURE__ */ React.createElement("br", null), "7-color spectrum"), /* @__PURE__ */ React.createElement("div", { style: { margin: "1.5rem 0" } }, /* @__PURE__ */ React.createElement("div", { style: { display: "flex", gap: "0.5rem", marginBottom: "1rem", justifyContent: "center" } }, COLOR_RAMP.map((color, i) => /* @__PURE__ */ React.createElement(ColorSquare, { key: i, value: i, size: "48px" }))), /* @__PURE__ */ React.createElement("div", { style: { display: "flex", justifyContent: "space-between", alignItems: "center", gap: "0.25rem", marginBottom: "1.5rem", maxWidth: "480px", margin: "0 auto 1.5rem" } }, /* @__PURE__ */ React.createElement("span", { style: { fontSize: "0.75rem", color: COLORS.textSecondary, fontWeight: 600 } }, "Minimal intervention"), /* @__PURE__ */ React.createElement("span", { style: { fontSize: "1rem", color: COLORS.textMuted } }, "\u2192"), /* @__PURE__ */ React.createElement("span", { style: { fontSize: "0.75rem", color: COLORS.textSecondary, fontWeight: 600 } }, "Total control"))), /* @__PURE__ */ React.createElement("p", { style: { fontSize: "0.9375rem", color: COLORS.textSecondary, textAlign: "center", marginBottom: "1rem" } }, "See what the scale means for each dimension:"), /* @__PURE__ */ React.createElement("div", { style: { display: "flex", justifyContent: "center", gap: "0.75rem", marginBottom: "1.5rem", flexWrap: "wrap" } }, POLICIES.map((policy, index) => /* @__PURE__ */ React.createElement(
+        return /* @__PURE__ */ React.createElement("div", { style: { minHeight: "400px", display: "flex", flexDirection: "column", justifyContent: "center" } }, /* @__PURE__ */ React.createElement("h2", { style: { margin: "0 0 2rem 0", color: COLORS.textPrimary, fontSize: "clamp(2rem, 5vw, 2.5rem)", fontWeight: 700, lineHeight: 1.2, textAlign: "center" } }, "Each Square uses a", /* @__PURE__ */ React.createElement("br", null), "7-color spectrum"), /* @__PURE__ */ React.createElement("div", { style: { margin: "1.5rem 0" } }, /* @__PURE__ */ React.createElement("div", { style: { display: "flex", gap: "0.5rem", marginBottom: "1rem", justifyContent: "center" } }, COLOR_RAMP.map((color, i) => /* @__PURE__ */ React.createElement(ColorSquare, { key: i, value: i, size: "48px" }))), /* @__PURE__ */ React.createElement("div", { style: { display: "flex", justifyContent: "space-between", alignItems: "center", gap: "0.25rem", marginBottom: "1.5rem", maxWidth: "480px", margin: "0 auto 1.5rem" } }, /* @__PURE__ */ React.createElement("span", { style: { fontSize: "0.75rem", color: COLORS.textSecondary, fontWeight: 600 } }, "Minimal intervention"), /* @__PURE__ */ React.createElement("span", { style: { fontSize: "1rem", color: COLORS.textMuted } }, "\u2192"), /* @__PURE__ */ React.createElement("span", { style: { fontSize: "0.75rem", color: COLORS.textSecondary, fontWeight: 600 } }, "Total control"))), /* @__PURE__ */ React.createElement("p", { style: { fontSize: "0.9375rem", color: COLORS.textSecondary, textAlign: "center", marginBottom: "1rem" } }, "See what the scale means for each Square:"), /* @__PURE__ */ React.createElement("div", { style: { display: "flex", justifyContent: "center", gap: "0.75rem", marginBottom: "1.5rem", flexWrap: "wrap" } }, POLICIES.map((policy, index) => /* @__PURE__ */ React.createElement(
           "button",
           {
             key: policy.key,
@@ -255,7 +255,7 @@ function SquaresWidget({
               e.currentTarget.style.boxShadow = "0 4px 12px rgba(255, 255, 255, 0.2)";
             }
           },
-          "Next Dimension \u2192"
+          "Next Square \u2192"
         ) : /* @__PURE__ */ React.createElement(
           "button",
           {
@@ -282,7 +282,7 @@ function SquaresWidget({
               e.currentTarget.style.boxShadow = "0 4px 12px rgba(255, 255, 255, 0.2)";
             }
           },
-          "See Your Results \u2192"
+          "See Your Squares \u2192"
         )));
       }
       case 3:
@@ -626,7 +626,7 @@ function SquaresWidget({
             e.currentTarget.style.color = "#a3a3a3";
           }
         },
-        "\u2190 Previous dimension"
+        "\u2190 Previous Square"
       ))
     )
   );
@@ -672,7 +672,7 @@ function ColorSquare2({ value, size = 48 }) {
 }
 function SquaresEmbedReact({
   variant = "card",
-  buttonText = "Map Your Squares",
+  buttonText = "Square Your Political Personality",
   align = "center",
   maxWidth,
   primaryColor = "#57534e",
@@ -734,7 +734,7 @@ function SquaresEmbedReact({
         fontFamily: '"Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif'
       }
     },
-    /* @__PURE__ */ React2.createElement("div", { style: { marginBottom: "24px" } }, /* @__PURE__ */ React2.createElement("h3", { style: { margin: "0 0 12px 0", fontSize: "clamp(1.375rem, 3vw, 1.75rem)", fontWeight: 700, color: COLORS2.textPrimary, lineHeight: 1.2 } }, "Map Your Political Positions"), /* @__PURE__ */ React2.createElement("p", { style: { margin: 0, fontSize: "clamp(0.9375rem, 2vw, 1rem)", color: COLORS2.textSecondary, lineHeight: "1.5" } }, "Use the TAME-R framework to visualize where you stand on 5 key policy dimensions")),
+    /* @__PURE__ */ React2.createElement("div", { style: { marginBottom: "24px" } }, /* @__PURE__ */ React2.createElement("h3", { style: { margin: "0 0 12px 0", fontSize: "clamp(1.375rem, 3vw, 1.75rem)", fontWeight: 700, color: COLORS2.textPrimary, lineHeight: 1.2 } }, "Square Your Political Personality"), /* @__PURE__ */ React2.createElement("p", { style: { margin: 0, fontSize: "clamp(0.9375rem, 2vw, 1rem)", color: COLORS2.textSecondary, lineHeight: "1.5" } }, "Square yourself across five political dimensions")),
     /* @__PURE__ */ React2.createElement(
       "div",
       {

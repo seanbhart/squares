@@ -37,7 +37,7 @@ export default function ChatModal() {
               <div>
                 <h2>Ask Squares</h2>
                 <p className={styles.modalSubtitle}>
-                  Questions about TAME-R or request typings for public figures
+                  Questions about TAME-R or request Squares of public figures
                 </p>
               </div>
               <button

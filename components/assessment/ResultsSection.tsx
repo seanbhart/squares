@@ -115,11 +115,11 @@ export default function ResultsSection({ answers, onStartOver }: ResultsSectionP
 
           {isComplete ? (
             <p className={styles.sharePrompt}>
-              Share your pattern on social media or save it for later!
+              Share your Squares on social media or save it for later! See how you change over time.
             </p>
           ) : (
             <p className={styles.incompleteMessage}>
-              Answer all {POLICIES.length} dimensions to get your complete pattern
+              Answer all {POLICIES.length} Squares to get your complete spectrum
             </p>
           )}
 

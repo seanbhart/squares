@@ -1,7 +1,7 @@
 {
-  "name": "Squares - TAME-R Political Mapping",
+  "name": "Squares - Your Political Personality",
   "short_name": "Squares",
-  "description": "Map your political positions across five dimensions with TAME-R",
+  "description": "Square your political personality across five dimensions with TAME-R",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",

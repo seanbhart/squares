@@ -140,9 +140,9 @@ export default function FiguresChatBox({
       <div className={styles.messages}>
         {messages.length === 0 && (
           <div className={styles.placeholder}>
-            <p>👋 Ask Squares to type any public figure!</p>
+            <p>👋 Ask Squares about any public figure!</p>
             <p className={styles.examples}>
-              Try: "Type Bernie Sanders" or "What is Nelson Mandela's TAME-R?"
+              Try: "Square Bernie Sanders" or "What are Nelson Mandela's Squares?"
             </p>
           </div>
         )}

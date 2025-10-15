@@ -176,7 +176,7 @@ export function SquaresWidget({
           <div style={{ minHeight: '400px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
             <h2 style={{ margin: '0 0 3rem 0', color: COLORS.textPrimary, fontSize: 'clamp(2rem, 5vw, 3rem)', fontWeight: 700, lineHeight: 1.2, textAlign: 'center' }}>
               You're not one word.<br />
-              You're many dimensions.
+              Your politics are unique.
             </h2>
             <div style={{ display: 'flex', justifyContent: 'center', gap: '1rem', margin: '2rem 0', flexWrap: 'wrap' }}>
               {POLICIES.map((policy, index) => {
@@ -193,7 +193,7 @@ export function SquaresWidget({
               })}
             </div>
             <p style={{ fontSize: '1rem', color: COLORS.textSecondary, textAlign: 'center', marginTop: '2rem', lineHeight: 1.6 }}>
-              TAME-R measures where you stand on five<br />independent policy dimensions.
+              Square your<br />political personality.
             </p>
           </div>
         );
@@ -206,7 +206,7 @@ export function SquaresWidget({
         return (
           <div style={{ minHeight: '400px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
             <h2 style={{ margin: '0 0 2rem 0', color: COLORS.textPrimary, fontSize: 'clamp(2rem, 5vw, 2.5rem)', fontWeight: 700, lineHeight: 1.2, textAlign: 'center' }}>
-              Each dimension uses a<br />7-color spectrum
+              Each Square uses a<br />7-color spectrum
             </h2>
             
             <div style={{ margin: '1.5rem 0' }}>
@@ -224,7 +224,7 @@ export function SquaresWidget({
             </div>
 
             <p style={{ fontSize: '0.9375rem', color: COLORS.textSecondary, textAlign: 'center', marginBottom: '1rem' }}>
-              See what the scale means for each dimension:
+              See what the scale means for each Square:
             </p>
 
             <div style={{ display: 'flex', justifyContent: 'center', gap: '0.75rem', marginBottom: '1.5rem', flexWrap: 'wrap' }}>
@@ -396,7 +396,7 @@ export function SquaresWidget({
                     e.currentTarget.style.boxShadow = '0 4px 12px rgba(255, 255, 255, 0.2)';
                   }}
                 >
-                  Next Dimension →
+                  Next Square →
                 </button>
               ) : (
                 <button
@@ -423,7 +423,7 @@ export function SquaresWidget({
                     e.currentTarget.style.boxShadow = '0 4px 12px rgba(255, 255, 255, 0.2)';
                   }}
                 >
-                  See Your Results →
+                  See Your Squares →
                 </button>
               )}
             </div>
@@ -816,7 +816,7 @@ export function SquaresWidget({
                 e.currentTarget.style.color = '#a3a3a3';
               }}
             >
-              ← Previous dimension
+              ← Previous Square
             </button>
           </div>
         )}

@@ -16,7 +16,7 @@ The new landing page uses a scroll-snap design to create a captivating, experien
 **Purpose:** Establish pain point that visitors recognize
 
 ### Section 2: The Reality (5 seconds)
-**Message:** You're not one word. You're many dimensions.
+**Message:** You're not one word. Your politics are unique.
 
 **Visual:**
 - 5 colored squares appear with letters T-A-M-E-R

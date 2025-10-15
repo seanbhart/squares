@@ -58,7 +58,7 @@ Location: `/public/.well-known/farcaster.json`
     "heroImageUrl": "https://squares.vote/hero-image.png",
     "tagline": "Map your political dimensions",
     "ogTitle": "Squares Political Spectrum",
-    "ogDescription": "You're not one word—you're many dimensions.",
+    "ogDescription": "You're not one word—your politics are unique.",
     "ogImageUrl": "https://squares.vote/og-image.png"
   }
 }
@@ -141,7 +141,7 @@ export const metadata: Metadata = {
   description: '...',
   openGraph: {
     title: 'Squares Political Spectrum',
-    description: "You're not one word—you're many dimensions.",
+    description: "You're not one word—your politics are unique.",
     images: [{ 
       url: 'https://squares.vote/og-image.png',
       width: 1200,

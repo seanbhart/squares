@@ -12,7 +12,7 @@
   "dependencies": {
     "@anthropic-ai/sdk": "^0.65.0",
     "@farcaster/miniapp-sdk": "^0.2.0",
-    "@squares-app/react": "^2.5.10",
+    "@squares-app/react": "^2.6.0",
     "@supabase/ssr": "^0.7.0",
     "@supabase/supabase-js": "^2.75.0",
     "@vercel/analytics": "^1.5.0",

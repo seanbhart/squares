@@ -117,7 +117,7 @@ export default function AssessmentQuestion({
 
         <div className={styles.continueHint}>
           {currentIndex < totalQuestions - 1 
-            ? "Scroll down for next dimension ↓"
+            ? "Scroll down for next Square ↓"
             : "Scroll down to see your results ↓"
           }
         </div>

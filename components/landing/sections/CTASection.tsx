@@ -19,14 +19,14 @@ export default function CTASection() {
         </h2>
 
         <p className={styles.subheadline}>
-          Map your positions across all five dimensions.
+          Square your political personality.
         </p>
 
         <button
           className={styles.ctaButton}
           onClick={handleStartAssessment}
         >
-          <span className={styles.buttonText}>Map My Squares</span>
+          <span className={styles.buttonText}>Square Myself</span>
           <span className={styles.buttonIcon}>→</span>
         </button>
 
@@ -38,12 +38,12 @@ export default function CTASection() {
           <div className={styles.detailSeparator}>•</div>
           <div className={styles.detailItem}>
             <span className={styles.detailIcon}>📊</span>
-            <span className={styles.detailText}>5 dimensions</span>
+            <span className={styles.detailText}>5 Squares</span>
           </div>
           <div className={styles.detailSeparator}>•</div>
           <div className={styles.detailItem}>
             <span className={styles.detailIcon}>🎯</span>
-            <span className={styles.detailText}>Your unique pattern</span>
+            <span className={styles.detailText}>Your unique spectrum</span>
           </div>
         </div>
 

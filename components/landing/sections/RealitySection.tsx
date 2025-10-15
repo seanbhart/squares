@@ -40,7 +40,7 @@ export default function RealitySection() {
           You're not one word.
         </h2>
         <h2 className={styles.headline}>
-          You're many dimensions.
+          You have a unique political personality.
         </h2>
 
         <div className={styles.dimensionsGrid} data-visible={isVisible}>
@@ -64,7 +64,7 @@ export default function RealitySection() {
         </div>
 
         <p className={styles.subtext}>
-          TAME-R measures where you stand on five independent policy areas.
+          Square yourself across five political dimensions.
         </p>
       </div>
 

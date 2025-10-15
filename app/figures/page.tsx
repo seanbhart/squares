@@ -108,8 +108,8 @@ export default function FiguresPage() {
   const handleShareFigure = async (figureName: string, spectrum: (number | null)[], label?: string) => {
     const emojiPattern = spectrum.map(value => value !== null ? getEmojiSquare(value) : '⬜').join('');
     const shareText = label 
-      ? `TAME-R political spectrum for ${figureName} (${label}):\n${emojiPattern}\n\nTrade, Abortion, Migration, Economics, Rights — Map yours at squares.vote`
-      : `TAME-R political spectrum for ${figureName}:\n${emojiPattern}\n\nTrade, Abortion, Migration, Economics, Rights — Map yours at squares.vote`;
+      ? `Political spectrum for ${figureName} (${label}):\n${emojiPattern}\n\nTrade, Abortion, Migration, Economics, Rights — Square yourself at squares.vote`
+      : `Political spectrum for ${figureName}:\n${emojiPattern}\n\nTrade, Abortion, Migration, Economics, Rights — Square yourself at squares.vote`;
 
     // Try native share first (mobile)
     if (navigator.share) {
@@ -205,7 +205,7 @@ export default function FiguresPage() {
   const handleShare = async () => {
     if (!userEmojiSignature) return;
 
-    const shareText = `My TAME-R political spectrum:\n${userEmojiSignature}\n\nTrade, Abortion, Migration, Economics, Rights — Map yours at squares.vote`;
+    const shareText = `My political spectrum:\n${userEmojiSignature}\n\nTrade, Abortion, Migration, Economics, Rights — Square yourself at squares.vote`;
 
     // Try native share first (mobile)
     if (navigator.share) {
@@ -256,8 +256,8 @@ export default function FiguresPage() {
           <h1 className={styles.title}>Famous Figures</h1>
           <p className={styles.subtitle}>
             {userAssessment 
-              ? "Compare your pattern with historical and modern figures"
-              : "Explore political positions across history using the TAME-R framework"
+              ? "Compare your Squares with historical and modern figures"
+              : "Explore political personalities across history using Squares"
             }
           </p>
           <div className={styles.ctaButtons}>
@@ -569,7 +569,7 @@ export default function FiguresPage() {
 
       <footer className={styles.footer}>
         <p>
-          <Link href="/" className={styles.footerLink}>squares.vote</Link> • Mapping political positions with <Link href="/" className={styles.footerLink}>TAME-R</Link> • <Link href="/embed" className={styles.footerLink}>Embed</Link>
+          <Link href="/" className={styles.footerLink}>squares.vote</Link> • Squaring political personalities with <Link href="/" className={styles.footerLink}>TAME-R</Link> • <Link href="/embed" className={styles.footerLink}>Embed</Link>
         </p>
         <Link href="/" className={styles.footerButton}>Take the Assessment</Link>
       </footer>
