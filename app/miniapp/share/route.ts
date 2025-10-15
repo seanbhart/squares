@@ -5,8 +5,8 @@ export async function GET(request: Request) {
   const emojis = searchParams.get('emojis')
   
   const shareText = emojis
-    ? encodeURIComponent(`Just squared my politics with Squares! ${emojis}\n\nTry it:`)
-    : encodeURIComponent(`Just squared my politics with Squares!\n\nTry it:`)
+    ? encodeURIComponent(`Just squared my politics with @squares! ${emojis}\n\nTry it:`)
+    : encodeURIComponent(`Just squared my politics with @squares!\n\nTry it:`)
   
   const embedUrl = encodeURIComponent('https://farcaster.squares.vote/miniapp?v=2')
   

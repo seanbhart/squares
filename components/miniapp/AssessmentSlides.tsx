@@ -173,7 +173,7 @@ export default function AssessmentSlides({ initialSpectrum, initialStep = 0, ini
     }
     
     const emojis = POLICIES.map((p) => getEmojiSquare(spectrum[p.key as keyof SpectrumState]!)).join('');
-    const shareText = `Just squared my politics with Squares! ${emojis}\n\nTry it:`;
+    const shareText = `Just squared my politics with @squares! ${emojis}\n\nTry it:`;
     
     try {
       // Add cache-busting parameter to force Farcaster to re-crawl
