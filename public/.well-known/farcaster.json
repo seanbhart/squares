@@ -10,7 +10,7 @@
     "homeUrl": "https://www.squares.vote/miniapp",
     "iconUrl": "https://www.squares.vote/icon-1024x1024.png",
     "splashImageUrl": "https://www.squares.vote/splash-200x200.png",
-    "splashBackgroundColor": "#1a1a1a",
+    "splashBackgroundColor": "#121113",
     "webhookUrl": "https://www.squares.vote/api/farcaster/webhook",
     "subtitle": "Map your political views",
     "description": "Map your political positions across Trade, Abortion, Migration, Economics, and Rights using TAME-R. See where you stand compared to the community.",
