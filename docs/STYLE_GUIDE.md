@@ -1,6 +1,20 @@
 # Squares Design System & Style Guide
 
-> **Version 1.0** — A comprehensive guide for designers and developers building products in the Squares ecosystem.
+> **Version 1.1** — A comprehensive guide for designers and developers building products in the Squares ecosystem.
+
+---
+
+## Quick Start for Developers
+
+**Building a new extension?** Follow these rules:
+
+1. ✅ **Use CSS variables** for all colors: `var(--bg-primary)`, `var(--text-secondary)`, etc.
+2. ✅ Import from `/app/globals.css` (automatic in Next.js)
+3. ❌ **Never hardcode** hex colors like `#121113` or `#B8B8B9`
+4. ✅ **Policy colors** (purple→red spectrum) come from `/lib/tamer-config.ts`
+5. ✅ Test your component on figures page, miniapp, and main site for consistency
+
+**Color variables**: See [Color System](#color-system) for complete reference.
 
 ---
 
@@ -56,47 +70,77 @@
 
 ### UI Colors (Dark Mode Default)
 
+**⚠️ IMPORTANT**: Always use CSS variables, not hardcoded hex values.
+
+All colors are defined in `/app/globals.css` and available as CSS variables:
+
 ```css
-/* Backgrounds - from globals.css */
---bg-primary: #212121;              /* Main page background */
---bg-secondary: #1A1A1A;            /* Secondary background */
---surface: rgba(30, 30, 30, 0.8);   /* Cards, info boxes */
---surface-hover: rgba(40, 40, 40, 0.9); /* Hover state for cards/dropdowns */
---surface-lighter: rgba(50, 50, 50, 0.3); /* Timeline entries */
+/* Backgrounds */
+--bg-primary: #121113;                      /* Main page background (dark warm) */
+--bg-secondary: #1A191B;                    /* Secondary background */
+--surface: rgba(24, 23, 25, 0.85);          /* Cards, info boxes */
+--surface-hover: rgba(32, 31, 33, 0.95);    /* Hover state for surfaces */
+--surface-lighter: rgba(40, 39, 41, 0.35);  /* Timeline, subtle overlays */
 
 /* Text/Foreground */
---text-primary: #ffffff;            /* Primary text */
---text-secondary: #a3a3a3;          /* Muted/helper text */
---text-muted: #737373;              /* Disabled states */
+--text-primary: #ffffff;                    /* Primary text */
+--text-secondary: #B8B8B9;                  /* Muted/helper text (warm gray) */
+--text-muted: #7A797B;                      /* Disabled states */
 
 /* Borders */
---border: rgba(255, 255, 255, 0.1); /* Default borders */
---border-strong: rgba(255, 255, 255, 0.15); /* Emphasized borders */
---border-light: rgba(255, 255, 255, 0.05);  /* Subtle borders */
+--border: rgba(255, 255, 255, 0.08);        /* Default borders (subtle) */
+--border-strong: rgba(255, 255, 255, 0.12); /* Emphasized borders */
+--border-light: rgba(255, 255, 255, 0.04);  /* Very subtle borders */
 
 /* Interactive/Accent Colors */
---accent: #e5e5e5;                  /* Primary buttons */
---accent-hover: #ffffff;            /* Primary button hover */
---accent-text: #212121;             /* Text on accent backgrounds */
---neutral-button: #525252;          /* Secondary buttons, chat button */
---neutral-button-hover: #737373;    /* Neutral button hover */
+--accent: #e5e5e5;                          /* Primary buttons, links */
+--accent-hover: #ffffff;                    /* Primary button hover */
+--accent-text: #121113;                     /* Text on accent backgrounds */
+--neutral-button: #4A494B;                  /* Secondary buttons (warm gray) */
+--neutral-button-hover: #5A595B;            /* Neutral button hover */
 
 /* Shadows */
---shadow: rgba(0, 0, 0, 0.3);       /* Standard shadows */
---shadow-strong: rgba(0, 0, 0, 0.4); /* Stronger shadows */
---shadow-light: rgba(255, 255, 255, 0.2); /* Light shadows */
+--shadow: rgba(0, 0, 0, 0.4);               /* Standard shadows (deeper) */
+--shadow-strong: rgba(0, 0, 0, 0.6);        /* Stronger shadows */
+--shadow-light: rgba(255, 255, 255, 0.15);  /* Light shadows */
 ```
 
-### Light Mode Overrides
-
+**Usage Example**:
 ```css
-/* Used primarily on main website, not in miniapp */
---background-primary-light: #f9fafb;
---background-secondary-light: #ffffff;
---foreground-primary-light: #171717;
---foreground-secondary-light: #404040;
---border-default-light: rgba(0, 0, 0, 0.15);
+/* ✅ DO: Use CSS variables */
+.myComponent {
+  background: var(--bg-primary);
+  color: var(--text-secondary);
+  border: 1px solid var(--border);
+}
+
+/* ❌ DON'T: Hardcode colors */
+.myComponent {
+  background: #121113;
+  color: #B8B8B9;
+}
 ```
+
+### Theme Architecture
+
+**Current**: Dark mode only (warm, slightly purple-tinted)
+
+**Future**: If light mode is added, use CSS media queries or data attributes:
+```css
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg-primary: #f9fafb;
+    --text-primary: #171717;
+    /* ... */
+  }
+}
+```
+
+**Extending**: When creating new components or pages:
+1. Import from `/app/globals.css` (automatic in Next.js)
+2. Reference variables: `var(--variable-name)`
+3. Never hardcode #hex colors
+4. Test theme consistency across all pages
 
 ---
 
@@ -269,8 +313,8 @@ The core visual element of the Squares brand.
 .primaryButton {
   width: 100%;
   padding: 0.625rem 1.5rem;
-  background: #e5e5e5;
-  color: #212121;
+  background: var(--accent);
+  color: var(--accent-text);
   border: none;
   border-radius: 10px;
   font-size: 0.875rem;
@@ -281,7 +325,7 @@ The core visual element of the Squares brand.
 }
 
 .primaryButton:hover {
-  background: #ffffff;
+  background: var(--accent-hover);
   transform: translateY(-1px);
   box-shadow: 0 4px 12px rgba(255, 255, 255, 0.3);
 }
@@ -293,8 +337,8 @@ The core visual element of the Squares brand.
 .secondaryButton {
   padding: 0.625rem 1.5rem;
   background: transparent;
-  color: #e5e5e5;
-  border: 1.5px solid #525252;
+  color: var(--accent);
+  border: 1.5px solid var(--neutral-button);
   border-radius: 10px;
   font-size: 0.875rem;
   font-weight: 600;
@@ -304,7 +348,7 @@ The core visual element of the Squares brand.
 
 .secondaryButton:hover {
   background: rgba(255, 255, 255, 0.05);
-  border-color: #737373;
+  border-color: var(--neutral-button-hover);
   transform: translateY(-1px);
 }
 ```
@@ -319,7 +363,7 @@ The core visual element of the Squares brand.
   gap: 0.625rem;
   padding: 0.875rem 0.5rem;
   background: transparent;
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  border: 1px solid var(--border-strong);
   border-radius: 12px;
   cursor: pointer;
   transition: all 0.2s;
@@ -348,10 +392,10 @@ The core visual element of the Squares brand.
 
 ```css
 .card {
-  background: #212121;
+  background: var(--bg-primary);
   border-radius: 16px;
   padding: 0.75rem;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--border);
 }
 
 .signatureBox {
@@ -811,14 +855,15 @@ const handleCopy = async () => {
 
 ## Design Principles Summary
 
-1. **Spectrum over binary**: Use the 7-color gradient to show nuance
-2. **Transparent by default**: Buttons and options use transparent backgrounds with borders
-3. **Subtle interactions**: Small transforms (2px) and gentle overlays
-4. **Consistent spacing**: Use the spacing scale; reduce by ~25% on mobile
-5. **Color as meaning**: Spectrum colors indicate political positions, not decoration
-6. **Readability first**: High contrast, adequate sizing, clear labels
-7. **Copy-friendly**: Always include username context when copying emojis
-8. **Progressive disclosure**: Show complexity progressively, don't overwhelm
+1. **Use CSS variables**: All colors from `var(--variable)`, never hardcoded hex
+2. **Spectrum over binary**: Use the 7-color gradient to show nuance
+3. **Transparent by default**: Buttons and options use transparent backgrounds with borders
+4. **Subtle interactions**: Small transforms (2px) and gentle overlays
+5. **Consistent spacing**: Use the spacing scale; reduce by ~25% on mobile
+6. **Color as meaning**: Spectrum colors indicate political positions, not decoration
+7. **Readability first**: High contrast, adequate sizing, clear labels
+8. **Copy-friendly**: Always include username context when copying emojis
+9. **Progressive disclosure**: Show complexity progressively, don't overwhelm
 
 ---
 
@@ -827,4 +872,5 @@ const handleCopy = async () => {
 For design questions or to propose additions to this guide, please reach out to the Squares design team or submit a PR with updates.
 
 **Version History**:
+- **v1.1** (Oct 2025) — Updated color system to CSS variables, refined dark theme
 - **v1.0** (Oct 2025) — Initial style guide creation
