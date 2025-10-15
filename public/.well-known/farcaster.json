@@ -16,7 +16,11 @@
     "webhookUrl": "https://farcaster.squares.vote/api/farcaster/webhook",
     "subtitle": "Square your politics",
     "description": "Square your politics into shareable emojis. Find your Square friends!",
-    "screenshotUrls": [],
+    "screenshotUrls": [
+      "https://farcaster.squares.vote/squares-screenshot-01.png",
+      "https://farcaster.squares.vote/squares-screenshot-02.png",
+      "https://farcaster.squares.vote/squares-screenshot-03.png"
+    ],
     "primaryCategory": "social",
     "tags": ["politics", "spectrum", "assessment", "personality", "community"],
     "heroImageUrl": "https://farcaster.squares.vote/hero-image.png",
