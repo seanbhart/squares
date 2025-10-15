@@ -2,8 +2,9 @@
 
 import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
+import LoadingSpinner from "@/components/LoadingSpinner";
 import styles from "./figures.module.css";
-import { POLICIES, getScoreColor, getEmojiSquare, COLOR_RAMP } from "@/lib/tamer-config";
+import { POLICIES, getScoreColor, getEmojiSquare } from "@/lib/tamer-config";
 import { ClipboardIcon, CheckIcon, MessageCircleIcon } from "@/components/icons";
 import FiguresChatBox, { type Message } from "@/components/FiguresChatBox";
 import type { Figure, FiguresData } from "@/lib/api/figures";
@@ -236,21 +237,7 @@ export default function FiguresPage() {
   };
 
   if (loading) {
-    return (
-      <main className={styles.main}>
-        <div className={styles.loadingContainer}>
-          <div className={styles.loadingSpinner}>
-            {COLOR_RAMP.map((color, index) => (
-              <div
-                key={index}
-                className={styles.loadingSquare}
-                style={{ backgroundColor: color }}
-              />
-            ))}
-          </div>
-        </div>
-      </main>
-    );
+    return <LoadingSpinner />;
   }
 
   // Featured figures in the correct order from featured array

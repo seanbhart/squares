@@ -42,13 +42,6 @@
   border-color: var(--accent);
 }
 
-.loading {
-  text-align: center;
-  padding: 1.5rem;
-  color: var(--text-secondary);
-  font-size: 0.875rem;
-}
-
 .leaderboardList {
   display: flex;
   flex-direction: column;
@@ -197,10 +190,6 @@
 }
 
 .darkMode .username {
-  color: var(--text-secondary);
-}
-
-.darkMode .loading {
   color: var(--text-secondary);
 }
 

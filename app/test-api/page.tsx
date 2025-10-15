@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import LoadingSpinner from '@/components/LoadingSpinner';
 import type { Figure, FiguresData } from '@/lib/api/figures';
 
 export default function TestApiPage() {
@@ -36,11 +37,7 @@ export default function TestApiPage() {
   }, []);
 
   if (loading) {
-    return (
-      <div style={{ padding: '2rem' }}>
-        <h1>Loading...</h1>
-      </div>
-    );
+    return <LoadingSpinner />;
   }
 
   if (error) {

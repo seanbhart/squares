@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
+import LoadingSpinner from '@/components/LoadingSpinner';
 import styles from './Leaderboard.module.css';
 import { ClipboardIcon, CheckIcon } from '@/components/icons';
 
@@ -81,11 +82,7 @@ export default function Leaderboard({ currentFid }: LeaderboardProps) {
   }, []);
 
   if (loading) {
-    return (
-      <div className={`${styles.container} ${styles.darkMode}`}>
-        <div className={styles.loading}>Loading leaderboard...</div>
-      </div>
-    );
+    return <LoadingSpinner />;
   }
 
   return (

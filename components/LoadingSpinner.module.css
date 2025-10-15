@@ -1,0 +1,62 @@
+.loadingContainer {
+  padding: 4rem 2rem;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+.loadingSpinner {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.loadingSquare {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  top: 50%;
+  left: 50%;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Position squares in a perfect circle with corners pointing inward */
+/* 7 squares = 360° / 7 = 51.43° intervals */
+/* Each rotated 45° so corner points toward center */
+
+.loadingSquare:nth-child(1) {
+  transform: translate(-50%, -50%) rotate(0deg) translateY(-50px) rotate(45deg);
+}
+
+.loadingSquare:nth-child(2) {
+  transform: translate(-50%, -50%) rotate(51.43deg) translateY(-50px) rotate(45deg);
+}
+
+.loadingSquare:nth-child(3) {
+  transform: translate(-50%, -50%) rotate(102.86deg) translateY(-50px) rotate(45deg);
+}
+
+.loadingSquare:nth-child(4) {
+  transform: translate(-50%, -50%) rotate(154.29deg) translateY(-50px) rotate(45deg);
+}
+
+.loadingSquare:nth-child(5) {
+  transform: translate(-50%, -50%) rotate(205.71deg) translateY(-50px) rotate(45deg);
+}
+
+.loadingSquare:nth-child(6) {
+  transform: translate(-50%, -50%) rotate(257.14deg) translateY(-50px) rotate(45deg);
+}
+
+.loadingSquare:nth-child(7) {
+  transform: translate(-50%, -50%) rotate(308.57deg) translateY(-50px) rotate(45deg);
+}

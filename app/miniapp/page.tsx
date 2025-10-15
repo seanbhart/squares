@@ -1,6 +1,7 @@
 import { Suspense } from 'react';
 import type { Metadata } from 'next';
 import MiniAppClient from '@/components/miniapp/MiniAppClient';
+import LoadingSpinner from '@/components/LoadingSpinner';
 
 export const metadata: Metadata = {
   title: 'Squares Political Spectrum',
@@ -38,7 +39,7 @@ export const metadata: Metadata = {
 
 export default function MiniAppPage() {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<LoadingSpinner />}>
       <MiniAppClient />
     </Suspense>
   );
