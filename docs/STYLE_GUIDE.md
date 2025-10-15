@@ -479,119 +479,115 @@ The core visual element of the Squares brand.
 
 The Figures page uses a consistent dark theme with card-based layouts for displaying historical political figures.
 
-**All colors verified from actual CSS files.**
+**All colors verified from actual CSS files (Updated Oct 2025).**
 
 #### Background Colors
 
 ```css
-/* Main page background */
+/* Main page background - uses CSS variable */
 .main {
-  background: #212121;
-  color: #ffffff;
+  background: var(--bg-primary);  /* #121113 */
+  color: var(--text-primary);     /* #ffffff */
 }
 
-/* Card backgrounds - All use same surface color */
+/* Card backgrounds - All use var(--surface) */
 .userCard,
 .detailCard,
 .figureCard,
 .emojiSignature,
-.chatReasoning,
+.chatReasoning {
+  background: var(--surface);  /* rgba(24, 23, 25, 0.85) */
+}
+
 .emptyState {
-  background: rgba(30, 30, 30, 0.8);
+  background: var(--surface);  /* rgba(24, 23, 25, 0.85) */
 }
 
 /* Card borders */
 .userCard,
 .detailCard {
-  border: 2px solid rgba(255, 255, 255, 0.15);
+  border: 2px solid var(--border-strong);  /* rgba(255, 255, 255, 0.12) */
   border-radius: 16px;
 }
 
-.figureCard,
+.figureCard {
+  border: 1px solid var(--border);  /* rgba(255, 255, 255, 0.08) */
+  border-radius: 12px;
+}
+
 .emojiSignature,
 .chatReasoning {
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 16px; /* emojiSignature, chatReasoning */
-  border-radius: 12px; /* figureCard */
+  border: 1px solid var(--border);  /* rgba(255, 255, 255, 0.08) */
+  border-radius: 16px;
 }
 
 .emptyState {
-  border: 2px dashed rgba(255, 255, 255, 0.1);
+  border: 2px dashed var(--border);  /* rgba(255, 255, 255, 0.08) */
   border-radius: 16px;
 }
 
 /* Timeline entries - lighter background */
 .timelineEntry {
-  background: rgba(50, 50, 50, 0.3);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: var(--surface-lighter);   /* rgba(40, 39, 41, 0.35) */
+  border: 1px solid var(--border-light); /* rgba(255, 255, 255, 0.04) */
   border-radius: 12px;
-}
-
-/* Chat box */
-.chatBox {
-  background: #212121;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-/* Chat message area - uses --bg-secondary */
-.messages {
-  background: #1a1a1a;
-}
-
-/* Chat message bubbles */
-.userMessage {
-  background: #e5e5e5;
-  color: #212121;
-}
-
-.assistantMessage {
-  background: rgba(30, 30, 30, 0.8);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  color: #ffffff;
-}
-
-/* Chat header and input form */
-.header,
-.inputForm {
-  background: rgba(30, 30, 30, 0.8);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-/* Form inputs */
-.dropdown {
-  background: rgba(30, 30, 30, 0.8);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.dropdown:hover {
-  background: rgba(40, 40, 40, 0.9);
-  border-color: rgba(255, 255, 255, 0.2);
-}
-
-.input {
-  background: rgba(40, 40, 40, 0.9);
-  border: 1px solid rgba(255, 255, 255, 0.15);
 }
 ```
 
 #### Interactive Elements
 
 ```css
-/* Chat button */
-.mobileChatButton,
-.minimizedButton {
-  background: #525252;
+/* Buttons and hovers */
+.dropdown {
+  background: var(--surface);  /* rgba(24, 23, 25, 0.85) */
+  border: 1px solid var(--border);  /* rgba(255, 255, 255, 0.08) */
+}
+
+.dropdown:hover {
+  background: var(--surface-hover);     /* rgba(32, 31, 33, 0.95) */
+  border-color: var(--border-strong);   /* rgba(255, 255, 255, 0.12) */
+}
+
+/* Chat and neutral buttons */
+.mobileChatButton {
+  background: var(--neutral-button);  /* #4A494B */
   color: white;
 }
 
-.mobileChatButton:hover,
-.minimizedButton:hover {
-  background: #737373;
+.mobileChatButton:hover {
+  background: var(--neutral-button-hover);  /* #5A595B */
+  transform: translateY(-2px);
 }
 
 /* Share button gradient */
 .chatBanner {
-  background: linear-gradient(135deg, #525252, #737373);
+  background: linear-gradient(135deg, var(--neutral-button), var(--neutral-button-hover));
+  /* linear-gradient(135deg, #4A494B, #5A595B) */
+}
+
+/* Accent buttons (primary actions) */
+.takeAssessmentButton,
+.copyButton {
+  background: var(--accent);      /* #e5e5e5 */
+  color: var(--accent-text);      /* #121113 */
+}
+
+.takeAssessmentButton:hover,
+.copyButton:hover {
+  background: var(--accent-hover);  /* #ffffff */
+}
+
+/* Share icon button (secondary) */
+.shareIconButton {
+  background: transparent;
+  color: var(--text-secondary);  /* #B8B8B9 */
+  border: 1px solid var(--border);  /* rgba(255, 255, 255, 0.08) */
+}
+
+.shareIconButton:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text-primary);  /* #ffffff */
+  border-color: var(--border-strong);  /* rgba(255, 255, 255, 0.12) */
 }
 ```
 
@@ -618,14 +614,14 @@ The Figures page uses a consistent dark theme with card-based layouts for displa
 
 The embed documentation page uses a simplified **2-layer background system** for maximum clarity.
 
-**All colors verified from actual CSS files.**
+**All colors verified from actual CSS files (Updated Oct 2025).**
 
 #### Background Hierarchy
 
 ```css
 /* Layer 1: Page background only */
 .container {
-  background: var(--bg-primary); /* #212121 */
+  background: var(--bg-primary);  /* #121113 */
 }
 
 /* Demo and features sections have no background - use page background */
@@ -638,12 +634,28 @@ The embed documentation page uses a simplified **2-layer background system** for
 /* Layer 2: Code blocks only */
 .code,
 .codeDetails summary {
-  background: var(--bg-secondary); /* #1A1A1A */
-  border: 1px solid var(--border);
+  background: var(--bg-secondary);  /* #1A191B */
+  border: 1px solid var(--border);  /* rgba(255, 255, 255, 0.08) */
+}
+
+/* Code summary hover */
+.codeDetails summary:hover {
+  background: var(--surface-hover);  /* rgba(32, 31, 33, 0.95) */
+}
+
+/* Copy button in code blocks */
+.copyButton {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.copyButton:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.3);
 }
 
 /* React embed components render with their own backgrounds */
-/* Card variant: #212121 outer, #1A1A1A inner example area */
+/* Card variant: #121113 outer, #1A191B inner example area */
 ```
 
 **Design principle**: Minimize background layers. Only add a different background color when functionally necessary (code blocks). Let the embed component itself provide visual structure.

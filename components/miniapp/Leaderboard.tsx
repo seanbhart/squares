@@ -81,15 +81,16 @@ export default function Leaderboard({ currentFid }: LeaderboardProps) {
     }
   }, []);
 
-  if (loading) {
-    return <LoadingSpinner />;
-  }
-
   return (
     <div className={`${styles.container} ${styles.darkMode}`}>
       <h2 className={styles.title}>Latest Squares</h2>
 
-      <div className={styles.leaderboardList}>
+      {loading ? (
+        <div className={styles.loadingState}>
+          <LoadingSpinner />
+        </div>
+      ) : (
+        <div className={styles.leaderboardList}>
         {leaderboard.map((entry, index) => (
           <div
             key={entry.fid}
@@ -145,12 +146,13 @@ export default function Leaderboard({ currentFid }: LeaderboardProps) {
             </div>
           </div>
         ))}
-      </div>
 
-      {leaderboard.length === 0 && (
-        <div className={styles.empty}>
-          No entries yet. Be the first to map your squares!
-        </div>
+        {leaderboard.length === 0 && (
+          <div className={styles.empty}>
+            No entries yet. Be the first to map your squares!
+          </div>
+        )}
+      </div>
       )}
     </div>
   );

@@ -42,6 +42,20 @@
   border-color: var(--accent);
 }
 
+.loadingState {
+  padding: 2rem 1rem;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  min-height: 300px;
+}
+
+/* Override LoadingSpinner's full viewport styles when inside loadingState */
+.loadingState :global(.loadingContainer) {
+  min-height: auto;
+  padding: 2rem 1rem;
+}
+
 .leaderboardList {
   display: flex;
   flex-direction: column;
