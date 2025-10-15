@@ -5,10 +5,10 @@ import FullPageLoadingSpinner from '@/components/FullPageLoadingSpinner';
 
 export const metadata: Metadata = {
   title: 'Squares Political Spectrum',
-  description: 'Map your political positions across Trade, Abortion, Migration, Economics, and Rights using the TAME-R framework.',
+  description: 'Discover your political personality across Trade, Abortion, Migration, Economics, and Rights using the TAME-R framework. Map your positions and compare with the community.',
   openGraph: {
     title: 'Squares Political Spectrum',
-    description: "You're not one word—you're many dimensions. Map your political positions with TAME-R.",
+    description: "You're not one word—you're many dimensions. Discover your political personality with TAME-R.",
     url: 'https://www.squares.vote/miniapp',
     siteName: 'Squares',
     images: [
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Squares Political Spectrum',
-    description: "You're not one word—you're many dimensions. Map your positions with TAME-R.",
+    description: "You're not one word—you're many dimensions. Discover your political personality with TAME-R.",
     images: ['https://www.squares.vote/og-image.png'],
   },
   other: {
