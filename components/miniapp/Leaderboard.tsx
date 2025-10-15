@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from 'react';
 import LoadingSpinner from '@/components/LoadingSpinner';
 import styles from './Leaderboard.module.css';
 import { ClipboardIcon, CheckIcon } from '@/components/icons';
+import { sdk } from '@farcaster/miniapp-sdk';
 
 interface LeaderboardEntry {
   fid: number;
@@ -61,15 +62,25 @@ export default function Leaderboard({ currentFid }: LeaderboardProps) {
     }
   };
 
-  const handleCopyEntry = useCallback(async (entry: LeaderboardEntry) => {
+  const handleViewProfile = useCallback(async (fid: number) => {
+    try {
+      await sdk.actions.viewProfile({ fid });
+    } catch (error) {
+      console.error('Failed to open profile:', error);
+    }
+  }, []);
+
+  const handleCopyEntry = useCallback(async (entry: LeaderboardEntry, e: React.MouseEvent) => {
+    e.stopPropagation(); // Prevent triggering the profile view
+    
     const emojis = [
       entry.trade_score,
       entry.abortion_score,
       entry.migration_score,
       entry.economics_score,
       entry.rights_score,
-    ].map(score => getEmojiSquare(score)).join('');
-    
+    ].map(getEmojiSquare).join('');
+
     const text = entry.username ? `${emojis} @${entry.username}` : emojis;
     
     try {
@@ -95,6 +106,8 @@ export default function Leaderboard({ currentFid }: LeaderboardProps) {
           <div
             key={entry.fid}
             className={`${styles.entry} ${entry.fid === currentFid ? styles.currentUser : ''}`}
+            onClick={() => handleViewProfile(entry.fid)}
+            style={{ cursor: 'pointer' }}
           >
             <div className={styles.userInfo}>
               {entry.pfp_url && (
@@ -127,7 +140,7 @@ export default function Leaderboard({ currentFid }: LeaderboardProps) {
                 </span>
               ))}
               <button
-                onClick={() => handleCopyEntry(entry)}
+                onClick={(e) => handleCopyEntry(entry, e)}
                 style={{
                   background: 'transparent',
                   border: 'none',
