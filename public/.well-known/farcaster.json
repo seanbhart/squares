@@ -7,20 +7,20 @@
   "miniapp": {
     "version": "1",
     "name": "Squares Political Spectrum",
-    "homeUrl": "https://www.squares.vote/miniapp",
-    "iconUrl": "https://www.squares.vote/icon-1024x1024.png",
-    "splashImageUrl": "https://www.squares.vote/splash-200x200.png",
+    "homeUrl": "https://squares.vote/miniapp",
+    "iconUrl": "https://squares.vote/icon-1024x1024.png",
+    "splashImageUrl": "https://squares.vote/splash-200x200.png",
     "splashBackgroundColor": "#121113",
-    "webhookUrl": "https://www.squares.vote/api/farcaster/webhook",
+    "webhookUrl": "https://squares.vote/api/farcaster/webhook",
     "subtitle": "Map your political personality",
     "description": "Discover your political personality across Trade, Abortion, Migration, Economics, and Rights using TAME-R. See where you stand compared to the community.",
     "screenshotUrls": [],
     "primaryCategory": "social",
     "tags": ["politics", "spectrum", "assessment", "personality", "community", "leaderboard"],
-    "heroImageUrl": "https://www.squares.vote/hero-image.png",
+    "heroImageUrl": "https://squares.vote/hero-image.png",
     "tagline": "Map your political dimensions",
     "ogTitle": "Squares Political Spectrum",
     "ogDescription": "You're not one word—you're many dimensions. Map your positions with TAME-R.",
-    "ogImageUrl": "https://www.squares.vote/og-image.png"
+    "ogImageUrl": "https://squares.vote/og-image.png"
   }
 }
