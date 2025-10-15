@@ -8,11 +8,11 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Squares Political Spectrum',
     description: "You're not one word—you're many dimensions. Map your positions with TAME-R.",
-    url: 'https://squares.vote/miniapp',
+    url: 'https://www.squares.vote/miniapp',
     siteName: 'Squares',
     images: [
       {
-        url: 'https://squares.vote/og-image.png',
+        url: 'https://www.squares.vote/og-image.png',
         width: 1200,
         height: 630,
         alt: 'Squares Political Spectrum',
@@ -25,14 +25,14 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Squares Political Spectrum',
     description: "You're not one word—you're many dimensions. Map your positions with TAME-R.",
-    images: ['https://squares.vote/og-image.png'],
+    images: ['https://www.squares.vote/og-image.png'],
   },
   other: {
     'fc:frame': 'vNext',
-    'fc:frame:image': 'https://squares.vote/og-image.png',
+    'fc:frame:image': 'https://www.squares.vote/og-image.png',
     'fc:frame:button:1': 'Map Your Squares',
     'fc:frame:button:1:action': 'link',
-    'fc:frame:button:1:target': 'https://squares.vote/miniapp',
+    'fc:frame:button:1:target': 'https://www.squares.vote/miniapp',
   },
 };
 
