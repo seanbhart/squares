@@ -184,7 +184,7 @@ export function SquaresWidget({
                 const colors = [COLOR_RAMP[0], COLOR_RAMP[1], COLOR_RAMP[6], COLOR_RAMP[4], COLOR_RAMP[2]];
                 return (
                   <div key={policy.key} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem' }}>
-                    <div style={{ width: '80px', height: '80px', borderRadius: '12px', backgroundColor: colors[index], display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 4px 12px rgba(0, 0, 0, 0.3)', border: '1px solid rgba(255, 255, 255, 0.1)' }}>
+                    <div style={{ width: '80px', height: '80px', borderRadius: '12px', backgroundColor: colors[index], display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 4px 12px rgba(0, 0, 0, 0.3)', border: `1px solid ${COLORS.border}` }}>
                       <span style={{ fontSize: '2.5rem', color: 'white', fontWeight: 900 }}>{letters[index]}</span>
                     </div>
                     <span style={{ color: COLORS.textPrimary, fontSize: '0.875rem', fontWeight: 600 }}>{policy.label.split(' ')[0]}</span>
@@ -238,7 +238,7 @@ export function SquaresWidget({
                     alignItems: 'center',
                     gap: '0.375rem',
                     padding: '0.75rem 1rem',
-                    background: selectedSpectrumDimension === index ? 'rgba(255, 255, 255, 0.08)' : 'rgba(30, 30, 30, 0.8)',
+                    background: selectedSpectrumDimension === index ? 'rgba(255, 255, 255, 0.08)' : COLORS.surface,
                     border: selectedSpectrumDimension === index ? '1px solid rgba(255, 255, 255, 0.3)' : '1px solid rgba(255, 255, 255, 0.1)',
                     borderRadius: '12px',
                     cursor: 'pointer',
@@ -250,7 +250,7 @@ export function SquaresWidget({
                     fontFamily: 'inherit'
                   }}
                 >
-                  <div style={{ width: '40px', height: '40px', borderRadius: '8px', backgroundColor: '#333333', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 2px 8px rgba(0, 0, 0, 0.3)', border: '1px solid rgba(255, 255, 255, 0.15)' }}>
+                  <div style={{ width: '40px', height: '40px', borderRadius: '8px', backgroundColor: COLORS.bgSecondary, display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 2px 8px rgba(0, 0, 0, 0.3)', border: `1px solid ${COLORS.borderStrong}` }}>
                     <span style={{ fontSize: '1.25rem', color: COLORS.accent, fontWeight: 900 }}>{letters[index]}</span>
                   </div>
                   <span style={{ fontSize: '0.75rem', color: COLORS.textPrimary, fontWeight: 600 }}>{policy.label.split(' ')[0]}</span>
@@ -258,7 +258,7 @@ export function SquaresWidget({
               ))}
             </div>
 
-            <div style={{ background: 'rgba(30, 30, 30, 0.8)', borderRadius: '12px', padding: '1.5rem', border: '1px solid rgba(255, 255, 255, 0.1)' }}>
+            <div style={{ background: COLORS.surface, borderRadius: '12px', padding: '1.5rem', border: `1px solid ${COLORS.border}` }}>
               <h3 style={{ margin: '0 0 1rem 0', fontSize: '1.125rem', color: COLORS.textPrimary, fontWeight: 600, textAlign: 'center' }}>
                 {selectedPolicy.label}
               </h3>
@@ -295,14 +295,14 @@ export function SquaresWidget({
                       width: '8px', 
                       height: '8px', 
                       borderRadius: '50%', 
-                      backgroundColor: i === currentDimension ? '#737373' : '#404040',
+                      backgroundColor: i === currentDimension ? COLORS.textMuted : COLORS.surface,
                       transition: 'background-color 0.2s'
                     }} 
                   />
                 ))}
               </div>
               <div style={{ display: 'inline-block', marginBottom: '1rem' }}>
-                <div style={{ width: '80px', height: '80px', borderRadius: '16px', backgroundColor: '#333333', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 8px 24px rgba(0, 0, 0, 0.3)', border: '1px solid rgba(255, 255, 255, 0.15)' }}>
+                <div style={{ width: '80px', height: '80px', borderRadius: '16px', backgroundColor: COLORS.bgSecondary, display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 8px 24px rgba(0, 0, 0, 0.3)', border: `1px solid ${COLORS.borderStrong}` }}>
                   <span style={{ fontSize: '3rem', color: COLORS.accent, fontWeight: 900 }}>{letters[currentDimension]}</span>
                 </div>
               </div>
@@ -423,7 +423,7 @@ export function SquaresWidget({
               Your Political Spectrum
             </h2>
             
-            <div style={{ textAlign: 'center', margin: '2rem 0', padding: '2.5rem 2rem', background: 'rgba(30, 30, 30, 0.8)', borderRadius: '16px', border: '1px solid rgba(255, 255, 255, 0.1)' }}>
+            <div style={{ textAlign: 'center', margin: '2rem 0', padding: '2.5rem 2rem', background: COLORS.surface, borderRadius: '16px', border: `1px solid ${COLORS.border}` }}>
               <div style={{ display: 'flex', justifyContent: 'center', gap: 'clamp(0.5rem, 1.5vw, 1rem)', flexWrap: 'wrap', marginBottom: '1.5rem' }}>
                 {POLICIES.map((policy, i) => (
                   <div key={policy.key} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem' }}>
@@ -640,7 +640,7 @@ export function SquaresWidget({
       `}</style>
       <div 
         style={{
-          background: '#212121',
+          background: COLORS.bgPrimary,
           borderRadius: '20px',
           maxWidth: '640px',
           width: '92%',
@@ -651,7 +651,7 @@ export function SquaresWidget({
           boxShadow: '0 20px 60px rgba(0, 0, 0, 0.5)',
           animation: 'slideUp 0.3s ease-out',
           fontFamily: '"Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
-          border: '1px solid rgba(255, 255, 255, 0.1)'
+          border: `1px solid ${COLORS.border}`
         }}
         onClick={(e) => e.stopPropagation()}
       >
@@ -685,7 +685,7 @@ export function SquaresWidget({
           }}
           onMouseOut={(e) => {
             e.currentTarget.style.background = 'transparent';
-            e.currentTarget.style.color = '#737373';
+            e.currentTarget.style.color = COLORS.textMuted;
             e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.15)';
           }}
         >
@@ -701,7 +701,7 @@ export function SquaresWidget({
                   width: i === step ? '32px' : '10px',
                   height: '10px',
                   borderRadius: '6px',
-                  background: i === step ? '#e5e5e5' : (i < step ? 'rgba(229, 229, 229, 0.3)' : 'rgba(115, 115, 115, 0.3)'),
+                  background: i === step ? COLORS.accent : (i < step ? 'rgba(229, 229, 229, 0.3)' : 'rgba(115, 115, 115, 0.3)'),
                   transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
                   transform: i === step ? 'scale(1)' : 'scale(0.9)'
                 }}

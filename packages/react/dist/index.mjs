@@ -139,7 +139,7 @@ function SquaresWidget({
         return /* @__PURE__ */ React.createElement("div", { style: { minHeight: "400px", display: "flex", flexDirection: "column", justifyContent: "center" } }, /* @__PURE__ */ React.createElement("h2", { style: { margin: "0 0 3rem 0", color: COLORS.textPrimary, fontSize: "clamp(2rem, 5vw, 3rem)", fontWeight: 700, lineHeight: 1.2, textAlign: "center" } }, "You're not one word.", /* @__PURE__ */ React.createElement("br", null), "You're many dimensions."), /* @__PURE__ */ React.createElement("div", { style: { display: "flex", justifyContent: "center", gap: "1rem", margin: "2rem 0", flexWrap: "wrap" } }, POLICIES.map((policy, index) => {
           const letters = ["T", "A", "M", "E", "R"];
           const colors = [COLOR_RAMP[0], COLOR_RAMP[1], COLOR_RAMP[6], COLOR_RAMP[4], COLOR_RAMP[2]];
-          return /* @__PURE__ */ React.createElement("div", { key: policy.key, style: { display: "flex", flexDirection: "column", alignItems: "center", gap: "0.5rem" } }, /* @__PURE__ */ React.createElement("div", { style: { width: "80px", height: "80px", borderRadius: "12px", backgroundColor: colors[index], display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 4px 12px rgba(0, 0, 0, 0.3)", border: "1px solid rgba(255, 255, 255, 0.1)" } }, /* @__PURE__ */ React.createElement("span", { style: { fontSize: "2.5rem", color: "white", fontWeight: 900 } }, letters[index])), /* @__PURE__ */ React.createElement("span", { style: { color: COLORS.textPrimary, fontSize: "0.875rem", fontWeight: 600 } }, policy.label.split(" ")[0]));
+          return /* @__PURE__ */ React.createElement("div", { key: policy.key, style: { display: "flex", flexDirection: "column", alignItems: "center", gap: "0.5rem" } }, /* @__PURE__ */ React.createElement("div", { style: { width: "80px", height: "80px", borderRadius: "12px", backgroundColor: colors[index], display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 4px 12px rgba(0, 0, 0, 0.3)", border: `1px solid ${COLORS.border}` } }, /* @__PURE__ */ React.createElement("span", { style: { fontSize: "2.5rem", color: "white", fontWeight: 900 } }, letters[index])), /* @__PURE__ */ React.createElement("span", { style: { color: COLORS.textPrimary, fontSize: "0.875rem", fontWeight: 600 } }, policy.label.split(" ")[0]));
         })), /* @__PURE__ */ React.createElement("p", { style: { fontSize: "1rem", color: COLORS.textSecondary, textAlign: "center", marginTop: "2rem", lineHeight: 1.6 } }, "TAME-R measures where you stand on five", /* @__PURE__ */ React.createElement("br", null), "independent policy dimensions."));
       case 1: {
         const selectedPolicy = POLICIES[selectedSpectrumDimension];
@@ -156,7 +156,7 @@ function SquaresWidget({
               alignItems: "center",
               gap: "0.375rem",
               padding: "0.75rem 1rem",
-              background: selectedSpectrumDimension === index ? "rgba(255, 255, 255, 0.08)" : "rgba(30, 30, 30, 0.8)",
+              background: selectedSpectrumDimension === index ? "rgba(255, 255, 255, 0.08)" : COLORS.surface,
               border: selectedSpectrumDimension === index ? "1px solid rgba(255, 255, 255, 0.3)" : "1px solid rgba(255, 255, 255, 0.1)",
               borderRadius: "12px",
               cursor: "pointer",
@@ -168,9 +168,9 @@ function SquaresWidget({
               fontFamily: "inherit"
             }
           },
-          /* @__PURE__ */ React.createElement("div", { style: { width: "40px", height: "40px", borderRadius: "8px", backgroundColor: "#333333", display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 2px 8px rgba(0, 0, 0, 0.3)", border: "1px solid rgba(255, 255, 255, 0.15)" } }, /* @__PURE__ */ React.createElement("span", { style: { fontSize: "1.25rem", color: COLORS.accent, fontWeight: 900 } }, letters[index])),
+          /* @__PURE__ */ React.createElement("div", { style: { width: "40px", height: "40px", borderRadius: "8px", backgroundColor: COLORS.bgSecondary, display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 2px 8px rgba(0, 0, 0, 0.3)", border: `1px solid ${COLORS.borderStrong}` } }, /* @__PURE__ */ React.createElement("span", { style: { fontSize: "1.25rem", color: COLORS.accent, fontWeight: 900 } }, letters[index])),
           /* @__PURE__ */ React.createElement("span", { style: { fontSize: "0.75rem", color: COLORS.textPrimary, fontWeight: 600 } }, policy.label.split(" ")[0])
-        ))), /* @__PURE__ */ React.createElement("div", { style: { background: "rgba(30, 30, 30, 0.8)", borderRadius: "12px", padding: "1.5rem", border: "1px solid rgba(255, 255, 255, 0.1)" } }, /* @__PURE__ */ React.createElement("h3", { style: { margin: "0 0 1rem 0", fontSize: "1.125rem", color: COLORS.textPrimary, fontWeight: 600, textAlign: "center" } }, selectedPolicy.label), /* @__PURE__ */ React.createElement("div", { style: { display: "flex", flexDirection: "column", gap: "0.75rem" } }, POSITION_LABELS[selectedPolicy.key].map((label, index) => /* @__PURE__ */ React.createElement("div", { key: index, style: { display: "flex", alignItems: "center", gap: "1rem" } }, /* @__PURE__ */ React.createElement(ColorSquare, { value: index, size: "32px" }), /* @__PURE__ */ React.createElement("span", { style: { fontSize: "0.875rem", color: COLORS.textPrimary, flex: 1 } }, label))))));
+        ))), /* @__PURE__ */ React.createElement("div", { style: { background: COLORS.surface, borderRadius: "12px", padding: "1.5rem", border: `1px solid ${COLORS.border}` } }, /* @__PURE__ */ React.createElement("h3", { style: { margin: "0 0 1rem 0", fontSize: "1.125rem", color: COLORS.textPrimary, fontWeight: 600, textAlign: "center" } }, selectedPolicy.label), /* @__PURE__ */ React.createElement("div", { style: { display: "flex", flexDirection: "column", gap: "0.75rem" } }, POSITION_LABELS[selectedPolicy.key].map((label, index) => /* @__PURE__ */ React.createElement("div", { key: index, style: { display: "flex", alignItems: "center", gap: "1rem" } }, /* @__PURE__ */ React.createElement(ColorSquare, { value: index, size: "32px" }), /* @__PURE__ */ React.createElement("span", { style: { fontSize: "0.875rem", color: COLORS.textPrimary, flex: 1 } }, label))))));
       }
       case 2: {
         const policy = POLICIES[currentDimension];
@@ -185,11 +185,11 @@ function SquaresWidget({
               width: "8px",
               height: "8px",
               borderRadius: "50%",
-              backgroundColor: i === currentDimension ? "#737373" : "#404040",
+              backgroundColor: i === currentDimension ? COLORS.textMuted : COLORS.surface,
               transition: "background-color 0.2s"
             }
           }
-        ))), /* @__PURE__ */ React.createElement("div", { style: { display: "inline-block", marginBottom: "1rem" } }, /* @__PURE__ */ React.createElement("div", { style: { width: "80px", height: "80px", borderRadius: "16px", backgroundColor: "#333333", display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 8px 24px rgba(0, 0, 0, 0.3)", border: "1px solid rgba(255, 255, 255, 0.15)" } }, /* @__PURE__ */ React.createElement("span", { style: { fontSize: "3rem", color: COLORS.accent, fontWeight: 900 } }, letters[currentDimension]))), /* @__PURE__ */ React.createElement("h2", { style: { margin: "0 0 1rem 0", color: COLORS.textPrimary, fontSize: "clamp(1.75rem, 4vw, 2.5rem)", fontWeight: 800 } }, policy.label), /* @__PURE__ */ React.createElement("p", { style: { fontSize: "1rem", color: COLORS.textSecondary, marginBottom: "2rem" } }, "Where do you stand on government intervention?")), /* @__PURE__ */ React.createElement("div", { style: { display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(120px, 1fr))", gap: "0.75rem", marginBottom: "2rem" } }, POSITION_LABELS[policy.key].map((label, valueIndex) => {
+        ))), /* @__PURE__ */ React.createElement("div", { style: { display: "inline-block", marginBottom: "1rem" } }, /* @__PURE__ */ React.createElement("div", { style: { width: "80px", height: "80px", borderRadius: "16px", backgroundColor: COLORS.bgSecondary, display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 8px 24px rgba(0, 0, 0, 0.3)", border: `1px solid ${COLORS.borderStrong}` } }, /* @__PURE__ */ React.createElement("span", { style: { fontSize: "3rem", color: COLORS.accent, fontWeight: 900 } }, letters[currentDimension]))), /* @__PURE__ */ React.createElement("h2", { style: { margin: "0 0 1rem 0", color: COLORS.textPrimary, fontSize: "clamp(1.75rem, 4vw, 2.5rem)", fontWeight: 800 } }, policy.label), /* @__PURE__ */ React.createElement("p", { style: { fontSize: "1rem", color: COLORS.textSecondary, marginBottom: "2rem" } }, "Where do you stand on government intervention?")), /* @__PURE__ */ React.createElement("div", { style: { display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(120px, 1fr))", gap: "0.75rem", marginBottom: "2rem" } }, POSITION_LABELS[policy.key].map((label, valueIndex) => {
           const isSelected = spectrum[policy.key] === valueIndex;
           const isCenter = valueIndex === 3;
           return /* @__PURE__ */ React.createElement(
@@ -271,7 +271,7 @@ function SquaresWidget({
         )));
       }
       case 3:
-        return /* @__PURE__ */ React.createElement("div", { style: { minHeight: "400px", display: "flex", flexDirection: "column", justifyContent: "center" } }, /* @__PURE__ */ React.createElement("h2", { style: { margin: "0 0 3rem 0", color: COLORS.textPrimary, fontSize: "clamp(2rem, 5vw, 3rem)", fontWeight: 700, lineHeight: 1.2, textAlign: "center" } }, "Your Political Spectrum"), /* @__PURE__ */ React.createElement("div", { style: { textAlign: "center", margin: "2rem 0", padding: "2.5rem 2rem", background: "rgba(30, 30, 30, 0.8)", borderRadius: "16px", border: "1px solid rgba(255, 255, 255, 0.1)" } }, /* @__PURE__ */ React.createElement("div", { style: { display: "flex", justifyContent: "center", gap: "clamp(0.5rem, 1.5vw, 1rem)", flexWrap: "wrap", marginBottom: "1.5rem" } }, POLICIES.map((policy, i) => /* @__PURE__ */ React.createElement("div", { key: policy.key, style: { display: "flex", flexDirection: "column", alignItems: "center", gap: "0.5rem" } }, /* @__PURE__ */ React.createElement(ColorSquare, { value: spectrum[policy.key], size: "64px" }), /* @__PURE__ */ React.createElement("span", { style: { fontSize: "0.75rem", color: COLORS.textSecondary, fontWeight: 600, letterSpacing: "0.02em" } }, ["T", "A", "M", "E", "R"][i])))), /* @__PURE__ */ React.createElement("div", { style: { display: "flex", justifyContent: "center", gap: "clamp(0.5rem, 1.5vw, 1rem)", flexWrap: "wrap", paddingTop: "1rem", borderTop: "1px solid rgba(255, 255, 255, 0.1)" } }, POLICIES.map((policy) => /* @__PURE__ */ React.createElement("span", { key: policy.key, style: { fontSize: "0.6875rem", color: COLORS.textMuted, fontWeight: 500, textTransform: "lowercase" } }, policy.label))), /* @__PURE__ */ React.createElement("div", { style: { fontSize: "2rem", marginTop: "1.5rem", paddingTop: "1.5rem", borderTop: "1px solid rgba(255, 255, 255, 0.1)", display: "flex", justifyContent: "center", gap: "0.125rem" } }, POLICIES.map((policy) => /* @__PURE__ */ React.createElement("span", { key: policy.key }, getEmojiSquare(spectrum[policy.key]))))), /* @__PURE__ */ React.createElement(
+        return /* @__PURE__ */ React.createElement("div", { style: { minHeight: "400px", display: "flex", flexDirection: "column", justifyContent: "center" } }, /* @__PURE__ */ React.createElement("h2", { style: { margin: "0 0 3rem 0", color: COLORS.textPrimary, fontSize: "clamp(2rem, 5vw, 3rem)", fontWeight: 700, lineHeight: 1.2, textAlign: "center" } }, "Your Political Spectrum"), /* @__PURE__ */ React.createElement("div", { style: { textAlign: "center", margin: "2rem 0", padding: "2.5rem 2rem", background: COLORS.surface, borderRadius: "16px", border: `1px solid ${COLORS.border}` } }, /* @__PURE__ */ React.createElement("div", { style: { display: "flex", justifyContent: "center", gap: "clamp(0.5rem, 1.5vw, 1rem)", flexWrap: "wrap", marginBottom: "1.5rem" } }, POLICIES.map((policy, i) => /* @__PURE__ */ React.createElement("div", { key: policy.key, style: { display: "flex", flexDirection: "column", alignItems: "center", gap: "0.5rem" } }, /* @__PURE__ */ React.createElement(ColorSquare, { value: spectrum[policy.key], size: "64px" }), /* @__PURE__ */ React.createElement("span", { style: { fontSize: "0.75rem", color: COLORS.textSecondary, fontWeight: 600, letterSpacing: "0.02em" } }, ["T", "A", "M", "E", "R"][i])))), /* @__PURE__ */ React.createElement("div", { style: { display: "flex", justifyContent: "center", gap: "clamp(0.5rem, 1.5vw, 1rem)", flexWrap: "wrap", paddingTop: "1rem", borderTop: "1px solid rgba(255, 255, 255, 0.1)" } }, POLICIES.map((policy) => /* @__PURE__ */ React.createElement("span", { key: policy.key, style: { fontSize: "0.6875rem", color: COLORS.textMuted, fontWeight: 500, textTransform: "lowercase" } }, policy.label))), /* @__PURE__ */ React.createElement("div", { style: { fontSize: "2rem", marginTop: "1.5rem", paddingTop: "1.5rem", borderTop: "1px solid rgba(255, 255, 255, 0.1)", display: "flex", justifyContent: "center", gap: "0.125rem" } }, POLICIES.map((policy) => /* @__PURE__ */ React.createElement("span", { key: policy.key }, getEmojiSquare(spectrum[policy.key]))))), /* @__PURE__ */ React.createElement(
           "button",
           {
             onClick: handleCopy,
@@ -460,7 +460,7 @@ function SquaresWidget({
       "div",
       {
         style: {
-          background: "#212121",
+          background: COLORS.bgPrimary,
           borderRadius: "20px",
           maxWidth: "640px",
           width: "92%",
@@ -471,7 +471,7 @@ function SquaresWidget({
           boxShadow: "0 20px 60px rgba(0, 0, 0, 0.5)",
           animation: "slideUp 0.3s ease-out",
           fontFamily: '"Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
-          border: "1px solid rgba(255, 255, 255, 0.1)"
+          border: `1px solid ${COLORS.border}`
         },
         onClick: (e) => e.stopPropagation()
       },
@@ -507,7 +507,7 @@ function SquaresWidget({
           },
           onMouseOut: (e) => {
             e.currentTarget.style.background = "transparent";
-            e.currentTarget.style.color = "#737373";
+            e.currentTarget.style.color = COLORS.textMuted;
             e.currentTarget.style.borderColor = "rgba(255, 255, 255, 0.15)";
           }
         },
@@ -521,7 +521,7 @@ function SquaresWidget({
             width: i === step ? "32px" : "10px",
             height: "10px",
             borderRadius: "6px",
-            background: i === step ? "#e5e5e5" : i < step ? "rgba(229, 229, 229, 0.3)" : "rgba(115, 115, 115, 0.3)",
+            background: i === step ? COLORS.accent : i < step ? "rgba(229, 229, 229, 0.3)" : "rgba(115, 115, 115, 0.3)",
             transition: "all 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
             transform: i === step ? "scale(1)" : "scale(0.9)"
           }
