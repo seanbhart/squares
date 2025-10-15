@@ -19,14 +19,17 @@ export default function ChatBox() {
 
     const userMessage = input.trim();
     setInput("");
-    setMessages((prev) => [...prev, { role: "user", content: userMessage }]);
+    
+    // Build updated messages including the new user message
+    const updatedMessages = [...messages, { role: "user" as const, content: userMessage }];
+    setMessages(updatedMessages);
     setLoading(true);
 
     try {
       const response = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: userMessage }),
+        body: JSON.stringify({ messages: updatedMessages }),
       });
 
       if (!response.ok) {

@@ -88,20 +88,20 @@ Review the assessment below and respond with:
 
 Be concise but specific about any problems.`;
 
-async function getAssessment(userMessage: string): Promise<string> {
+async function getAssessment(messages: Array<{ role: "user" | "assistant"; content: string }>): Promise<string> {
   const response = await anthropic.messages.create({
     model: "claude-sonnet-4-5",
     max_tokens: 2048,
     system: ASSESSOR_PROMPT,
-    messages: [{ role: "user", content: userMessage }],
+    messages: messages,
   });
 
   const textContent = response.content.find((block) => block.type === "text");
   return textContent && "text" in textContent ? textContent.text : "";
 }
 
-async function reviewAssessment(userMessage: string, assessment: string): Promise<{ approved: boolean; feedback: string }> {
-  const reviewPrompt = `Original Request: "${userMessage}"\n\nAssessment to Review:\n${assessment}`;
+async function reviewAssessment(lastUserMessage: string, assessment: string): Promise<{ approved: boolean; feedback: string }> {
+  const reviewPrompt = `Original Request: "${lastUserMessage}"\n\nAssessment to Review:\n${assessment}`;
   
   const response = await anthropic.messages.create({
     model: "claude-sonnet-4-5",
@@ -168,19 +168,22 @@ function extractSpectrumData(assessment: string): {
 
 export async function POST(request: NextRequest) {
   try {
-    const { message } = await request.json();
+    const { messages } = await request.json();
 
-    if (!message || typeof message !== "string") {
-      return NextResponse.json({ error: "Invalid message" }, { status: 400 });
+    if (!messages || !Array.isArray(messages)) {
+      return NextResponse.json({ error: "Invalid messages array" }, { status: 400 });
     }
 
+    // Get the last user message for checking if it's a typing request
+    const lastUserMessage = messages[messages.length - 1]?.content || "";
+
     // Check if this is a typing request (contains keywords like "type", "assess", figure names)
-    const isTypingRequest = /\b(type|assess|typing|squares for|tamer for)\b/i.test(message);
+    const isTypingRequest = /\b(type|assess|typing|squares for|tamer for)\b/i.test(lastUserMessage);
 
     if (isTypingRequest) {
       // Multi-agent flow: Assessor → Reviewer → Final response
-      const initialAssessment = await getAssessment(message);
-      const review = await reviewAssessment(message, initialAssessment);
+      const initialAssessment = await getAssessment(messages);
+      const review = await reviewAssessment(lastUserMessage, initialAssessment);
 
       let finalReply: string;
       if (review.approved) {
@@ -198,7 +201,7 @@ export async function POST(request: NextRequest) {
       });
     } else {
       // Simple question - single agent response
-      const reply = await getAssessment(message);
+      const reply = await getAssessment(messages);
       return NextResponse.json({ reply });
     }
   } catch (error) {

@@ -63,7 +63,7 @@ export default function FiguresChatBox({
       const response = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: userMessage }),
+        body: JSON.stringify({ messages: updatedMessagesWithUser }),
       });
 
       if (!response.ok) {
