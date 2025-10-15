@@ -6,7 +6,7 @@
   },
   "miniapp": {
     "version": "1",
-    "name": "Squares Political Spectrum",
+    "name": "Squares Political Personality",
     "homeUrl": "https://www.squares.vote/miniapp",
     "iconUrl": "https://www.squares.vote/icon-1024x1024.png",
     "imageUrl": "https://www.squares.vote/miniapp-image.png",
@@ -21,7 +21,7 @@
     "tags": ["politics", "spectrum", "assessment", "personality", "community"],
     "heroImageUrl": "https://www.squares.vote/hero-image.png",
     "tagline": "Your politics, Squared",
-    "ogTitle": "Squares Political Spectrum",
+    "ogTitle": "Squares Political Personality",
     "ogDescription": "You're not one word. Square your politics into shareable emojis.",
     "ogImageUrl": "https://www.squares.vote/og-image.png",
     "castShareUrl": "https://warpcast.com/~/compose?text=Just%20squared%20my%20politics%20with%20Squares!%20%F0%9F%9F%A6%F0%9F%9F%A9%F0%9F%9F%A6%F0%9F%9F%A9%F0%9F%9F%A6%0A%0ATry%20it%3A&embeds[]=https://www.squares.vote/miniapp"
