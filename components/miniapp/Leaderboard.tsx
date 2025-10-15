@@ -149,7 +149,7 @@ export default function Leaderboard({ currentFid }: LeaderboardProps) {
 
         {leaderboard.length === 0 && (
           <div className={styles.empty}>
-            No entries yet. Be the first to square your political personality!
+            No entries yet. Be the first to Square your political personality!
           </div>
         )}
       </div>

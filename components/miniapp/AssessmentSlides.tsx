@@ -470,19 +470,26 @@ export default function AssessmentSlides({ initialSpectrum, initialStep = 0, ini
                   marginBottom: '0.75rem'
                 }}
               >
-                Share Your Squares
+                Share Squares
               </button>
 
-              <button 
-                onClick={handleToggleVisibility} 
-                className={styles.secondaryButton}
-              >
-                {isPublic ? 'Hide from Community' : 'Reveal to Community'}
-              </button>
+              <div style={{ display: 'flex', gap: '0.75rem' }}>
+                <button 
+                  onClick={handleToggleVisibility} 
+                  className={styles.secondaryButton}
+                  style={{ flex: 1 }}
+                >
+                  {isPublic ? 'Hide Squares' : 'Show Squares'}
+                </button>
 
-              <button onClick={handleStartOver} className={styles.secondaryButton}>
-                Start Over
-              </button>
+                <button 
+                  onClick={handleStartOver} 
+                  className={styles.secondaryButton}
+                  style={{ flex: 1 }}
+                >
+                  Start Over
+                </button>
+              </div>
             </div>
           </div>
         );
