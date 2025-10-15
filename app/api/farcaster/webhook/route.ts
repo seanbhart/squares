@@ -50,8 +50,11 @@ export async function POST(request: NextRequest) {
     switch (event) {
       case 'frame_added':
       case 'miniapp_added':
-        // User added/installed your frame/miniapp - notifications enabled by default
+        // User added/installed your frame/miniapp
+        // IMPORTANT: Just adding the app does NOT mean notifications are enabled
+        // We only enable notifications if we explicitly receive notification token details
         if (notificationDetails) {
+          // Received notification token - notifications ARE enabled
           const { error } = await supabase
             .from('notification_tokens')
             .upsert({
@@ -59,7 +62,7 @@ export async function POST(request: NextRequest) {
               notification_url: notificationDetails.url,
               notification_token: notificationDetails.token,
               app_installed: true,
-              enabled: true,
+              enabled: true, // Explicitly enabled with token
               updated_at: new Date().toISOString(),
             }, {
               onConflict: 'fid'
@@ -70,15 +73,15 @@ export async function POST(request: NextRequest) {
             throw error
           }
           
-          console.log(`[Webhook] App installed with notifications enabled for FID ${fid}`)
+          console.log(`[Webhook] App installed WITH notifications enabled for FID ${fid}`)
         } else {
-          // No notification details, but app was added - mark as installed
+          // No notification details - just mark app as installed, notifications OFF
           const { error } = await supabase
             .from('notification_tokens')
             .upsert({
               fid,
               app_installed: true,
-              enabled: false, // No token = notifications not available
+              enabled: false, // App installed but notifications NOT enabled
               updated_at: new Date().toISOString(),
             }, {
               onConflict: 'fid'
@@ -87,7 +90,7 @@ export async function POST(request: NextRequest) {
           if (error) {
             console.error('[Webhook] Error marking app as installed:', error)
           } else {
-            console.log(`[Webhook] App installed (no notifications) for FID ${fid}`)
+            console.log(`[Webhook] App installed WITHOUT notifications for FID ${fid}`)
           }
         }
         break
