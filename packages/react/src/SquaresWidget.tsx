@@ -707,23 +707,25 @@ export function SquaresWidget({
           ×
         </button>
         
-        <div style={{ marginBottom: '2.5rem' }}>
-          <div style={{ display: 'flex', gap: '0.625rem', justifyContent: 'center', marginBottom: step === 2 ? '1rem' : '0' }}>
-            {[0, 1, 2, 3].map(i => (
-              <div
-                key={i}
-                style={{
-                  width: i === step ? '32px' : '10px',
-                  height: '10px',
-                  borderRadius: '6px',
-                  background: i === step ? COLORS.accent : (i < step ? 'rgba(229, 229, 229, 0.3)' : 'rgba(115, 115, 115, 0.3)'),
-                  transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
-                  transform: i === step ? 'scale(1)' : 'scale(0.9)'
-                }}
-              />
-            ))}
+        {step !== 2 && (
+          <div style={{ marginBottom: '2.5rem' }}>
+            <div style={{ display: 'flex', gap: '0.625rem', justifyContent: 'center' }}>
+              {[0, 1, 2, 3].map(i => (
+                <div
+                  key={i}
+                  style={{
+                    width: i === step ? '32px' : '10px',
+                    height: '10px',
+                    borderRadius: '6px',
+                    background: i === step ? COLORS.accent : (i < step ? 'rgba(229, 229, 229, 0.3)' : 'rgba(115, 115, 115, 0.3)'),
+                    transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+                    transform: i === step ? 'scale(1)' : 'scale(0.9)'
+                  }}
+                />
+              ))}
+            </div>
           </div>
-        </div>
+        )}
 
         {renderStep()}
 

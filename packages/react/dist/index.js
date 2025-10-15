@@ -565,7 +565,7 @@ function SquaresWidget({
         },
         "\xD7"
       ),
-      /* @__PURE__ */ import_react.default.createElement("div", { style: { marginBottom: "2.5rem" } }, /* @__PURE__ */ import_react.default.createElement("div", { style: { display: "flex", gap: "0.625rem", justifyContent: "center", marginBottom: step === 2 ? "1rem" : "0" } }, [0, 1, 2, 3].map((i) => /* @__PURE__ */ import_react.default.createElement(
+      step !== 2 && /* @__PURE__ */ import_react.default.createElement("div", { style: { marginBottom: "2.5rem" } }, /* @__PURE__ */ import_react.default.createElement("div", { style: { display: "flex", gap: "0.625rem", justifyContent: "center" } }, [0, 1, 2, 3].map((i) => /* @__PURE__ */ import_react.default.createElement(
         "div",
         {
           key: i,

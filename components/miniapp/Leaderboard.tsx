@@ -41,7 +41,29 @@ export default function Leaderboard({ currentFid }: LeaderboardProps) {
     try {
       const response = await fetch('/api/farcaster/leaderboard?sortBy=recent&limit=50');
       const data = await response.json();
-      setLeaderboard(data.leaderboard || []);
+      const entries = data.leaderboard || [];
+      
+      // TEMP: Duplicate first entry 20 times for testing
+      if (entries.length > 0) {
+        const firstEntry = entries[0];
+        for (let i = 0; i < 20; i++) {
+          entries.push({
+            ...firstEntry,
+            fid: firstEntry.fid + i + 1000 // Give unique FIDs
+          });
+        }
+      }
+      
+      // Pin current user to top if they exist in the leaderboard
+      if (currentFid) {
+        const currentUserIndex = entries.findIndex((e: LeaderboardEntry) => e.fid === currentFid);
+        if (currentUserIndex > 0) {
+          const currentUserEntry = entries.splice(currentUserIndex, 1)[0];
+          entries.unshift(currentUserEntry);
+        }
+      }
+      
+      setLeaderboard(entries);
     } catch (error) {
       console.error('Failed to fetch leaderboard:', error);
     } finally {
