@@ -205,7 +205,7 @@ export default function FiguresPage() {
   const handleShare = async () => {
     if (!userEmojiSignature) return;
 
-    const shareText = `My political spectrum:\n${userEmojiSignature}\n\nTrade, Abortion, Migration, Economics, Rights — Square yourself at squares.vote`;
+    const shareText = `My political personality Squares:\n${userEmojiSignature}\n\nTrade, Abortion, Migration, Economics, Rights — Square yourself at squares.vote`;
 
     // Try native share first (mobile)
     if (navigator.share) {
