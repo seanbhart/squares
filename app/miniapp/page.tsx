@@ -35,6 +35,20 @@ export const metadata: Metadata = {
       button: {
         title: 'Square Your Politics',
         action: {
+          type: 'launch_miniapp',
+          name: 'Squares Political Spectrum',
+          url: 'https://farcaster.squares.vote/miniapp',
+          splashImageUrl: 'https://farcaster.squares.vote/splash-200x200.png',
+          splashBackgroundColor: '#121113',
+        },
+      },
+    }),
+    'fc:frame': JSON.stringify({
+      version: '1',
+      imageUrl: 'https://farcaster.squares.vote/miniapp-image.png',
+      button: {
+        title: 'Square Your Politics',
+        action: {
           type: 'launch_frame',
           name: 'Squares Political Spectrum',
           url: 'https://farcaster.squares.vote/miniapp',
