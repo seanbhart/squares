@@ -1,6 +1,6 @@
 {
   "name": "@squares-app/react",
-  "version": "2.5.8",
+  "version": "2.5.9",
   "description": "Official React component for squares.vote embeds",
   "main": "dist/index.js",
   "module": "dist/index.mjs",

@@ -177,19 +177,34 @@ function SquaresWidget({
         const letters = ["T", "A", "M", "E", "R"];
         const colors = [COLOR_RAMP[0], COLOR_RAMP[1], COLOR_RAMP[6], COLOR_RAMP[4], COLOR_RAMP[2]];
         const isLastDimension = currentDimension === POLICIES.length - 1;
-        return /* @__PURE__ */ React.createElement("div", { style: { minHeight: "400px", display: "flex", flexDirection: "column", justifyContent: "center" } }, /* @__PURE__ */ React.createElement("div", { style: { textAlign: "center", marginBottom: "2rem" } }, /* @__PURE__ */ React.createElement("div", { style: { fontSize: "0.875rem", color: COLORS.textSecondary, fontWeight: 600, marginBottom: "0.75rem", letterSpacing: "0.1em" } }, currentDimension + 1, " OF ", POLICIES.length), /* @__PURE__ */ React.createElement("div", { style: { display: "flex", justifyContent: "center", gap: "0.5rem", marginBottom: "2rem" } }, POLICIES.map((_, i) => /* @__PURE__ */ React.createElement(
-          "div",
-          {
-            key: i,
-            style: {
-              width: "8px",
-              height: "8px",
-              borderRadius: "50%",
-              backgroundColor: i === currentDimension ? COLORS.textMuted : COLORS.surface,
-              transition: "background-color 0.2s"
+        return /* @__PURE__ */ React.createElement("div", { style: { minHeight: "400px", display: "flex", flexDirection: "column", justifyContent: "center" } }, /* @__PURE__ */ React.createElement("div", { style: { textAlign: "center", marginBottom: "2rem" } }, /* @__PURE__ */ React.createElement("div", { style: { fontSize: "0.875rem", color: COLORS.textSecondary, fontWeight: 600, marginBottom: "0.75rem", letterSpacing: "0.1em" } }, currentDimension + 1, " OF ", POLICIES.length), /* @__PURE__ */ React.createElement("div", { style: { display: "flex", justifyContent: "center", gap: "0.5rem", marginBottom: "2rem" } }, POLICIES.map((p, i) => {
+          const hasAnswer = spectrum[p.key] !== void 0 && spectrum[p.key] !== null;
+          const dotColor = hasAnswer ? COLOR_RAMP[spectrum[p.key]] : i === currentDimension ? COLORS.textMuted : COLORS.surface;
+          return /* @__PURE__ */ React.createElement(
+            "div",
+            {
+              key: i,
+              style: {
+                width: "8px",
+                height: "8px",
+                borderRadius: "50%",
+                backgroundColor: dotColor,
+                transition: "background-color 0.2s"
+              }
             }
-          }
-        ))), /* @__PURE__ */ React.createElement("div", { style: { display: "inline-block", marginBottom: "1rem" } }, /* @__PURE__ */ React.createElement("div", { style: { width: "80px", height: "80px", borderRadius: "16px", backgroundColor: COLORS.bgSecondary, display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 8px 24px rgba(0, 0, 0, 0.3)", border: `1px solid ${COLORS.borderStrong}` } }, /* @__PURE__ */ React.createElement("span", { style: { fontSize: "3rem", color: COLORS.accent, fontWeight: 900 } }, letters[currentDimension]))), /* @__PURE__ */ React.createElement("h2", { style: { margin: "0 0 1rem 0", color: COLORS.textPrimary, fontSize: "clamp(1.75rem, 4vw, 2.5rem)", fontWeight: 800 } }, policy.label), /* @__PURE__ */ React.createElement("p", { style: { fontSize: "1rem", color: COLORS.textSecondary, marginBottom: "2rem" } }, "Where do you stand on government intervention?")), /* @__PURE__ */ React.createElement("div", { style: { display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(120px, 1fr))", gap: "0.75rem", marginBottom: "2rem" } }, POSITION_LABELS[policy.key].map((label, valueIndex) => {
+          );
+        })), /* @__PURE__ */ React.createElement("div", { style: { display: "inline-block", marginBottom: "1rem" } }, /* @__PURE__ */ React.createElement("div", { style: {
+          width: "80px",
+          height: "80px",
+          borderRadius: "16px",
+          backgroundColor: spectrum[policy.key] !== void 0 && spectrum[policy.key] !== null ? COLOR_RAMP[spectrum[policy.key]] : COLORS.bgSecondary,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          boxShadow: "0 8px 24px rgba(0, 0, 0, 0.3)",
+          border: `1px solid ${COLORS.borderStrong}`,
+          transition: "background-color 0.3s ease"
+        } }, /* @__PURE__ */ React.createElement("span", { style: { fontSize: "3rem", color: "white", fontWeight: 900 } }, letters[currentDimension]))), /* @__PURE__ */ React.createElement("h2", { style: { margin: "0 0 1rem 0", color: COLORS.textPrimary, fontSize: "clamp(1.75rem, 4vw, 2.5rem)", fontWeight: 800 } }, policy.label), /* @__PURE__ */ React.createElement("p", { style: { fontSize: "1rem", color: COLORS.textSecondary, marginBottom: "2rem" } }, "Where do you stand on government intervention?")), /* @__PURE__ */ React.createElement("div", { style: { display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(120px, 1fr))", gap: "0.75rem", marginBottom: "2rem" } }, POSITION_LABELS[policy.key].map((label, valueIndex) => {
           const isSelected = spectrum[policy.key] === valueIndex;
           const isCenter = valueIndex === 3;
           return /* @__PURE__ */ React.createElement(
@@ -526,19 +541,7 @@ function SquaresWidget({
             transform: i === step ? "scale(1)" : "scale(0.9)"
           }
         }
-      ))), step === 2 && /* @__PURE__ */ React.createElement("div", { style: { textAlign: "center" } }, /* @__PURE__ */ React.createElement("div", { style: { fontSize: "0.8125rem", color: COLORS.textSecondary, fontWeight: 600, marginBottom: "0.5rem" } }, "Dimension ", currentDimension + 1, " of ", POLICIES.length), /* @__PURE__ */ React.createElement("div", { style: { display: "flex", gap: "0.375rem", justifyContent: "center" } }, POLICIES.map((_, i) => /* @__PURE__ */ React.createElement(
-        "div",
-        {
-          key: i,
-          style: {
-            width: "8px",
-            height: "8px",
-            borderRadius: "50%",
-            background: i <= currentDimension ? "#e5e5e5" : "rgba(115, 115, 115, 0.3)",
-            transition: "all 0.3s"
-          }
-        }
-      ))))),
+      )))),
       renderStep(),
       step !== 2 && step !== 3 && /* @__PURE__ */ React.createElement("div", { style: { display: "flex", justifyContent: "space-between", gap: "1rem", marginTop: "2.5rem", paddingTop: "2rem", borderTop: "1px solid rgba(255, 255, 255, 0.1)" } }, step > 0 && /* @__PURE__ */ React.createElement(
         "button",

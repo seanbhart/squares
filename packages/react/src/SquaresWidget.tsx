@@ -288,22 +288,37 @@ export function SquaresWidget({
                 {currentDimension + 1} OF {POLICIES.length}
               </div>
               <div style={{ display: 'flex', justifyContent: 'center', gap: '0.5rem', marginBottom: '2rem' }}>
-                {POLICIES.map((_, i) => (
-                  <div 
-                    key={i}
-                    style={{ 
-                      width: '8px', 
-                      height: '8px', 
-                      borderRadius: '50%', 
-                      backgroundColor: i === currentDimension ? COLORS.textMuted : COLORS.surface,
-                      transition: 'background-color 0.2s'
-                    }} 
-                  />
-                ))}
+                {POLICIES.map((p, i) => {
+                  const hasAnswer = spectrum[p.key] !== undefined && spectrum[p.key] !== null;
+                  const dotColor = hasAnswer ? COLOR_RAMP[spectrum[p.key]] : (i === currentDimension ? COLORS.textMuted : COLORS.surface);
+                  return (
+                    <div 
+                      key={i}
+                      style={{ 
+                        width: '8px', 
+                        height: '8px', 
+                        borderRadius: '50%', 
+                        backgroundColor: dotColor,
+                        transition: 'background-color 0.2s'
+                      }} 
+                    />
+                  );
+                })}
               </div>
               <div style={{ display: 'inline-block', marginBottom: '1rem' }}>
-                <div style={{ width: '80px', height: '80px', borderRadius: '16px', backgroundColor: COLORS.bgSecondary, display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 8px 24px rgba(0, 0, 0, 0.3)', border: `1px solid ${COLORS.borderStrong}` }}>
-                  <span style={{ fontSize: '3rem', color: COLORS.accent, fontWeight: 900 }}>{letters[currentDimension]}</span>
+                <div style={{ 
+                  width: '80px', 
+                  height: '80px', 
+                  borderRadius: '16px', 
+                  backgroundColor: spectrum[policy.key] !== undefined && spectrum[policy.key] !== null ? COLOR_RAMP[spectrum[policy.key]] : COLORS.bgSecondary, 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  justifyContent: 'center', 
+                  boxShadow: '0 8px 24px rgba(0, 0, 0, 0.3)', 
+                  border: `1px solid ${COLORS.borderStrong}`,
+                  transition: 'background-color 0.3s ease'
+                }}>
+                  <span style={{ fontSize: '3rem', color: 'white', fontWeight: 900 }}>{letters[currentDimension]}</span>
                 </div>
               </div>
               <h2 style={{ margin: '0 0 1rem 0', color: COLORS.textPrimary, fontSize: 'clamp(1.75rem, 4vw, 2.5rem)', fontWeight: 800 }}>
@@ -708,28 +723,6 @@ export function SquaresWidget({
               />
             ))}
           </div>
-          
-          {step === 2 && (
-            <div style={{ textAlign: 'center' }}>
-              <div style={{ fontSize: '0.8125rem', color: COLORS.textSecondary, fontWeight: 600, marginBottom: '0.5rem' }}>
-                Dimension {currentDimension + 1} of {POLICIES.length}
-              </div>
-              <div style={{ display: 'flex', gap: '0.375rem', justifyContent: 'center' }}>
-                {POLICIES.map((_, i) => (
-                  <div
-                    key={i}
-                    style={{
-                      width: '8px',
-                      height: '8px',
-                      borderRadius: '50%',
-                      background: i <= currentDimension ? '#e5e5e5' : 'rgba(115, 115, 115, 0.3)',
-                      transition: 'all 0.3s'
-                    }}
-                  />
-                ))}
-              </div>
-            </div>
-          )}
         </div>
 
         {renderStep()}
