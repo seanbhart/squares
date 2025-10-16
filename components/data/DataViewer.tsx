@@ -1000,7 +1000,7 @@ export default function DataViewer() {
           <Link href="/api/v1/data/spectrums" className={styles.apiLink}>
             API Endpoint
           </Link>{' '}
-          • <Link href="/">Take the Assessment</Link>
+          • <a href={mainSiteUrl}>Take the Assessment</a>
         </p>
       </footer>
     </div>
