@@ -7,6 +7,11 @@ import { COLOR_RAMP, POLICIES, getScoreLabel } from '@/lib/tamer-config';
 import FullPageLoadingSpinner from '@/components/FullPageLoadingSpinner';
 import styles from './DataViewer.module.css';
 
+// Main site URL for cross-subdomain navigation
+const mainSiteUrl = process.env.NODE_ENV === 'production'
+  ? 'https://squares.vote/figures'
+  : 'http://localhost:3000/figures';
+
 interface PublicSpectrum {
   id: string;
   fid: number;
@@ -452,9 +457,9 @@ export default function DataViewer() {
             have chosen to share their Squares publicly.
           </p>
         </div>
-        <Link href="/" className={styles.homeLink}>
+        <a href={mainSiteUrl} className={styles.homeLink}>
           ← Back to Squares
-        </Link>
+        </a>
       </header>
 
       <div className={styles.controls}>

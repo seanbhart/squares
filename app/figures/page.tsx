@@ -42,6 +42,17 @@ export default function FiguresPage() {
   const [mobileChatOpen, setMobileChatOpen] = useState(false);
   const [chatMessages, setChatMessages] = useState<Message[]>([]);
   const detailSectionRef = useRef<HTMLElement>(null);
+  
+  // Subdomain URLs - simple environment-based approach
+  const dataUrl = process.env.NODE_ENV === 'production' 
+    ? 'https://data.squares.vote' 
+    : 'http://data.localhost:3000';
+  const developerUrl = process.env.NODE_ENV === 'production'
+    ? 'https://developer.squares.vote'
+    : 'http://developer.localhost:3000';
+  const mainSiteUrl = process.env.NODE_ENV === 'production'
+    ? 'https://squares.vote'
+    : 'http://localhost:3000';
 
   // Prevent body scroll when overlay is open on mobile
   useEffect(() => {
@@ -569,9 +580,9 @@ export default function FiguresPage() {
 
       <footer className={styles.footer}>
         <p>
-          <Link href="/" className={styles.footerLink}>squares.vote</Link> • Squaring political personalities with <Link href="/" className={styles.footerLink}>TAME-R</Link> • <Link href="/embed" className={styles.footerLink}>Embed</Link>
+          <a href={dataUrl} className={styles.footerLink}>Public Data</a> • Squaring political personalities with <a href={mainSiteUrl} className={styles.footerLink}>TAME-R</a> • <a href={developerUrl} className={styles.footerLink}>Developers</a>
         </p>
-        <Link href="/" className={styles.footerButton}>Take the Assessment</Link>
+        <a href={mainSiteUrl} className={styles.footerButton}>Take the Assessment</a>
       </footer>
 
       {/* Desktop Chat */}

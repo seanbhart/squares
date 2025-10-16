@@ -4,6 +4,11 @@ import { useState } from 'react';
 import { SquaresEmbedReact } from '@squares-app/react';
 import styles from './embed.module.css';
 
+// Main site URL for cross-subdomain navigation
+const mainSiteUrl = process.env.NODE_ENV === 'production'
+  ? 'https://squares.vote/figures'
+  : 'http://localhost:3000/figures';
+
 export default function EmbedPage() {
   const [copiedId, setCopiedId] = useState<string | null>(null);
 
@@ -48,7 +53,7 @@ function MyComponent() {
 
   return (
     <div className={styles.container}>
-      <a href="/" className={styles.backLink}>
+      <a href={mainSiteUrl} className={styles.backLink}>
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
           <path d="M19 12H5M12 19l-7-7 7-7"/>
         </svg>

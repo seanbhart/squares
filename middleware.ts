@@ -3,6 +3,44 @@ import type { NextRequest } from 'next/server';
 import { createServerClient } from '@supabase/ssr';
 
 export async function middleware(req: NextRequest) {
+  const hostname = req.headers.get('host') || '';
+  const url = req.nextUrl.clone();
+  
+  // Subdomain routing for production
+  if (process.env.NODE_ENV === 'production') {
+    // data.squares.vote -> /data page
+    if (hostname.startsWith('data.')) {
+      if (url.pathname === '/') {
+        url.pathname = '/data';
+        return NextResponse.rewrite(url);
+      }
+    }
+    
+    // developer.squares.vote -> /embed page
+    if (hostname.startsWith('developer.')) {
+      if (url.pathname === '/') {
+        url.pathname = '/embed';
+        return NextResponse.rewrite(url);
+      }
+    }
+  }
+  
+  // For local development with subdomain testing:
+  // Use *.localhost:3000 (e.g., data.localhost:3000)
+  if (hostname.includes('localhost')) {
+    const subdomain = hostname.split('.')[0];
+    
+    if (subdomain === 'data' && url.pathname === '/') {
+      url.pathname = '/data';
+      return NextResponse.rewrite(url);
+    }
+    
+    if (subdomain === 'developer' && url.pathname === '/') {
+      url.pathname = '/embed';
+      return NextResponse.rewrite(url);
+    }
+  }
+  
   let res = NextResponse.next({
     request: {
       headers: req.headers,
