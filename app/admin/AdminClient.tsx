@@ -53,7 +53,7 @@ export default function AdminClient({ initialUser }: AdminClientProps) {
   const [figures, setFigures] = useState<AdminFigure[]>([]);
   const [analysisHistory, setAnalysisHistory] = useState<any[]>([]);
   const [users, setUsers] = useState<any[]>([]);
-  const [activeTab, setActiveTab] = useState<'figures' | 'analysis' | 'admins' | 'prompts' | 'notifications'>('figures');
+  const [activeTab, setActiveTab] = useState<'figures' | 'analysis' | 'admins' | 'prompts' | 'notifications' | 'api-keys'>('figures');
   
   // Notifications state
   const [notificationTokens, setNotificationTokens] = useState<Array<NotificationTokenRecord & { username?: string }>>([]);
@@ -81,6 +81,16 @@ export default function AdminClient({ initialUser }: AdminClientProps) {
   const [reviewerPrompt, setReviewerPrompt] = useState('');
   const [promptsLoading, setPromptsLoading] = useState(false);
   const [promptsSaved, setPromptsSaved] = useState(false);
+  
+  // API Keys state
+  const [apiKeys, setApiKeys] = useState<any[]>([]);
+  const [newKeyName, setNewKeyName] = useState('');
+  const [newKeyEmail, setNewKeyEmail] = useState('');
+  const [newKeyOrg, setNewKeyOrg] = useState('');
+  const [newKeyTier, setNewKeyTier] = useState<'free' | 'standard' | 'enterprise'>('free');
+  const [isCreatingKey, setIsCreatingKey] = useState(false);
+  const [createdKey, setCreatedKey] = useState<string | null>(null);
+  const [keyCopied, setKeyCopied] = useState(false);
   
   // Confirmation modal state
   const [confirmModal, setConfirmModal] = useState<{
@@ -215,6 +225,81 @@ export default function AdminClient({ initialUser }: AdminClientProps) {
         setConfirmModal({ ...confirmModal, isOpen: false });
       },
     });
+  }
+
+  async function loadApiKeys() {
+    try {
+      const response = await fetch('/api/admin/keys');
+      if (response.ok) {
+        const result = await response.json();
+        setApiKeys(result.data || []);
+      }
+    } catch (error) {
+      console.error('Error loading API keys:', error);
+      setMessage({ type: 'error', text: 'Failed to load API keys' });
+    }
+  }
+
+  async function createApiKey() {
+    if (!newKeyName || !newKeyEmail) {
+      setMessage({ type: 'error', text: 'Name and email are required' });
+      return;
+    }
+
+    setIsCreatingKey(true);
+    setKeyCopied(false);
+    try {
+      const response = await fetch('/api/admin/keys', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: newKeyName,
+          contact_email: newKeyEmail,
+          organization: newKeyOrg || null,
+          tier: newKeyTier,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to create API key');
+      }
+
+      const result = await response.json();
+      setCreatedKey(result.api_key);
+      setMessage({ type: 'success', text: 'API key created successfully!' });
+      setNewKeyName('');
+      setNewKeyEmail('');
+      setNewKeyOrg('');
+      setNewKeyTier('free');
+      await loadApiKeys();
+    } catch (error) {
+      console.error('Error creating API key:', error);
+      setMessage({ type: 'error', text: 'Failed to create API key' });
+    } finally {
+      setIsCreatingKey(false);
+    }
+  }
+
+  async function revokeApiKey(keyId: string, keyName: string) {
+    if (!confirm(`Are you sure you want to revoke "${keyName}"?`)) {
+      return;
+    }
+
+    try {
+      const response = await fetch(`/api/admin/keys/${keyId}`, {
+        method: 'DELETE',
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to revoke API key');
+      }
+
+      setMessage({ type: 'success', text: 'API key revoked successfully' });
+      await loadApiKeys();
+    } catch (error) {
+      console.error('Error revoking API key:', error);
+      setMessage({ type: 'error', text: 'Failed to revoke API key' });
+    }
   }
 
   async function loadPrompts() {
@@ -520,6 +605,15 @@ export default function AdminClient({ initialUser }: AdminClientProps) {
           }}
         >
           Notifications ({notificationStats.enabled_tokens})
+        </button>
+        <button
+          className={activeTab === 'api-keys' ? styles.activeTab : ''}
+          onClick={() => {
+            setActiveTab('api-keys');
+            loadApiKeys();
+          }}
+        >
+          API Keys ({apiKeys.length})
         </button>
       </nav>
 
@@ -1001,6 +1095,200 @@ export default function AdminClient({ initialUser }: AdminClientProps) {
                 </div>
               )}
             </div>
+          </section>
+        </div>
+      )}
+
+      {activeTab === 'api-keys' && (
+        <div className={styles.content}>
+          <section className={styles.section}>
+            <h2>Create New API Key</h2>
+            
+            {createdKey && (
+              <div className={styles.message} style={{ background: '#1A191B', color: 'var(--text-primary)', padding: '1rem', borderRadius: '8px', marginBottom: '1rem', border: '2px solid var(--border-strong)' }}>
+                <strong>⚠️ Save this key now - it won't be shown again!</strong>
+                <div style={{ marginTop: '0.5rem', padding: '0.75rem', background: 'var(--background)', borderRadius: '4px', fontFamily: 'monospace', fontSize: '0.9rem', wordBreak: 'break-all', border: '1px solid var(--border)' }}>
+                  {createdKey}
+                </div>
+                <button
+                  onClick={() => {
+                    navigator.clipboard.writeText(createdKey);
+                    setKeyCopied(true);
+                    setMessage({ type: 'success', text: 'API key copied to clipboard!' });
+                    setTimeout(() => setKeyCopied(false), 2000);
+                  }}
+                  style={{ 
+                    marginTop: '0.5rem', 
+                    padding: '0.5rem 1rem', 
+                    background: keyCopied ? 'var(--neutral-button-hover)' : 'var(--accent)', 
+                    color: keyCopied ? 'white' : 'var(--accent-text)', 
+                    border: 'none', 
+                    borderRadius: '4px', 
+                    cursor: 'pointer', 
+                    fontWeight: 600,
+                    transition: 'all 0.2s ease'
+                  }}
+                >
+                  {keyCopied ? '✓ Copied!' : '📋 Copy to Clipboard'}
+                </button>
+                <button
+                  onClick={() => {
+                    setCreatedKey(null);
+                    setKeyCopied(false);
+                  }}
+                  style={{ marginTop: '0.5rem', marginLeft: '0.5rem', padding: '0.5rem 1rem', background: 'rgba(255,255,255,0.1)', color: 'var(--text-secondary)', border: 'none', borderRadius: '4px', cursor: 'pointer' }}
+                >
+                  Dismiss
+                </button>
+              </div>
+            )}
+            
+            <div className={styles.compactForm}>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '1rem' }}>
+                <div>
+                  <label style={{ display: 'block', marginBottom: '0.25rem', fontSize: '0.9rem', fontWeight: 600 }}>
+                    Name *
+                  </label>
+                  <input
+                    type="text"
+                    value={newKeyName}
+                    onChange={(e) => setNewKeyName(e.target.value)}
+                    placeholder="e.g., Research Project, Personal Use"
+                    style={{ width: '100%', padding: '0.5rem', border: '1px solid rgba(255, 255, 255, 0.12)', borderRadius: '4px', background: 'var(--background)', color: 'var(--text-primary)' }}
+                  />
+                </div>
+                <div>
+                  <label style={{ display: 'block', marginBottom: '0.25rem', fontSize: '0.9rem', fontWeight: 600 }}>
+                    Contact Email *
+                  </label>
+                  <input
+                    type="email"
+                    value={newKeyEmail}
+                    onChange={(e) => setNewKeyEmail(e.target.value)}
+                    placeholder="contact@example.com"
+                    style={{ width: '100%', padding: '0.5rem', border: '1px solid rgba(255, 255, 255, 0.12)', borderRadius: '4px', background: 'var(--background)', color: 'var(--text-primary)' }}
+                  />
+                </div>
+              </div>
+              
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '1rem' }}>
+                <div>
+                  <label style={{ display: 'block', marginBottom: '0.25rem', fontSize: '0.9rem', fontWeight: 600 }}>
+                    Organization (optional)
+                  </label>
+                  <input
+                    type="text"
+                    value={newKeyOrg}
+                    onChange={(e) => setNewKeyOrg(e.target.value)}
+                    placeholder="e.g., University, Company Name"
+                    style={{ width: '100%', padding: '0.5rem', border: '1px solid rgba(255, 255, 255, 0.12)', borderRadius: '4px', background: 'var(--background)', color: 'var(--text-primary)' }}
+                  />
+                </div>
+                <div>
+                  <label style={{ display: 'block', marginBottom: '0.25rem', fontSize: '0.9rem', fontWeight: 600 }}>
+                    Tier
+                  </label>
+                  <select
+                    value={newKeyTier}
+                    onChange={(e) => setNewKeyTier(e.target.value as 'free' | 'standard' | 'enterprise')}
+                    style={{ width: '100%', padding: '0.5rem', border: '1px solid rgba(255, 255, 255, 0.12)', borderRadius: '4px', background: 'var(--background)', color: 'var(--text-primary)' }}
+                  >
+                    <option value="free">Free (60/min, 10k/day)</option>
+                    <option value="standard">Standard (300/min, 100k/day)</option>
+                    <option value="enterprise">Enterprise (1000/min, 1M/day)</option>
+                  </select>
+                </div>
+              </div>
+              
+              <button
+                onClick={createApiKey}
+                disabled={isCreatingKey}
+                className={styles.primaryButton}
+              >
+                {isCreatingKey ? 'Creating...' : '🔑 Create API Key'}
+              </button>
+            </div>
+          </section>
+
+          <section className={styles.section}>
+            <h2>Existing API Keys ({apiKeys.length})</h2>
+            {apiKeys.length === 0 ? (
+              <p style={{ color: 'var(--text-muted)' }}>No API keys created yet.</p>
+            ) : (
+              <div className={styles.tableWrapper}>
+                <table className={styles.table}>
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Organization</th>
+                      <th>Email</th>
+                      <th>Tier</th>
+                      <th>Prefix</th>
+                      <th>Status</th>
+                      <th>Usage</th>
+                      <th>Created</th>
+                      <th>Last Used</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {apiKeys.map((key) => (
+                      <tr key={key.id}>
+                        <td style={{ fontWeight: 600 }}>{key.name}</td>
+                        <td>{key.organization || '-'}</td>
+                        <td style={{ fontSize: '0.85rem' }}>{key.contact_email}</td>
+                        <td>
+                          <span style={{
+                            padding: '0.25rem 0.5rem',
+                            borderRadius: '4px',
+                            fontSize: '0.75rem',
+                            fontWeight: 600,
+                            background: key.tier === 'enterprise' ? 'var(--neutral-button-hover)' : key.tier === 'standard' ? 'var(--neutral-button)' : 'rgba(255, 255, 255, 0.15)',
+                            color: 'white'
+                          }}>
+                            {key.tier.toUpperCase()}
+                          </span>
+                        </td>
+                        <td style={{ fontFamily: 'monospace', fontSize: '0.85rem' }}>
+                          {key.key_prefix}
+                        </td>
+                        <td>
+                          <span style={{
+                            padding: '0.25rem 0.5rem',
+                            borderRadius: '4px',
+                            fontSize: '0.75rem',
+                            fontWeight: 600,
+                            background: key.status === 'active' ? 'var(--neutral-button-hover)' : key.status === 'suspended' ? 'rgba(255, 255, 255, 0.15)' : 'rgba(255, 255, 255, 0.1)',
+                            color: 'white'
+                          }}>
+                            {key.status}
+                          </span>
+                        </td>
+                        <td style={{ fontSize: '0.85rem' }}>
+                          {key.requests_count?.toLocaleString() || 0} requests
+                        </td>
+                        <td style={{ fontSize: '0.85rem' }}>
+                          {new Date(key.created_at).toLocaleDateString()}
+                        </td>
+                        <td style={{ fontSize: '0.85rem' }}>
+                          {key.last_used_at ? new Date(key.last_used_at).toLocaleDateString() : 'Never'}
+                        </td>
+                        <td>
+                          <button
+                            onClick={() => revokeApiKey(key.id, key.name)}
+                            className={styles.dangerButton}
+                            disabled={key.status === 'revoked'}
+                            style={{ fontSize: '0.85rem', padding: '0.25rem 0.5rem' }}
+                          >
+                            {key.status === 'revoked' ? 'Revoked' : 'Revoke'}
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
           </section>
         </div>
       )}

@@ -55,17 +55,18 @@
 
 .signInButton {
   padding: 0.75rem 1.5rem;
-  background: #4285f4;
-  color: white;
+  background: var(--accent);
+  color: var(--accent-text);
   border: none;
   border-radius: 4px;
   font-size: 1rem;
   cursor: pointer;
   transition: background 0.2s;
+  font-weight: 600;
 }
 
 .signInButton:hover {
-  background: #357ae8;
+  background: var(--accent-hover);
 }
 
 .tabs {
@@ -124,15 +125,15 @@
 }
 
 .message.success {
-  background: #d4edda;
-  color: #155724;
-  border: 2px solid #28a745;
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-primary);
+  border: 2px solid rgba(255, 255, 255, 0.12);
 }
 
 .message.error {
-  background: #f8d7da;
-  color: #721c24;
-  border: 2px solid #dc3545;
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-primary);
+  border: 2px solid rgba(255, 255, 255, 0.12);
 }
 
 .content {
@@ -254,22 +255,23 @@
 
 .primaryButton {
   background: var(--accent);
-  color: white;
+  color: var(--accent-text);
   border-color: var(--accent);
+  font-weight: 600;
 }
 
 .primaryButton:hover {
-  opacity: 0.9;
+  background: var(--accent-hover);
 }
 
 .dangerButton {
-  background: #dc3545;
-  color: white;
-  border-color: #dc3545;
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text-primary);
+  border-color: rgba(255, 255, 255, 0.15);
 }
 
 .dangerButton:hover {
-  background: #c82333;
+  background: rgba(255, 255, 255, 0.15);
 }
 
 .figureList {
@@ -314,7 +316,7 @@
 .badge {
   padding: 0.25rem 0.5rem;
   background: var(--accent);
-  color: white;
+  color: var(--accent-text);
   border-radius: 4px;
   font-size: 0.75rem;
   font-weight: 600;
@@ -390,23 +392,23 @@
 }
 
 .status.pending {
-  background: #ffc107;
-  color: #000;
+  background: rgba(255, 255, 255, 0.15);
+  color: var(--text-primary);
 }
 
 .status.processing {
-  background: #17a2b8;
+  background: var(--neutral-button);
   color: white;
 }
 
 .status.completed {
-  background: #28a745;
+  background: var(--neutral-button-hover);
   color: white;
 }
 
 .status.failed {
-  background: #dc3545;
-  color: white;
+  background: rgba(255, 255, 255, 0.15);
+  color: var(--text-primary);
 }
 
 .historyCard p {
@@ -416,7 +418,7 @@
 }
 
 .historyCard .error {
-  color: #dc3545;
+  color: var(--text-secondary);
   font-weight: 500;
 }
 
@@ -501,12 +503,12 @@
 
 .adminBadge {
   background: var(--accent);
-  color: white;
+  color: var(--accent-text);
 }
 
 .youBadge {
-  background: #6c757d;
-  color: white;
+  background: rgba(255, 255, 255, 0.15);
+  color: var(--text-secondary);
 }
 
 .userMeta {
@@ -552,18 +554,18 @@
 
 .addRoleButton {
   padding: 0.75rem 1.5rem;
-  background: #4285f4;
+  background: var(--neutral-button);
   color: white;
   border: none;
   border-radius: 4px;
   font-size: 1rem;
   cursor: pointer;
-  white-space: nowrap;
   transition: background 0.2s;
+  font-weight: 500;
 }
 
 .addRoleButton:hover {
-  background: #357ae8;
+  background: var(--neutral-button-hover);
 }
 
 .selectedRoles {
@@ -574,11 +576,11 @@
 }
 
 .roleBadge {
-  display: inline-flex;
+  display: flex;
   align-items: center;
   gap: 0.5rem;
   padding: 0.4rem 0.75rem;
-  background: #5865f2;
+  background: var(--neutral-button);
   color: white;
   border-radius: 4px;
   font-size: 0.85rem;
@@ -643,7 +645,7 @@
 .emailButton {
   background: none;
   border: none;
-  color: #4285f4;
+  color: var(--text-primary);
   font-weight: 500;
   font-size: 1rem;
   cursor: pointer;
@@ -699,12 +701,12 @@
 .promptTextarea {
   width: 100%;
   padding: 1.25rem;
-  border: 2px solid #4a5568;
+  border: 2px solid rgba(255, 255, 255, 0.12);
   border-radius: 6px;
   font-size: 0.95rem;
   font-family: 'Monaco', 'Menlo', 'Courier New', monospace;
-  background: #1a202c;
-  color: #e2e8f0;
+  background: var(--background);
+  color: var(--text-primary);
   resize: vertical;
   line-height: 1.6;
   box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -712,9 +714,9 @@
 
 .promptTextarea:focus {
   outline: none;
-  border-color: #4285f4;
-  background: #2d3748;
-  box-shadow: 0 0 0 3px rgba(66, 133, 244, 0.1);
+  border-color: var(--accent);
+  background: var(--surface);
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.05);
 }
 
 .promptActions {
@@ -722,6 +724,49 @@
   justify-content: flex-end;
   gap: 1rem;
   margin-top: 2rem;
+}
+
+/* API Keys Table */
+.tableWrapper {
+  overflow-x: auto;
+  border-radius: 8px;
+  border: 1px solid var(--border-strong);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--background);
+}
+
+.table thead {
+  background: var(--surface);
+  border-bottom: 2px solid var(--border-strong);
+}
+
+.table th {
+  text-align: left;
+  padding: 0.75rem 1rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+
+.table td {
+  padding: 1rem;
+  border-top: 1px solid var(--border);
+  vertical-align: middle;
+}
+
+.table tbody tr {
+  transition: background 0.2s;
+}
+
+.table tbody tr:hover {
+  background: var(--surface-lighter);
 }
 
 /* Notifications */
@@ -776,7 +821,7 @@
 .enabledBadge {
   display: inline-block;
   padding: 0.25rem 0.75rem;
-  background: #10b981;
+  background: var(--neutral-button-hover);
   color: white;
   border-radius: 4px;
   font-size: 0.85rem;
@@ -786,8 +831,8 @@
 .disabledBadge {
   display: inline-block;
   padding: 0.25rem 0.75rem;
-  background: #6b7280;
-  color: white;
+  background: rgba(255, 255, 255, 0.15);
+  color: var(--text-secondary);
   border-radius: 4px;
   font-size: 0.85rem;
   font-weight: 500;

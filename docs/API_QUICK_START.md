@@ -52,6 +52,53 @@ Response:
 | **Standard** | 30 | 1,000 | 10 URLs |
 | **Enterprise** | 100 | 10,000 | 50 URLs |
 
+## Public Data API (No Auth Required)
+
+### Get Public User Spectrums
+
+```bash
+GET /api/v1/data/spectrums
+```
+
+Retrieve political spectrum data from users who have opted to share their data publicly.
+
+Query Parameters:
+- `page` - Page number (default: 1)
+- `limit` - Results per page (default: 100, max: 1000)
+- `sort` - Sort by: `created_at`, `updated_at`, `diversity_score`, `times_updated`
+- `order` - Sort order: `asc` or `desc`
+- `min_diversity` - Filter by minimum diversity score
+- `max_diversity` - Filter by maximum diversity score
+
+Response:
+```json
+{
+  "data": [
+    {
+      "fid": 12345,
+      "username": "alice",
+      "trade_score": 2,
+      "abortion_score": 4,
+      "migration_score": 3,
+      "economics_score": 5,
+      "rights_score": 1,
+      "diversity_score": 1.58,
+      "times_updated": 3,
+      "created_at": "2025-01-15T10:30:00Z"
+    }
+  ],
+  "pagination": {
+    "page": 1,
+    "limit": 100,
+    "total_results": 5432,
+    "has_next": true
+  }
+}
+```
+
+**See**: [Public Data API Documentation](./API_PUBLIC_DATA.md)  
+**Explore**: [Interactive Data Dashboard](https://squares.vote/data)
+
 ## Coming in Phase 2
 
 ### Analyze Content (Single URL)

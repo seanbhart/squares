@@ -5,6 +5,7 @@
   /* Modern Dark Theme (default) */
   --bg-primary: #121113;
   --bg-secondary: #1A191B;
+  --background: #121113;
   --surface: rgba(24, 23, 25, 0.85);
   --surface-hover: rgba(32, 31, 33, 0.95);
   --surface-lighter: rgba(40, 39, 41, 0.35);
