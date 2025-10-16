@@ -8,6 +8,8 @@ import { validateApiKey } from '@/lib/api/auth';
 import { getUsageStats } from '@/lib/api/rate-limit';
 import { handleError } from '@/lib/api/errors';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET(request: NextRequest) {
   try {
     // Authenticate API key

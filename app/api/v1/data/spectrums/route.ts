@@ -4,6 +4,8 @@ import { validateApiKey } from '@/lib/api/auth';
 import { checkApiKeyRateLimit, getRateLimitHeaders } from '@/lib/api/rate-limit';
 import { getServiceSupabase } from '@/lib/api/auth';
 
+export const dynamic = 'force-dynamic';
+
 /**
  * GET /api/v1/data/spectrums
  * 

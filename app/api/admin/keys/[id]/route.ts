@@ -9,6 +9,8 @@ import { verifyAdminAuth } from '@/lib/api/admin-auth';
 import { invalidRequestError, handleError } from '@/lib/api/errors';
 import { getServiceSupabase } from '@/lib/api/auth';
 
+export const dynamic = 'force-dynamic';
+
 /**
  * PATCH /api/admin/keys/[id]
  * Update an API key's settings

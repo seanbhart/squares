@@ -12,6 +12,8 @@ import { invalidRequestError, handleError } from '@/lib/api/errors';
 import { getServiceSupabase } from '@/lib/api/auth';
 import { CreateApiKeyRequest, CreateApiKeyResponse, ApiKeyTier } from '@/lib/api/types';
 
+export const dynamic = 'force-dynamic';
+
 /**
  * POST /api/admin/keys
  * Create a new API key

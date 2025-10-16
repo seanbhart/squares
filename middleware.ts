@@ -16,10 +16,10 @@ export async function middleware(req: NextRequest) {
       }
     }
     
-    // developer.squares.vote -> /embed page
+    // developer.squares.vote -> /developer page
     if (hostname.startsWith('developer.')) {
       if (url.pathname === '/') {
-        url.pathname = '/embed';
+        url.pathname = '/developer';
         return NextResponse.rewrite(url);
       }
     }
@@ -36,7 +36,7 @@ export async function middleware(req: NextRequest) {
     }
     
     if (subdomain === 'developer' && url.pathname === '/') {
-      url.pathname = '/embed';
+      url.pathname = '/developer';
       return NextResponse.rewrite(url);
     }
   }

@@ -2,14 +2,14 @@
 
 import { useState } from 'react';
 import { SquaresEmbedReact } from '@squares-app/react';
-import styles from './embed.module.css';
+import styles from './developer.module.css';
 
 // Main site URL for cross-subdomain navigation
 const mainSiteUrl = process.env.NODE_ENV === 'production'
   ? 'https://squares.vote/figures'
   : 'http://localhost:3000/figures';
 
-export default function EmbedPage() {
+export default function DeveloperPage() {
   const [copiedId, setCopiedId] = useState<string | null>(null);
 
   const copyToClipboard = async (text: string, id: string) => {

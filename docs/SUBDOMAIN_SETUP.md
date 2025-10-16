@@ -5,7 +5,7 @@ This document explains how to work with subdomains in both local development and
 ## Production Subdomains
 
 - **data.squares.vote** → Maps to `/data` page
-- **developer.squares.vote** → Maps to `/embed` page
+- **developer.squares.vote** → Maps to `/developer` page
 - **squares.vote** (or www.squares.vote) → Main site
 
 ## Local Development Testing
@@ -31,7 +31,7 @@ You can also test using regular paths in development:
 ```
 http://localhost:3000              → Main site
 http://localhost:3000/data         → Data page
-http://localhost:3000/embed        → Developer page
+http://localhost:3000/developer        → Developer page
 ```
 
 The middleware handles routing the same way internally.
@@ -45,11 +45,11 @@ The middleware (`/middleware.ts`) detects the hostname and rewrites requests:
 
 **Production:**
 - `data.squares.vote/` → rewrites to `/data`
-- `developer.squares.vote/` → rewrites to `/embed`
+- `developer.squares.vote/` → rewrites to `/developer`
 
 **Local Development:**
 - `data.localhost:3000/` → rewrites to `/data`
-- `developer.localhost:3000/` → rewrites to `/embed`
+- `developer.localhost:3000/` → rewrites to `/developer`
 - `localhost:3000/data` → works as normal (no rewrite)
 
 ### Cross-Subdomain Links
@@ -96,7 +96,7 @@ developer.squares.vote  CNAME    cname.vercel-dns.com
 - [ ] Main site loads at `localhost:3000`
 - [ ] Data page loads at `localhost:3000/data`
 - [ ] Data page loads at `data.localhost:3000` (if testing subdomains)
-- [ ] Embed page loads at `localhost:3000/embed`
+- [ ] Embed page loads at `localhost:3000/developer`
 - [ ] Developer page loads at `developer.localhost:3000` (if testing subdomains)
 - [ ] All links and navigation work correctly
 - [ ] Authentication works across subdomains

@@ -124,7 +124,7 @@ function App() {
 
 import { SquaresEmbedReact } from '@squares-app/react';
 
-export default function EmbedPage() {
+export default function DeveloperPage() {
   return (
     <main>
       <SquaresEmbedReact 
@@ -331,7 +331,7 @@ import { SquaresEmbedReact } from '@squares-app/react';
 
 ## Support
 
-- **Live Demo:** [squares.vote/embed](https://squares.vote/embed)
+- **Live Demo:** [squares.vote/developer](https://squares.vote/developer)
 - **GitHub:** [github.com/seanbhart/squares](https://github.com/seanbhart/squares)
 - **Issues:** [github.com/seanbhart/squares/issues](https://github.com/seanbhart/squares/issues)
 - **npm Package:** [@squares-app/react](https://www.npmjs.com/package/@squares-app/react)

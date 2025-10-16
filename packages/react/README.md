@@ -120,5 +120,5 @@ MIT
 ## Links
 
 - [squares.vote](https://squares.vote)
-- [Embed Demo](https://squares.vote/embed)
+- [Embed Demo](https://squares.vote/developer)
 - [GitHub](https://github.com/seanbhart/squares)

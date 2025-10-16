@@ -2,7 +2,7 @@
 
 An open-source framework for mapping political positions across key policy dimensions.
 
-🌐 **[Live Site](https://squares.vote)** | 🔌 **[Embed Demo](https://squares.vote/embed)** | 📚 **[Embed Guide](./EMBED.md)** | 📖 **[TAME-R Framework](#tame-r-framework)**
+🌐 **[Live Site](https://squares.vote)** | 🔌 **[Embed Demo](https://squares.vote/developer)** | 📚 **[Embed Guide](./DEVELOPER.md)** | 📖 **[TAME-R Framework](#tame-r-framework)**
 
 ---
 
@@ -24,7 +24,7 @@ function App() {
 }
 ```
 
-📚 **[Complete Documentation →](./EMBED.md)**
+📚 **[Complete Documentation →](./DEVELOPER.md)**
 
 ### Local Development
 
@@ -84,7 +84,7 @@ function MyComponent() {
 - ✅ **Responsive** - Works on all screen sizes
 - ✅ **Privacy-focused** - No tracking or data collection
 
-See the [complete documentation](./EMBED.md) for all props and examples.
+See the [complete documentation](./DEVELOPER.md) for all props and examples.
 
 ---
 

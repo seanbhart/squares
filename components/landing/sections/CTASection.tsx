@@ -53,7 +53,7 @@ export default function CTASection() {
       </div>
 
       <footer className={styles.footer}>
-        <a href="/embed" className={styles.footerLink}>
+        <a href="/developer" className={styles.footerLink}>
           Embed on Your Site
         </a>
         <span className={styles.footerSeparator}>•</span>
