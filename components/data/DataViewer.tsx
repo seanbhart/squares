@@ -181,7 +181,7 @@ const DIMENSION_INFO = {
   economics: 'Economic intervention: 0 = Pure free market, 6 = Full state control',
   rights: 'Civil liberties & equality: 0 = Full legal equality, 6 = Criminalization',
   divergence: 'How far positions are from the center point (3.0). Higher = positions diverge more from center overall. E.g., all 0s or all 6s = high divergence.',
-  spread: 'How varied the positions are across dimensions. Higher = inconsistent positions across issues. Lower = consistent positions across issues. E.g., [0,0,6,6,0] = high spread.',
+  spread: 'How varied the positions are across dimensions. Higher = diverse positions across issues. Lower = uniform positions across issues. E.g., [0,0,6,6,0] = high spread.',
 };
 
 // ColorSquare component for visual representation
