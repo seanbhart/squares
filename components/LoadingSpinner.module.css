@@ -8,9 +8,9 @@
 
 .loadingSpinner {
   position: relative;
-  width: 120px;
-  height: 120px;
-  animation: spin 2s linear infinite;
+  width: 144px;
+  height: 144px;
+  animation: spin 3s linear infinite;
 }
 
 @keyframes spin {
@@ -20,42 +20,121 @@
 
 .loadingSquare {
   position: absolute;
-  width: 40px;
-  height: 40px;
+  width: 42px;
+  height: 42px;
   border-radius: 8px;
-  top: 50%;
-  left: 50%;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
-/* Position squares in a perfect circle with corners pointing inward */
-/* 7 squares = 360° / 7 = 51.43° intervals */
-/* Each rotated 45° so corner points toward center */
+/* Grid layout pattern (3 columns x 3 rows):
+   Row 0: Blue(1), Green(2), Yellow(3)
+   Row 1: Purple(0), [empty], Orange(4)
+   Row 2: [empty], Black(6), Red(5)
+*/
 
 .loadingSquare:nth-child(1) {
-  transform: translate(-50%, -50%) rotate(0deg) translateY(-50px) rotate(45deg);
+  /* Purple (index 0) - position (0, 1) */
+  top: 51px;
+  left: 0px;
 }
 
 .loadingSquare:nth-child(2) {
-  transform: translate(-50%, -50%) rotate(51.43deg) translateY(-50px) rotate(45deg);
+  /* Blue (index 1) - position (0, 0) */
+  top: 0px;
+  left: 0px;
 }
 
 .loadingSquare:nth-child(3) {
-  transform: translate(-50%, -50%) rotate(102.86deg) translateY(-50px) rotate(45deg);
+  /* Green (index 2) - position (1, 0) */
+  top: 0px;
+  left: 51px;
 }
 
 .loadingSquare:nth-child(4) {
-  transform: translate(-50%, -50%) rotate(154.29deg) translateY(-50px) rotate(45deg);
+  /* Yellow (index 3) - position (2, 0) */
+  top: 0px;
+  left: 102px;
 }
 
 .loadingSquare:nth-child(5) {
-  transform: translate(-50%, -50%) rotate(205.71deg) translateY(-50px) rotate(45deg);
+  /* Orange (index 4) - position (2, 1) */
+  top: 51px;
+  left: 102px;
 }
 
 .loadingSquare:nth-child(6) {
-  transform: translate(-50%, -50%) rotate(257.14deg) translateY(-50px) rotate(45deg);
+  /* Red (index 5) - position (2, 2) */
+  top: 102px;
+  left: 102px;
 }
 
 .loadingSquare:nth-child(7) {
-  transform: translate(-50%, -50%) rotate(308.57deg) translateY(-50px) rotate(45deg);
+  /* Black (index 6) - position (1, 2) */
+  top: 102px;
+  left: 51px;
+}
+
+/* Transparent square with corner bracket borders - bottom left */
+.loadingSquareBracket {
+  position: absolute;
+  width: 42px;
+  height: 42px;
+  border-radius: 8px;
+  top: 102px;
+  left: 0px;
+  background: transparent;
+}
+
+/* Corner brackets using pseudo-elements */
+.loadingSquareBracket::before,
+.loadingSquareBracket::after {
+  content: '';
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border: 2px solid rgba(255, 255, 255, 0.8);
+}
+
+/* Top-left corner bracket */
+.loadingSquareBracket::before {
+  top: 0;
+  left: 0;
+  border-right: none;
+  border-bottom: none;
+  border-radius: 8px 0 0 0;
+}
+
+/* Bottom-right corner bracket */
+.loadingSquareBracket::after {
+  bottom: 0;
+  right: 0;
+  border-left: none;
+  border-top: none;
+  border-radius: 0 0 8px 0;
+}
+
+/* Top-right corner bracket */
+.bracketTopRight {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 12px;
+  height: 12px;
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  border-left: none;
+  border-bottom: none;
+  border-radius: 0 8px 0 0;
+}
+
+/* Bottom-left corner bracket */
+.bracketBottomLeft {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 12px;
+  height: 12px;
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  border-right: none;
+  border-top: none;
+  border-radius: 0 0 0 8px;
 }

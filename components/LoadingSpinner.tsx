@@ -12,6 +12,11 @@ export default function LoadingSpinner() {
             style={{ backgroundColor: color }}
           />
         ))}
+        {/* Transparent square with corner brackets in bottom left */}
+        <div className={styles.loadingSquareBracket}>
+          <div className={styles.bracketTopRight} />
+          <div className={styles.bracketBottomLeft} />
+        </div>
       </div>
     </div>
   );

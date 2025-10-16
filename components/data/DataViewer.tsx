@@ -1,9 +1,10 @@
 'use client';
 
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback, useMemo } from 'react';
 import Link from 'next/link';
 import { InfoIcon } from '@/components/icons';
 import { COLOR_RAMP, POLICIES, getScoreLabel } from '@/lib/tamer-config';
+import FullPageLoadingSpinner from '@/components/FullPageLoadingSpinner';
 import styles from './DataViewer.module.css';
 
 interface PublicSpectrum {
@@ -61,6 +62,113 @@ function getScaleLabel(value: number): { label: string; color: string } {
   if (value < 2.0) return { label: 'High', color: '#e67e22' };
   return { label: 'Very High', color: '#c0392b' };
 }
+
+// Cross-Cutting Alliance Group Definitions
+type AllianceGroup = {
+  id: string;
+  name: string;
+  description: string;
+  criteria: (item: PublicSpectrum) => boolean;
+};
+
+const ALLIANCE_GROUPS: AllianceGroup[] = [
+  {
+    id: 'decentralization',
+    name: 'Decentralization Alliance',
+    description: 'Opposition to centralized control (economic OR movement)',
+    criteria: (item) => item.economics_score <= 2 || item.trade_score <= 1 || item.migration_score <= 1,
+  },
+  {
+    id: 'community_protection',
+    name: 'Community Protection Coalition',
+    description: 'Protecting local community/resources',
+    criteria: (item) => 
+      (item.trade_score >= 4 && item.migration_score >= 4) || 
+      (item.economics_score >= 4 && item.migration_score >= 4),
+  },
+  {
+    id: 'personal_autonomy',
+    name: 'Personal Autonomy Alliance',
+    description: 'Bodily autonomy and personal freedom',
+    criteria: (item) => item.abortion_score <= 2 && item.rights_score <= 2,
+  },
+  {
+    id: 'traditional_order',
+    name: 'Traditional Order Coalition',
+    description: 'Traditional social structures',
+    criteria: (item) => 
+      (item.abortion_score >= 4 && item.rights_score >= 4) || 
+      item.abortion_score >= 5 || 
+      item.rights_score >= 5,
+  },
+  {
+    id: 'economic_justice',
+    name: 'Economic Justice Advocates',
+    description: 'Strong government role in economy',
+    criteria: (item) => 
+      item.economics_score >= 4 && 
+      (item.trade_score <= 2 || item.trade_score >= 4),
+  },
+  {
+    id: 'maximum_freedom',
+    name: 'Maximum Freedom Maximalists',
+    description: 'Minimal government across most areas',
+    criteria: (item) => {
+      const lowScores = [
+        item.trade_score,
+        item.abortion_score,
+        item.migration_score,
+        item.economics_score,
+        item.rights_score,
+      ].filter(score => score <= 1).length;
+      return lowScores >= 4;
+    },
+  },
+  {
+    id: 'maximum_authority',
+    name: 'Maximum Authority Maximalists',
+    description: 'Strong government across most areas',
+    criteria: (item) => {
+      const highScores = [
+        item.trade_score,
+        item.abortion_score,
+        item.migration_score,
+        item.economics_score,
+        item.rights_score,
+      ].filter(score => score >= 5).length;
+      return highScores >= 4;
+    },
+  },
+  {
+    id: 'single_issue_moderate',
+    name: 'Single-Issue Focused',
+    description: 'Passionate about one issue, pragmatic on others',
+    criteria: (item) => {
+      const scores = [
+        item.trade_score,
+        item.abortion_score,
+        item.migration_score,
+        item.economics_score,
+        item.rights_score,
+      ];
+      const extremes = scores.filter(score => score === 0 || score === 6).length;
+      const moderates = scores.filter(score => score >= 2 && score <= 4).length;
+      return extremes === 1 && moderates >= 4;
+    },
+  },
+  {
+    id: 'economic_libertarian',
+    name: 'Economic Libertarian',
+    description: 'Free market economics regardless of social views',
+    criteria: (item) => item.economics_score <= 2 && item.trade_score <= 2,
+  },
+  {
+    id: 'social_progressive',
+    name: 'Social Progressive',
+    description: 'Personal freedom regardless of economic views',
+    criteria: (item) => item.abortion_score <= 2 && item.rights_score <= 2,
+  },
+];
 
 const DIMENSION_INFO = {
   trade: 'International trade policy: 0 = Free trade/open markets, 6 = Protectionism/closed economy',
@@ -132,6 +240,8 @@ export default function DataViewer() {
   const [hoveredSegment, setHoveredSegment] = useState<{dimension: string, index: number} | null>(null);
   const [hoveredScore, setHoveredScore] = useState<{id: string, type: 'extremity' | 'spread'} | null>(null);
   const [hoveredSquare, setHoveredSquare] = useState<{id: string, dimension: string, value: number} | null>(null);
+  const [selectedAlliances, setSelectedAlliances] = useState<string[]>([]);
+  const [allianceExpanded, setAllianceExpanded] = useState(true);
   const [openFilter, setOpenFilter] = useState<string | null>(null);
   const [filters, setFilters] = useState<{
     trade: number[];
@@ -254,15 +364,37 @@ export default function DataViewer() {
 
   const stats = calculateStats();
 
+  // Calculate alliance group membership counts
+  const allianceGroupCounts = useMemo(() => {
+    const counts: Record<string, number> = {};
+    ALLIANCE_GROUPS.forEach(group => {
+      counts[group.id] = data.filter(group.criteria).length;
+    });
+    return counts;
+  }, [data]);
+
   // Filter data for table view
   const filteredData = data.filter((item) => {
-    return (
+    // Apply dimension filters
+    const matchesDimensionFilters = (
       filters.trade.includes(item.trade_score) &&
       filters.abortion.includes(item.abortion_score) &&
       filters.migration.includes(item.migration_score) &&
       filters.economics.includes(item.economics_score) &&
       filters.rights.includes(item.rights_score)
     );
+
+    // Apply alliance filters (if any selected)
+    if (selectedAlliances.length === 0) {
+      return matchesDimensionFilters;
+    }
+
+    const matchesAllianceFilters = selectedAlliances.some(allianceId => {
+      const group = ALLIANCE_GROUPS.find(g => g.id === allianceId);
+      return group && group.criteria(item);
+    });
+
+    return matchesDimensionFilters && matchesAllianceFilters;
   });
 
   const toggleFilter = (dimension: keyof typeof filters, value: number) => {
@@ -283,6 +415,15 @@ export default function DataViewer() {
       economics: [0, 1, 2, 3, 4, 5, 6],
       rights: [0, 1, 2, 3, 4, 5, 6],
     });
+    setSelectedAlliances([]);
+  };
+
+  const toggleAlliance = (allianceId: string) => {
+    setSelectedAlliances(prev => 
+      prev.includes(allianceId)
+        ? prev.filter(id => id !== allianceId)
+        : [...prev, allianceId]
+    );
   };
 
   const handleSquareHover = (id: string, dimension: string, value: number) => {
@@ -298,11 +439,7 @@ export default function DataViewer() {
   };
 
   if (loading && !data.length) {
-    return (
-      <div className={styles.container}>
-        <div className={styles.loading}>Loading public data...</div>
-      </div>
-    );
+    return <FullPageLoadingSpinner />;
   }
 
   return (
@@ -311,7 +448,7 @@ export default function DataViewer() {
         <div className={styles.headerContent}>
           <h1>Public Squares Data</h1>
           <p>
-            Explore political spectrum data from {pagination?.total_results.toLocaleString() || 0} users who
+            Explore political spectrum data from users who
             have chosen to share their Squares publicly.
           </p>
         </div>
@@ -477,9 +614,47 @@ export default function DataViewer() {
 
       {viewMode === 'table' && (
         <div className={styles.tableContainer}>
-          {(filters.trade.length < 7 || filters.abortion.length < 7 || filters.migration.length < 7 || filters.economics.length < 7 || filters.rights.length < 7) && (
+          <div className={styles.allianceFilterSection}>
+            <div className={styles.allianceHeader}>
+              <div className={styles.allianceHeaderContent}>
+                <div>
+                  <h3>Common Ground Groups</h3>
+                  <p>Find users who share positions across dimensions</p>
+                </div>
+                <button 
+                  className={styles.collapseButton}
+                  onClick={() => setAllianceExpanded(!allianceExpanded)}
+                  aria-label={allianceExpanded ? 'Collapse' : 'Expand'}
+                >
+                  {allianceExpanded ? '−' : '+'}
+                </button>
+              </div>
+            </div>
+            {allianceExpanded && (
+            <div className={styles.allianceGrid}>
+              {ALLIANCE_GROUPS.map(group => (
+                <button
+                  key={group.id}
+                  className={`${styles.allianceButton} ${selectedAlliances.includes(group.id) ? styles.allianceButtonActive : ''}`}
+                  onClick={() => toggleAlliance(group.id)}
+                  disabled={allianceGroupCounts[group.id] === 0}
+                >
+                  <div className={styles.allianceName}>{group.name}</div>
+                  <div className={styles.allianceDescription}>{group.description}</div>
+                  <div className={styles.allianceCount}>
+                    {allianceGroupCounts[group.id].toLocaleString()} {allianceGroupCounts[group.id] === 1 ? 'user' : 'users'}
+                  </div>
+                </button>
+              ))}
+            </div>
+            )}
+          </div>
+          {(filters.trade.length < 7 || filters.abortion.length < 7 || filters.migration.length < 7 || filters.economics.length < 7 || filters.rights.length < 7 || selectedAlliances.length > 0) && (
             <div className={styles.filterInfo}>
-              Filters active ({filteredData.length} of {data.length} results)
+              {selectedAlliances.length > 0 && (
+                <span>{selectedAlliances.length} alliance {selectedAlliances.length === 1 ? 'group' : 'groups'} selected • </span>
+              )}
+              {filteredData.length} of {data.length} results
               <button onClick={resetFilters} className={styles.resetButton}>Reset All Filters</button>
             </div>
           )}
