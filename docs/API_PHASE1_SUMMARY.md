@@ -1,13 +1,14 @@
 # Squares API - Phase 1 Implementation Summary
 
-**Status**: ✅ **COMPLETE**  
-**Completion Date**: January 23, 2025
+**Phase 1 Status**: ✅ **COMPLETE**  
+**Public Data API**: ✅ **COMPLETE**  
+**Completion Date**: January 2025
 
 ---
 
 ## What Was Built
 
-Phase 1 delivers the complete **core infrastructure** for the Squares Content Analysis API, enabling external services to authenticate, track usage, and prepare for content analysis capabilities.
+Phase 1 delivers the complete **core infrastructure** for the Squares Content Analysis API, plus a fully functional **Public Data API**. External services can now authenticate, track usage, access public user spectrum data, and we're ready to build content analysis capabilities.
 
 ### 🗄️ Database Schema
 
@@ -111,13 +112,30 @@ Revoke API key (soft delete)
 
 ### 🎯 User Endpoints
 
+#### **GET /api/v1/usage**
 **File**: `app/api/v1/usage/route.ts`
 
-#### **GET /api/v1/usage**
 Check current usage and remaining quota
 - Current period stats
 - Rate limit configuration
 - Last request timestamp
+
+#### **GET /api/v1/data/spectrums** ✅ NEW
+**File**: `app/api/v1/data/spectrums/route.ts`
+
+Public Data API (requires auth) - Access user spectrums shared publicly
+- Pagination (up to 1000 per page)
+- Sorting by date, divergence_score, spread_score, times_updated
+- Filtering by score ranges
+- Returns: fid, username, display_name, 5 dimension scores, divergence_score, spread_score
+- Powers the [public data dashboard](https://data.squares.vote)
+
+**Features**:
+- ✅ Authentication required (uses API key)
+- ✅ Rate limited by tier
+- ✅ Dynamic rendering (no static generation)
+- ✅ Service role for efficient queries
+- ✅ Supports legacy parameter names for smooth migration
 
 ---
 
@@ -230,6 +248,13 @@ squares/
 - Audit logging
 - Statistics and monitoring
 
+✅ **Public Data API** 🆕
+- Authenticated access to public user spectrums
+- Advanced filtering and sorting
+- Pagination up to 1000 results
+- Powers data.squares.vote dashboard
+- Divergence and spread score calculations
+
 ---
 
 ## Testing Checklist
@@ -251,39 +276,125 @@ Before deploying to production:
 
 ---
 
-## Next Steps: Phase 2
+## Next Steps: Phase 2 - Content Analysis API 🚧
 
-Phase 2 will add the **content analysis functionality**:
+Phase 2 will add the **content analysis functionality**. Here's the implementation plan:
 
-1. **Content Fetcher**
-   - URL validation and normalization
-   - HTTP fetching with timeouts
-   - HTML parsing and text extraction
-   - Error handling for unreachable/invalid URLs
+### 1. Content Fetcher Service 🔨
+**File**: `lib/api/content-fetcher.ts`
 
-2. **AI Analysis Service**
-   - Integration with existing OpenAI setup
-   - TAME-R framework prompts
-   - Structured spectrum extraction
-   - Confidence score calculation
+**Tasks**:
+- ☐ URL validation and normalization (remove tracking params, handle redirects)
+- ☐ HTTP fetching with configurable timeouts (10s default)
+- ☐ HTML parsing (cheerio or similar)
+- ☐ Text extraction (title, meta description, main content)
+- ☐ Error handling for unreachable/invalid URLs
+- ☐ Rate limiting for external requests (respect robots.txt)
+- ☐ User-Agent header with contact info
 
-3. **Analysis Endpoints**
-   - `POST /api/v1/analyze` - Single URL analysis
-   - `POST /api/v1/analyze/batch` - Batch processing
-   - `GET /api/v1/analysis/:id` - Retrieve by ID
-   - `GET /api/v1/analyses` - List with pagination
+**Dependencies**: axios, cheerio
 
-4. **Caching Layer**
-   - URL hash-based deduplication
-   - 7-day TTL for results
-   - Cache-aware responses
-   - Automatic cleanup
+---
 
-5. **Enhanced Logging**
-   - Log all analysis requests
-   - Track AI costs per key
-   - Performance metrics
-   - Success/failure rates
+### 2. AI Analysis Service 🔨
+**File**: `lib/api/analyzer.ts`
+
+**Tasks**:
+- ☐ Reuse existing OpenAI setup from main app
+- ☐ Adapt TAMER framework prompts for API use
+- ☐ Structured JSON output (spectrum + reasoning + confidence)
+- ☐ Token counting and cost calculation
+- ☐ Timeout handling (30s max)
+- ☐ Retry logic for transient failures
+- ☐ Error categorization (content issue vs AI issue)
+
+**Response Format**:
+```typescript
+{
+  spectrum: { trade: 0-6, abortion: 0-6, migration: 0-6, economics: 0-6, rights: 0-6 },
+  reasoning?: { trade: string, ... },
+  confidence?: { trade: 0-1, ... },
+  metadata: { title, excerpt, tokens_used, cost_usd }
+}
+```
+
+---
+
+### 3. Analysis Endpoints 🔨
+
+#### **POST /api/v1/analyze**
+**File**: `app/api/v1/analyze/route.ts`
+
+Single URL analysis
+- ☐ Request validation (valid URL format)
+- ☐ Check cache first (by URL hash)
+- ☐ Rate limit check
+- ☐ Fetch content → analyze → cache result
+- ☐ Log request with AI cost
+- ☐ Return analysis + signatures (emoji, text)
+
+#### **POST /api/v1/analyze/batch**
+**File**: `app/api/v1/analyze/batch/route.ts`
+
+Batch URL processing
+- ☐ Validate batch size (respect tier limits: 3/10/50)
+- ☐ Check cache for each URL
+- ☐ Process uncached URLs (parallel with concurrency limit)
+- ☐ Return results + summary (completed/failed/cached counts)
+- ☐ Log batch request with total AI cost
+
+#### **GET /api/v1/analysis/[id]**
+**File**: `app/api/v1/analysis/[id]/route.ts`
+
+Retrieve cached analysis by ID
+- ☐ Query api_analyses table
+- ☐ Check if expired (7-day TTL)
+- ☐ Return full analysis or 404
+
+---
+
+### 4. Caching Layer 🔨
+**Uses existing**: `api_analyses` table
+
+**Tasks**:
+- ☐ URL normalization before hashing (lowercase, remove params)
+- ☐ SHA-256 hash for deduplication
+- ☐ 7-day TTL enforcement
+- ☐ Cache hit/miss tracking
+- ☐ Automatic cleanup job (daily cron)
+- ☐ Cache warming for popular URLs
+
+**Benefits**:
+- Reduces AI costs
+- Faster responses
+- Consistent results for same URL
+
+---
+
+### 5. Enhanced Logging 🔨
+**Uses existing**: `api_usage_logs` table
+
+**Additional fields to log**:
+- ☐ `ai_tokens_used` - Prompt + completion tokens
+- ☐ `ai_cost_usd` - Calculated cost
+- ☐ `cached` - Was result from cache?
+- ☐ `fetch_time_ms` - Content fetching time
+- ☐ `analysis_time_ms` - AI analysis time
+- ☐ `url_hash` - For linking to cached analysis
+
+---
+
+### Implementation Order
+
+1. ① Content Fetcher (can test independently)
+2. ② AI Analyzer (reuse existing prompts)
+3. ③ Caching logic (URL normalization + hash)
+4. ④ POST /api/v1/analyze (single URL)
+5. ⑤ GET /api/v1/analysis/[id] (retrieval)
+6. ⑥ POST /api/v1/analyze/batch (batch processing)
+7. ⑦ Enhanced logging and monitoring
+
+**Estimated Time**: 2-3 days of focused development
 
 ---
 
@@ -327,7 +438,7 @@ UPSTASH_REDIS_REST_TOKEN=...
 
 ## Success Metrics
 
-**Infrastructure Goals** (All Met ✅):
+**Phase 1 Goals** (All Met ✅):
 - ✅ Secure API key storage with hashing
 - ✅ Multi-tier rate limiting
 - ✅ Complete admin management interface
@@ -335,6 +446,7 @@ UPSTASH_REDIS_REST_TOKEN=...
 - ✅ Comprehensive error handling
 - ✅ Full TypeScript type safety
 - ✅ Production-ready database schema
+- ✅ Public Data API with filtering/sorting/pagination
 
 ---
 
@@ -345,16 +457,19 @@ UPSTASH_REDIS_REST_TOKEN=...
 - Admin access requires authenticated user with `'admin'` in `roles` array
 - RLS policies protect all tables
 - Service role used only for API operations
+- Public data API requires authentication (no anonymous access)
 
 **Performance**:
 - In-memory rate limiting is fast but single-server only
 - Database queries use indexes on key_hash and timestamps
 - View `api_keys_with_stats` optimized for admin dashboard
+- Public data endpoint uses `force-dynamic` to prevent static caching
 
 **Scalability**:
 - Current in-memory rate limiting: Good for <1000 req/s
 - Redis upgrade: Scales to 100,000+ req/s
 - Database: Supports millions of keys and billions of logs
+- Public data API: Efficient Supabase queries with pagination
 
 ---
 
@@ -365,4 +480,6 @@ For questions about Phase 1 implementation:
 - Check setup guide in `docs/API_SETUP.md`
 - See database schema in `supabase/migrations/20250123_create_api_keys.sql`
 
-Ready to move on to **Phase 2: Content Analysis** 🚀
+Ready to move on to **Phase 2: Content Analysis API** 🚀
+
+See implementation plan above for detailed tasks and timeline.

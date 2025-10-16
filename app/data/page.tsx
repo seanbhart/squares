@@ -4,7 +4,7 @@ import DataViewer from '@/components/data/DataViewer';
 import FullPageLoadingSpinner from '@/components/FullPageLoadingSpinner';
 
 export const metadata: Metadata = {
-  title: 'Public Data | Squares',
+  title: 'Public Data',
   description: 'Explore public political spectrum data from the Squares community. View distributions, export data, and analyze political diversity.',
   openGraph: {
     title: 'Squares Public Data',

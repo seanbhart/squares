@@ -1,7 +1,8 @@
 # Squares API - Quick Start Guide
 
-**Phase 1 Status**: ✅ Core infrastructure complete (authentication, rate limiting, key management)  
-**Phase 2 Status**: ⏳ Analysis endpoints coming soon
+**Phase 1 Status**: ✅ **COMPLETE** - Core infrastructure (authentication, rate limiting, key management)  
+**Public Data API**: ✅ **COMPLETE** - Public user spectrums with filtering and sorting  
+**Phase 2 Status**: 🚧 **READY TO BUILD** - Content analysis endpoints
 
 ## Get an API Key
 
@@ -52,7 +53,7 @@ Response:
 | **Standard** | 30 | 1,000 | 10 URLs |
 | **Enterprise** | 100 | 10,000 | 50 URLs |
 
-## Public Data API (No Auth Required)
+## ✅ Public Data API (Live - No Auth Required)
 
 ### Get Public User Spectrums
 
@@ -108,7 +109,7 @@ Response:
 **See**: [Public Data API Documentation](./API_PUBLIC_DATA.md)  
 **Explore**: [Interactive Data Dashboard](https://squares.vote/data)
 
-## Coming in Phase 2
+## 🚧 Phase 2: Content Analysis API (Ready to Build)
 
 ### Analyze Content (Single URL)
 
@@ -163,17 +164,58 @@ Response:
 
 ```bash
 POST /api/v1/analyze/batch
+Content-Type: application/json
 
 {
   "urls": [
     "https://example.com/article1",
-    "https://example.com/article2"
+    "https://example.com/article2",
+    "https://example.com/article3"
   ],
   "options": {
-    "include_reasoning": false
+    "include_reasoning": false,
+    "include_confidence": true
   }
 }
 ```
+
+Response:
+```json
+{
+  "analyses": [
+    {
+      "id": "analysis_abc123",
+      "url": "https://example.com/article1",
+      "status": "completed",
+      "spectrum": { "trade": 2, "abortion": 4, "migration": 3, "economics": 5, "rights": 1 },
+      "emoji_signature": "🟩🟧🟨🟥🟦",
+      "cached": false
+    },
+    {
+      "id": "analysis_def456",
+      "url": "https://example.com/article2",
+      "status": "completed",
+      "spectrum": { "trade": 5, "abortion": 2, "migration": 4, "economics": 3, "rights": 4 },
+      "emoji_signature": "🟥🟩🟧🟨🟧",
+      "cached": true
+    }
+  ],
+  "summary": {
+    "total": 3,
+    "completed": 2,
+    "failed": 1,
+    "cached": 1
+  }
+}
+```
+
+### Get Analysis by ID
+
+```bash
+GET /api/v1/analysis/{id}
+```
+
+Retrieve a previously completed analysis by its ID.
 
 ## Error Handling
 
@@ -250,17 +292,19 @@ console.log(`${usage.current_period.requests_remaining} requests remaining`);
 
 ## Changelog
 
-### Phase 1 (2025-01-23)
+### Phase 1 (2025-01-23) ✅ COMPLETE
 - ✅ API key authentication
 - ✅ Rate limiting
 - ✅ Usage tracking
 - ✅ Admin key management
+- ✅ Public data API (spectrums with filtering/sorting)
 
-### Phase 2 (Coming Soon)
-- ⏳ Content analysis endpoint
-- ⏳ Batch processing
-- ⏳ Result caching
-- ⏳ Historical queries
+### Phase 2 (Ready to Build) 🚧
+- 🔨 Single URL content analysis
+- 🔨 Batch URL processing (3-50 URLs depending on tier)
+- 🔨 Result caching (7-day TTL)
+- 🔨 Analysis retrieval by ID
+- 🔨 AI cost tracking per request
 
 ### Phase 3 (Future)
 - 📋 Interactive API docs (Swagger)
