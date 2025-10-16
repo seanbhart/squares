@@ -349,13 +349,21 @@ export default function DataViewer() {
   const calculateStats = useCallback(() => {
     if (data.length === 0) return null;
 
+    // Filter out any items with missing divergence_score
+    const validDivergenceItems = data.filter(item => typeof item.divergence_score === 'number' && !isNaN(item.divergence_score));
+    const validSpreadItems = data.filter(item => typeof item.spread_score === 'number' && !isNaN(item.spread_score));
+
     const stats = {
       total: data.length,
-      avg_divergence: data.reduce((sum, item) => sum + item.divergence_score, 0) / data.length,
-      avg_spread: data.reduce((sum, item) => sum + item.spread_score, 0) / data.length,
+      avg_divergence: validDivergenceItems.length > 0 
+        ? validDivergenceItems.reduce((sum, item) => sum + item.divergence_score, 0) / validDivergenceItems.length
+        : 0,
+      avg_spread: validSpreadItems.length > 0
+        ? validSpreadItems.reduce((sum, item) => sum + item.spread_score, 0) / validSpreadItems.length
+        : 0,
       dimensions: DIMENSION_LABELS.map(({ key, name }) => {
-        const scores = data.map((item) => item[key as keyof PublicSpectrum] as number);
-        const avg = scores.reduce((sum, score) => sum + score, 0) / scores.length;
+        const scores = data.map((item) => item[key as keyof PublicSpectrum] as number).filter(score => typeof score === 'number' && !isNaN(score));
+        const avg = scores.length > 0 ? scores.reduce((sum, score) => sum + score, 0) / scores.length : 0;
         const distribution = Array.from({ length: 7 }, (_, i) => scores.filter((s) => s === i).length);
         return { name, key, avg, distribution };
       }),
@@ -485,7 +493,11 @@ export default function DataViewer() {
               <div className={styles.statLabel}>Public Spectrums</div>
             </div>
             <div className={styles.statCard}>
-              <div className={styles.statValue}>{stats.avg_divergence.toFixed(2)}</div>
+              <div className={styles.statValue}>
+                {typeof stats.avg_divergence === 'number' && !isNaN(stats.avg_divergence) 
+                  ? stats.avg_divergence.toFixed(2) 
+                  : '—'}
+              </div>
               <div className={styles.statLabel}>
                 Avg Divergence
                 <button
@@ -506,7 +518,11 @@ export default function DataViewer() {
               </div>
             </div>
             <div className={styles.statCard}>
-              <div className={styles.statValue}>{stats.avg_spread.toFixed(2)}</div>
+              <div className={styles.statValue}>
+                {typeof stats.avg_spread === 'number' && !isNaN(stats.avg_spread) 
+                  ? stats.avg_spread.toFixed(2) 
+                  : '—'}
+              </div>
               <div className={styles.statLabel}>
                 Avg Spread
                 <button
