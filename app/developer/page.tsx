@@ -6,8 +6,8 @@ import styles from './developer.module.css';
 
 // Main site URL for cross-subdomain navigation
 const mainSiteUrl = process.env.NODE_ENV === 'production'
-  ? 'https://squares.vote/figures'
-  : 'http://localhost:3000/figures';
+  ? 'https://squares.vote'
+  : 'http://localhost:3000';
 
 export default function DeveloperPage() {
   const [copiedId, setCopiedId] = useState<string | null>(null);
