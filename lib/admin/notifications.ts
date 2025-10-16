@@ -154,7 +154,7 @@ export async function getNotificationTokensWithUserInfo(): Promise<Array<Notific
   // Get user info for those FIDs
   const fids = tokens.map(t => t.fid)
   const { data: users, error: usersError } = await supabase
-    .from('spectrums')
+    .from('farcaster_spectrums')
     .select('fid, username')
     .in('fid', fids)
   

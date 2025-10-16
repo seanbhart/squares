@@ -138,7 +138,6 @@ export default function DataViewer() {
       'Rights',
       'Extremity Score',
       'Spread Score',
-      'Times Updated',
       'Created At',
       'Updated At',
     ];
@@ -154,7 +153,6 @@ export default function DataViewer() {
       item.rights_score,
       item.extremity_score.toFixed(2),
       item.spread_score.toFixed(2),
-      item.times_updated,
       new Date(item.created_at).toISOString(),
       new Date(item.updated_at).toISOString(),
     ]);
@@ -475,7 +473,6 @@ export default function DataViewer() {
                     )}
                   </span>
                 </th>
-                <th>Updates</th>
                 <th>Created</th>
               </tr>
             </thead>
@@ -510,7 +507,6 @@ export default function DataViewer() {
                   </td>
                   <td className={styles.scoreCell}>{item.extremity_score.toFixed(2)}</td>
                   <td className={styles.scoreCell}>{item.spread_score.toFixed(2)}</td>
-                  <td>{item.times_updated}</td>
                   <td>{new Date(item.created_at).toLocaleDateString()}</td>
                 </tr>
               ))}
