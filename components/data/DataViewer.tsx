@@ -127,6 +127,16 @@ export default function DataViewer() {
   const handleExportCSV = useCallback(() => {
     if (data.length === 0) return;
 
+    // Helper function to escape CSV values
+    const escapeCSV = (value: string | number): string => {
+      if (typeof value !== 'string') return value.toString();
+      // If the value contains comma, quote, or newline, wrap in quotes and escape internal quotes
+      if (value.includes(',') || value.includes('"') || value.includes('\n')) {
+        return `"${value.replace(/"/g, '""')}"`;
+      }
+      return value;
+    };
+
     const headers = [
       'FID',
       'Username',
@@ -144,8 +154,8 @@ export default function DataViewer() {
 
     const rows = data.map((item) => [
       item.fid,
-      item.username || '',
-      item.display_name || '',
+      escapeCSV(item.username || ''),
+      escapeCSV(item.display_name || ''),
       item.trade_score,
       item.abortion_score,
       item.migration_score,
