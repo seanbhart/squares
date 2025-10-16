@@ -3,7 +3,7 @@
 import { useEffect, useState, useCallback } from 'react';
 import Link from 'next/link';
 import { InfoIcon } from '@/components/icons';
-import { COLOR_RAMP } from '@/lib/tamer-config';
+import { COLOR_RAMP, POLICIES, getScoreLabel } from '@/lib/tamer-config';
 import styles from './DataViewer.module.css';
 
 interface PublicSpectrum {
@@ -42,15 +42,25 @@ const DIMENSION_LABELS = [
   { key: 'rights_score', name: 'Rights', emoji: '🟥' },
 ];
 
+// Generic fallback labels (only used if policy-specific label not found)
 const POSITION_LABELS = {
-  0: 'Very Progressive',
-  1: 'Progressive',
-  2: 'Lean Progressive',
-  3: 'Centrist',
-  4: 'Lean Conservative',
-  5: 'Conservative',
-  6: 'Very Conservative',
+  0: 'Position 0',
+  1: 'Position 1',
+  2: 'Position 2',
+  3: 'Position 3',
+  4: 'Position 4',
+  5: 'Position 5',
+  6: 'Position 6',
 };
+
+// Helper function to get scale label for extremity/spread scores
+function getScaleLabel(value: number): { label: string; color: string } {
+  if (value < 0.5) return { label: 'Very Low', color: '#398a34' };
+  if (value < 1.0) return { label: 'Low', color: '#7e568e' };
+  if (value < 1.5) return { label: 'Medium', color: '#eab308' };
+  if (value < 2.0) return { label: 'High', color: '#e67e22' };
+  return { label: 'Very High', color: '#c0392b' };
+}
 
 const DIMENSION_INFO = {
   trade: 'International trade policy: 0 = Free trade/open markets, 6 = Protectionism/closed economy',
@@ -58,26 +68,55 @@ const DIMENSION_INFO = {
   migration: 'Immigration policy: 0 = Open borders, 6 = No immigration',
   economics: 'Economic intervention: 0 = Pure free market, 6 = Full state control',
   rights: 'Civil liberties & equality: 0 = Full legal equality, 6 = Criminalization',
-  extremity: 'How far positions are from the political center (3.0). Higher = more extreme views overall. E.g., all 0s or all 6s = high extremity.',
-  spread: 'How varied the positions are across dimensions. Higher = inconsistent (mix of progressive & conservative). Lower = consistent ideology. E.g., [0,0,6,6,0] = high spread.',
-  diversity: 'Legacy metric (same as Extremity). Measures distance from political center.',
+  extremity: 'How far positions are from the center point (3.0). Higher = more extreme positions from center overall. E.g., all 0s or all 6s = high extremity.',
+  spread: 'How varied the positions are across dimensions. Higher = inconsistent positions across issues. Lower = consistent positions across issues. E.g., [0,0,6,6,0] = high spread.',
+  diversity: 'Legacy metric (same as Extremity). Measures distance from center point.',
 };
 
 // ColorSquare component for visual representation
-function ColorSquare({ value, size = 28 }: { value: number; size?: number }) {
+function ColorSquare({ 
+  value, 
+  size = 28, 
+  itemId,
+  dimension,
+  onHover,
+  onClick,
+  isHovered 
+}: { 
+  value: number; 
+  size?: number;
+  itemId: string;
+  dimension: string;
+  onHover: (id: string, dimension: string, value: number) => void;
+  onClick: (id: string, dimension: string, value: number) => void;
+  isHovered: boolean;
+}) {
+  const label = getScoreLabel(dimension as any, value);
+  
   return (
-    <div
-      style={{
-        width: `${size}px`,
-        height: `${size}px`,
-        borderRadius: '6px',
-        backgroundColor: COLOR_RAMP[value],
-        boxShadow: '0 1px 3px rgba(0, 0, 0, 0.3)',
-        border: '1px solid rgba(255, 255, 255, 0.1)',
-        display: 'inline-block',
-      }}
-      title={`Score: ${value} - ${POSITION_LABELS[value as keyof typeof POSITION_LABELS]}`}
-    />
+    <div style={{ position: 'relative', display: 'inline-block' }}>
+      <div
+        style={{
+          width: `${size}px`,
+          height: `${size}px`,
+          borderRadius: '6px',
+          backgroundColor: COLOR_RAMP[value],
+          boxShadow: isHovered ? '0 2px 8px rgba(0, 0, 0, 0.5)' : '0 1px 3px rgba(0, 0, 0, 0.3)',
+          border: isHovered ? '2px solid rgba(255, 255, 255, 0.4)' : '1px solid rgba(255, 255, 255, 0.1)',
+          display: 'inline-block',
+          cursor: 'pointer',
+          transition: 'all 0.2s ease',
+          transform: isHovered ? 'scale(1.1)' : 'scale(1)',
+        }}
+        onMouseEnter={() => onHover(itemId, dimension, value)}
+        onClick={() => onClick(itemId, dimension, value)}
+      />
+      {isHovered && (
+        <div className={styles.squareTooltip}>
+          <strong>{value}</strong>: {label}
+        </div>
+      )}
+    </div>
   );
 }
 
@@ -90,6 +129,23 @@ export default function DataViewer() {
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
   const [viewMode, setViewMode] = useState<'table' | 'visualizations'>('visualizations');
   const [hoveredInfo, setHoveredInfo] = useState<string | null>(null);
+  const [hoveredSegment, setHoveredSegment] = useState<{dimension: string, index: number} | null>(null);
+  const [hoveredScore, setHoveredScore] = useState<{id: string, type: 'extremity' | 'spread'} | null>(null);
+  const [hoveredSquare, setHoveredSquare] = useState<{id: string, dimension: string, value: number} | null>(null);
+  const [openFilter, setOpenFilter] = useState<string | null>(null);
+  const [filters, setFilters] = useState<{
+    trade: number[];
+    abortion: number[];
+    migration: number[];
+    economics: number[];
+    rights: number[];
+  }>({
+    trade: [0, 1, 2, 3, 4, 5, 6],
+    abortion: [0, 1, 2, 3, 4, 5, 6],
+    migration: [0, 1, 2, 3, 4, 5, 6],
+    economics: [0, 1, 2, 3, 4, 5, 6],
+    rights: [0, 1, 2, 3, 4, 5, 6],
+  });
 
   const fetchData = useCallback(async () => {
     setLoading(true);
@@ -198,6 +254,49 @@ export default function DataViewer() {
 
   const stats = calculateStats();
 
+  // Filter data for table view
+  const filteredData = data.filter((item) => {
+    return (
+      filters.trade.includes(item.trade_score) &&
+      filters.abortion.includes(item.abortion_score) &&
+      filters.migration.includes(item.migration_score) &&
+      filters.economics.includes(item.economics_score) &&
+      filters.rights.includes(item.rights_score)
+    );
+  });
+
+  const toggleFilter = (dimension: keyof typeof filters, value: number) => {
+    setFilters(prev => {
+      const current = prev[dimension];
+      const updated = current.includes(value)
+        ? current.filter(v => v !== value)
+        : [...current, value].sort((a, b) => a - b);
+      return { ...prev, [dimension]: updated };
+    });
+  };
+
+  const resetFilters = () => {
+    setFilters({
+      trade: [0, 1, 2, 3, 4, 5, 6],
+      abortion: [0, 1, 2, 3, 4, 5, 6],
+      migration: [0, 1, 2, 3, 4, 5, 6],
+      economics: [0, 1, 2, 3, 4, 5, 6],
+      rights: [0, 1, 2, 3, 4, 5, 6],
+    });
+  };
+
+  const handleSquareHover = (id: string, dimension: string, value: number) => {
+    setHoveredSquare({ id, dimension, value });
+  };
+
+  const handleSquareClick = (id: string, dimension: string, value: number) => {
+    if (hoveredSquare?.id === id && hoveredSquare?.dimension === dimension) {
+      setHoveredSquare(null);
+    } else {
+      setHoveredSquare({ id, dimension, value });
+    }
+  };
+
   if (loading && !data.length) {
     return (
       <div className={styles.container}>
@@ -294,7 +393,7 @@ export default function DataViewer() {
             {stats.dimensions.map((dim) => (
               <div key={dim.key} className={styles.chartCard}>
                 <h3>
-                  {DIMENSION_LABELS.find((d) => d.key === dim.key)?.emoji} {dim.name}
+                  {dim.name}
                   <button
                     className={styles.infoButton}
                     onMouseEnter={() => setHoveredInfo(dim.key)}
@@ -308,35 +407,67 @@ export default function DataViewer() {
                   </button>
                   {hoveredInfo === dim.key && (
                     <div className={styles.tooltip}>
+                      <div style={{ marginBottom: '0.5rem', fontWeight: 600 }}>Average: {dim.avg.toFixed(2)}</div>
                       {DIMENSION_INFO[dim.key as keyof typeof DIMENSION_INFO]}
                     </div>
                   )}
                 </h3>
-                <div className={styles.avgScore}>Average: {dim.avg.toFixed(2)}</div>
 
-                <div className={styles.distribution}>
-                  {dim.distribution.map((count, index) => {
-                    const percentage = (count / data.length) * 100;
-                    return (
-                      <div key={index} className={styles.distributionItem}>
-                        <div className={styles.distributionLabel}>
-                          {index}: {POSITION_LABELS[index as keyof typeof POSITION_LABELS]}
+                <div className={styles.stackedBarContainer}>
+                  <div className={styles.stackedBar}>
+                    {dim.distribution.map((count, index) => {
+                      const percentage = (count / data.length) * 100;
+                      // Get the dimension key (e.g., 'trade', 'abortion')
+                      const dimensionKey = dim.key.replace('_score', '');
+                      // Get the actual policy label for this dimension and score
+                      const label = getScoreLabel(dimensionKey as any, index);
+                      const isHovered = hoveredSegment?.dimension === dim.key && hoveredSegment?.index === index;
+                      
+                      if (percentage === 0) return null;
+                      
+                      return (
+                        <div
+                          key={index}
+                          className={styles.stackedSegment}
+                          style={{
+                            width: `${percentage}%`,
+                            backgroundColor: COLOR_RAMP[index],
+                          }}
+                          onMouseEnter={() => setHoveredSegment({dimension: dim.key, index})}
+                          onMouseLeave={() => setHoveredSegment(null)}
+                          onClick={() => setHoveredSegment(isHovered ? null : {dimension: dim.key, index})}
+                          title={`${index}: ${label}`}
+                        >
+                          {percentage >= 8 && (
+                            <span className={styles.segmentLabel}>
+                              {isHovered ? count : `${percentage.toFixed(0)}%`}
+                            </span>
+                          )}
                         </div>
-                        <div className={styles.distributionBar}>
-                          <div
-                            className={styles.distributionFill}
-                            style={{
-                              width: `${percentage}%`,
-                              backgroundColor: `hsl(${(index / 6) * 120}, 70%, 50%)`,
-                            }}
+                      );
+                    })}
+                  </div>
+                  <div className={styles.stackedLegend}>
+                    {dim.distribution.map((count, index) => {
+                      const percentage = (count / data.length) * 100;
+                      const dimensionKey = dim.key.replace('_score', '');
+                      const label = getScoreLabel(dimensionKey as any, index);
+                      
+                      if (percentage === 0) return null;
+                      
+                      return (
+                        <div key={index} className={styles.legendItem}>
+                          <div 
+                            className={styles.legendColor} 
+                            style={{ backgroundColor: COLOR_RAMP[index] }}
                           />
-                          <span className={styles.distributionValue}>
-                            {count} ({percentage.toFixed(1)}%)
+                          <span className={styles.legendText}>
+                            {index}: {label} ({percentage.toFixed(1)}%)
                           </span>
                         </div>
-                      </div>
-                    );
-                  })}
+                      );
+                    })}
+                  </div>
                 </div>
               </div>
             ))}
@@ -346,104 +477,166 @@ export default function DataViewer() {
 
       {viewMode === 'table' && (
         <div className={styles.tableContainer}>
-          <table className={styles.dataTable}>
+          {(filters.trade.length < 7 || filters.abortion.length < 7 || filters.migration.length < 7 || filters.economics.length < 7 || filters.rights.length < 7) && (
+            <div className={styles.filterInfo}>
+              Filters active ({filteredData.length} of {data.length} results)
+              <button onClick={resetFilters} className={styles.resetButton}>Reset All Filters</button>
+            </div>
+          )}
+          <div className={styles.tableWrapper}>
+            <table className={styles.dataTable}>
             <thead>
               <tr>
                 <th>User</th>
                 <th>
-                  <span className={styles.columnHeader}>
-                    Trade
+                  <div className={styles.filterHeader}>
+                    <span>Trade</span>
                     <button
-                      className={styles.infoButton}
-                      onMouseEnter={() => setHoveredInfo('trade')}
-                      onMouseLeave={() => setHoveredInfo(null)}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        setHoveredInfo(hoveredInfo === 'trade' ? null : 'trade');
-                      }}
+                      className={styles.filterButton}
+                      onClick={() => setOpenFilter(openFilter === 'trade' ? null : 'trade')}
                     >
-                      <InfoIcon />
+                      ▼ {filters.trade.length < 7 && `(${filters.trade.length})`}
                     </button>
-                    {hoveredInfo === 'trade' && (
-                      <div className={styles.tooltip}>{DIMENSION_INFO.trade}</div>
+                    {openFilter === 'trade' && (
+                      <div className={styles.filterDropdown}>
+                        <div className={styles.filterActions}>
+                          <button onClick={() => setFilters(prev => ({ ...prev, trade: [0, 1, 2, 3, 4, 5, 6] }))} className={styles.selectAllButton}>Select All</button>
+                          <button onClick={() => setFilters(prev => ({ ...prev, trade: [] }))} className={styles.selectAllButton}>Deselect All</button>
+                        </div>
+                        {[0, 1, 2, 3, 4, 5, 6].map(value => (
+                          <label key={value} className={styles.filterOption}>
+                            <input
+                              type="checkbox"
+                              checked={filters.trade.includes(value)}
+                              onChange={() => toggleFilter('trade', value)}
+                            />
+                            <div className={styles.colorDot} style={{ backgroundColor: COLOR_RAMP[value] }} />
+                            {value}: {getScoreLabel('trade', value)}
+                          </label>
+                        ))}
+                      </div>
                     )}
-                  </span>
+                  </div>
                 </th>
                 <th>
-                  <span className={styles.columnHeader}>
-                    Abortion
+                  <div className={styles.filterHeader}>
+                    <span>Abortion</span>
                     <button
-                      className={styles.infoButton}
-                      onMouseEnter={() => setHoveredInfo('abortion')}
-                      onMouseLeave={() => setHoveredInfo(null)}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        setHoveredInfo(hoveredInfo === 'abortion' ? null : 'abortion');
-                      }}
+                      className={styles.filterButton}
+                      onClick={() => setOpenFilter(openFilter === 'abortion' ? null : 'abortion')}
                     >
-                      <InfoIcon />
+                      ▼ {filters.abortion.length < 7 && `(${filters.abortion.length})`}
                     </button>
-                    {hoveredInfo === 'abortion' && (
-                      <div className={styles.tooltip}>{DIMENSION_INFO.abortion}</div>
+                    {openFilter === 'abortion' && (
+                      <div className={styles.filterDropdown}>
+                        <div className={styles.filterActions}>
+                          <button onClick={() => setFilters(prev => ({ ...prev, abortion: [0, 1, 2, 3, 4, 5, 6] }))} className={styles.selectAllButton}>Select All</button>
+                          <button onClick={() => setFilters(prev => ({ ...prev, abortion: [] }))} className={styles.selectAllButton}>Deselect All</button>
+                        </div>
+                        {[0, 1, 2, 3, 4, 5, 6].map(value => (
+                          <label key={value} className={styles.filterOption}>
+                            <input
+                              type="checkbox"
+                              checked={filters.abortion.includes(value)}
+                              onChange={() => toggleFilter('abortion', value)}
+                            />
+                            <div className={styles.colorDot} style={{ backgroundColor: COLOR_RAMP[value] }} />
+                            {value}: {getScoreLabel('abortion', value)}
+                          </label>
+                        ))}
+                      </div>
                     )}
-                  </span>
+                  </div>
                 </th>
                 <th>
-                  <span className={styles.columnHeader}>
-                    Migration
+                  <div className={styles.filterHeader}>
+                    <span>Migration</span>
                     <button
-                      className={styles.infoButton}
-                      onMouseEnter={() => setHoveredInfo('migration')}
-                      onMouseLeave={() => setHoveredInfo(null)}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        setHoveredInfo(hoveredInfo === 'migration' ? null : 'migration');
-                      }}
+                      className={styles.filterButton}
+                      onClick={() => setOpenFilter(openFilter === 'migration' ? null : 'migration')}
                     >
-                      <InfoIcon />
+                      ▼ {filters.migration.length < 7 && `(${filters.migration.length})`}
                     </button>
-                    {hoveredInfo === 'migration' && (
-                      <div className={styles.tooltip}>{DIMENSION_INFO.migration}</div>
+                    {openFilter === 'migration' && (
+                      <div className={styles.filterDropdown}>
+                        <div className={styles.filterActions}>
+                          <button onClick={() => setFilters(prev => ({ ...prev, migration: [0, 1, 2, 3, 4, 5, 6] }))} className={styles.selectAllButton}>Select All</button>
+                          <button onClick={() => setFilters(prev => ({ ...prev, migration: [] }))} className={styles.selectAllButton}>Deselect All</button>
+                        </div>
+                        {[0, 1, 2, 3, 4, 5, 6].map(value => (
+                          <label key={value} className={styles.filterOption}>
+                            <input
+                              type="checkbox"
+                              checked={filters.migration.includes(value)}
+                              onChange={() => toggleFilter('migration', value)}
+                            />
+                            <div className={styles.colorDot} style={{ backgroundColor: COLOR_RAMP[value] }} />
+                            {value}: {getScoreLabel('migration', value)}
+                          </label>
+                        ))}
+                      </div>
                     )}
-                  </span>
+                  </div>
                 </th>
                 <th>
-                  <span className={styles.columnHeader}>
-                    Economics
+                  <div className={styles.filterHeader}>
+                    <span>Economics</span>
                     <button
-                      className={styles.infoButton}
-                      onMouseEnter={() => setHoveredInfo('economics')}
-                      onMouseLeave={() => setHoveredInfo(null)}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        setHoveredInfo(hoveredInfo === 'economics' ? null : 'economics');
-                      }}
+                      className={styles.filterButton}
+                      onClick={() => setOpenFilter(openFilter === 'economics' ? null : 'economics')}
                     >
-                      <InfoIcon />
+                      ▼ {filters.economics.length < 7 && `(${filters.economics.length})`}
                     </button>
-                    {hoveredInfo === 'economics' && (
-                      <div className={styles.tooltip}>{DIMENSION_INFO.economics}</div>
+                    {openFilter === 'economics' && (
+                      <div className={styles.filterDropdown}>
+                        <div className={styles.filterActions}>
+                          <button onClick={() => setFilters(prev => ({ ...prev, economics: [0, 1, 2, 3, 4, 5, 6] }))} className={styles.selectAllButton}>Select All</button>
+                          <button onClick={() => setFilters(prev => ({ ...prev, economics: [] }))} className={styles.selectAllButton}>Deselect All</button>
+                        </div>
+                        {[0, 1, 2, 3, 4, 5, 6].map(value => (
+                          <label key={value} className={styles.filterOption}>
+                            <input
+                              type="checkbox"
+                              checked={filters.economics.includes(value)}
+                              onChange={() => toggleFilter('economics', value)}
+                            />
+                            <div className={styles.colorDot} style={{ backgroundColor: COLOR_RAMP[value] }} />
+                            {value}: {getScoreLabel('economics', value)}
+                          </label>
+                        ))}
+                      </div>
                     )}
-                  </span>
+                  </div>
                 </th>
                 <th>
-                  <span className={styles.columnHeader}>
-                    Rights
+                  <div className={styles.filterHeader}>
+                    <span>Rights</span>
                     <button
-                      className={styles.infoButton}
-                      onMouseEnter={() => setHoveredInfo('rights')}
-                      onMouseLeave={() => setHoveredInfo(null)}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        setHoveredInfo(hoveredInfo === 'rights' ? null : 'rights');
-                      }}
+                      className={styles.filterButton}
+                      onClick={() => setOpenFilter(openFilter === 'rights' ? null : 'rights')}
                     >
-                      <InfoIcon />
+                      ▼ {filters.rights.length < 7 && `(${filters.rights.length})`}
                     </button>
-                    {hoveredInfo === 'rights' && (
-                      <div className={styles.tooltip}>{DIMENSION_INFO.rights}</div>
+                    {openFilter === 'rights' && (
+                      <div className={styles.filterDropdown}>
+                        <div className={styles.filterActions}>
+                          <button onClick={() => setFilters(prev => ({ ...prev, rights: [0, 1, 2, 3, 4, 5, 6] }))} className={styles.selectAllButton}>Select All</button>
+                          <button onClick={() => setFilters(prev => ({ ...prev, rights: [] }))} className={styles.selectAllButton}>Deselect All</button>
+                        </div>
+                        {[0, 1, 2, 3, 4, 5, 6].map(value => (
+                          <label key={value} className={styles.filterOption}>
+                            <input
+                              type="checkbox"
+                              checked={filters.rights.includes(value)}
+                              onChange={() => toggleFilter('rights', value)}
+                            />
+                            <div className={styles.colorDot} style={{ backgroundColor: COLOR_RAMP[value] }} />
+                            {value}: {getScoreLabel('rights', value)}
+                          </label>
+                        ))}
+                      </div>
                     )}
-                  </span>
+                  </div>
                 </th>
                 <th>
                   <span className={styles.columnHeader}>
@@ -483,11 +676,10 @@ export default function DataViewer() {
                     )}
                   </span>
                 </th>
-                <th>Created</th>
               </tr>
             </thead>
             <tbody>
-              {data.map((item) => (
+              {filteredData.map((item) => (
                 <tr key={item.id}>
                   <td>
                     <div className={styles.userCell}>
@@ -500,28 +692,109 @@ export default function DataViewer() {
                       </div>
                     </div>
                   </td>
-                  <td className={styles.scoreCell}>
-                    <ColorSquare value={item.trade_score} />
+                  <td className={styles.scoreCell}
+                    onMouseLeave={() => setHoveredSquare(null)}
+                  >
+                    <ColorSquare 
+                      value={item.trade_score}
+                      itemId={item.id}
+                      dimension="trade"
+                      onHover={handleSquareHover}
+                      onClick={handleSquareClick}
+                      isHovered={hoveredSquare?.id === item.id && hoveredSquare?.dimension === 'trade'}
+                    />
                   </td>
-                  <td className={styles.scoreCell}>
-                    <ColorSquare value={item.abortion_score} />
+                  <td className={styles.scoreCell}
+                    onMouseLeave={() => setHoveredSquare(null)}
+                  >
+                    <ColorSquare 
+                      value={item.abortion_score}
+                      itemId={item.id}
+                      dimension="abortion"
+                      onHover={handleSquareHover}
+                      onClick={handleSquareClick}
+                      isHovered={hoveredSquare?.id === item.id && hoveredSquare?.dimension === 'abortion'}
+                    />
                   </td>
-                  <td className={styles.scoreCell}>
-                    <ColorSquare value={item.migration_score} />
+                  <td className={styles.scoreCell}
+                    onMouseLeave={() => setHoveredSquare(null)}
+                  >
+                    <ColorSquare 
+                      value={item.migration_score}
+                      itemId={item.id}
+                      dimension="migration"
+                      onHover={handleSquareHover}
+                      onClick={handleSquareClick}
+                      isHovered={hoveredSquare?.id === item.id && hoveredSquare?.dimension === 'migration'}
+                    />
                   </td>
-                  <td className={styles.scoreCell}>
-                    <ColorSquare value={item.economics_score} />
+                  <td className={styles.scoreCell}
+                    onMouseLeave={() => setHoveredSquare(null)}
+                  >
+                    <ColorSquare 
+                      value={item.economics_score}
+                      itemId={item.id}
+                      dimension="economics"
+                      onHover={handleSquareHover}
+                      onClick={handleSquareClick}
+                      isHovered={hoveredSquare?.id === item.id && hoveredSquare?.dimension === 'economics'}
+                    />
                   </td>
-                  <td className={styles.scoreCell}>
-                    <ColorSquare value={item.rights_score} />
+                  <td className={styles.scoreCell}
+                    onMouseLeave={() => setHoveredSquare(null)}
+                  >
+                    <ColorSquare 
+                      value={item.rights_score}
+                      itemId={item.id}
+                      dimension="rights"
+                      onHover={handleSquareHover}
+                      onClick={handleSquareClick}
+                      isHovered={hoveredSquare?.id === item.id && hoveredSquare?.dimension === 'rights'}
+                    />
                   </td>
-                  <td className={styles.scoreCell}>{item.extremity_score.toFixed(2)}</td>
-                  <td className={styles.scoreCell}>{item.spread_score.toFixed(2)}</td>
-                  <td>{new Date(item.created_at).toLocaleDateString()}</td>
+                  <td 
+                    className={styles.scoreCell}
+                    onMouseEnter={() => setHoveredScore({id: item.id, type: 'extremity'})}
+                    onMouseLeave={() => setHoveredScore(null)}
+                    onClick={() => setHoveredScore(prev => prev?.id === item.id && prev?.type === 'extremity' ? null : {id: item.id, type: 'extremity'})}
+                  >
+                    <span 
+                      className={styles.scoreLabel}
+                      style={{ 
+                        color: getScaleLabel(item.extremity_score).color,
+                        cursor: 'pointer',
+                        fontWeight: 600
+                      }}
+                    >
+                      {hoveredScore?.id === item.id && hoveredScore?.type === 'extremity' 
+                        ? item.extremity_score.toFixed(2) 
+                        : getScaleLabel(item.extremity_score).label}
+                    </span>
+                  </td>
+                  <td 
+                    className={styles.scoreCell}
+                    onMouseEnter={() => setHoveredScore({id: item.id, type: 'spread'})}
+                    onMouseLeave={() => setHoveredScore(null)}
+                    onClick={() => setHoveredScore(prev => prev?.id === item.id && prev?.type === 'spread' ? null : {id: item.id, type: 'spread'})}
+                  >
+                    <span 
+                      className={styles.scoreLabel}
+                      style={{ 
+                        color: getScaleLabel(item.spread_score).color,
+                        cursor: 'pointer',
+                        fontWeight: 600
+                      }}
+                    >
+                      {hoveredScore?.id === item.id && hoveredScore?.type === 'spread' 
+                        ? item.spread_score.toFixed(2) 
+                        : getScaleLabel(item.spread_score).label}
+                    </span>
+                  </td>
                 </tr>
               ))}
             </tbody>
           </table>
+          </div>
         </div>
       )}
 

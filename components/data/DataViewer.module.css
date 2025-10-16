@@ -1,7 +1,7 @@
 .container {
   min-height: 100vh;
-  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
-  color: #ffffff;
+  background: linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+  color: var(--text-primary);
   padding: 2rem;
 }
 
@@ -17,14 +17,12 @@
 .headerContent h1 {
   font-size: 2.5rem;
   margin: 0 0 0.5rem 0;
-  background: linear-gradient(135deg, #8B5CF6 0%, #EC4899 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: var(--text-primary);
+  font-weight: 600;
 }
 
 .headerContent p {
-  color: #a0a0a0;
+  color: var(--text-secondary);
   font-size: 1.1rem;
   margin: 0;
   max-width: 600px;
@@ -32,18 +30,19 @@
 
 .homeLink {
   padding: 0.75rem 1.5rem;
-  background: rgba(139, 92, 246, 0.1);
-  border: 1px solid rgba(139, 92, 246, 0.3);
+  background: var(--neutral-button);
+  border: 1px solid var(--border-strong);
   border-radius: 8px;
-  color: #8B5CF6;
+  color: var(--text-primary);
   text-decoration: none;
   transition: all 0.2s;
   white-space: nowrap;
+  font-weight: 500;
 }
 
 .homeLink:hover {
-  background: rgba(139, 92, 246, 0.2);
-  border-color: rgba(139, 92, 246, 0.5);
+  background: var(--neutral-button-hover);
+  border-color: var(--border-strong);
 }
 
 .controls {
@@ -67,7 +66,7 @@
   padding: 0.75rem 1.5rem;
   background: transparent;
   border: none;
-  color: #a0a0a0;
+  color: var(--text-secondary);
   cursor: pointer;
   border-radius: 6px;
   transition: all 0.2s;
@@ -75,23 +74,24 @@
 }
 
 .viewToggle button.activeTab {
-  background: rgba(139, 92, 246, 0.2);
-  color: #8B5CF6;
+  background: var(--neutral-button);
+  color: var(--text-primary);
 }
 
 .exportButton {
   padding: 0.75rem 1.5rem;
-  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  background: var(--accent);
   border: none;
-  color: white;
+  color: var(--accent-text);
   border-radius: 8px;
   cursor: pointer;
   font-size: 1rem;
-  transition: transform 0.2s;
+  font-weight: 600;
+  transition: background 0.2s;
 }
 
 .exportButton:hover:not(:disabled) {
-  transform: translateY(-2px);
+  background: var(--accent-hover);
 }
 
 .exportButton:disabled {
@@ -104,7 +104,7 @@
   margin: 4rem auto;
   text-align: center;
   font-size: 1.2rem;
-  color: #a0a0a0;
+  color: var(--text-secondary);
 }
 
 /* Visualizations */
@@ -131,15 +131,12 @@
 .statValue {
   font-size: 2.5rem;
   font-weight: bold;
-  background: linear-gradient(135deg, #8B5CF6 0%, #EC4899 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: var(--text-primary);
   margin-bottom: 0.5rem;
 }
 
 .statLabel {
-  color: #a0a0a0;
+  color: var(--text-secondary);
   font-size: 1rem;
   display: flex;
   align-items: center;
@@ -161,7 +158,7 @@
 }
 
 .chartCard h3 {
-  margin: 0 0 0.5rem 0;
+  margin: 0 0 1.5rem 0;
   font-size: 1.3rem;
   display: flex;
   align-items: center;
@@ -169,54 +166,66 @@
   position: relative;
 }
 
-.avgScore {
-  color: #a0a0a0;
-  margin-bottom: 1.5rem;
-  font-size: 0.9rem;
-}
-
-.distribution {
+/* Stacked Bar Chart */
+.stackedBarContainer {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: 1rem;
 }
 
-.distributionItem {
+.stackedBar {
   display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-}
-
-.distributionLabel {
-  font-size: 0.85rem;
-  color: #a0a0a0;
-}
-
-.distributionBar {
-  height: 32px;
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 6px;
-  position: relative;
+  height: 48px;
+  border-radius: 8px;
   overflow: hidden;
+  border: 1px solid var(--border);
 }
 
-.distributionFill {
-  height: 100%;
-  transition: width 0.3s ease;
+.stackedSegment {
   display: flex;
   align-items: center;
-  padding: 0 0.75rem;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
 }
 
-.distributionValue {
-  position: absolute;
-  left: 0.75rem;
-  top: 50%;
-  transform: translateY(-50%);
+.stackedSegment:hover {
+  filter: brightness(1.2);
+  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.3);
+}
+
+.segmentLabel {
   font-size: 0.85rem;
-  font-weight: bold;
+  font-weight: 600;
   color: white;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+  user-select: none;
+}
+
+.stackedLegend {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+}
+
+.legendItem {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.legendColor {
+  width: 16px;
+  height: 16px;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+
+.legendText {
+  color: var(--text-secondary);
+  line-height: 1.4;
 }
 
 /* Table */
@@ -226,7 +235,44 @@
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 12px;
-  overflow: hidden;
+  overflow: visible;
+  position: relative;
+}
+
+.filterInfo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.03);
+  border-bottom: 1px solid var(--border);
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+.resetButton {
+  padding: 0.5rem 1rem;
+  background: var(--neutral-button);
+  color: var(--text-primary);
+  border: 1px solid var(--border-strong);
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: all 0.2s;
+}
+
+.resetButton:hover {
+  background: var(--neutral-button-hover);
+}
+
+.tableWrapper {
+  overflow: visible;
+  border-radius: 0 0 12px 12px;
+  min-height: 500px;
+}
+
+.tableScrollContainer {
+  overflow-x: auto;
 }
 
 .dataTable {
@@ -239,9 +285,20 @@
   padding: 1rem;
   text-align: left;
   font-weight: 600;
-  color: #8B5CF6;
-  border-bottom: 2px solid rgba(139, 92, 246, 0.3);
+  color: var(--text-secondary);
+  border-bottom: 2px solid var(--border-strong);
   position: relative;
+}
+
+.dataTable thead {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.dataTable tbody {
+  position: relative;
+  z-index: 1;
 }
 
 .columnHeader {
@@ -251,12 +308,105 @@
   position: relative;
 }
 
+.filterHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  position: relative;
+}
+
+.filterButton {
+  background: none;
+  border: none;
+  padding: 0.25rem 0.5rem;
+  cursor: pointer;
+  color: var(--text-muted);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  transition: color 0.2s;
+  font-size: 0.75rem;
+}
+
+.filterButton:hover {
+  color: var(--text-primary);
+}
+
+.filterDropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  margin-top: 0.5rem;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-strong);
+  border-radius: 8px;
+  padding: 0.5rem;
+  z-index: 100;
+  min-width: 250px;
+  max-height: 400px;
+  overflow-y: auto;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+.filterActions {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 0.5rem;
+}
+
+.selectAllButton {
+  flex: 1;
+  padding: 0.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-secondary);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  transition: all 0.2s;
+}
+
+.selectAllButton:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text-primary);
+  border-color: var(--border-strong);
+}
+
+.filterOption {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background 0.2s;
+  font-size: 0.85rem;
+  color: var(--text-primary);
+}
+
+.filterOption:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.filterOption input[type="checkbox"] {
+  cursor: pointer;
+}
+
+.colorDot {
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+
 .infoButton {
   background: none;
   border: none;
   padding: 0.25rem;
   cursor: pointer;
-  color: rgba(139, 92, 246, 0.6);
+  color: var(--text-muted);
   display: inline-flex;
   align-items: center;
   transition: color 0.2s;
@@ -264,7 +414,7 @@
 }
 
 .infoButton:hover {
-  color: #8B5CF6;
+  color: var(--text-primary);
 }
 
 .tooltip {
@@ -273,8 +423,8 @@
   left: 50%;
   transform: translateX(-50%);
   margin-top: 0.5rem;
-  background: rgba(20, 20, 30, 0.98);
-  color: #ffffff;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
   padding: 0.75rem 1rem;
   border-radius: 8px;
   font-size: 0.875rem;
@@ -283,8 +433,8 @@
   max-width: 300px;
   width: max-content;
   z-index: 1000;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-  border: 1px solid rgba(139, 92, 246, 0.3);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  border: 1px solid var(--border-strong);
   line-height: 1.4;
   text-align: left;
   pointer-events: none;
@@ -309,7 +459,7 @@
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  border: 2px solid rgba(139, 92, 246, 0.3);
+  border: 2px solid var(--border);
 }
 
 .displayName {
@@ -318,7 +468,7 @@
 
 .username {
   font-size: 0.85rem;
-  color: #a0a0a0;
+  color: var(--text-secondary);
 }
 
 .scoreCell {
@@ -326,6 +476,29 @@
   font-weight: 600;
   font-variant-numeric: tabular-nums;
   vertical-align: middle;
+}
+
+.scoreLabel {
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.squareTooltip {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: 0.5rem;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  white-space: nowrap;
+  z-index: 1000;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  border: 1px solid var(--border-strong);
+  pointer-events: none;
 }
 
 /* Pagination */
@@ -340,17 +513,18 @@
 
 .pagination button {
   padding: 0.75rem 1.5rem;
-  background: rgba(139, 92, 246, 0.1);
-  border: 1px solid rgba(139, 92, 246, 0.3);
-  color: #8B5CF6;
+  background: var(--neutral-button);
+  border: 1px solid var(--border-strong);
+  color: var(--text-primary);
   border-radius: 8px;
   cursor: pointer;
   transition: all 0.2s;
+  font-weight: 500;
 }
 
 .pagination button:hover:not(:disabled) {
-  background: rgba(139, 92, 246, 0.2);
-  border-color: rgba(139, 92, 246, 0.5);
+  background: var(--neutral-button-hover);
+  border-color: var(--border-strong);
 }
 
 .pagination button:disabled {
@@ -359,7 +533,7 @@
 }
 
 .pagination span {
-  color: #a0a0a0;
+  color: var(--text-secondary);
 }
 
 /* Footer */
@@ -367,9 +541,9 @@
   max-width: 1400px;
   margin: 4rem auto 0;
   padding-top: 2rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: 1px solid var(--border);
   text-align: center;
-  color: #a0a0a0;
+  color: var(--text-secondary);
 }
 
 .footer p {
@@ -377,11 +551,12 @@
 }
 
 .footer a {
-  color: #8B5CF6;
+  color: var(--text-primary);
   text-decoration: none;
 }
 
 .footer a:hover {
+  color: var(--accent);
   text-decoration: underline;
 }
 
