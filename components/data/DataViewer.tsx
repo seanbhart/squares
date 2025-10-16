@@ -26,8 +26,7 @@ interface PublicSpectrum {
   times_updated: number;
   created_at: string;
   updated_at: string;
-  diversity_score: number; // Legacy field (same as extremity)
-  extremity_score: number;
+  divergence_score: number;
   spread_score: number;
 }
 
@@ -59,7 +58,7 @@ const POSITION_LABELS = {
   6: 'Position 6',
 };
 
-// Helper function to get scale label for extremity/spread scores
+// Helper function to get scale label for divergence/spread scores
 function getScaleLabel(value: number): { label: string; color: string } {
   if (value < 0.5) return { label: 'Very Low', color: '#398a34' };
   if (value < 1.0) return { label: 'Low', color: '#7e568e' };
@@ -181,9 +180,8 @@ const DIMENSION_INFO = {
   migration: 'Immigration policy: 0 = Open borders, 6 = No immigration',
   economics: 'Economic intervention: 0 = Pure free market, 6 = Full state control',
   rights: 'Civil liberties & equality: 0 = Full legal equality, 6 = Criminalization',
-  extremity: 'How far positions are from the center point (3.0). Higher = more extreme positions from center overall. E.g., all 0s or all 6s = high extremity.',
+  divergence: 'How far positions are from the center point (3.0). Higher = positions diverge more from center overall. E.g., all 0s or all 6s = high divergence.',
   spread: 'How varied the positions are across dimensions. Higher = inconsistent positions across issues. Lower = consistent positions across issues. E.g., [0,0,6,6,0] = high spread.',
-  diversity: 'Legacy metric (same as Extremity). Measures distance from center point.',
 };
 
 // ColorSquare component for visual representation
@@ -243,7 +241,7 @@ export default function DataViewer() {
   const [viewMode, setViewMode] = useState<'table' | 'visualizations'>('visualizations');
   const [hoveredInfo, setHoveredInfo] = useState<string | null>(null);
   const [hoveredSegment, setHoveredSegment] = useState<{dimension: string, index: number} | null>(null);
-  const [hoveredScore, setHoveredScore] = useState<{id: string, type: 'extremity' | 'spread'} | null>(null);
+  const [hoveredScore, setHoveredScore] = useState<{id: string, type: 'divergence' | 'spread'} | null>(null);
   const [hoveredSquare, setHoveredSquare] = useState<{id: string, dimension: string, value: number} | null>(null);
   const [selectedAlliances, setSelectedAlliances] = useState<string[]>([]);
   const [allianceExpanded, setAllianceExpanded] = useState(true);
@@ -317,7 +315,7 @@ export default function DataViewer() {
       'Migration',
       'Economics',
       'Rights',
-      'Extremity Score',
+      'Divergence Score',
       'Spread Score',
       'Created At',
       'Updated At',
@@ -332,7 +330,7 @@ export default function DataViewer() {
       item.migration_score,
       item.economics_score,
       item.rights_score,
-      item.extremity_score.toFixed(2),
+      item.divergence_score.toFixed(2),
       item.spread_score.toFixed(2),
       new Date(item.created_at).toISOString(),
       new Date(item.updated_at).toISOString(),
@@ -353,8 +351,7 @@ export default function DataViewer() {
 
     const stats = {
       total: data.length,
-      avg_diversity: data.reduce((sum, item) => sum + item.diversity_score, 0) / data.length,
-      avg_extremity: data.reduce((sum, item) => sum + item.extremity_score, 0) / data.length,
+      avg_divergence: data.reduce((sum, item) => sum + item.divergence_score, 0) / data.length,
       avg_spread: data.reduce((sum, item) => sum + item.spread_score, 0) / data.length,
       dimensions: DIMENSION_LABELS.map(({ key, name }) => {
         const scores = data.map((item) => item[key as keyof PublicSpectrum] as number);
@@ -488,23 +485,23 @@ export default function DataViewer() {
               <div className={styles.statLabel}>Public Spectrums</div>
             </div>
             <div className={styles.statCard}>
-              <div className={styles.statValue}>{stats.avg_extremity.toFixed(2)}</div>
+              <div className={styles.statValue}>{stats.avg_divergence.toFixed(2)}</div>
               <div className={styles.statLabel}>
-                Avg Extremity
+                Avg Divergence
                 <button
                   className={styles.infoButton}
-                  onMouseEnter={() => setHoveredInfo('extremity_summary')}
+                  onMouseEnter={() => setHoveredInfo('divergence_summary')}
                   onMouseLeave={() => setHoveredInfo(null)}
                   onClick={(e) => {
                     e.preventDefault();
-                    setHoveredInfo(hoveredInfo === 'extremity_summary' ? null : 'extremity_summary');
+                    setHoveredInfo(hoveredInfo === 'divergence_summary' ? null : 'divergence_summary');
                   }}
                   style={{ marginLeft: '0.25rem' }}
                 >
                   <InfoIcon />
                 </button>
-                {hoveredInfo === 'extremity_summary' && (
-                  <div className={styles.tooltip}>{DIMENSION_INFO.extremity}</div>
+                {hoveredInfo === 'divergence_summary' && (
+                  <div className={styles.tooltip}>{DIMENSION_INFO.divergence}</div>
                 )}
               </div>
             </div>
@@ -820,20 +817,20 @@ export default function DataViewer() {
                 </th>
                 <th>
                   <span className={styles.columnHeader}>
-                    Extremity
+                    Divergence
                     <button
                       className={styles.infoButton}
-                      onMouseEnter={() => setHoveredInfo('extremity')}
+                      onMouseEnter={() => setHoveredInfo('divergence')}
                       onMouseLeave={() => setHoveredInfo(null)}
                       onClick={(e) => {
                         e.preventDefault();
-                        setHoveredInfo(hoveredInfo === 'extremity' ? null : 'extremity');
+                        setHoveredInfo(hoveredInfo === 'divergence' ? null : 'divergence');
                       }}
                     >
                       <InfoIcon />
                     </button>
-                    {hoveredInfo === 'extremity' && (
-                      <div className={styles.tooltip}>{DIMENSION_INFO.extremity}</div>
+                    {hoveredInfo === 'divergence' && (
+                      <div className={styles.tooltip}>{DIMENSION_INFO.divergence}</div>
                     )}
                   </span>
                 </th>
@@ -934,21 +931,21 @@ export default function DataViewer() {
                   </td>
                   <td 
                     className={styles.scoreCell}
-                    onMouseEnter={() => setHoveredScore({id: item.id, type: 'extremity'})}
+                    onMouseEnter={() => setHoveredScore({id: item.id, type: 'divergence'})}
                     onMouseLeave={() => setHoveredScore(null)}
-                    onClick={() => setHoveredScore(prev => prev?.id === item.id && prev?.type === 'extremity' ? null : {id: item.id, type: 'extremity'})}
+                    onClick={() => setHoveredScore(prev => prev?.id === item.id && prev?.type === 'divergence' ? null : {id: item.id, type: 'divergence'})}
                   >
                     <span 
                       className={styles.scoreLabel}
                       style={{ 
-                        color: getScaleLabel(item.extremity_score).color,
+                        color: getScaleLabel(item.divergence_score).color,
                         cursor: 'pointer',
                         fontWeight: 600
                       }}
                     >
-                      {hoveredScore?.id === item.id && hoveredScore?.type === 'extremity' 
-                        ? item.extremity_score.toFixed(2) 
-                        : getScaleLabel(item.extremity_score).label}
+                      {hoveredScore?.id === item.id && hoveredScore?.type === 'divergence' 
+                        ? item.divergence_score.toFixed(2) 
+                        : getScaleLabel(item.divergence_score).label}
                     </span>
                   </td>
                   <td 

@@ -18,12 +18,16 @@ export const dynamic = 'force-dynamic';
  * Query Parameters:
  * - page: Page number (default: 1)
  * - limit: Results per page (default: 100, max: 1000)
- * - sort: Sort field (created_at, updated_at, extremity_score, spread_score, times_updated)
+ * - sort: Sort field (created_at, updated_at, divergence_score, spread_score, times_updated)
  * - order: Sort order (asc, desc, default: desc)
- * - min_extremity: Minimum extremity score filter
- * - max_extremity: Maximum extremity score filter
+ * - min_divergence: Minimum divergence score filter
+ * - max_divergence: Maximum divergence score filter
  * - min_spread: Minimum spread score filter
  * - max_spread: Maximum spread score filter
+ * 
+ * Legacy parameters (for backward compatibility):
+ * - min_extremity, max_extremity (alias for min_divergence, max_divergence)
+ * - min_diversity, max_diversity (alias for min_divergence, max_divergence)
  */
 export async function GET(request: NextRequest) {
   const startTime = Date.now();
@@ -54,7 +58,7 @@ export async function GET(request: NextRequest) {
     const sortField = searchParams.get('sort') || 'created_at';
     const sortOrder = searchParams.get('order') || 'desc';
     
-    const validSortFields = ['created_at', 'updated_at', 'diversity_score', 'extremity_score', 'spread_score', 'times_updated'];
+    const validSortFields = ['created_at', 'updated_at', 'divergence_score', 'spread_score', 'times_updated'];
     const validOrders = ['asc', 'desc'];
     
     if (!validSortFields.includes(sortField) || !validOrders.includes(sortOrder)) {
@@ -64,11 +68,20 @@ export async function GET(request: NextRequest) {
       );
     }
     
-    // Filters
-    const minExtremity = searchParams.get('min_extremity') ? parseFloat(searchParams.get('min_extremity')!) : null;
-    const maxExtremity = searchParams.get('max_extremity') ? parseFloat(searchParams.get('max_extremity')!) : null;
-    const minSpread = searchParams.get('min_spread') ? parseFloat(searchParams.get('min_spread')!) : null;
-    const maxSpread = searchParams.get('max_spread') ? parseFloat(searchParams.get('max_spread')!) : null;
+    // Filters - support new divergence parameters and legacy extremity/diversity parameters
+    const minDivergence = searchParams.get('min_divergence') 
+      || searchParams.get('min_extremity') 
+      || searchParams.get('min_diversity');
+    const maxDivergence = searchParams.get('max_divergence')
+      || searchParams.get('max_extremity')
+      || searchParams.get('max_diversity');
+    const minSpread = searchParams.get('min_spread');
+    const maxSpread = searchParams.get('max_spread');
+    
+    const minDivergenceValue = minDivergence ? parseFloat(minDivergence) : null;
+    const maxDivergenceValue = maxDivergence ? parseFloat(maxDivergence) : null;
+    const minSpreadValue = minSpread ? parseFloat(minSpread) : null;
+    const maxSpreadValue = maxSpread ? parseFloat(maxSpread) : null;
     
     // Use service role client for API requests
     const supabase = getServiceSupabase();
@@ -79,17 +92,17 @@ export async function GET(request: NextRequest) {
       .select('*', { count: 'exact' });
     
     // Apply filters
-    if (minExtremity !== null) {
-      query = query.gte('extremity_score', minExtremity);
+    if (minDivergenceValue !== null) {
+      query = query.gte('divergence_score', minDivergenceValue);
     }
-    if (maxExtremity !== null) {
-      query = query.lte('extremity_score', maxExtremity);
+    if (maxDivergenceValue !== null) {
+      query = query.lte('divergence_score', maxDivergenceValue);
     }
-    if (minSpread !== null) {
-      query = query.gte('spread_score', minSpread);
+    if (minSpreadValue !== null) {
+      query = query.gte('spread_score', minSpreadValue);
     }
-    if (maxSpread !== null) {
-      query = query.lte('spread_score', maxSpread);
+    if (maxSpreadValue !== null) {
+      query = query.lte('spread_score', maxSpreadValue);
     }
     
     // Apply sorting and pagination

@@ -65,10 +65,14 @@ Retrieve political spectrum data from users who have opted to share their data p
 Query Parameters:
 - `page` - Page number (default: 1)
 - `limit` - Results per page (default: 100, max: 1000)
-- `sort` - Sort by: `created_at`, `updated_at`, `diversity_score`, `times_updated`
+- `sort` - Sort by: `created_at`, `updated_at`, `divergence_score`, `spread_score`, `times_updated`
 - `order` - Sort order: `asc` or `desc`
-- `min_diversity` - Filter by minimum diversity score
-- `max_diversity` - Filter by maximum diversity score
+- `min_divergence` - Filter by minimum divergence score
+- `max_divergence` - Filter by maximum divergence score
+- `min_spread` - Filter by minimum spread score
+- `max_spread` - Filter by maximum spread score
+
+_Legacy parameters still supported: `min_extremity`, `max_extremity`, `min_diversity`, `max_diversity` (aliases for divergence filters)_
 
 Response:
 ```json
@@ -82,7 +86,8 @@ Response:
       "migration_score": 3,
       "economics_score": 5,
       "rights_score": 1,
-      "diversity_score": 1.58,
+      "divergence_score": 1.58,
+      "spread_score": 1.92,
       "times_updated": 3,
       "created_at": "2025-01-15T10:30:00Z"
     }
@@ -95,6 +100,10 @@ Response:
   }
 }
 ```
+
+**Score Fields:**
+- `divergence_score` - How far positions diverge from center (3.0)
+- `spread_score` - How varied positions are across dimensions
 
 **See**: [Public Data API Documentation](./API_PUBLIC_DATA.md)  
 **Explore**: [Interactive Data Dashboard](https://squares.vote/data)

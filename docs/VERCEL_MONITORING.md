@@ -187,7 +187,7 @@ track('data_export', {
 
 track('api_usage', {
   endpoint: '/api/v1/data/spectrums',
-  query: 'sort=extremity_score',
+  query: 'sort=divergence_score',
 });
 ```
 

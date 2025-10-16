@@ -309,12 +309,14 @@ curl -X GET "https://squares.vote/api/v1/data/spectrums?page=1&limit=100" \
   -H "Authorization: Bearer live_xxx...xxx"
 ```
 
-### Filter by Extremity
+### Filter by Divergence Score
 
 ```bash
-curl -X GET "https://squares.vote/api/v1/data/spectrums?min_extremity=2.0&max_extremity=3.0" \
+curl -X GET "https://squares.vote/api/v1/data/spectrums?min_divergence=2.0&max_divergence=3.0" \
   -H "Authorization: Bearer live_xxx...xxx"
 ```
+
+_Note: Legacy parameters `min_extremity`/`max_extremity` and `min_diversity`/`max_diversity` are still supported as aliases._
 
 ### Sort by Spread Score
 
