@@ -231,31 +231,31 @@
   position: relative;
 }
 
-/* Alliance Group Filter Section */
-.allianceFilterSection {
+/* Bloc Group Filter Section */
+.blocFilterSection {
   padding: 2rem;
   border-bottom: 1px solid var(--border);
   background: rgba(255, 255, 255, 0.02);
 }
 
-.allianceHeader {
+.blocHeader {
   margin-bottom: 0;
 }
 
-.allianceHeaderContent {
+.blocHeaderContent {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
   gap: 1rem;
 }
 
-.allianceHeader h3 {
+.blocHeader h3 {
   margin: 0 0 0.5rem 0;
   font-size: 1.3rem;
   color: var(--text-primary);
 }
 
-.allianceHeader p {
+.blocHeader p {
   margin: 0;
   color: var(--text-secondary);
   font-size: 0.9rem;
@@ -284,14 +284,14 @@
   border-color: var(--border-strong);
 }
 
-.allianceGrid {
+.blocGrid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: 0.75rem;
   margin-top: 1.5rem;
 }
 
-.allianceButton {
+.blocButton {
   background: rgba(255, 255, 255, 0.05);
   border: 2px solid var(--border);
   border-radius: 8px;
@@ -304,44 +304,44 @@
   gap: 0.4rem;
 }
 
-.allianceButton:hover:not(:disabled):not(.allianceButtonActive) {
+.blocButton:hover:not(:disabled):not(.blocButtonActive) {
   background: rgba(255, 255, 255, 0.08);
   border-color: var(--border-strong);
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
-.allianceButton:disabled {
+.blocButton:disabled {
   opacity: 0.4;
   cursor: not-allowed;
 }
 
-.allianceButtonActive {
+.blocButtonActive {
   background: rgba(255, 255, 255, 0.12);
   border-color: rgba(255, 255, 255, 0.3);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
 }
 
-.allianceButtonActive:hover {
+.blocButtonActive:hover {
   background: rgba(255, 255, 255, 0.15);
   border-color: rgba(255, 255, 255, 0.35);
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
 }
 
-.allianceName {
+.blocName {
   font-size: 0.9rem;
   font-weight: 600;
   color: var(--text-primary);
 }
 
-.allianceDescription {
+.blocDescription {
   font-size: 0.8rem;
   color: var(--text-secondary);
   line-height: 1.3;
 }
 
-.allianceCount {
+.blocCount {
   font-size: 0.7rem;
   color: var(--text-muted);
   font-weight: 500;

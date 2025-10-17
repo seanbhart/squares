@@ -67,22 +67,22 @@ function getScaleLabel(value: number): { label: string; color: string } {
   return { label: 'Very High', color: '#c0392b' };
 }
 
-// Color Pattern Alliance Definitions
-type AllianceGroup = {
+// Color Pattern Bloc Definitions
+type BlocGroup = {
   id: string;
   name: string;
   description: string;
   criteria: (item: PublicSpectrum) => boolean;
 };
 
-const ALLIANCE_GROUPS: AllianceGroup[] = [
+const BLOC_GROUPS: BlocGroup[] = [
   // Color spectrum: 0=purple, 1=blue, 2=green, 3=yellow, 4=orange, 5=red, 6=black
-  // Criteria: At least 3 dimensions must be in the alliance's color range
+  // Criteria: At least 3 dimensions must be in the bloc's color range
   
-  // Post-Scarcity Front: Purple-Blue (0-1)
+  // Postscarcity Front: Purple-Blue (0-1)
   {
     id: 'post_scarcity',
-    name: 'Post-Scarcity Front',
+    name: 'Postscarcity Front',
     description: 'Very progressive - UBI, automation, post-scarcity economics',
     criteria: (item) => {
       const scores = [item.trade_score, item.abortion_score, item.migration_score, item.economics_score, item.rights_score];
@@ -222,8 +222,8 @@ export default function DataViewer() {
   const [hoveredSegment, setHoveredSegment] = useState<{dimension: string, index: number} | null>(null);
   const [hoveredScore, setHoveredScore] = useState<{id: string, type: 'divergence' | 'spread'} | null>(null);
   const [hoveredSquare, setHoveredSquare] = useState<{id: string, dimension: string, value: number} | null>(null);
-  const [selectedAlliances, setSelectedAlliances] = useState<string[]>([]);
-  const [allianceExpanded, setAllianceExpanded] = useState(true);
+  const [selectedBlocs, setSelectedBlocs] = useState<string[]>([]);
+  const [blocExpanded, setBlocExpanded] = useState(true);
   const [openFilter, setOpenFilter] = useState<string | null>(null);
   const [filters, setFilters] = useState<{
     trade: number[];
@@ -353,10 +353,10 @@ export default function DataViewer() {
 
   const stats = calculateStats();
 
-  // Calculate alliance group membership counts
-  const allianceGroupCounts = useMemo(() => {
+  // Calculate bloc group membership counts
+  const blocGroupCounts = useMemo(() => {
     const counts: Record<string, number> = {};
-    ALLIANCE_GROUPS.forEach(group => {
+    BLOC_GROUPS.forEach(group => {
       counts[group.id] = data.filter(group.criteria).length;
     });
     return counts;
@@ -373,17 +373,17 @@ export default function DataViewer() {
       filters.rights.includes(item.rights_score)
     );
 
-    // Apply alliance filters (if any selected)
-    if (selectedAlliances.length === 0) {
+    // Apply bloc filters (if any selected)
+    if (selectedBlocs.length === 0) {
       return matchesDimensionFilters;
     }
 
-    const matchesAllianceFilters = selectedAlliances.some(allianceId => {
-      const group = ALLIANCE_GROUPS.find(g => g.id === allianceId);
+    const matchesBlocFilters = selectedBlocs.some(blocId => {
+      const group = BLOC_GROUPS.find(g => g.id === blocId);
       return group && group.criteria(item);
     });
 
-    return matchesDimensionFilters && matchesAllianceFilters;
+    return matchesDimensionFilters && matchesBlocFilters;
   });
 
   const toggleFilter = (dimension: keyof typeof filters, value: number) => {
@@ -404,14 +404,14 @@ export default function DataViewer() {
       economics: [0, 1, 2, 3, 4, 5, 6],
       rights: [0, 1, 2, 3, 4, 5, 6],
     });
-    setSelectedAlliances([]);
+    setSelectedBlocs([]);
   };
 
-  const toggleAlliance = (allianceId: string) => {
-    setSelectedAlliances(prev => 
-      prev.includes(allianceId)
-        ? prev.filter(id => id !== allianceId)
-        : [...prev, allianceId]
+  const toggleBloc = (blocId: string) => {
+    setSelectedBlocs(prev => 
+      prev.includes(blocId)
+        ? prev.filter(id => id !== blocId)
+        : [...prev, blocId]
     );
   };
 
@@ -611,45 +611,45 @@ export default function DataViewer() {
 
       {viewMode === 'table' && (
         <div className={styles.tableContainer}>
-          <div className={styles.allianceFilterSection}>
-            <div className={styles.allianceHeader}>
-              <div className={styles.allianceHeaderContent}>
+          <div className={styles.blocFilterSection}>
+            <div className={styles.blocHeader}>
+              <div className={styles.blocHeaderContent}>
                 <div>
-                  <h3>Common Ground Alliances</h3>
+                  <h3>Common Ground Blocs</h3>
                   <p>Friends with similar sentiments</p>
                 </div>
                 <button 
                   className={styles.collapseButton}
-                  onClick={() => setAllianceExpanded(!allianceExpanded)}
-                  aria-label={allianceExpanded ? 'Collapse' : 'Expand'}
+                  onClick={() => setBlocExpanded(!blocExpanded)}
+                  aria-label={blocExpanded ? 'Collapse' : 'Expand'}
                 >
-                  {allianceExpanded ? '−' : '+'}
+                  {blocExpanded ? '−' : '+'}
                 </button>
               </div>
             </div>
-            {allianceExpanded && (
-            <div className={styles.allianceGrid}>
-              {ALLIANCE_GROUPS.map(group => (
+            {blocExpanded && (
+            <div className={styles.blocGrid}>
+              {BLOC_GROUPS.map(group => (
                 <button
                   key={group.id}
-                  className={`${styles.allianceButton} ${selectedAlliances.includes(group.id) ? styles.allianceButtonActive : ''}`}
-                  onClick={() => toggleAlliance(group.id)}
-                  disabled={allianceGroupCounts[group.id] === 0}
+                  className={`${styles.blocButton} ${selectedBlocs.includes(group.id) ? styles.blocButtonActive : ''}`}
+                  onClick={() => toggleBloc(group.id)}
+                  disabled={blocGroupCounts[group.id] === 0}
                 >
-                  <div className={styles.allianceName}>{group.name}</div>
-                  <div className={styles.allianceDescription}>{group.description}</div>
-                  <div className={styles.allianceCount}>
-                    {allianceGroupCounts[group.id].toLocaleString()} {allianceGroupCounts[group.id] === 1 ? 'user' : 'users'}
+                  <div className={styles.blocName}>{group.name}</div>
+                  <div className={styles.blocDescription}>{group.description}</div>
+                  <div className={styles.blocCount}>
+                    {blocGroupCounts[group.id].toLocaleString()} {blocGroupCounts[group.id] === 1 ? 'user' : 'users'}
                   </div>
                 </button>
               ))}
             </div>
             )}
           </div>
-          {(filters.trade.length < 7 || filters.abortion.length < 7 || filters.migration.length < 7 || filters.economics.length < 7 || filters.rights.length < 7 || selectedAlliances.length > 0) && (
+          {(filters.trade.length < 7 || filters.abortion.length < 7 || filters.migration.length < 7 || filters.economics.length < 7 || filters.rights.length < 7 || selectedBlocs.length > 0) && (
             <div className={styles.filterInfo}>
-              {selectedAlliances.length > 0 && (
-                <span>{selectedAlliances.length} {selectedAlliances.length === 1 ? 'alliance' : 'alliances'} selected • </span>
+              {selectedBlocs.length > 0 && (
+                <span>{selectedBlocs.length} {selectedBlocs.length === 1 ? 'bloc' : 'blocs'} selected • </span>
               )}
               {filteredData.length} of {data.length} results
               <button onClick={resetFilters} className={styles.resetButton}>Reset All Filters</button>
