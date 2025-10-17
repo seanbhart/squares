@@ -67,7 +67,7 @@ function getScaleLabel(value: number): { label: string; color: string } {
   return { label: 'Very High', color: '#c0392b' };
 }
 
-// Cross-Cutting Alliance Group Definitions
+// Color Pattern Alliance Definitions
 type AllianceGroup = {
   id: string;
   name: string;
@@ -76,101 +76,150 @@ type AllianceGroup = {
 };
 
 const ALLIANCE_GROUPS: AllianceGroup[] = [
+  // Single Color Dominance
   {
-    id: 'decentralization',
-    name: 'Decentralization Alliance',
-    description: 'Opposition to centralized control (economic OR movement)',
-    criteria: (item) => item.economics_score <= 2 || item.trade_score <= 1 || item.migration_score <= 1,
-  },
-  {
-    id: 'community_protection',
-    name: 'Community Protection Coalition',
-    description: 'Protecting local community/resources',
-    criteria: (item) => 
-      (item.trade_score >= 4 && item.migration_score >= 4) || 
-      (item.economics_score >= 4 && item.migration_score >= 4),
-  },
-  {
-    id: 'personal_autonomy',
-    name: 'Personal Autonomy Alliance',
-    description: 'Bodily autonomy and personal freedom',
-    criteria: (item) => item.abortion_score <= 2 && item.rights_score <= 2,
-  },
-  {
-    id: 'traditional_order',
-    name: 'Traditional Order Coalition',
-    description: 'Traditional social structures',
-    criteria: (item) => 
-      (item.abortion_score >= 4 && item.rights_score >= 4) || 
-      item.abortion_score >= 5 || 
-      item.rights_score >= 5,
-  },
-  {
-    id: 'economic_justice',
-    name: 'Economic Justice Advocates',
-    description: 'Strong government role in economy',
-    criteria: (item) => 
-      item.economics_score >= 4 && 
-      (item.trade_score <= 2 || item.trade_score >= 4),
-  },
-  {
-    id: 'maximum_freedom',
-    name: 'Maximum Freedom Maximalists',
-    description: 'Minimal government across most areas',
+    id: 'green_blue',
+    name: '🟩🟦',
+    description: 'Low intervention consistent',
     criteria: (item) => {
-      const lowScores = [
-        item.trade_score,
-        item.abortion_score,
-        item.migration_score,
-        item.economics_score,
-        item.rights_score,
-      ].filter(score => score <= 1).length;
-      return lowScores >= 4;
+      const scores = [item.trade_score, item.abortion_score, item.migration_score, item.economics_score, item.rights_score];
+      const hasGreen = scores.some(s => s <= 1); // At least one green (0-1)
+      const hasBlue = scores.some(s => s >= 1 && s <= 2); // At least one blue (1-2)
+      const lowCount = scores.filter(s => s <= 2).length; // Most are low
+      return hasGreen && hasBlue && lowCount >= 3;
     },
   },
   {
-    id: 'maximum_authority',
-    name: 'Maximum Authority Maximalists',
-    description: 'Strong government across most areas',
+    id: 'blue_yellow',
+    name: '🟦🟨',
+    description: 'Center-left pragmatists',
     criteria: (item) => {
-      const highScores = [
-        item.trade_score,
-        item.abortion_score,
-        item.migration_score,
-        item.economics_score,
-        item.rights_score,
-      ].filter(score => score >= 5).length;
-      return highScores >= 4;
+      const scores = [item.trade_score, item.abortion_score, item.migration_score, item.economics_score, item.rights_score];
+      const hasBlue = scores.some(s => s >= 1 && s <= 2); // At least one blue
+      const hasYellow = scores.some(s => s === 3); // At least one yellow (center)
+      const inRange = scores.filter(s => s >= 1 && s <= 3).length;
+      return hasBlue && hasYellow && inRange >= 3;
     },
   },
   {
-    id: 'single_issue_moderate',
-    name: 'Single-Issue Focused',
-    description: 'Passionate about one issue, pragmatic on others',
+    id: 'yellow_core',
+    name: '🟨',
+    description: 'True centrists',
     criteria: (item) => {
-      const scores = [
-        item.trade_score,
-        item.abortion_score,
-        item.migration_score,
-        item.economics_score,
-        item.rights_score,
-      ];
-      const extremes = scores.filter(score => score === 0 || score === 6).length;
-      const moderates = scores.filter(score => score >= 2 && score <= 4).length;
-      return extremes === 1 && moderates >= 4;
+      const scores = [item.trade_score, item.abortion_score, item.migration_score, item.economics_score, item.rights_score];
+      const yellowCount = scores.filter(s => s >= 2 && s <= 4).length;
+      const hasExtremes = scores.some(s => s <= 1 || s >= 5);
+      return yellowCount >= 4 && !hasExtremes; // Mostly yellow, no extremes
     },
   },
   {
-    id: 'economic_libertarian',
-    name: 'Economic Libertarian',
-    description: 'Free market economics regardless of social views',
-    criteria: (item) => item.economics_score <= 2 && item.trade_score <= 2,
+    id: 'yellow_orange',
+    name: '🟨🟧',
+    description: 'Center-right traditionalists',
+    criteria: (item) => {
+      const scores = [item.trade_score, item.abortion_score, item.migration_score, item.economics_score, item.rights_score];
+      const hasYellow = scores.some(s => s === 3); // At least one yellow
+      const hasOrange = scores.some(s => s >= 4 && s <= 5); // At least one orange
+      const inRange = scores.filter(s => s >= 3 && s <= 5).length;
+      return hasYellow && hasOrange && inRange >= 3;
+    },
   },
   {
-    id: 'social_progressive',
-    name: 'Social Progressive',
-    description: 'Personal freedom regardless of economic views',
-    criteria: (item) => item.abortion_score <= 2 && item.rights_score <= 2,
+    id: 'orange_red',
+    name: '🟧🟥',
+    description: 'High intervention consistent',
+    criteria: (item) => {
+      const scores = [item.trade_score, item.abortion_score, item.migration_score, item.economics_score, item.rights_score];
+      const hasOrange = scores.some(s => s >= 4 && s <= 5); // At least one orange
+      const hasRed = scores.some(s => s === 6); // At least one red
+      const highCount = scores.filter(s => s >= 4).length;
+      return hasOrange && hasRed && highCount >= 3;
+    },
+  },
+  
+  // Two-Color Blends
+  {
+    id: 'green_yellow_mix',
+    name: '🟩🟨',
+    description: 'Flexible moderates',
+    criteria: (item) => {
+      const scores = [item.trade_score, item.abortion_score, item.migration_score, item.economics_score, item.rights_score];
+      const hasGreen = scores.some(s => s <= 1);
+      const hasYellow = scores.some(s => s >= 2 && s <= 3);
+      const noHighIntervention = scores.every(s => s <= 3);
+      const inRange = scores.filter(s => s <= 3).length;
+      return hasGreen && hasYellow && noHighIntervention && inRange >= 4;
+    },
+  },
+  {
+    id: 'yellow_red_mix',
+    name: '🟨🟥',
+    description: 'Order and structure',
+    criteria: (item) => {
+      const scores = [item.trade_score, item.abortion_score, item.migration_score, item.economics_score, item.rights_score];
+      const hasYellow = scores.some(s => s >= 3 && s <= 4);
+      const hasRed = scores.some(s => s >= 5);
+      const noLowIntervention = scores.every(s => s >= 3);
+      const inRange = scores.filter(s => s >= 3).length;
+      return hasYellow && hasRed && noLowIntervention && inRange >= 4;
+    },
+  },
+  {
+    id: 'split_spectrum',
+    name: '🟩🟥',
+    description: 'Cross-pressured',
+    criteria: (item) => {
+      const scores = [item.trade_score, item.abortion_score, item.migration_score, item.economics_score, item.rights_score];
+      const hasGreen = scores.some(s => s <= 1);
+      const hasRed = scores.some(s => s >= 5);
+      const lowCount = scores.filter(s => s <= 2).length;
+      const highCount = scores.filter(s => s >= 4).length;
+      return hasGreen && hasRed && lowCount >= 2 && highCount >= 2;
+    },
+  },
+  {
+    id: 'rainbow',
+    name: '🟩🟦🟨🟧🟥',
+    description: 'Full spectrum thinkers',
+    criteria: (item) => {
+      const scores = [item.trade_score, item.abortion_score, item.migration_score, item.economics_score, item.rights_score];
+      const hasGreen = scores.some(s => s <= 1);
+      const hasBlue = scores.some(s => s >= 1 && s <= 2);
+      const hasYellow = scores.some(s => s === 3);
+      const hasOrange = scores.some(s => s >= 4 && s <= 5);
+      const hasRed = scores.some(s => s === 6);
+      // Must have at least 4 of the 5 color ranges
+      const colorCount = [hasGreen, hasBlue, hasYellow, hasOrange, hasRed].filter(Boolean).length;
+      return colorCount >= 4;
+    },
+  },
+  
+  // Temperature Groups
+  {
+    id: 'cool_colors',
+    name: '🟩🟦🟨',
+    description: 'Progressive-moderate',
+    criteria: (item) => {
+      const scores = [item.trade_score, item.abortion_score, item.migration_score, item.economics_score, item.rights_score];
+      const hasGreen = scores.some(s => s <= 1);
+      const hasBlueOrYellow = scores.some(s => s >= 1 && s <= 3);
+      const coolCount = scores.filter(s => s <= 3).length;
+      const hasWarm = scores.some(s => s >= 4);
+      return hasGreen && hasBlueOrYellow && coolCount >= 4 && !hasWarm;
+    },
+  },
+  {
+    id: 'warm_colors',
+    name: '🟨🟧🟥',
+    description: 'Conservative-moderate',
+    criteria: (item) => {
+      const scores = [item.trade_score, item.abortion_score, item.migration_score, item.economics_score, item.rights_score];
+      const hasRed = scores.some(s => s >= 5);
+      const hasOrangeOrYellow = scores.some(s => s >= 3 && s <= 5);
+      const warmCount = scores.filter(s => s >= 3).length;
+      const hasCool = scores.some(s => s <= 2);
+      return hasRed && hasOrangeOrYellow && warmCount >= 4 && !hasCool;
+    },
   },
 ];
 
@@ -636,8 +685,8 @@ export default function DataViewer() {
             <div className={styles.allianceHeader}>
               <div className={styles.allianceHeaderContent}>
                 <div>
-                  <h3>Common Ground Groups</h3>
-                  <p>Find users who share positions across dimensions</p>
+                  <h3>Common Ground Alliances</h3>
+                  <p>Friends with similar sentiments</p>
                 </div>
                 <button 
                   className={styles.collapseButton}
@@ -670,7 +719,7 @@ export default function DataViewer() {
           {(filters.trade.length < 7 || filters.abortion.length < 7 || filters.migration.length < 7 || filters.economics.length < 7 || filters.rights.length < 7 || selectedAlliances.length > 0) && (
             <div className={styles.filterInfo}>
               {selectedAlliances.length > 0 && (
-                <span>{selectedAlliances.length} alliance {selectedAlliances.length === 1 ? 'group' : 'groups'} selected • </span>
+                <span>{selectedAlliances.length} {selectedAlliances.length === 1 ? 'alliance' : 'alliances'} selected • </span>
               )}
               {filteredData.length} of {data.length} results
               <button onClick={resetFilters} className={styles.resetButton}>Reset All Filters</button>

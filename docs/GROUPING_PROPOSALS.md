@@ -356,7 +356,145 @@ These identify unexpected common ground that transcends typical political catego
 
 ---
 
-## 6. Dimension-Specific Recommendations
+## 6. Color Pattern Groups
+
+These groups identify users whose spectrum displays a visual pattern of similar colors, indicating consistent position ranges across multiple dimensions. Not every dimension needs to match, but the overall pattern creates a recognizable color theme.
+
+### Green-Blue Spectrum (Positions 0-2 dominant)
+**Low Intervention Consistent**
+- **Criteria**: 3+ dimensions at positions 0-2
+- **Common ground**: Preference for minimal government action across multiple areas
+- **Visual pattern**: Mostly green and blue squares
+- **Profile**: Consistent low-intervention philosophy
+- **Examples**: 
+  - All 0-1s (pure green)
+  - Mix of 0-2 across trade, economics, rights, migration
+  - May have 1-2 dimensions outside this range
+
+### Blue-Yellow Center (Positions 1-3 dominant)
+**Center-Left Pragmatists**
+- **Criteria**: 3+ dimensions at positions 1-3
+- **Common ground**: Moderate approaches with slight lean toward less intervention
+- **Visual pattern**: Blue, light green, and yellow squares
+- **Profile**: Pragmatic centrists, evidence-based policy
+- **Examples**:
+  - Trade 2, Economics 3, Rights 1, Migration 2
+  - Avoid extremes but not rigidly centrist
+
+### Yellow Core (Positions 2-4 dominant)
+**True Centrists**
+- **Criteria**: 4+ dimensions at positions 2-4
+- **Common ground**: Middle-ground philosophy across most issues
+- **Visual pattern**: Predominantly yellow squares with some blue/orange
+- **Profile**: Balance-seekers, compromise-oriented
+- **Examples**:
+  - All 3s (perfect center)
+  - Mix of 2-4 across all dimensions
+  - Already covered in "Pragmatic Moderates" but worth highlighting visually
+
+### Yellow-Orange Balance (Positions 3-5 dominant)
+**Center-Right Traditionalists**
+- **Criteria**: 3+ dimensions at positions 3-5
+- **Common ground**: Moderate-to-higher intervention, traditional approaches
+- **Visual pattern**: Yellow and orange squares
+- **Profile**: Cautious change, respect for established systems
+- **Examples**:
+  - Economics 4, Trade 5, Rights 4, Abortion 3
+  - Prefers existing frameworks with gradual reform
+
+### Orange-Red Authority (Positions 4-6 dominant)
+**High Intervention Consistent**
+- **Criteria**: 3+ dimensions at positions 4-6
+- **Common ground**: Strong government or traditional authority across areas
+- **Visual pattern**: Mostly orange and red squares
+- **Profile**: Belief in active state/traditional role
+- **Examples**:
+  - Mix of 4-6 across economics, migration, abortion, rights
+  - May include nationalist welfare states or traditional conservatives
+
+### Green-Yellow Mix (Positions 0-3, spread)
+**Flexible Moderates**
+- **Criteria**: Most dimensions 0-3, with variety across the range
+- **Common ground**: Open to market solutions and moderate government
+- **Visual pattern**: Green, blue, and yellow - no red/orange
+- **Profile**: Reform-minded, not authoritarian
+- **Examples**:
+  - Trade 0, Economics 3, Rights 1, Migration 2, Abortion 3
+  - Avoids restrictive/high-intervention positions
+
+### Yellow-Red Mix (Positions 3-6, spread)
+**Order and Structure**
+- **Criteria**: Most dimensions 3-6, with variety across the range
+- **Common ground**: Values stability, structure, and established systems
+- **Visual pattern**: Yellow, orange, and red - no green/blue
+- **Profile**: Traditional, risk-averse, order-focused
+- **Examples**:
+  - Trade 4, Economics 5, Rights 6, Migration 5, Abortion 3
+  - Avoids libertarian/minimal-intervention positions
+
+### Split Spectrum (Green-Blue + Orange-Red)
+**Ideological Cross-Pressured**
+- **Criteria**: 2+ dimensions at 0-2 AND 2+ dimensions at 4-6
+- **Common ground**: Strong views in opposite directions on different issues
+- **Visual pattern**: Mix of green/blue with orange/red, little yellow
+- **Profile**: Libertarian on some issues, authoritarian on others
+- **Examples**:
+  - Economics 0, Trade 1, Abortion 6, Rights 5 (libertarian economics, social conservative)
+  - Economics 6, Rights 0, Migration 0, Trade 5 (socialist economics, social liberal)
+  - Already captured in "Ideological Independents" but worth highlighting visually
+
+### Rainbow Spectrum (All colors represented)
+**Full Spectrum Thinkers**
+- **Criteria**: At least one dimension in each range: 0-1, 2-3, 4-5, 5-6
+- **Common ground**: Issue-by-issue evaluation, no ideological consistency
+- **Visual pattern**: All colors from green through red
+- **Profile**: Maximum diversity of thought, defies categorization
+- **Examples**:
+  - Trade 0, Economics 3, Rights 5, Migration 1, Abortion 6
+  - Probably frustrating to discuss politics with but interesting
+
+### Cool Colors Dominant (Blue-Green-Yellow, positions 0-3)
+**Progressive-Moderate Coalition**
+- **Criteria**: 4+ dimensions at positions 0-3, with at least 2 dimensions at 0-2
+- **Common ground**: Generally favor less restrictive policies
+- **Visual pattern**: Cool colors (green, blue, yellow), minimal warm colors
+- **Profile**: Progressive to moderate, open to change
+- **Differentiates from**: Pure centrists by having some strong low-intervention positions
+
+### Warm Colors Dominant (Yellow-Orange-Red, positions 3-6)
+**Conservative-Moderate Coalition**
+- **Criteria**: 4+ dimensions at positions 3-6, with at least 2 dimensions at 4-6
+- **Common ground**: Generally favor more structured/traditional policies
+- **Visual pattern**: Warm colors (yellow, orange, red), minimal cool colors
+- **Profile**: Traditional to moderate, cautious about change
+- **Differentiates from**: Pure centrists by having some strong high-intervention positions
+
+### Complementary Colors (Split patterns)
+**Economic vs Social Divides**
+
+**Green Economics, Red Social** (Economics 0-2, Abortion/Rights 5-6)
+- Conservative social values with free market economics
+- Visual: Green squares + red squares
+- Profile: Fusionist conservatism
+
+**Red Economics, Green Social** (Economics 5-6, Abortion/Rights 0-2)
+- Progressive social values with socialist economics
+- Visual: Red squares + green squares
+- Profile: Democratic socialism
+
+**Green Trade/Migration, Red Abortion/Rights** (Trade/Migration 0-2, Abortion/Rights 5-6)
+- Open borders libertarian meets social conservative
+- Visual: Green + red in different domains
+- Profile: Complex libertarian-traditionalist
+
+**Red Trade/Migration, Green Abortion/Rights** (Trade/Migration 5-6, Abortion/Rights 0-2)
+- Closed borders with personal freedom
+- Visual: Red + green in different domains
+- Profile: Economic nationalist progressive
+
+---
+
+## 7. Dimension-Specific Recommendations
 
 ### Tight Grouping Required (1-2 point range max)
 
@@ -422,7 +560,13 @@ These identify unexpected common ground that transcends typical political catego
 - Ideological profiles
 - Helps find similar overall worldviews
 
-**Tier 4: Cross-Cutting Alliances** (12-15 groups)
+**Tier 4: Color Pattern Groups** (15-18 groups)
+- Visual color themes and combinations
+- Easy to understand at a glance
+- Helps users identify by overall tendency
+- Appeals to visual thinkers
+
+**Tier 5: Cross-Cutting Alliances** (12-15 groups)
 - Unexpected common ground
 - Issue-specific focus
 - Helps break echo chambers
@@ -468,12 +612,15 @@ These identify unexpected common ground that transcends typical political catego
 
 ## Conclusion
 
-This grouping framework creates **60-80 overlapping groups** that:
+This grouping framework creates **75-95 overlapping groups** that:
 1. Respect the intensity of certain positions (abortion/migration/economics extremes)
 2. Allow flexibility where topics are less divisive (trade, centrist positions)
 3. Create unexpected alliances across dimensions
-4. Help users find common ground even when they differ on other issues
-5. Avoid partisan labels in favor of descriptive, intervention-based language
-6. Enable rich recommendation and community-building features
+4. **Identify visual color patterns that indicate overall political tendencies**
+5. Help users find common ground even when they differ on other issues
+6. Avoid partisan labels in favor of descriptive, intervention-based language
+7. Enable rich recommendation and community-building features
 
 The key insight is that **common ground exists on single issues even when people disagree on everything else**. By creating many overlapping groups, we help users discover allies they might not expect, build coalitions across traditional divides, and recognize the complexity of political identity beyond simple left-right categorization.
+
+**The Color Pattern Groups are particularly powerful** because they make abstract political positions immediately visible and intuitive. Users can quickly see "I'm mostly green and yellow" or "I have green economics but red social views" and find others with similar visual patterns. This adds an accessible, engaging layer to political self-identification that complements the more analytical single and two-dimension groups.
