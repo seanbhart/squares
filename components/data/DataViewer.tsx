@@ -76,143 +76,90 @@ type AllianceGroup = {
 };
 
 const ALLIANCE_GROUPS: AllianceGroup[] = [
-  // Single Color Dominance
+  // TIGHTENED CRITERIA: At least 3 dimensions in color scheme, outliers max 1 color away
+  
+  // Post-Scarcity Front: Very progressive (green 0-1, blue 2)
+  {
+    id: 'post_scarcity',
+    name: 'Post-Scarcity Front',
+    description: 'Very progressive - UBI, automation, post-scarcity economics',
+    criteria: (item) => {
+      const scores = [item.trade_score, item.abortion_score, item.migration_score, item.economics_score, item.rights_score];
+      const inScheme = scores.filter(s => s <= 2).length; // Green-blue range (0-2)
+      const outliers = scores.filter(s => s > 2);
+      const maxOutlier = outliers.length > 0 ? Math.max(...outliers) : 0;
+      return inScheme >= 3 && maxOutlier <= 3; // At least 3 in scheme, outliers only yellow
+    },
+  },
+  
+  // Builder Corps: Pro-growth progressives (green 0-1, blue 2)
   {
     id: 'green_blue',
-    name: '🟩🟦',
-    description: 'Low intervention consistent',
+    name: 'Builder Corps',
+    description: 'Pro-growth progressives - state capacity, YIMBY, growth-oriented',
     criteria: (item) => {
       const scores = [item.trade_score, item.abortion_score, item.migration_score, item.economics_score, item.rights_score];
-      const inRange = scores.filter(s => s <= 2).length; // Green-blue range (0-2)
-      const tooFar = scores.some(s => s >= 4); // Orange or red is too far (more than one color away)
-      return inRange >= 2 && !tooFar; // At least 2 in range, no orange/red
-    },
-  },
-  {
-    id: 'blue_yellow',
-    name: '🟦🟨',
-    description: 'Center-left pragmatists',
-    criteria: (item) => {
-      const scores = [item.trade_score, item.abortion_score, item.migration_score, item.economics_score, item.rights_score];
-      const inRange = scores.filter(s => s >= 1 && s <= 3).length; // Blue-yellow range (1-3)
-      const tooFar = scores.some(s => s === 0 || s >= 5); // Green 0 or orange/red is too far
-      return inRange >= 2 && !tooFar; // At least 2 in range, nothing too extreme
-    },
-  },
-  {
-    id: 'yellow_core',
-    name: '🟨',
-    description: 'True centrists',
-    criteria: (item) => {
-      const scores = [item.trade_score, item.abortion_score, item.migration_score, item.economics_score, item.rights_score];
-      const yellowCount = scores.filter(s => s >= 2 && s <= 4).length;
-      const hasExtremes = scores.some(s => s <= 1 || s >= 5);
-      return yellowCount >= 4 && !hasExtremes; // Mostly yellow, no extremes
-    },
-  },
-  {
-    id: 'yellow_orange',
-    name: '🟨🟧',
-    description: 'Center-right traditionalists',
-    criteria: (item) => {
-      const scores = [item.trade_score, item.abortion_score, item.migration_score, item.economics_score, item.rights_score];
-      const inRange = scores.filter(s => s >= 3 && s <= 5).length; // Yellow-orange range (3-5)
-      const tooFar = scores.some(s => s <= 1 || s === 6); // Green or red 6 is too far
-      return inRange >= 2 && !tooFar; // At least 2 in range, no green or red extremes
-    },
-  },
-  {
-    id: 'orange_red',
-    name: '🟧🟥',
-    description: 'High intervention consistent',
-    criteria: (item) => {
-      const scores = [item.trade_score, item.abortion_score, item.migration_score, item.economics_score, item.rights_score];
-      const inRange = scores.filter(s => s >= 4).length; // Orange-red range (4-6)
-      const tooFar = scores.some(s => s <= 2); // Green or blue is too far (more than one color away)
-      return inRange >= 2 && !tooFar; // At least 2 in range, no green/blue
+      const inScheme = scores.filter(s => s <= 2).length; // Green-blue range (0-2)
+      const outliers = scores.filter(s => s > 2);
+      const maxOutlier = outliers.length > 0 ? Math.max(...outliers) : 0;
+      return inScheme >= 3 && maxOutlier <= 3; // At least 3 in scheme, outliers only yellow
     },
   },
   
-  // Two-Color Blends
-  {
-    id: 'green_yellow_mix',
-    name: '🟩🟨',
-    description: 'Flexible moderates',
-    criteria: (item) => {
-      const scores = [item.trade_score, item.abortion_score, item.migration_score, item.economics_score, item.rights_score];
-      const inRange = scores.filter(s => s <= 3).length; // Green-yellow range (0-3)
-      const tooFar = scores.some(s => s >= 5); // Red is too far (more than one color away)
-      return inRange >= 2 && !tooFar; // At least 2 in range, no red
-    },
-  },
-  {
-    id: 'yellow_red_mix',
-    name: '🟨🟥',
-    description: 'Order and structure',
-    criteria: (item) => {
-      const scores = [item.trade_score, item.abortion_score, item.migration_score, item.economics_score, item.rights_score];
-      const hasYellow = scores.some(s => s >= 3 && s <= 4);
-      const hasRed = scores.some(s => s >= 5);
-      const noLowIntervention = scores.every(s => s >= 3);
-      const inRange = scores.filter(s => s >= 3).length;
-      return hasYellow && hasRed && noLowIntervention && inRange >= 4;
-    },
-  },
-  {
-    id: 'split_spectrum',
-    name: '🟩🟥',
-    description: 'Cross-pressured',
-    criteria: (item) => {
-      const scores = [item.trade_score, item.abortion_score, item.migration_score, item.economics_score, item.rights_score];
-      const hasGreen = scores.some(s => s <= 1);
-      const hasRed = scores.some(s => s >= 5);
-      const lowCount = scores.filter(s => s <= 2).length;
-      const highCount = scores.filter(s => s >= 4).length;
-      return hasGreen && hasRed && lowCount >= 2 && highCount >= 2;
-    },
-  },
-  {
-    id: 'rainbow',
-    name: '🟩🟦🟨🟧🟥',
-    description: 'Full spectrum thinkers',
-    criteria: (item) => {
-      const scores = [item.trade_score, item.abortion_score, item.migration_score, item.economics_score, item.rights_score];
-      const hasGreen = scores.some(s => s <= 1);
-      const hasBlue = scores.some(s => s >= 1 && s <= 2);
-      const hasYellow = scores.some(s => s === 3);
-      const hasOrange = scores.some(s => s >= 4 && s <= 5);
-      const hasRed = scores.some(s => s === 6);
-      // Must have at least 4 of the 5 color ranges
-      const colorCount = [hasGreen, hasBlue, hasYellow, hasOrange, hasRed].filter(Boolean).length;
-      return colorCount >= 4;
-    },
-  },
-  
-  // Temperature Groups
+  // Abundance Alliance: YIMBY, pro-immigration, pro-trade (green 0-1, blue 2, yellow 3)
   {
     id: 'cool_colors',
-    name: '🟩🟦🟨',
-    description: 'Progressive-moderate',
+    name: 'Abundance Alliance',
+    description: 'YIMBY, pro-immigration, pro-trade growth coalition',
     criteria: (item) => {
       const scores = [item.trade_score, item.abortion_score, item.migration_score, item.economics_score, item.rights_score];
-      const hasGreen = scores.some(s => s <= 1);
-      const hasBlueOrYellow = scores.some(s => s >= 1 && s <= 3);
-      const coolCount = scores.filter(s => s <= 3).length;
-      const hasWarm = scores.some(s => s >= 4);
-      return hasGreen && hasBlueOrYellow && coolCount >= 4 && !hasWarm;
+      const inScheme = scores.filter(s => s <= 3).length; // Green-blue-yellow range (0-3)
+      const outliers = scores.filter(s => s > 3);
+      const maxOutlier = outliers.length > 0 ? Math.max(...outliers) : 0;
+      return inScheme >= 3 && maxOutlier <= 4; // At least 3 in scheme, outliers only orange
     },
   },
+  
+  // Localist Alliance: Place-based politics (yellow 3, orange 4, red 5-6)
   {
-    id: 'warm_colors',
-    name: '🟨🟧🟥',
-    description: 'Conservative-moderate',
+    id: 'localist',
+    name: 'Localist Alliance',
+    description: 'Place-based politics, community-first values',
     criteria: (item) => {
       const scores = [item.trade_score, item.abortion_score, item.migration_score, item.economics_score, item.rights_score];
-      const hasRed = scores.some(s => s >= 5);
-      const hasOrangeOrYellow = scores.some(s => s >= 3 && s <= 5);
-      const warmCount = scores.filter(s => s >= 3).length;
-      const hasCool = scores.some(s => s <= 2);
-      return hasRed && hasOrangeOrYellow && warmCount >= 4 && !hasCool;
+      const inScheme = scores.filter(s => s >= 3).length; // Yellow-orange-red range (3-6)
+      const outliers = scores.filter(s => s < 3);
+      const minOutlier = outliers.length > 0 ? Math.min(...outliers) : 6;
+      return inScheme >= 3 && minOutlier >= 2; // At least 3 in scheme, outliers only blue
+    },
+  },
+  
+  // NatCon Corps: National conservatives (orange 4, red 5-6)
+  {
+    id: 'orange_red',
+    name: 'NatCon Corps',
+    description: 'National conservatives - community and traditional values',
+    criteria: (item) => {
+      const scores = [item.trade_score, item.abortion_score, item.migration_score, item.economics_score, item.rights_score];
+      const inScheme = scores.filter(s => s >= 4).length; // Orange-red range (4-6)
+      const outliers = scores.filter(s => s < 4);
+      const minOutlier = outliers.length > 0 ? Math.min(...outliers) : 6;
+      return inScheme >= 3 && minOutlier >= 3; // At least 3 in scheme, outliers only yellow
+    },
+  },
+  
+  // Postliberal Front: Postliberal/integralist (orange 4, red 5-6)
+  {
+    id: 'postliberal',
+    name: 'Postliberal Front',
+    description: 'Postliberal/integralist - rejecting liberal framework',
+    criteria: (item) => {
+      const scores = [item.trade_score, item.abortion_score, item.migration_score, item.economics_score, item.rights_score];
+      const inScheme = scores.filter(s => s >= 4).length; // Orange-red range (4-6)
+      const outliers = scores.filter(s => s < 4);
+      const minOutlier = outliers.length > 0 ? Math.min(...outliers) : 6;
+      const veryHigh = scores.filter(s => s >= 5).length; // At least 2 must be 5+
+      return inScheme >= 3 && minOutlier >= 3 && veryHigh >= 2; // Very conservative with extremes
     },
   },
 ];
