@@ -4,5 +4,10 @@
     "./supabase/functions"
   ],
   "deno.lint": true,
-  "deno.unstable": true
+  "deno.unstable": true,
+  "python.defaultInterpreterPath": "${workspaceFolder}/analytics/.venv/bin/python",
+  "python.analysis.extraPaths": [
+    "${workspaceFolder}/analytics"
+  ],
+  "jupyter.notebookFileRoot": "${workspaceFolder}/analytics"
 }

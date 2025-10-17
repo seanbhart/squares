@@ -17,3 +17,23 @@ pnpm-debug.log*
 # OS files
 .DS_Store
 .vercel
+
+# Python / Analytics
+analytics/venv/
+analytics/.venv/
+analytics/env/
+analytics/.env/
+analytics/__pycache__/
+analytics/**/__pycache__/
+analytics/.ipynb_checkpoints/
+analytics/**/.ipynb_checkpoints/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+.pytest_cache/
+.coverage
+htmlcov/
