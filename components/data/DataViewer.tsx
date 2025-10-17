@@ -83,10 +83,9 @@ const ALLIANCE_GROUPS: AllianceGroup[] = [
     description: 'Low intervention consistent',
     criteria: (item) => {
       const scores = [item.trade_score, item.abortion_score, item.migration_score, item.economics_score, item.rights_score];
-      const hasGreen = scores.some(s => s <= 1); // At least one green (0-1)
-      const hasBlue = scores.some(s => s >= 1 && s <= 2); // At least one blue (1-2)
-      const lowCount = scores.filter(s => s <= 2).length; // Most are low
-      return hasGreen && hasBlue && lowCount >= 3;
+      const inRange = scores.filter(s => s <= 2).length; // Green-blue range (0-2)
+      const tooFar = scores.some(s => s >= 4); // Orange or red is too far (more than one color away)
+      return inRange >= 2 && !tooFar; // At least 2 in range, no orange/red
     },
   },
   {
@@ -95,10 +94,9 @@ const ALLIANCE_GROUPS: AllianceGroup[] = [
     description: 'Center-left pragmatists',
     criteria: (item) => {
       const scores = [item.trade_score, item.abortion_score, item.migration_score, item.economics_score, item.rights_score];
-      const hasBlue = scores.some(s => s >= 1 && s <= 2); // At least one blue
-      const hasYellow = scores.some(s => s === 3); // At least one yellow (center)
-      const inRange = scores.filter(s => s >= 1 && s <= 3).length;
-      return hasBlue && hasYellow && inRange >= 3;
+      const inRange = scores.filter(s => s >= 1 && s <= 3).length; // Blue-yellow range (1-3)
+      const tooFar = scores.some(s => s === 0 || s >= 5); // Green 0 or orange/red is too far
+      return inRange >= 2 && !tooFar; // At least 2 in range, nothing too extreme
     },
   },
   {
@@ -118,10 +116,9 @@ const ALLIANCE_GROUPS: AllianceGroup[] = [
     description: 'Center-right traditionalists',
     criteria: (item) => {
       const scores = [item.trade_score, item.abortion_score, item.migration_score, item.economics_score, item.rights_score];
-      const hasYellow = scores.some(s => s === 3); // At least one yellow
-      const hasOrange = scores.some(s => s >= 4 && s <= 5); // At least one orange
-      const inRange = scores.filter(s => s >= 3 && s <= 5).length;
-      return hasYellow && hasOrange && inRange >= 3;
+      const inRange = scores.filter(s => s >= 3 && s <= 5).length; // Yellow-orange range (3-5)
+      const tooFar = scores.some(s => s <= 1 || s === 6); // Green or red 6 is too far
+      return inRange >= 2 && !tooFar; // At least 2 in range, no green or red extremes
     },
   },
   {
@@ -130,10 +127,9 @@ const ALLIANCE_GROUPS: AllianceGroup[] = [
     description: 'High intervention consistent',
     criteria: (item) => {
       const scores = [item.trade_score, item.abortion_score, item.migration_score, item.economics_score, item.rights_score];
-      const hasOrange = scores.some(s => s >= 4 && s <= 5); // At least one orange
-      const hasRed = scores.some(s => s === 6); // At least one red
-      const highCount = scores.filter(s => s >= 4).length;
-      return hasOrange && hasRed && highCount >= 3;
+      const inRange = scores.filter(s => s >= 4).length; // Orange-red range (4-6)
+      const tooFar = scores.some(s => s <= 2); // Green or blue is too far (more than one color away)
+      return inRange >= 2 && !tooFar; // At least 2 in range, no green/blue
     },
   },
   
@@ -144,11 +140,9 @@ const ALLIANCE_GROUPS: AllianceGroup[] = [
     description: 'Flexible moderates',
     criteria: (item) => {
       const scores = [item.trade_score, item.abortion_score, item.migration_score, item.economics_score, item.rights_score];
-      const hasGreen = scores.some(s => s <= 1);
-      const hasYellow = scores.some(s => s >= 2 && s <= 3);
-      const noHighIntervention = scores.every(s => s <= 3);
-      const inRange = scores.filter(s => s <= 3).length;
-      return hasGreen && hasYellow && noHighIntervention && inRange >= 4;
+      const inRange = scores.filter(s => s <= 3).length; // Green-yellow range (0-3)
+      const tooFar = scores.some(s => s >= 5); // Red is too far (more than one color away)
+      return inRange >= 2 && !tooFar; // At least 2 in range, no red
     },
   },
   {
