@@ -1,4 +1,4 @@
-username,alliance,outlier_dimension,outlier_value,trade,abortion,migration,economics,rights
+username,bloc,outlier_dimension,outlier_value,trade,abortion,migration,economics,rights
 kingmodaser,Postscarcity Front,trade,3,3,0,0,4,6
 mehdi-benembarek,Postscarcity Front,trade,2,2,4,1,3,1
 papa,Postscarcity Front,trade,2,2,3,1,4,0
@@ -22,6 +22,9 @@ zakriya,Postscarcity Front,abortion,3,0,3,0,3,4
 javabu.eth,Postscarcity Front,economics,4,2,2,1,4,2
 azbest,Postscarcity Front,trade,4,4,0,2,4,0
 freymon.eth,Postscarcity Front,abortion,6,1,6,2,2,0
+hengky420,Builder Corps,rights,4,0,3,2,3,4
+smhsince91,Builder Corps,economics,4,0,3,1,4,0
+thumbsup.eth,Builder Corps,economics,5,2,1,0,5,0
 rathermercurial.eth,Builder Corps,economics,4,2,0,1,4,0
 kiowayyy,Builder Corps,trade,0,0,0,0,0,0
 vipulpapriwal,Builder Corps,trade,0,0,0,0,0,0
@@ -56,6 +59,8 @@ zakriya,Builder Corps,rights,4,0,3,0,3,4
 thatfineboykp,Builder Corps,trade,0,0,0,1,3,0
 sa,Builder Corps,trade,0,0,0,0,0,0
 purp,Builder Corps,economics,5,2,0,1,5,0
+smhsince91,Abundance Alliance,economics,4,0,3,1,4,0
+thumbsup.eth,Abundance Alliance,economics,5,2,1,0,5,0
 rathermercurial.eth,Abundance Alliance,economics,4,2,0,1,4,0
 dribble,Abundance Alliance,abortion,5,0,5,1,0,0
 sirchidex,Abundance Alliance,trade,0,0,0,1,0,0
@@ -77,6 +82,7 @@ meb,Localist Alliance,trade,2,2,5,5,2,2
 cryptim.eth,Localist Alliance,abortion,2,3,2,3,2,2
 fredrickadler,Localist Alliance,trade,6,6,2,6,2,6
 saluberis,Localist Alliance,trade,2,2,2,5,3,2
+mosi0oo,NatCon Corps,economics,0,4,3,5,0,3
 gadoo,NatCon Corps,rights,0,5,6,3,3,0
 dogmatik,NatCon Corps,economics,2,4,4,3,2,3
 yara2024,NatCon Corps,trade,1,1,6,3,5,4

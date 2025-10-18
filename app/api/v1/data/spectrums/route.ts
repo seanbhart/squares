@@ -86,31 +86,57 @@ export async function GET(request: NextRequest) {
     // Use service role client for API requests
     const supabase = getServiceSupabase();
     
-    // Build query
-    let query = supabase
+    // WORKAROUND: Get total count separately to avoid Supabase count bug with views
+    // When using range() with count on views, Supabase sometimes returns incorrect counts
+    let countQuery = supabase
       .from('public_farcaster_spectrums')
-      .select('*', { count: 'exact' });
+      .select('*', { count: 'exact', head: true });
     
-    // Apply filters
+    // Apply same filters to count query
     if (minDivergenceValue !== null) {
-      query = query.gte('divergence_score', minDivergenceValue);
+      countQuery = countQuery.gte('divergence_score', minDivergenceValue);
     }
     if (maxDivergenceValue !== null) {
-      query = query.lte('divergence_score', maxDivergenceValue);
+      countQuery = countQuery.lte('divergence_score', maxDivergenceValue);
     }
     if (minSpreadValue !== null) {
-      query = query.gte('spread_score', minSpreadValue);
+      countQuery = countQuery.gte('spread_score', minSpreadValue);
     }
     if (maxSpreadValue !== null) {
-      query = query.lte('spread_score', maxSpreadValue);
+      countQuery = countQuery.lte('spread_score', maxSpreadValue);
     }
     
-    // Apply sorting and pagination
-    query = query
+    const { count, error: countError } = await countQuery;
+    
+    if (countError) {
+      console.error('Error getting count:', countError);
+    }
+    
+    // Build data query separately (without count)
+    let dataQuery = supabase
+      .from('public_farcaster_spectrums')
+      .select('*');
+    
+    // Apply same filters to data query
+    if (minDivergenceValue !== null) {
+      dataQuery = dataQuery.gte('divergence_score', minDivergenceValue);
+    }
+    if (maxDivergenceValue !== null) {
+      dataQuery = dataQuery.lte('divergence_score', maxDivergenceValue);
+    }
+    if (minSpreadValue !== null) {
+      dataQuery = dataQuery.gte('spread_score', minSpreadValue);
+    }
+    if (maxSpreadValue !== null) {
+      dataQuery = dataQuery.lte('spread_score', maxSpreadValue);
+    }
+    
+    // Apply sorting and pagination to data query
+    dataQuery = dataQuery
       .order(sortField as any, { ascending: sortOrder === 'asc' })
       .range(offset, offset + limit - 1);
     
-    const { data, error, count } = await query;
+    const { data, error } = await dataQuery;
     
     if (error) {
       console.error('Error fetching public spectrums:', error);
