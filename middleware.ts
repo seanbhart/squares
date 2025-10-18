@@ -23,6 +23,14 @@ export async function middleware(req: NextRequest) {
         return NextResponse.rewrite(url);
       }
     }
+    
+    // admin.squares.vote -> /admin page
+    if (hostname.startsWith('admin.')) {
+      if (url.pathname === '/') {
+        url.pathname = '/admin';
+        return NextResponse.rewrite(url);
+      }
+    }
   }
   
   // For local development with subdomain testing:
@@ -37,6 +45,11 @@ export async function middleware(req: NextRequest) {
     
     if (subdomain === 'developer' && url.pathname === '/') {
       url.pathname = '/developer';
+      return NextResponse.rewrite(url);
+    }
+    
+    if (subdomain === 'admin' && url.pathname === '/') {
+      url.pathname = '/admin';
       return NextResponse.rewrite(url);
     }
   }
