@@ -39,7 +39,9 @@ export async function GET(request: NextRequest) {
     return NextResponse.json(data, {
       status: response.status,
       headers: {
-        'Cache-Control': 'public, s-maxage=300, stale-while-revalidate=600',
+        // Reduced cache time: 1 minute CDN cache, 2 minute stale-while-revalidate
+        // This allows faster updates while still providing performance benefits
+        'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=120',
       },
     });
   } catch (error) {

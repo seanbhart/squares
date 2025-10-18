@@ -247,6 +247,7 @@ export default function DataViewer() {
         limit: '100',
         sort: sortField,
         order: sortOrder,
+        v: '2', // Cache buster - increment when data structure changes
       });
 
       // Use internal proxy endpoint (doesn't require client-side API key)
