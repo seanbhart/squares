@@ -1,4 +1,5 @@
 username,bloc,outlier_dimension,outlier_value,trade,abortion,migration,economics,rights
+chronor,Postscarcity Syndicate,migration,5,0,1,5,2,3
 kingmodaser,Postscarcity Syndicate,trade,3,3,0,0,4,6
 mehdi-benembarek,Postscarcity Syndicate,trade,2,2,4,1,3,1
 papa,Postscarcity Syndicate,trade,2,2,3,1,4,0
@@ -22,6 +23,8 @@ zakriya,Postscarcity Syndicate,abortion,3,0,3,0,3,4
 javabu.eth,Postscarcity Syndicate,economics,4,2,2,1,4,2
 azbest,Postscarcity Syndicate,trade,4,4,0,2,4,0
 freymon.eth,Postscarcity Syndicate,abortion,6,1,6,2,2,0
+chronor,Builder Bloc,migration,5,0,1,5,2,3
+0wn,Builder Bloc,trade,0,0,0,0,0,0
 hengky420,Builder Bloc,rights,4,0,3,2,3,4
 smhsince91,Builder Bloc,economics,4,0,3,1,4,0
 thumbsup.eth,Builder Bloc,economics,5,2,1,0,5,0
@@ -52,7 +55,7 @@ homer27,Builder Bloc,trade,3,3,3,1,0,2
 syubidab.eth,Builder Bloc,trade,4,4,3,1,0,3
 ako1988,Builder Bloc,trade,0,0,2,1,0,0
 mustang,Builder Bloc,economics,4,1,3,3,4,2
-hdr,Builder Bloc,economics,5,0,0,1,5,2
+hdr,Builder Bloc,trade,0,0,3,0,0,1
 ukhy89,Builder Bloc,migration,4,0,3,4,3,2
 abcryptozone,Builder Bloc,trade,0,0,2,3,3,0
 zakriya,Builder Bloc,rights,4,0,3,0,3,4
@@ -72,7 +75,7 @@ beerguy.eth,Abundance Alliance,trade,0,0,0,1,2,0
 zoo,Abundance Alliance,economics,5,0,0,1,5,0
 augustuscaesar,Abundance Alliance,trade,0,0,0,3,3,0
 ako1988,Abundance Alliance,trade,0,0,2,1,0,0
-hdr,Abundance Alliance,economics,5,0,0,1,5,2
+hdr,Abundance Alliance,trade,0,0,3,0,0,1
 zakriya,Abundance Alliance,rights,4,0,3,0,3,4
 thatfineboykp,Abundance Alliance,trade,0,0,0,1,3,0
 purp,Abundance Alliance,economics,5,2,0,1,5,0
