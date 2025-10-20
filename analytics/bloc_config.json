@@ -1,0 +1,240 @@
+{
+  "colorRamp": {
+    "purple": "#7e568e",
+    "blue": "#1f6adb",
+    "green": "#398a34",
+    "yellow": "#eab308",
+    "orange": "#e67e22",
+    "red": "#c0392b",
+    "darkSlate": "#383b3d"
+  },
+  "blocNames": {
+    "communist": "Communist",
+    "social_democrat_union": "Social Democrat Union",
+    "post_scarcity": "Postscarcity Syndicate",
+    "nordic_model": "Nordic Model",
+    "builder_bloc": "Builder Bloc",
+    "abundance_alliance": "Abundance Alliance",
+    "libertarian": "Libertarian League",
+    "liberty_caucus": "Liberty Caucus",
+    "localist_league": "Localist League",
+    "natcon_corps": "NatCon Corps",
+    "postliberal_front": "Postliberal Front",
+    "fascist": "Fascist"
+  },
+  "referenceIdeologies": {
+    "communist": "Communist",
+    "nordic_model": "Nordic Model",
+    "libertarian": "Libertarian League",
+    "fascist": "Fascist"
+  },
+  "blocDescriptions": {
+    "communist": "Revolutionary socialism. Centrally planned economy, abolition of private property, internationalist.",
+    "social_democrat_union": "Protectionist social democrats. Labor-focused, anti-free trade, pro-choice, extensive redistribution, progressive rights.",
+    "post_scarcity": "Tech-optimist left. Open borders, heavy economic intervention (UBI, automation support), very progressive on social issues.",
+    "nordic_model": "Social democracy. Market economy with extensive welfare state, strong unions, high taxes.",
+    "builder_bloc": "Pragmatic progressives. Pro-growth, state capacity building, strategically interventionist economics, YIMBY.",
+    "abundance_alliance": "Market-oriented growth coalition. Free trade, pro-immigration, light-touch economics, YIMBY, deregulation.",
+    "libertarian": "Radical libertarians. Pure free market, minimal/no state, open borders, maximum individual liberty.",
+    "liberty_caucus": "Free-market conservatives. Free trade, pro-life, moderate immigration, laissez-faire economics, traditional values.",
+    "localist_league": "Place-based communitarians. Protectionist, restrictive immigration, localist economics, community values.",
+    "natcon_corps": "National conservatives. Very protectionist, restrictive immigration, industrial policy, traditional values.",
+    "postliberal_front": "Integralists. Anti-globalist, very pro-life, closed borders, corporatist economics, rejects liberal framework.",
+    "fascist": "Ultranationalist authoritarianism. Corporatist economics, extreme social control, racial/national purity."
+  },
+  "dimensionMeanings": {
+    "trade_score": "0=free trade/globalist, 6=protectionist/nationalist",
+    "abortion_score": "0=pro-choice, 6=pro-life",
+    "migration_score": "0=open borders, 6=closed borders/restrictive",
+    "economics_score": "0=free market/laissez-faire, 6=heavy intervention/planning",
+    "rights_score": "0=progressive individualism, 6=traditional/communitarian"
+  },
+  "idealBlocPositions": {
+    "communist": {
+      "playable": false,
+      "examples": "Revolutionary socialists, Marxist-Leninists, anti-capitalist left (reference ideology)",
+      "keyDimensions": ["economics", "rights", "trade"],
+      "trade_score": 6,
+      "abortion_score": 1,
+      "migration_score": 1,
+      "economics_score": 6,
+      "rights_score": 5
+    },
+    "social_democrat_union": {
+      "playable": true,
+      "examples": "Bernie Sanders, AOC, The Squad (Ocasio-Cortez, Ilhan Omar, Rashida Tlaib), DSA, Jacobin magazine, labor unions, democratic socialists, economic populist left",
+      "keyDimensions": ["economics", "trade", "rights"],
+      "trade_score": 5,
+      "abortion_score": 0,
+      "migration_score": 2,
+      "economics_score": 5,
+      "rights_score": 0
+    },
+    "post_scarcity": {
+      "playable": true,
+      "examples": "Andrew Yang, UBI advocates, Fully Automated Luxury Communism supporters, tech-optimist progressives, AI/automation left, effective altruists (longtermist), futurist left",
+      "keyDimensions": ["economics", "migration", "rights"],
+      "trade_score": 1,
+      "abortion_score": 0,
+      "migration_score": 0,
+      "economics_score": 5,
+      "rights_score": 0
+    },
+    "nordic_model": {
+      "playable": false,
+      "examples": "Scandinavian social democracy, Swedish model, European welfare states (reference ideology)",
+      "keyDimensions": ["economics", "trade", "rights"],
+      "trade_score": 1,
+      "abortion_score": 0,
+      "migration_score": 3,
+      "economics_score": 4,
+      "rights_score": 1
+    },
+    "builder_bloc": {
+      "playable": true,
+      "examples": "Ezra Klein, Matt Yglesias, Jerusalem Demsas, Derek Thompson, Supply-Side Progressives, YIMBYs (progressive), state capacity liberals, New Liberals, Slow Boring, Vox progressives",
+      "keyDimensions": ["economics", "migration", "trade"],
+      "trade_score": 2,
+      "abortion_score": 1,
+      "migration_score": 1,
+      "economics_score": 3,
+      "rights_score": 1
+    },
+    "abundance_alliance": {
+      "playable": true,
+      "examples": "Tyler Cowen, Noah Smith, Neoliberal Project, Niskanen Center, YIMBYs (market-oriented), Marginal Revolution, market urbanists, evidence-based policy moderates, pro-growth centrists",
+      "keyDimensions": ["trade", "migration", "economics"],
+      "trade_score": 0,
+      "abortion_score": 2,
+      "migration_score": 0,
+      "economics_score": 1,
+      "rights_score": 1
+    },
+    "libertarian": {
+      "playable": true,
+      "examples": "Reason magazine, Cato Institute, Ron Paul, Rand Paul, libertarian movement, anarcho-capitalists, Free State Project, crypto/Bitcoin maximalists, radical free-market advocates",
+      "keyDimensions": ["economics", "rights", "migration"],
+      "trade_score": 0,
+      "abortion_score": 1,
+      "migration_score": 0,
+      "economics_score": 0,
+      "rights_score": 0
+    },
+    "liberty_caucus": {
+      "playable": true,
+      "examples": "Mitt Romney, Paul Ryan, Nikki Haley, Larry Hogan, Wall Street Journal editorial board, Chamber of Commerce Republicans, traditional business conservatives, pre-Trump GOP establishment",
+      "keyDimensions": ["economics", "trade", "rights"],
+      "trade_score": 0,
+      "abortion_score": 4,
+      "migration_score": 3,
+      "economics_score": 1,
+      "rights_score": 4
+    },
+    "localist_league": {
+      "playable": false,
+      "examples": "Front Porch Republic, New Urbanism, communitarianism, localist thought (reference ideology)",
+      "keyDimensions": ["migration", "trade", "rights"],
+      "trade_score": 5,
+      "abortion_score": 4,
+      "migration_score": 5,
+      "economics_score": 3,
+      "rights_score": 4
+    },
+    "natcon_corps": {
+      "playable": true,
+      "examples": "MAGA movement, Donald Trump, J.D. Vance, Tucker Carlson, Steve Bannon, National Conservatism conferences, American Compass, Sohrab Ahmari, Patrick Deneen, populist right, America First",
+      "keyDimensions": ["migration", "trade", "rights"],
+      "trade_score": 6,
+      "abortion_score": 5,
+      "migration_score": 6,
+      "economics_score": 4,
+      "rights_score": 5
+    },
+    "postliberal_front": {
+      "playable": true,
+      "examples": "Adrian Vermeule, Catholic integralism, The Josias, radical traditionalists, post-liberal order thinkers, those rejecting Enlightenment liberalism entirely",
+      "keyDimensions": ["rights", "abortion", "migration"],
+      "trade_score": 6,
+      "abortion_score": 6,
+      "migration_score": 6,
+      "economics_score": 5,
+      "rights_score": 6
+    },
+    "fascist": {
+      "playable": false,
+      "examples": "Historical fascism, ultranationalism, authoritarian nationalism (reference ideology, not viable in US)",
+      "keyDimensions": ["migration", "rights", "economics"],
+      "trade_score": 6,
+      "abortion_score": 5,
+      "migration_score": 6,
+      "economics_score": 4,
+      "rights_score": 6
+    }
+  },
+  "blocColors": {
+    "communist": {
+      "primary": "#c0392b",
+      "secondary": "#383b3d",
+      "description": "Red and dark slate - revolutionary authoritarianism"
+    },
+    "social_democrat_union": {
+      "primary": "#1f6adb",
+      "secondary": "#c0392b",
+      "tertiary": "#7e568e",
+      "description": "Blue, red, and purple - labor left coalition"
+    },
+    "post_scarcity": {
+      "primary": "#7e568e",
+      "secondary": "#1f6adb",
+      "description": "Purple and blue - tech-optimist progressive"
+    },
+    "nordic_model": {
+      "primary": "#1f6adb",
+      "secondary": "#398a34",
+      "description": "Blue and green - social democratic capitalism"
+    },
+    "builder_bloc": {
+      "primary": "#1f6adb",
+      "secondary": "#398a34",
+      "tertiary": "#7e568e",
+      "description": "Blue, green, and purple - pragmatic growth progressives"
+    },
+    "abundance_alliance": {
+      "primary": "#398a34",
+      "secondary": "#eab308",
+      "tertiary": "#1f6adb",
+      "description": "Green, yellow, and blue - market-oriented growth coalition"
+    },
+    "libertarian": {
+      "primary": "#eab308",
+      "secondary": "#7e568e",
+      "description": "Yellow and purple - maximum individual liberty (economic + social freedom)"
+    },
+    "liberty_caucus": {
+      "primary": "#eab308",
+      "secondary": "#e67e22",
+      "description": "Yellow and orange - free-market traditional conservatives"
+    },
+    "localist_league": {
+      "primary": "#e67e22",
+      "secondary": "#eab308",
+      "tertiary": "#c0392b",
+      "description": "Orange, yellow, and red - place-based communitarians"
+    },
+    "natcon_corps": {
+      "primary": "#c0392b",
+      "secondary": "#e67e22",
+      "description": "Red and orange - MAGA populist conservatives"
+    },
+    "postliberal_front": {
+      "primary": "#c0392b",
+      "secondary": "#383b3d",
+      "description": "Red and dark slate - integralist authoritarianism"
+    },
+    "fascist": {
+      "primary": "#383b3d",
+      "secondary": "#c0392b",
+      "description": "Dark slate and red - totalitarian nationalism"
+    }
+  }
+}
