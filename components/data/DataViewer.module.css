@@ -286,7 +286,7 @@
 
 .blocGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 0.75rem;
   margin-top: 1.5rem;
 }
@@ -300,8 +300,9 @@
   transition: all 0.2s ease;
   text-align: left;
   display: flex;
-  flex-direction: column;
-  gap: 0.4rem;
+  flex-direction: row;
+  align-items: center;
+  gap: 1rem;
 }
 
 .blocButton:hover:not(:disabled):not(.blocButtonActive) {
@@ -327,6 +328,26 @@
   border-color: rgba(255, 255, 255, 0.35);
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+.blocIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  opacity: 0.9;
+}
+
+.blocButton:hover .blocIcon {
+  opacity: 1;
+}
+
+.blocContent {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  flex: 1;
+  min-width: 0;
 }
 
 .blocName {

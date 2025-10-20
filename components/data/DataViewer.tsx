@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useCallback, useMemo } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { InfoIcon } from '@/components/icons';
 import { COLOR_RAMP, POLICIES, getScoreLabel } from '@/lib/tamer-config';
 import FullPageLoadingSpinner from '@/components/FullPageLoadingSpinner';
@@ -11,6 +12,16 @@ import styles from './DataViewer.module.css';
 const mainSiteUrl = process.env.NODE_ENV === 'production'
   ? 'https://squares.vote'
   : 'http://localhost:3000';
+
+// Bloc icons mapping
+const BLOC_ICONS: Record<string, string> = {
+  post_scarcity: '/svg-postscarcity-syndicate.svg',
+  builder_bloc: '/svg-builder-bloc.svg',
+  abundance_alliance: '/svg-abundance-alliance.svg',
+  localist_league: '/svg-localist-league.svg',
+  natcon_corps: '/svg-natcon-corps.svg',
+  postliberal_front: '/svg-postliberal-front.svg',
+};
 
 interface PublicSpectrum {
   id: string;
@@ -79,10 +90,10 @@ const BLOC_GROUPS: BlocGroup[] = [
   // Color spectrum: 0=purple, 1=blue, 2=green, 3=yellow, 4=orange, 5=red, 6=black
   // Criteria: At least 3 dimensions must be in the bloc's color range
   
-  // Postscarcity Front: Purple-Blue (0-1)
+  // Postscarcity Syndicate: Purple-Blue (0-1)
   {
     id: 'post_scarcity',
-    name: 'Postscarcity Front',
+    name: 'Postscarcity Syndicate',
     description: 'Very progressive - UBI, automation, post-scarcity economics',
     criteria: (item) => {
       const scores = [item.trade_score, item.abortion_score, item.migration_score, item.economics_score, item.rights_score];
@@ -91,10 +102,10 @@ const BLOC_GROUPS: BlocGroup[] = [
     },
   },
   
-  // Builder Corps: Blue-Green (1-2)
+  // Builder Bloc: Blue-Green (1-2)
   {
-    id: 'builder_corps',
-    name: 'Builder Corps',
+    id: 'builder_bloc',
+    name: 'Builder Bloc',
     description: 'Pro-growth progressives - state capacity, YIMBY, growth-oriented',
     criteria: (item) => {
       const scores = [item.trade_score, item.abortion_score, item.migration_score, item.economics_score, item.rights_score];
@@ -115,10 +126,10 @@ const BLOC_GROUPS: BlocGroup[] = [
     },
   },
   
-  // Localist Alliance: Yellow-Orange-Red (3-5)
+  // Localist League: Yellow-Orange-Red (3-5)
   {
-    id: 'localist_alliance',
-    name: 'Localist Alliance',
+    id: 'localist_league',
+    name: 'Localist League',
     description: 'Place-based politics, community-first values',
     criteria: (item) => {
       const scores = [item.trade_score, item.abortion_score, item.migration_score, item.economics_score, item.rights_score];
@@ -637,10 +648,22 @@ export default function DataViewer() {
                   onClick={() => toggleBloc(group.id)}
                   disabled={blocGroupCounts[group.id] === 0}
                 >
-                  <div className={styles.blocName}>{group.name}</div>
-                  <div className={styles.blocDescription}>{group.description}</div>
-                  <div className={styles.blocCount}>
-                    {blocGroupCounts[group.id].toLocaleString()} {blocGroupCounts[group.id] === 1 ? 'user' : 'users'}
+                  {BLOC_ICONS[group.id] && (
+                    <div className={styles.blocIcon}>
+                      <Image
+                        src={BLOC_ICONS[group.id]}
+                        alt={`${group.name} icon`}
+                        width={48}
+                        height={48}
+                      />
+                    </div>
+                  )}
+                  <div className={styles.blocContent}>
+                    <div className={styles.blocName}>{group.name}</div>
+                    <div className={styles.blocDescription}>{group.description}</div>
+                    <div className={styles.blocCount}>
+                      {blocGroupCounts[group.id].toLocaleString()} {blocGroupCounts[group.id] === 1 ? 'user' : 'users'}
+                    </div>
                   </div>
                 </button>
               ))}
