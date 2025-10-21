@@ -24,7 +24,7 @@ export interface BlocPosition {
 export interface BlocColors {
   primary: string;
   secondary: string;
-  accent: string;
+  tertiary: string;
   description: string;
 }
 
@@ -79,7 +79,7 @@ export function getBlocColors(blocId: BlocId): BlocColors {
   return BLOC_COLORS[blocId] ?? {
     primary: '#808080',
     secondary: '#808080',
-    accent: '#808080',
+    tertiary: '#808080',
     description: 'Gray - undefined bloc',
   };
 }
