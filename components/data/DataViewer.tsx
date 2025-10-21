@@ -5,6 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { InfoIcon } from '@/components/icons';
 import { COLOR_RAMP, POLICIES, getScoreLabel } from '@/lib/tamer-config';
+import { getAllBlocs, getBlocName, getBlocDescription, getIdealPosition, getKeyDimensions } from '@/lib/bloc-config';
 import FullPageLoadingSpinner from '@/components/FullPageLoadingSpinner';
 import styles from './DataViewer.module.css';
 
@@ -15,12 +16,19 @@ const mainSiteUrl = process.env.NODE_ENV === 'production'
 
 // Bloc icons mapping
 const BLOC_ICONS: Record<string, string> = {
+  communists: '/svg-communists.svg',
+  revolutionary_socialists: '/svg-revolutionary-socialists.svg',
+  social_democrat_union: '/svg-social-democrat-union.svg',
   post_scarcity: '/svg-postscarcity-syndicate.svg',
+  nordic_model: '/svg-nordic-model.svg',
   builder_bloc: '/svg-builder-bloc.svg',
   abundance_alliance: '/svg-abundance-alliance.svg',
+  libertarian_lobby: '/svg-libertarian-lobby.svg',
+  liberty_caucus: '/svg-liberty-caucus.svg',
   localist_league: '/svg-localist-league.svg',
   natcon_corps: '/svg-natcon-corps.svg',
   postliberal_front: '/svg-postliberal-front.svg',
+  fascists: '/svg-fascists.svg',
 };
 
 interface PublicSpectrum {
@@ -86,83 +94,66 @@ type BlocGroup = {
   criteria: (item: PublicSpectrum) => boolean;
 };
 
-const BLOC_GROUPS: BlocGroup[] = [
-  // Color spectrum: 0=purple, 1=blue, 2=green, 3=yellow, 4=orange, 5=red, 6=black
-  // Criteria: At least 3 dimensions must be in the bloc's color range
+// Generate bloc groups from config
+// Matching criteria: 
+// 1. Must be within 1.5 points on at least 2 of the bloc's key dimensions
+// 2. Overall Euclidean distance must be < 4.0 to avoid false positives
+const BLOC_GROUPS: BlocGroup[] = getAllBlocs(false).map(blocId => {
+  const idealPos = getIdealPosition(blocId as any);
+  const keyDims = getKeyDimensions(blocId as any);
   
-  // Postscarcity Syndicate: Purple-Blue (0-1)
-  {
-    id: 'post_scarcity',
-    name: 'Postscarcity Syndicate',
-    description: 'Very progressive - UBI, automation, post-scarcity economics',
-    criteria: (item) => {
-      const scores = [item.trade_score, item.abortion_score, item.migration_score, item.economics_score, item.rights_score];
-      const inRange = scores.filter(s => s >= 0 && s <= 1).length;
-      return inRange >= 3;
+  return {
+    id: blocId,
+    name: getBlocName(blocId as any),
+    description: getBlocDescription(blocId as any),
+    criteria: (item: PublicSpectrum) => {
+      if (!idealPos) return false;
+      
+      // Map key dimension names to score fields
+      const dimMap: Record<string, keyof PublicSpectrum> = {
+        trade: 'trade_score',
+        abortion: 'abortion_score',
+        migration: 'migration_score',
+        economics: 'economics_score',
+        rights: 'rights_score',
+      };
+      
+      // Count how many key dimensions are close
+      let closeCount = 0;
+      for (const dim of keyDims) {
+        const scoreField = dimMap[dim];
+        if (scoreField) {
+          const userScore = item[scoreField];
+          const idealScore = idealPos[`${dim}_score` as keyof typeof idealPos];
+          if (typeof userScore === 'number' && typeof idealScore === 'number') {
+            // Within 1.5 points is considered close
+            if (Math.abs(userScore - idealScore) <= 1.5) {
+              closeCount++;
+            }
+          }
+        }
+      }
+      
+      // Check overall Euclidean distance across all 5 dimensions
+      const allDims = ['trade', 'abortion', 'migration', 'economics', 'rights'];
+      let sumSquaredDiffs = 0;
+      for (const dim of allDims) {
+        const scoreField = dimMap[dim];
+        if (scoreField) {
+          const userScore = item[scoreField];
+          const idealScore = idealPos[`${dim}_score` as keyof typeof idealPos];
+          if (typeof userScore === 'number' && typeof idealScore === 'number') {
+            sumSquaredDiffs += Math.pow(userScore - idealScore, 2);
+          }
+        }
+      }
+      const euclideanDistance = Math.sqrt(sumSquaredDiffs);
+      
+      // Match if close on at least 2 key dimensions AND overall distance is reasonable
+      return closeCount >= 2 && euclideanDistance < 4.0;
     },
-  },
-  
-  // Builder Bloc: Blue-Green (1-2)
-  {
-    id: 'builder_bloc',
-    name: 'Builder Bloc',
-    description: 'Pro-growth progressives - state capacity, YIMBY, growth-oriented',
-    criteria: (item) => {
-      const scores = [item.trade_score, item.abortion_score, item.migration_score, item.economics_score, item.rights_score];
-      const inRange = scores.filter(s => s >= 1 && s <= 2).length;
-      return inRange >= 3;
-    },
-  },
-  
-  // Abundance Alliance: Blue-Green-Yellow (1-3)
-  {
-    id: 'abundance_alliance',
-    name: 'Abundance Alliance',
-    description: 'YIMBY, pro-immigration, pro-trade growth coalition',
-    criteria: (item) => {
-      const scores = [item.trade_score, item.abortion_score, item.migration_score, item.economics_score, item.rights_score];
-      const inRange = scores.filter(s => s >= 1 && s <= 3).length;
-      return inRange >= 3;
-    },
-  },
-  
-  // Localist League: Yellow-Orange-Red (3-5)
-  {
-    id: 'localist_league',
-    name: 'Localist League',
-    description: 'Place-based politics, community-first values',
-    criteria: (item) => {
-      const scores = [item.trade_score, item.abortion_score, item.migration_score, item.economics_score, item.rights_score];
-      const inRange = scores.filter(s => s >= 3 && s <= 5).length;
-      return inRange >= 3;
-    },
-  },
-  
-  // NatCon Corps: Orange-Red (4-5)
-  {
-    id: 'natcon_corps',
-    name: 'NatCon Corps',
-    description: 'National conservatives - community and traditional values',
-    criteria: (item) => {
-      const scores = [item.trade_score, item.abortion_score, item.migration_score, item.economics_score, item.rights_score];
-      const inRange = scores.filter(s => s >= 4 && s <= 5).length;
-      return inRange >= 3;
-    },
-  },
-  
-  // Postliberal Front: Red-Black (5-6)
-  {
-    id: 'postliberal_front',
-    name: 'Postliberal Front',
-    description: 'Postliberal/integralist - rejecting liberal framework',
-    criteria: (item) => {
-      const scores = [item.trade_score, item.abortion_score, item.migration_score, item.economics_score, item.rights_score];
-      const inRange = scores.filter(s => s >= 5 && s <= 6).length;
-      const veryHigh = scores.filter(s => s >= 5).length;
-      return inRange >= 3 && veryHigh >= 2; // At least 3 in range, at least 2 very extreme
-    },
-  },
-];
+  };
+});
 
 const DIMENSION_INFO = {
   trade: 'International trade policy: 0 = Free trade/open markets, 6 = Protectionism/closed economy',

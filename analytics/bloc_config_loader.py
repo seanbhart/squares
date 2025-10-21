@@ -96,9 +96,10 @@ def get_all_blocs(include_reference: bool = False) -> List[str]:
         include_reference: Whether to include reference ideologies
     
     Returns:
-        List of bloc IDs
+        List of bloc IDs (deduplicated)
     """
     blocs = list(BLOC_NAMES.keys())
     if include_reference:
         blocs.extend(REFERENCE_IDEOLOGIES.keys())
-    return blocs
+    # Remove duplicates while preserving order
+    return list(dict.fromkeys(blocs))
