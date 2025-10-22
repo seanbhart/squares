@@ -327,6 +327,8 @@ Each bloc is defined by **three key dimensions** listed in order of importance. 
 
 The PLATFORM framework measures 8 key policy dimensions across all blocs. Scores range from 0-6 on each dimension.
 
+**Scoring Methodology:** Scores are based on **historical practice** rather than stated ideology. For example, Communists score high on border restrictions (Berlin Wall, Soviet exit visas) despite internationalist rhetoric, and both Communists and Fascists score maximum on surveillance despite different ideological justifications.
+
 ### Dimension Definitions
 
 | Dimension | 0 (Liberal/Open) | 6 (Conservative/Closed) |
@@ -337,68 +339,81 @@ The PLATFORM framework measures 8 key policy dimensions across all blocs. Scores
 | **Trade** | Free trade (same as TAME-R) | Protectionist (same as TAME-R) |
 | **Free Speech** | Absolute free speech | Maximum speech restrictions |
 | **Ownership** | Pure private ownership | Full state ownership |
-| **Rights** | Progressive individualism (same as TAME-R) | Traditional/communitarian (same as TAME-R) |
+| **Rights** | Progressive individualism (anti-discrimination enforcement) | Traditional/communitarian (pro-discrimination enforcement) |
 | **Migration** | Open borders (same as TAME-R) | Closed borders (same as TAME-R) |
+
+**Note:** Rights uses a horseshoe color scheme (⬛️🟥🟧🟨🟧🟥⬛️) because both extremes involve heavy government intervention—0-2 enforces anti-discrimination, 4-6 enforces traditional hierarchies, and 3 is neutral/hands-off.
 
 ### Bloc Scores Table
 
 | Bloc | Privacy | Labor | Abortion | Trade | Free Speech | Ownership | Rights | Migration |
 |------|---------|-------|----------|-------|-------------|-----------|--------|-----------|
-| **1. Communists** | 🟥 5 | ⬛️ 6 | 🟦 1 | ⬛️ 6 | 🟥 5 | ⬛️ 6 | 🟥 5 | 🟦 1 |
-| **2. Revolutionary Socialists** | 🟢 2 | ⬛️ 6 | 🟪 0 | 🟥 5 | 🟩 2 | 🟥 5 | 🟩 2 | 🟦 1 |
-| **3. Social Democrat Union** | 🟦 1 | 🟥 5 | 🟪 0 | 🟥 5 | 🟦 1 | 🟧 4 | 🟪 0 | 🟩 2 |
-| **4. Postscarcity Syndicate** | 🟦 1 | 🟧 4 | 🟪 0 | 🟦 1 | 🟪 0 | 🟧 4 | 🟪 0 | 🟪 0 |
-| **5. Nordic Model** | 🟦 1 | 🟧 4 | 🟪 0 | 🟦 1 | 🟦 1 | 🟩 2 | 🟦 1 | 🟨 3 |
-| **6. Builder Bloc** | 🟦 1 | 🟩 2 | 🟦 1 | 🟩 2 | 🟦 1 | 🟦 1 | 🟦 1 | 🟦 1 |
-| **7. Abundance Alliance** | 🟪 0 | 🟦 1 | 🟩 2 | 🟪 0 | 🟪 0 | 🟪 0 | 🟦 1 | 🟪 0 |
-| **8. Libertarian Lobby** | 🟪 0 | 🟪 0 | 🟦 1 | 🟪 0 | 🟪 0 | 🟪 0 | 🟪 0 | 🟪 0 |
+| **1. Communists** | ⬛️ 6 | ⬛️ 6 | 🟦 1 | ⬛️ 6 | ⬛️ 6 | ⬛️ 6 | 🟥 5 | 🟥 5 |
+| **2. Revolutionary Socialists** | 🟧 4 | ⬛️ 6 | 🟪 0 | 🟥 5 | 🟧 4 | 🟥 5 | 🟧 2 | 🟨 3 |
+| **3. Social Democrat Union** | 🟦 1 | 🟥 5 | 🟪 0 | 🟥 5 | 🟦 1 | 🟧 4 | ⬛️ 0 | 🟩 2 |
+| **4. Postscarcity Syndicate** | 🟦 1 | 🟧 4 | 🟪 0 | 🟦 1 | 🟪 0 | 🟧 4 | ⬛️ 0 | 🟪 0 |
+| **5. Nordic Model** | 🟦 1 | 🟧 4 | 🟪 0 | 🟦 1 | 🟦 1 | 🟩 2 | 🟥 1 | 🟨 3 |
+| **6. Builder Bloc** | 🟦 1 | 🟩 2 | 🟦 1 | 🟩 2 | 🟦 1 | 🟦 1 | 🟧 2 | 🟦 1 |
+| **7. Abundance Alliance** | 🟪 0 | 🟦 1 | 🟩 2 | 🟪 0 | 🟪 0 | 🟪 0 | 🟧 2 | 🟪 0 |
+| **8. Libertarian Lobby** | 🟪 0 | 🟪 0 | 🟦 1 | 🟪 0 | 🟪 0 | 🟪 0 | 🟨 3 | 🟪 0 |
 | **9. Liberty Caucus** | 🟦 1 | 🟦 1 | 🟧 4 | 🟪 0 | 🟦 1 | 🟪 0 | 🟧 4 | 🟨 3 |
 | **10. Localist League** | 🟩 2 | 🟨 3 | 🟧 4 | 🟥 5 | 🟩 2 | 🟩 2 | 🟧 4 | 🟥 5 |
 | **11. NatCon Corps** | 🟧 4 | 🟨 3 | 🟥 5 | ⬛️ 6 | 🟧 4 | 🟨 3 | 🟥 5 | ⬛️ 6 |
 | **12. Postliberal Front** | 🟥 5 | 🟧 4 | ⬛️ 6 | ⬛️ 6 | ⬛️ 6 | 🟧 4 | ⬛️ 6 | ⬛️ 6 |
-| **13. Fascists** | ⬛️ 6 | 🟨 3 | 🟥 5 | ⬛️ 6 | ⬛️ 6 | 🟧 4 | ⬛️ 6 | ⬛️ 6 |
+| **13. Fascists** | ⬛️ 6 | 🟧 4 | 🟥 5 | ⬛️ 6 | ⬛️ 6 | 🟧 4 | ⬛️ 6 | ⬛️ 6 |
 
 ### PLATFORM Profiles (Visual Summary)
 
-**Communists:** 🟥⬛️🟦⬛️🟥⬛️🟥🟦 (Authoritarian state socialism)
-**Revolutionary Socialists:** 🟢⬛️🟪🟥🟩🟥🟩🟦 (Democratic socialism with strong labor)
-**Social Democrat Union:** 🟦🟥🟪🟥🟦🟧🟪🟩 (Progressive labor protectionism)
-**Postscarcity Syndicate:** 🟦🟧🟪🟦🟪🟧🟪🟪 (Tech-optimist openness with state support)
-**Nordic Model:** 🟦🟧🟪🟦🟦🟩🟦🟨 (Balanced social democracy)
-**Builder Bloc:** 🟦🟩🟦🟩🟦🟦🟦🟦 (Pragmatic pro-growth progressivism)
-**Abundance Alliance:** 🟪🟦🟩🟪🟪🟪🟦🟪 (Market liberalism with minimal state)
-**Libertarian Lobby:** 🟪🟪🟦🟪🟪🟪🟪🟪 (Pure libertarianism)
+**Communists:** ⬛️⬛️🟦⬛️⬛️⬛️🟥🟥 (Authoritarian state socialism)
+**Revolutionary Socialists:** 🟧⬛️🟪🟥🟧🟥🟧🟨 (Democratic socialism with strong labor)
+**Social Democrat Union:** 🟦🟥🟪🟥🟦🟧⬛️🟩 (Progressive labor protectionism)
+**Postscarcity Syndicate:** 🟦🟧🟪🟦🟪🟧⬛️🟪 (Tech-optimist openness with state support)
+**Nordic Model:** 🟦🟧🟪🟦🟦🟩🟥🟨 (Balanced social democracy)
+**Builder Bloc:** 🟦🟩🟦🟩🟦🟦🟧🟦 (Pragmatic pro-growth progressivism)
+**Abundance Alliance:** 🟪🟦🟩🟪🟪🟪🟧🟪 (Market liberalism with minimal state)
+**Libertarian Lobby:** 🟪🟪🟦🟪🟪🟪🟨🟪 (Pure libertarianism)
 **Liberty Caucus:** 🟦🟦🟧🟪🟦🟪🟧🟨 (Free-market social conservatism)
 **Localist League:** 🟩🟨🟧🟥🟩🟩🟧🟥 (Communitarian protectionism)
 **NatCon Corps:** 🟧🟨🟥⬛️🟧🟨🟥⬛️ (Nationalist populism)
 **Postliberal Front:** 🟥🟧⬛️⬛️⬛️🟧⬛️⬛️ (Totalitarian integralism)
-**Fascists:** ⬛️🟨🟥⬛️⬛️🟧⬛️⬛️ (Totalitarian ultranationalism)
+**Fascists:** ⬛️🟧🟥⬛️⬛️🟧⬛️⬛️ (Totalitarian ultranationalism)
 
 ### Key PLATFORM Insights
 
 **Privacy Dimension:**
 - **Maximum Privacy (0-1):** Postscarcity, Abundance Alliance, Libertarian Lobby, Social Democrats, Nordic Model, Builder Bloc, Liberty Caucus
-- **Moderate (2-3):** Revolutionary Socialists, Localist League
-- **High Surveillance (4-5):** NatCon Corps, Communists, Postliberal Front
-- **Maximum Surveillance (6):** Fascists
+- **Moderate (2-3):** Localist League
+- **High Surveillance (4-5):** Revolutionary Socialists, NatCon Corps, Postliberal Front
+- **Maximum Surveillance (6):** Communists, Fascists
 
 **Labor Dimension:**
 - **Anti-Union (0-1):** Libertarian Lobby, Abundance Alliance, Liberty Caucus
-- **Moderate (2-3):** Builder Bloc, Localist League, NatCon Corps, Fascists
-- **Pro-Union (4-5):** Nordic Model, Postscarcity, Social Democrats, Postliberal Front
+- **Moderate (2-3):** Builder Bloc, Localist League, NatCon Corps
+- **Pro-Union (4-5):** Nordic Model, Postscarcity, Social Democrats, Postliberal Front, Fascists
 - **Maximum Labor Power (6):** Communists, Revolutionary Socialists
 
 **Free Speech Dimension:**
 - **Absolute Free Speech (0-1):** Postscarcity, Abundance Alliance, Libertarian Lobby, Social Democrats, Nordic Model, Builder Bloc, Liberty Caucus
-- **Moderate Restrictions (2-3):** Revolutionary Socialists, Localist League
-- **Significant Restrictions (4-5):** Communists, NatCon Corps
-- **Maximum Restrictions (6):** Postliberal Front, Fascists
+- **Moderate Restrictions (2-3):** Localist League
+- **Significant Restrictions (4-5):** Revolutionary Socialists, NatCon Corps
+- **Maximum Restrictions (6):** Communists, Postliberal Front, Fascists
 
 **Ownership Dimension:**
 - **Pure Private (0-1):** Libertarian Lobby, Abundance Alliance, Liberty Caucus, Builder Bloc
 - **Mixed Economy (2-3):** Nordic Model, Localist League, NatCon Corps
 - **Heavy Public Sector (4-5):** Social Democrats, Postscarcity, Postliberal Front, Fascists, Revolutionary Socialists
 - **Full State Ownership (6):** Communists
+
+**Rights Dimension (Horseshoe Pattern):**
+- **⬛️ Maximum Anti-Discrimination (0):** Social Democrats, Postscarcity - Government actively enforces equality
+- **🟥 Strong Anti-Discrimination (1):** Nordic Model - Strong civil rights protections
+- **🟧 Moderate Anti-Discrimination (2):** Revolutionary Socialists, Builder Bloc, Abundance Alliance - Some anti-discrimination enforcement
+- **🟨 Neutral/Hands-Off (3):** Libertarian Lobby - Government neither enforces nor restricts
+- **🟧 Moderate Traditional (4):** Liberty Caucus, Localist League - Some traditional values in law
+- **🟥 Strong Traditional (5):** Communists, NatCon Corps - Government enforces traditional hierarchies
+- **⬛️ Maximum Traditional (6):** Postliberal Front, Fascists - Total enforcement of traditional/authoritarian order
+
+**Note:** The horseshoe shows that Social Democrats/Postscarcity (0) and Fascists/Postliberal (6) both want maximum government enforcement, but in opposite directions. The "freest" position is 3 (Libertarian), where government stays out of social/cultural issues entirely.
 
 ---
 
@@ -425,10 +440,12 @@ The PLATFORM framework measures 8 key policy dimensions across all blocs. Scores
 
 ### Migration Dimension (Open to Closed)
 - **Maximum Open (0):** Postscarcity, Abundance Alliance, Libertarian Lobby
-- **Open (1):** Communists, Revolutionary Socialists, Builder Bloc
-- **Moderate (2-3):** Social Democrats, Nordic Model, Liberty Caucus
-- **Restrictive (5):** Localist League
+- **Open (1):** Builder Bloc
+- **Moderate (2-3):** Social Democrats, Revolutionary Socialists, Nordic Model, Liberty Caucus
+- **Restrictive (5):** Communists, Localist League
 - **Maximum Closed (6):** NatCon Corps, Postliberal Front, Fascists
+
+**Note:** Communists scored based on historical practice (Berlin Wall, Soviet exit restrictions, North Korean border control) rather than internationalist rhetoric.
 
 ### Abortion Dimension (Pro-Choice to Pro-Life)
 - **Strongly Pro-Choice (0):** Revolutionary Socialists, Social Democrats, Postscarcity, Nordic Model
