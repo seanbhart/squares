@@ -1,39 +1,28 @@
 # Political Bloc Configuration Summary
 
 ## Overview
-This document summarizes 13 distinct political blocs across the ideological spectrum, from communists to fascists. Each bloc is defined by its positions on five key policy dimensions.
+This document summarizes 13 distinct political blocs across the ideological spectrum, from communists to fascists. Each bloc is defined by its positions on **eight PLATFORM policy dimensions**.
 
-## Dimension Key
-All blocs are scored 0-6 on five dimensions:
+## PLATFORM Framework
+All blocs are scored 0-6 on eight dimensions:
 
 | Dimension | 0 (Liberal/Open) | 6 (Conservative/Closed) |
 |-----------|------------------|-------------------------|
-| **Trade** | Free trade/globalist | Protectionist/nationalist |
+| **Privacy** | Maximum privacy protections | Maximum surveillance state |
+| **Labor** | Anti-union, right-to-work | Maximum labor power, codetermination |
 | **Abortion** | Pro-choice | Pro-life |
-| **Migration** | Open borders | Closed borders/restrictive |
-| **Economics** | Free market/laissez-faire | Heavy intervention/planning |
-| **Rights** | Progressive individualism | Traditional/communitarian |
+| **Trade** | Free trade | Protectionist |
+| **Free Speech** | Absolute free speech | Maximum speech restrictions |
+| **Ownership** | Pure private ownership | Full state ownership |
+| **Rights** | Progressive individualism (anti-discrimination) | Traditional/communitarian (pro-discrimination) |
+| **Migration** | Open borders | Closed borders |
+
+**Scoring Methodology:** Scores are based on **historical practice** rather than stated ideology (e.g., Communists score high on border restrictions despite internationalist rhetoric).
 
 ## Visual Spectrum Legend
-🟪 Purple (0) → 🟦 Blue (1) → 🟩 Green (2) → 🟨 Yellow (3) → 🟧 Orange (4) → 🟥 Red (5) → ⬛️ Dark Slate (6)
+🟪 Purple (0) → 🟦 Blue (1) → 🟩 Green (2) → 🟨 Yellow (3) → 🟧 Orange (4) → 🟥 Red (5) → ⬛️ Black (6)
 
-## Key Dimensions Explained
-
-Each bloc is defined by **three key dimensions** listed in order of importance. These represent the policy areas that most strongly define the bloc's ideological identity and distinguish it from other blocs.
-
-**How to interpret:**
-- **First dimension** = Most defining characteristic of the bloc
-- **Second dimension** = Secondary defining characteristic
-- **Third dimension** = Tertiary defining characteristic
-
-**Key Dimension Colors** show the emoji square for each of these three dimensions, providing a visual summary of the bloc's core positions.
-
-**Example:** Communists have key dimensions of Economics (⬛️), Rights (🟥), Trade (⬛️) - meaning their ideology is primarily defined by maximum state economic control, followed by communitarian/authoritarian rights positions, and protectionist trade policy.
-
-**Pattern observations:**
-- **Left-wing blocs (1-6)** typically prioritize Economics first
-- **Right-wing blocs (10-13)** typically prioritize Migration or Rights first
-- **Centrist/libertarian blocs (7-9)** show more varied priorities based on their specific coalition
+**Special Note:** The **Rights** dimension uses a horseshoe color scheme (⬛️🟥🟧🟨🟧🟥⬛️) because both extremes involve heavy government intervention—0-2 enforces anti-discrimination, 4-6 enforces traditional hierarchies, and 3 is neutral/hands-off.
 
 ---
 
@@ -42,18 +31,6 @@ Each bloc is defined by **three key dimensions** listed in order of importance. 
 **Description:** Marxist-Leninist vanguard. Centrally planned economy, abolition of private property, dictatorship of the proletariat.
 
 **Reference Ideology:** ✓ (Used as reference point)
-
-### Ideal Spectrum
-- **Trade:** ⬛️ (6 - Maximum protectionist)
-- **Abortion:** 🟦 (1 - Pro-choice)
-- **Migration:** 🟦 (1 - Open)
-- **Economics:** ⬛️ (6 - Maximum central planning)
-- **Rights:** 🟥 (5 - Communitarian/authoritarian)
-
-**Key Dimensions:** Economics, Rights, Trade
-
-**Full Spectrum:** ⬛️🟦🟦⬛️🟥
-**Key Dimension Colors:** ⬛️🟥⬛️
 
 **Examples:** CPUSA, Party for Socialism and Liberation, Lenin, Stalin, Mao Zedong, Castro, Marxist-Leninist parties worldwide, vanguard party advocates
 
@@ -65,18 +42,6 @@ Each bloc is defined by **three key dimensions** listed in order of importance. 
 
 **Reference Ideology:** ✓ (Used as reference point)
 
-### Ideal Spectrum
-- **Trade:** 🟥 (5 - Highly protectionist)
-- **Abortion:** 🟪 (0 - Strongly pro-choice)
-- **Migration:** 🟦 (1 - Open)
-- **Economics:** ⬛️ (6 - Maximum intervention)
-- **Rights:** 🟩 (2 - Progressive)
-
-**Key Dimensions:** Economics, Rights, Trade
-
-**Full Spectrum:** 🟥🟪🟦⬛️🟩
-**Key Dimension Colors:** ⬛️🟩🟥
-
 **Examples:** Socialist Alternative, Kshama Sawant (Seattle), Trotskyists, Rosa Luxemburg, Leon Trotsky, anti-imperialist left, hardline DSA members, Jacobin's revolutionary wing
 
 ---
@@ -86,18 +51,6 @@ Each bloc is defined by **three key dimensions** listed in order of importance. 
 **Description:** Protectionist social democrats. Labor-focused, anti-free trade, pro-choice, extensive redistribution, progressive rights.
 
 **Reference Ideology:** ✗
-
-### Ideal Spectrum
-- **Trade:** 🟥 (5 - Highly protectionist)
-- **Abortion:** 🟪 (0 - Strongly pro-choice)
-- **Migration:** 🟩 (2 - Moderately open)
-- **Economics:** 🟥 (5 - Heavy intervention)
-- **Rights:** 🟪 (0 - Maximum progressive)
-
-**Key Dimensions:** Economics, Trade, Rights
-
-**Full Spectrum:** 🟥🟪🟩🟥🟪
-**Key Dimension Colors:** 🟥🟥🟪
 
 **Examples:** Bernie Sanders, AOC, The Squad, DSA, Jacobin magazine, labor unions, Jeremy Corbyn (UK), Jean-Luc Mélenchon (France), Podemos (Spain), democratic socialists, economic populist left
 
@@ -109,18 +62,6 @@ Each bloc is defined by **three key dimensions** listed in order of importance. 
 
 **Reference Ideology:** ✗
 
-### Ideal Spectrum
-- **Trade:** 🟦 (1 - Free trade)
-- **Abortion:** 🟪 (0 - Strongly pro-choice)
-- **Migration:** 🟪 (0 - Maximum open borders)
-- **Economics:** 🟥 (5 - Heavy intervention)
-- **Rights:** 🟪 (0 - Maximum progressive)
-
-**Key Dimensions:** Economics, Migration, Rights
-
-**Full Spectrum:** 🟦🟪🟪🟥🟪
-**Key Dimension Colors:** 🟥🟪🟪
-
 **Examples:** Andrew Yang, Forward Party, UBI advocates, Aaron Bastani (UK), Nick Srnicek, Fully Automated Luxury Communism supporters, tech-optimist progressives, AI safety/acceleration debates, longtermist EAs, futurist left
 
 ---
@@ -130,18 +71,6 @@ Each bloc is defined by **three key dimensions** listed in order of importance. 
 **Description:** Social democracy. Market economy with extensive welfare state, strong unions, high taxes.
 
 **Reference Ideology:** ✓ (Used as reference point)
-
-### Ideal Spectrum
-- **Trade:** 🟦 (1 - Free trade)
-- **Abortion:** 🟪 (0 - Strongly pro-choice)
-- **Migration:** 🟨 (3 - Moderate)
-- **Economics:** 🟧 (4 - Significant intervention)
-- **Rights:** 🟦 (1 - Progressive)
-
-**Key Dimensions:** Economics, Trade, Rights
-
-**Full Spectrum:** 🟦🟪🟨🟧🟦
-**Key Dimension Colors:** 🟧🟦🟦
 
 **Examples:** Pete Buttigieg, Elizabeth Warren (USA, influenced by), Swedish Social Democrats, Danish system, Finnish model, pragmatic progressives who cite Scandinavia, European welfare state advocates
 
@@ -153,18 +82,6 @@ Each bloc is defined by **three key dimensions** listed in order of importance. 
 
 **Reference Ideology:** ✗
 
-### Ideal Spectrum
-- **Trade:** 🟩 (2 - Mostly free trade)
-- **Abortion:** 🟦 (1 - Pro-choice)
-- **Migration:** 🟦 (1 - Open)
-- **Economics:** 🟨 (3 - Moderate intervention)
-- **Rights:** 🟦 (1 - Progressive)
-
-**Key Dimensions:** Economics, Migration, Trade
-
-**Full Spectrum:** 🟩🟦🟦🟨🟦
-**Key Dimension Colors:** 🟨🟦🟩
-
 **Examples:** Ezra Klein, Matt Yglesias, Jon Ossoff, Jerusalem Demsas, Derek Thompson, Jennifer Pahlka (USA, state capacity), Supply-Side Progressives, YIMBYs (progressive wing), New Liberals (UK), Progress Studies movement, Vox/Slow Boring writers
 
 ---
@@ -174,18 +91,6 @@ Each bloc is defined by **three key dimensions** listed in order of importance. 
 **Description:** Market-oriented growth coalition. Free trade, pro-immigration, light-touch economics, YIMBY, deregulation.
 
 **Reference Ideology:** ✗
-
-### Ideal Spectrum
-- **Trade:** 🟪 (0 - Maximum free trade)
-- **Abortion:** 🟩 (2 - Pro-choice leaning)
-- **Migration:** 🟪 (0 - Maximum open borders)
-- **Economics:** 🟦 (1 - Light intervention)
-- **Rights:** 🟦 (1 - Progressive)
-
-**Key Dimensions:** Trade, Migration, Economics
-
-**Full Spectrum:** 🟪🟩🟪🟦🟦
-**Key Dimension Colors:** 🟪🟪🟦
 
 **Examples:** Tyler Cowen, Noah Smith, Neoliberal Project, Niskanen Center, Marginal Revolution blog, market YIMBYs, Scott Alexander/Astral Codex Ten, evidence-based policy advocates, pro-growth centrists, technocratic liberals
 
@@ -197,18 +102,6 @@ Each bloc is defined by **three key dimensions** listed in order of importance. 
 
 **Reference Ideology:** ✓ (Used as reference point)
 
-### Ideal Spectrum
-- **Trade:** 🟪 (0 - Maximum free trade)
-- **Abortion:** 🟦 (1 - Pro-choice)
-- **Migration:** 🟪 (0 - Maximum open borders)
-- **Economics:** 🟪 (0 - Maximum free market)
-- **Rights:** 🟪 (0 - Maximum individualism)
-
-**Key Dimensions:** Economics, Rights, Migration
-
-**Full Spectrum:** 🟪🟦🟪🟪🟪
-**Key Dimension Colors:** 🟪🟪🟪
-
 **Examples:** Ron Paul, Rand Paul, Reason magazine, Cato Institute, Libertarian Party, Thomas Massie, anarcho-capitalists, Murray Rothbard, Free State Project, Bitcoin/crypto maximalists, Austrian School economists
 
 ---
@@ -218,18 +111,6 @@ Each bloc is defined by **three key dimensions** listed in order of importance. 
 **Description:** Free-market conservatives. Free trade, pro-life, moderate immigration, laissez-faire economics, traditional values.
 
 **Reference Ideology:** ✗
-
-### Ideal Spectrum
-- **Trade:** 🟪 (0 - Maximum free trade)
-- **Abortion:** 🟧 (4 - Pro-life)
-- **Migration:** 🟨 (3 - Moderate)
-- **Economics:** 🟦 (1 - Light intervention)
-- **Rights:** 🟧 (4 - Traditional)
-
-**Key Dimensions:** Economics, Trade, Rights
-
-**Full Spectrum:** 🟪🟧🟨🟦🟧
-**Key Dimension Colors:** 🟦🟪🟧
 
 **Examples:** Mitt Romney, Paul Ryan, Nikki Haley, Larry Hogan, Liz Cheney, Adam Kinzinger, Wall Street Journal editorial board, Chamber of Commerce, traditional business conservatives, pre-Trump GOP establishment, Reagan Republicans
 
@@ -241,18 +122,6 @@ Each bloc is defined by **three key dimensions** listed in order of importance. 
 
 **Reference Ideology:** ✓ (Used as reference point)
 
-### Ideal Spectrum
-- **Trade:** 🟥 (5 - Highly protectionist)
-- **Abortion:** 🟧 (4 - Pro-life)
-- **Migration:** 🟥 (5 - Highly restrictive)
-- **Economics:** 🟨 (3 - Moderate intervention)
-- **Rights:** 🟧 (4 - Traditional)
-
-**Key Dimensions:** Migration, Trade, Rights
-
-**Full Spectrum:** 🟥🟧🟥🟨🟧
-**Key Dimension Colors:** 🟥🟥🟧
-
 **Examples:** Front Porch Republic, Rod Dreher (USA, Benedict Option), Strong Towns (USA, Chuck Marohn), New Urbanist Congress, Wendell Berry readers, local food movement advocates, Main Street conservatives, communitarianism, subsidiarity advocates
 
 ---
@@ -262,18 +131,6 @@ Each bloc is defined by **three key dimensions** listed in order of importance. 
 **Description:** National conservatives. Very protectionist, restrictive immigration, industrial policy, traditional values.
 
 **Reference Ideology:** ✗
-
-### Ideal Spectrum
-- **Trade:** ⬛️ (6 - Maximum protectionist)
-- **Abortion:** 🟥 (5 - Pro-life)
-- **Migration:** ⬛️ (6 - Closed borders)
-- **Economics:** 🟧 (4 - Significant intervention)
-- **Rights:** 🟥 (5 - Traditional/nationalist)
-
-**Key Dimensions:** Migration, Trade, Rights
-
-**Full Spectrum:** ⬛️🟥⬛️🟧🟥
-**Key Dimension Colors:** ⬛️⬛️🟥
 
 **Examples:** Donald Trump, J.D. Vance, Tucker Carlson, Steve Bannon, Matt Gaetz, MAGA movement, National Conservatism conferences, American Compass, Sohrab Ahmari, Patrick Deneen, Yoram Hazony, Viktor Orbán (Hungary), Marine Le Pen (France), America First, populist right
 
@@ -285,18 +142,6 @@ Each bloc is defined by **three key dimensions** listed in order of importance. 
 
 **Reference Ideology:** ✗
 
-### Ideal Spectrum
-- **Trade:** ⬛️ (6 - Maximum protectionist)
-- **Abortion:** ⬛️ (6 - Maximum pro-life)
-- **Migration:** ⬛️ (6 - Closed borders)
-- **Economics:** 🟥 (5 - Heavy intervention)
-- **Rights:** ⬛️ (6 - Maximum traditional)
-
-**Key Dimensions:** Rights, Abortion, Migration
-
-**Full Spectrum:** ⬛️⬛️⬛️🟥⬛️
-**Key Dimension Colors:** ⬛️⬛️⬛️
-
 **Examples:** Adrian Vermeule, Catholic integralism (USA/international), The Josias journal, Sohrab Ahmari (USA, hard-right wing), Patrick Deneen (Why Liberalism Failed), radical traditionalists, those seeking confessional state, rejecting Enlightenment liberalism entirely
 
 ---
@@ -306,18 +151,6 @@ Each bloc is defined by **three key dimensions** listed in order of importance. 
 **Description:** Ultranationalist authoritarianism. Corporatist economics, extreme social control, racial/national purity.
 
 **Reference Ideology:** ✓ (Used as reference point - theoretical extreme only)
-
-### Ideal Spectrum
-- **Trade:** ⬛️ (6 - Maximum protectionist)
-- **Abortion:** 🟥 (5 - Pro-life)
-- **Migration:** ⬛️ (6 - Closed borders)
-- **Economics:** 🟧 (4 - Significant state control)
-- **Rights:** ⬛️ (6 - Totalitarian)
-
-**Key Dimensions:** Migration, Rights, Economics
-
-**Full Spectrum:** ⬛️🟥⬛️🟧⬛️
-**Key Dimension Colors:** ⬛️⬛️🟧
 
 **Examples:** Historical fascism (Mussolini's Italy, Nazi Germany), contemporary ultranationalism, Golden Dawn (Greece, disbanded), authoritarian nationalism, extreme far-right movements (reference ideology only - represents theoretical extreme, not advocating)
 
@@ -335,12 +168,12 @@ The PLATFORM framework measures 8 key policy dimensions across all blocs. Scores
 |-----------|------------------|-------------------------|
 | **Privacy** | Maximum privacy protections | Maximum surveillance state |
 | **Labor** | Anti-union, right-to-work | Maximum labor power, codetermination |
-| **Abortion** | Pro-choice (same as TAME-R) | Pro-life (same as TAME-R) |
-| **Trade** | Free trade (same as TAME-R) | Protectionist (same as TAME-R) |
+| **Abortion** | Pro-choice | Pro-life |
+| **Trade** | Free trade | Protectionist |
 | **Free Speech** | Absolute free speech | Maximum speech restrictions |
 | **Ownership** | Pure private ownership | Full state ownership |
 | **Rights** | Progressive individualism (anti-discrimination enforcement) | Traditional/communitarian (pro-discrimination enforcement) |
-| **Migration** | Open borders (same as TAME-R) | Closed borders (same as TAME-R) |
+| **Migration** | Open borders | Closed borders |
 
 **Note:** Rights uses a horseshoe color scheme (⬛️🟥🟧🟨🟧🟥⬛️) because both extremes involve heavy government intervention—0-2 enforces anti-discrimination, 4-6 enforces traditional hierarchies, and 3 is neutral/hands-off.
 
@@ -478,67 +311,11 @@ The PLATFORM framework measures 8 key policy dimensions across all blocs. Scores
 ## Technical Notes
 
 - All blocs are currently marked as **not playable**
-- **6 Reference Ideologies** serve as theoretical anchor points for the spectrum
-- Color coding uses a 7-color ramp from purple (most liberal) to dark slate (most extreme/authoritarian)
-- Each bloc has exactly **3 key dimensions** that most strongly define their identity
-- Scores range from **0 (most liberal/open/progressive)** to **6 (most conservative/closed/traditional)**
-
----
-
-## Policy Dimension Comparison
-
-Comparison of current TAME-R dimensions with AI-suggested alternative policy frameworks:
-
-| Policy Area | Current TAME-R | Sean PLATFORM | GPT 5 PRO (Rank) | Claude Sonnet 4.5 (Rank) | Gemini 2.5 Pro (Rank) |
-|-------------|----------------|---------------|------------------|--------------------------|----------------------|
-| **Privacy** | — | ✓ Privacy | — | Due Process / Privacy (#15) | — |
-| **Labor/Unions** | *(part of Economics)* | ✓ Labor | Labor Regime & Wage Floor (#6) | Labor & Unions (#5) | Labor & Unions (#11) |
-| **Abortion** | Abortion | ✓ Abortion | Abortion Law (#4) | Abortion (#4) | Abortion (#5) |
-| **Trade/Industrial Policy** | Trade | ✓ Trade | Trade Barrier Level (#7) | Trade & Industrial Policy (#2) | Trade & Industrial Policy (#3) |
-| **Speech/Platform Regulation** | — | ✓ Free Speech | Speech & Platform Regulation (#2) | Tech & Speech Regulation (#10) | Tech & Speech Regulation (#1) |
-| **Ownership/Nationalization** | *(part of Economics)* | ✓ Ownership of Industry | Ownership of Key Industries (#5) | — | — |
-| **Rights/LGBTQ+/Gender** | Rights | ✓ Rights | Anti-Discrimination & Exemptions (#8) | LGBTQ+ & Gender Policy (#6) | Anti-Discrimination & Exemptions (#7) |
-| **Immigration/Border** | Migration | ✓ Migration | Immigration Quota & Enforcement (#3) | Immigration & Border Policy (#1) | Immigration & Border Policy (#4) |
-| **Economics (General)** | Economics | — | *(split into specific areas)* | *(split into specific areas)* | *(split into specific areas)* |
-| **Healthcare** | *(part of Economics)* | — | Healthcare (#10 - bonus) | Healthcare (#3) | Healthcare (#8) |
-| **Taxation/Redistribution** | *(part of Economics)* | — | Taxation & Wealth (#12 - derived) | Taxation & Wealth (#7) | Taxation & Redistribution (#9) |
-| **Climate/Energy/Environment** | *(part of Economics)* | — | Economic Reg & Climate (#13 - derived) | Economic Reg & Climate (#9) | Economic Reg & Climate (#10) |
-| **Gun Rights** | — | — | Gun Rights (#9 - bonus) | Gun Rights (#8) | Gun Rights (#6) |
-| **Surveillance/Policing** | — | — | Surveillance & Policing Powers (#1) | Surveillance & Policing Powers (#12) | Surveillance & Policing Powers (#12) |
-| **Criminal Justice** | — | — | Criminal Justice (#16 - derived) | Criminal Justice (#13) | — |
-| **Education** | — | — | Education (#11 - battleground) | — | Education (#2) |
-| **Foreign Policy** | — | — | Foreign Policy (#17 - toggle) | Foreign Policy (#11) | Foreign Policy (#13) |
-| **Governance/Representation** | — | — | Representation/Governance (#15 - toggle) | Representation & Governance (#14) | Representation & Governance (#14) |
-
-### Key Insights from Comparison:
-
-**Universal Agreement (All 3 AIs + TAME-R):**
-- Immigration/Migration ✓
-- Trade policy ✓
-- Abortion ✓
-
-**Strong AI Consensus (2-3 AIs recommend):**
-- **Healthcare** - Considered essential by Claude & Gemini, bonus by GPT
-- **Labor & Unions** - All 3 AIs rank this highly
-- **Taxation** - Claude & Gemini prioritize, GPT considers derivative
-- **Gun Rights** - All 3 AIs include in top 8-9
-- **Rights/LGBTQ+/Anti-Discrimination** - Different framing but all include
-
-**Emerging Priority (AI emphasis):**
-- **Speech & Platform Regulation** - GPT ranks #2, Gemini ranks #1, Claude ranks lower
-- **Surveillance & Policing** - GPT ranks #1, others rank as secondary
-
-**TAME-R Advantages:**
-- **Simpler framework** (5 dimensions vs 8-11 suggested)
-- **Economics as umbrella** captures multiple sub-issues without overwhelming users
-- **Rights as umbrella** covers discrimination, LGBTQ+, and individual liberties
-- **Established and tested** with existing bloc configurations
-
-**Potential TAME-R Expansions to Consider:**
-1. Split Economics into 2-3 specific dimensions (Healthcare, Labor, Taxation)
-2. Add Speech/Platform Regulation as 6th dimension
-3. Add Gun Rights as cultural/rights marker
-4. Split Rights into Civil Rights vs Individual Liberties
+- **6 Reference Ideologies** serve as theoretical anchor points for the spectrum: Communists, Revolutionary Socialists, Nordic Model, Libertarian Lobby, Localist League, and Fascists
+- Color coding uses a 7-color ramp from purple (most liberal) to black (most extreme/authoritarian)
+- The **PLATFORM framework** uses **8 dimensions**: Privacy, Labor, Abortion, Trade, Free Speech, Ownership, Rights, and Migration
+- Scores range from **0 (liberal/open/minimal state)** to **6 (conservative/closed/maximal state)**
+- **Rights dimension** uses a unique horseshoe color scheme because both extremes involve heavy government intervention
 
 ---
 
