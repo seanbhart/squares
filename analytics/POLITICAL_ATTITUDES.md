@@ -145,37 +145,125 @@ Each attitude type has **7 points** distributed across the four CORE dimensions,
 
 | Type | Name | Binary | Mid-Value | C (Civil) | O (Openness) | R (Redistribution) | E (Ethics) | Key Dimensions |
 |------|------|--------|-----------|-----------|--------------|-------------------|------------|----------------|
-| **LGMP** | Optimists | ⬛️⬛️⬛️⬛️ | 🟦🟦🟦🟦 | 2 | 2 | 2 | 1 | Balanced across C, O, R |
-| **AGMP** | Architects | ⬜️⬛️⬛️⬛️ | 🟧🟦🟦🟦 | 1 | 2 | 3 | 1 | **R** (Market innovation), O |
-| **LGMT** | Libertarians | ⬛️⬛️⬛️⬜️ | 🟦🟦🟦🟧 | 3 | 2 | 1 | 1 | **C** (Liberty), O |
-| **AGMT** | Institutionalists | ⬜️⬛️⬛️⬜️ | 🟧🟦🟦🟧 | 2 | 2 | 2 | 1 | Balanced institutional focus |
+| **LGMP** | Optimists | ⬛️⬛️⬛️⬛️ | 🟦🟦🟦🟦 | 1 | 1 | 1 | 1 | Balanced across C, O, R |
+| **AGMP** | Architects | ⬜️⬛️⬛️⬛️ | 🟧🟦🟦🟦 | 4 | 1 | 1 | 1 | **R** (Market innovation), O |
+| **LGMT** | Libertarians | ⬛️⬛️⬛️⬜️ | 🟦🟦🟦🟧 | 1 | 1 | 1 | 4 | **C** (Liberty), O |
+| **AGMT** | Institutionalists | ⬜️⬛️⬛️⬜️ | 🟧🟦🟦🟧 | 4 | 1 | 1 | 4 | Balanced institutional focus |
+
+**Intensity Variations:**
+
+**LGMP (Liberty-Global-Market-Progressive) Subtypes:**
+- **2222** - **Pragmatists**: Moderate believers in market solutions with balanced compromise
+- **1111** - **Optimists** *(default)*: Confident innovators who trust free systems
+- **0000** - **Visionaries**: Radical free-market globalists pushing boundaries
+
+**AGMP (Authority-Global-Market-Progressive) Subtypes:**
+- **3222** - **Reformers**: Cautious improvers working within systems
+- **4111** - **Architects** *(default)*: Strategic builders of market-oriented institutions
+- **5000** - **Masterplanners**: Commanding designers of global economic frameworks
+
+**LGMT (Liberty-Global-Market-Traditional) Subtypes:**
+- **2223** - **Conventionalists**: Moderate conservatives favoring stability
+- **1114** - **Libertarians** *(default)*: Classical liberals defending tradition through freedom
+- **0005** - **Constitutionalists**: Strict originalists with absolute property rights
+
+**AGMT (Authority-Global-Market-Traditional) Subtypes:**
+- **3223** - **Establishmentarians**: Safe-choice maintainers of status quo
+- **4114** - **Institutionalists** *(default)*: Principled defenders of established order
+- **5005** - **Guardians**: Firm protectors of traditional market hierarchies
 
 ### GS – Diplomats (Social Globalists)
 
 | Type | Name | Binary | Mid-Value | C (Civil) | O (Openness) | R (Redistribution) | E (Ethics) | Key Dimensions |
 |------|------|--------|-----------|-----------|--------------|-------------------|------------|----------------|
-| **LGSP** | Cooperators | ⬛️⬛️⬜️⬛️ | 🟦🟦🟧🟦 | 1 | 2 | 3 | 1 | **R** (Social welfare), O |
-| **AGSP** | Technocrats | ⬜️⬛️⬜️⬛️ | 🟧🟦🟧🟦 | 1 | 2 | 3 | 1 | **R** (Redistribution), O |
-| **LGST** | Humanists | ⬛️⬛️⬜️⬜️ | 🟦🟦🟧🟧 | 1 | 2 | 2 | 2 | O, balanced R/E |
-| **AGST** | Global Conservatives | ⬜️⬛️⬜️⬜️ | 🟧🟦🟧🟧 | 2 | 2 | 1 | 2 | C, O, E balance |
+| **LGSP** | Cooperators | ⬛️⬛️⬜️⬛️ | 🟦🟦🟧🟦 | 1 | 1 | 4 | 1 | **R** (Social welfare), O |
+| **AGSP** | Technocrats | ⬜️⬛️⬜️⬛️ | 🟧🟦🟧🟦 | 4 | 1 | 4 | 1 | **R** (Redistribution), O |
+| **LGST** | Humanists | ⬛️⬛️⬜️⬜️ | 🟦🟦🟧🟧 | 1 | 1 | 4 | 4 | O, balanced R/E |
+| **AGST** | Global Conservatives | ⬜️⬛️⬜️⬜️ | 🟧🟦🟧🟧 | 4 | 1 | 4 | 4 | C, O, E balance |
+
+**Intensity Variations:**
+
+**LGSP (Liberty-Global-Social-Progressive) Subtypes:**
+- **2232** - **Facilitators**: Gentle coordinators building consensus step by step
+- **1141** - **Cooperators** *(default)*: Collaborative reformers championing social welfare
+- **0050** - **Solidarity Leaders**: Uncompromising champions of universal welfare rights
+
+**AGSP (Authority-Global-Social-Progressive) Subtypes:**
+- **3232** - **Planners**: Thoughtful policy designers with measured approach
+- **4141** - **Technocrats** *(default)*: Expert-driven managers of redistribution systems
+- **5050** - **Social Engineers**: Commanding architects of total welfare states
+
+**LGST (Liberty-Global-Social-Traditional) Subtypes:**
+- **2233** - **Caregivers**: Gentle servants upholding communal bonds
+- **1144** - **Humanists** *(default)*: Faith-based global charity advocates
+- **0055** - **Missionaries**: Devoted healers spreading traditional compassion worldwide
+
+**AGST (Authority-Global-Social-Traditional) Subtypes:**
+- **3233** - **Corporatists**: Moderate organizers of structured societies
+- **4144** - **Global Conservatives** *(default)*: Principled defenders of ordered social hierarchies
+- **5055** - **Paternalists**: Firm guides enforcing traditional welfare obligations
 
 ### NS – Unionists (Social Nationalists)
 
 | Type | Name | Binary | Mid-Value | C (Civil) | O (Openness) | R (Redistribution) | E (Ethics) | Key Dimensions |
 |------|------|--------|-----------|-----------|--------------|-------------------|------------|----------------|
-| **LNSP** | Laborists | ⬛️⬜️⬜️⬛️ | 🟦🟧🟧🟦 | 1 | 2 | 3 | 1 | **R** (Social solidarity), O |
-| **ANSP** | Revolutionaries | ⬜️⬜️⬜️⬛️ | 🟧🟧🟧🟦 | 3 | 1 | 2 | 1 | **C** (Authority), R |
-| **LNST** | National Conservatives | ⬛️⬜️⬜️⬜️ | 🟦🟧🟧🟧 | 1 | 2 | 2 | 2 | O, balanced R/E |
-| **ANST** | Order Conservatives | ⬜️⬜️⬜️⬜️ | 🟧🟧🟧🟧 | 3 | 1 | 1 | 2 | **C** (Authority), E |
+| **LNSP** | Laborists | ⬛️⬜️⬜️⬛️ | 🟦🟧🟧🟦 | 1 | 4 | 4 | 1 | **R** (Social solidarity), O |
+| **ANSP** | Revolutionaries | ⬜️⬜️⬜️⬛️ | 🟧🟧🟧🟦 | 4 | 4 | 4 | 1 | **C** (Authority), R |
+| **LNST** | National Conservatives | ⬛️⬜️⬜️⬜️ | 🟦🟧🟧🟧 | 1 | 4 | 4 | 4 | O, balanced R/E |
+| **ANST** | Order Conservatives | ⬜️⬜️⬜️⬜️ | 🟧🟧🟧🟧 | 4 | 4 | 4 | 4 | **C** (Authority), E |
+
+**Intensity Variations:**
+
+**LNSP (Liberty-National-Social-Progressive) Subtypes:**
+- **2332** - **Organizers**: Moderate union supporters seeking gradual reform
+- **1441** - **Laborists** *(default)*: Committed workers' advocates demanding social solidarity
+- **0550** - **Syndicalists**: Militant labor radicals seizing collective control
+
+**ANSP (Authority-National-Social-Progressive) Subtypes:**
+- **3332** - **Collectivists**: Pragmatic statists coordinating national economies
+- **4441** - **Revolutionaries** *(default)*: Vanguard leaders overthrowing capitalist systems
+- **5550** - **Communists**: Iron-fisted architects of total state socialism
+
+**LNST (Liberty-National-Social-Traditional) Subtypes:**
+- **2333** - **Populists**: Folkish advocates balancing tradition and community
+- **1444** - **National Conservatives** *(default)*: Rooted defenders of faith and fatherland
+- **0555** - **Supremacists**: Fanatical tribalists enforcing blood-and-soil purity
+
+**ANST (Authority-National-Social-Traditional) Subtypes:**
+- **3333** - **Disciplinarians**: Stern enforcers maintaining traditional order
+- **4444** - **Order Conservatives** *(default)*: Total authoritarians demanding obedience to hierarchy
+- **5555** - **Totalitarians**: Absolute dictators crushing all dissent and difference
 
 ### NM – Proprietors (Market Nationalists)
 
 | Type | Name | Binary | Mid-Value | C (Civil) | O (Openness) | R (Redistribution) | E (Ethics) | Key Dimensions |
 |------|------|--------|-----------|-----------|--------------|-------------------|------------|----------------|
-| **LNMP** | Merchants | ⬛️⬜️⬛️⬛️ | 🟦🟧🟦🟦 | 1 | 2 | 3 | 1 | **R** (Market), O |
-| **ANMP** | Modernizers | ⬜️⬜️⬛️⬛️ | 🟧🟧🟦🟦 | 3 | 2 | 1 | 1 | **C** (Authority), O |
-| **LNMT** | Stewards | ⬛️⬜️⬛️⬜️ | 🟦🟧🟦🟧 | 1 | 2 | 2 | 2 | O, balanced R/E |
-| **ANMT** | Enforcers | ⬜️⬜️⬛️⬜️ | 🟧🟧🟦🟧 | 3 | 1 | 1 | 2 | **C** (Authority), E |
+| **LNMP** | Merchants | ⬛️⬜️⬛️⬛️ | 🟦🟧🟦🟦 | 1 | 4 | 1 | 1 | **R** (Market), O |
+| **ANMP** | Modernizers | ⬜️⬜️⬛️⬛️ | 🟧🟧🟦🟦 | 4 | 4 | 1 | 1 | **C** (Authority), O |
+| **LNMT** | Stewards | ⬛️⬜️⬛️⬜️ | 🟦🟧🟦🟧 | 1 | 4 | 1 | 4 | balanced R/E |
+| **ANMT** | Enforcers | ⬜️⬜️⬛️⬜️ | 🟧🟧🟦🟧 | 4 | 4 | 1 | 4 | **C** (Authority), E |
+
+**Intensity Variations:**
+
+**LNMP (Liberty-National-Market-Progressive) Subtypes:**
+- **2322** - **Tradesmen**: Practical local business owners favoring stability
+- **1411** - **Merchants** *(default)*: Independent entrepreneurs protecting community commerce
+- **0500** - **Isolationists**: Hardcore protectionists shutting out foreign competition
+
+**ANMP (Authority-National-Market-Progressive) Subtypes:**
+- **3322** - **Nationalists**: Strategic developers building domestic industry
+- **4411** - **Modernizers** *(default)*: State-guided capitalists advancing national power
+- **5500** - **Autarchs**: Commanding economic nationalists demanding total self-sufficiency
+
+**LNMT (Liberty-National-Market-Traditional) Subtypes:**
+- **2323** - **Townspeople**: Neighborly shopkeepers upholding local customs
+- **1414** - **Stewards** *(default)*: Faithful caretakers preserving heritage and property
+- **0505** - **Separatists**: Rigid traditionalists rejecting outside influence entirely
+
+**ANMT (Authority-National-Market-Traditional) Subtypes:**
+- **3323** - **Sentinels**: Watchful defenders of borders and hierarchies
+- **4414** - **Enforcers** *(default)*: Hard-order nationalists crushing threats to tradition
+- **5505** - **Fascists**: Brutal authoritarians imposing racial/cultural domination
 
 ### Key Patterns
 
