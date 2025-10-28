@@ -136,19 +136,19 @@ That person is an empathetic, cooperative global reformer — the Diplomat famil
 Each attitude type has **7 points** distributed across the four CORE dimensions, indicating which dimensions most strongly define that attitude. Each dimension receives at least 1 point.
 
 **Reading the Visual Representations:**
-- **Binary**: ⬛️ = less government (Liberty/Global/Market/Progressive), ⬜️ = more government (Authority/National/Social/Traditional)
+- **Binary**: ⬜️ = less government (Liberty/Global/Market/Progressive), ⬛️ = more government (Authority/National/Social/Traditional)
 - **Mid-Value**: Simplified color coding where 🟦 = L/G/M/P (blue for less government) and 🟧 = A/N/S/T (orange for more government)
 
-*Example: AGSP (Technocrats) shows ⬜️⬛️⬜️⬛️ in binary and 🟧🟦🟧🟦 in mid-value, indicating Authority-Global-Social-Progressive preferences.*
+*Example: AGSP (Technocrats) shows ⬛️⬜️⬛️⬜️ in binary and 🟧🟦🟧🟦 in mid-value, indicating Authority-Global-Social-Progressive preferences.*
 
 ### GM – Builders (Market Globalists)
 
 | Type | Name | Binary | Mid-Value | C (Civil) | O (Openness) | R (Redistribution) | E (Ethics) | Key Dimensions |
 |------|------|--------|-----------|-----------|--------------|-------------------|------------|----------------|
-| **LGMP** | Optimists | ⬛️⬛️⬛️⬛️ | 🟦🟦🟦🟦 | 1 | 1 | 1 | 1 | Balanced across C, O, R |
-| **AGMP** | Architects | ⬜️⬛️⬛️⬛️ | 🟧🟦🟦🟦 | 4 | 1 | 1 | 1 | **R** (Market innovation), O |
-| **LGMT** | Libertarians | ⬛️⬛️⬛️⬜️ | 🟦🟦🟦🟧 | 1 | 1 | 1 | 4 | **C** (Liberty), O |
-| **AGMT** | Institutionalists | ⬜️⬛️⬛️⬜️ | 🟧🟦🟦🟧 | 4 | 1 | 1 | 4 | Balanced institutional focus |
+| **LGMP** | Optimists | ⬜️⬜️⬜️⬜️ | 🟦🟦🟦🟦 | 1 | 1 | 1 | 1 | Balanced across C, O, R |
+| **AGMP** | Architects | ⬛️⬜️⬜️⬜️ | 🟧🟦🟦🟦 | 4 | 1 | 1 | 1 | **R** (Market innovation), O |
+| **LGMT** | Constitutionalists | ⬜️⬜️⬜️⬛️ | 🟦🟦🟦🟧 | 1 | 1 | 1 | 4 | **C** (Liberty), O |
+| **AGMT** | Institutionalists | ⬛️⬜️⬜️⬛️ | 🟧🟦🟦🟧 | 4 | 1 | 1 | 4 | Balanced institutional focus |
 
 **Intensity Variations:**
 
@@ -164,8 +164,8 @@ Each attitude type has **7 points** distributed across the four CORE dimensions,
 
 **LGMT (Liberty-Global-Market-Traditional) Subtypes:**
 - **2223** - **Conventionalists**: Moderate conservatives favoring stability
-- **1114** - **Libertarians** *(default)*: Classical liberals defending tradition through freedom
-- **0005** - **Constitutionalists**: Strict originalists with absolute property rights
+- **1114** - **Constitutionalists** *(default)*: Rule-of-law advocates balancing liberty and tradition
+- **0005** - **Libertarians**: Radical minimalists demanding absolute freedom and property rights
 
 **AGMT (Authority-Global-Market-Traditional) Subtypes:**
 - **3223** - **Establishmentarians**: Safe-choice maintainers of status quo
@@ -176,10 +176,10 @@ Each attitude type has **7 points** distributed across the four CORE dimensions,
 
 | Type | Name | Binary | Mid-Value | C (Civil) | O (Openness) | R (Redistribution) | E (Ethics) | Key Dimensions |
 |------|------|--------|-----------|-----------|--------------|-------------------|------------|----------------|
-| **LGSP** | Cooperators | ⬛️⬛️⬜️⬛️ | 🟦🟦🟧🟦 | 1 | 1 | 4 | 1 | **R** (Social welfare), O |
-| **AGSP** | Technocrats | ⬜️⬛️⬜️⬛️ | 🟧🟦🟧🟦 | 4 | 1 | 4 | 1 | **R** (Redistribution), O |
-| **LGST** | Humanists | ⬛️⬛️⬜️⬜️ | 🟦🟦🟧🟧 | 1 | 1 | 4 | 4 | O, balanced R/E |
-| **AGST** | Global Conservatives | ⬜️⬛️⬜️⬜️ | 🟧🟦🟧🟧 | 4 | 1 | 4 | 4 | C, O, E balance |
+| **LGSP** | Cooperators | ⬜️⬜️⬛️⬜️ | 🟦🟦🟧🟦 | 1 | 1 | 4 | 1 | **R** (Social welfare), O |
+| **AGSP** | Technocrats | ⬛️⬜️⬛️⬜️ | 🟧🟦🟧🟦 | 4 | 1 | 4 | 1 | **R** (Redistribution), O |
+| **LGST** | Humanists | ⬜️⬜️⬛️⬛️ | 🟦🟦🟧🟧 | 1 | 1 | 4 | 4 | O, balanced R/E |
+| **AGST** | Global Conservatives | ⬛️⬜️⬛️⬛️ | 🟧🟦🟧🟧 | 4 | 1 | 4 | 4 | C, O, E balance |
 
 **Intensity Variations:**
 
@@ -207,10 +207,10 @@ Each attitude type has **7 points** distributed across the four CORE dimensions,
 
 | Type | Name | Binary | Mid-Value | C (Civil) | O (Openness) | R (Redistribution) | E (Ethics) | Key Dimensions |
 |------|------|--------|-----------|-----------|--------------|-------------------|------------|----------------|
-| **LNSP** | Laborists | ⬛️⬜️⬜️⬛️ | 🟦🟧🟧🟦 | 1 | 4 | 4 | 1 | **R** (Social solidarity), O |
-| **ANSP** | Revolutionaries | ⬜️⬜️⬜️⬛️ | 🟧🟧🟧🟦 | 4 | 4 | 4 | 1 | **C** (Authority), R |
-| **LNST** | National Conservatives | ⬛️⬜️⬜️⬜️ | 🟦🟧🟧🟧 | 1 | 4 | 4 | 4 | O, balanced R/E |
-| **ANST** | Order Conservatives | ⬜️⬜️⬜️⬜️ | 🟧🟧🟧🟧 | 4 | 4 | 4 | 4 | **C** (Authority), E |
+| **LNSP** | Laborists | ⬜️⬛️⬛️⬜️ | 🟦🟧🟧🟦 | 1 | 4 | 4 | 1 | **R** (Social solidarity), O |
+| **ANSP** | Revolutionaries | ⬛️⬛️⬛️⬜️ | 🟧🟧🟧🟦 | 4 | 4 | 4 | 1 | **C** (Authority), R |
+| **LNST** | National Conservatives | ⬜️⬛️⬛️⬛️ | 🟦🟧🟧🟧 | 1 | 4 | 4 | 4 | O, balanced R/E |
+| **ANST** | Order Conservatives | ⬛️⬛️⬛️⬛️ | 🟧🟧🟧🟧 | 4 | 4 | 4 | 4 | **C** (Authority), E |
 
 **Intensity Variations:**
 
@@ -226,22 +226,22 @@ Each attitude type has **7 points** distributed across the four CORE dimensions,
 
 **LNST (Liberty-National-Social-Traditional) Subtypes:**
 - **2333** - **Populists**: Folkish advocates balancing tradition and community
-- **1444** - **National Conservatives** *(default)*: Rooted defenders of faith and fatherland
+- **1444** - **Grassroots Traditionalists** *(default)*: Rooted defenders of faith and fatherland
 - **0555** - **Supremacists**: Fanatical tribalists enforcing blood-and-soil purity
 
 **ANST (Authority-National-Social-Traditional) Subtypes:**
 - **3333** - **Disciplinarians**: Stern enforcers maintaining traditional order
-- **4444** - **Order Conservatives** *(default)*: Total authoritarians demanding obedience to hierarchy
+- **4444** - **National Conservatives** *(default)*: Total authoritarians demanding obedience to hierarchy
 - **5555** - **Totalitarians**: Absolute dictators crushing all dissent and difference
 
 ### NM – Proprietors (Market Nationalists)
 
 | Type | Name | Binary | Mid-Value | C (Civil) | O (Openness) | R (Redistribution) | E (Ethics) | Key Dimensions |
 |------|------|--------|-----------|-----------|--------------|-------------------|------------|----------------|
-| **LNMP** | Merchants | ⬛️⬜️⬛️⬛️ | 🟦🟧🟦🟦 | 1 | 4 | 1 | 1 | **R** (Market), O |
-| **ANMP** | Modernizers | ⬜️⬜️⬛️⬛️ | 🟧🟧🟦🟦 | 4 | 4 | 1 | 1 | **C** (Authority), O |
-| **LNMT** | Stewards | ⬛️⬜️⬛️⬜️ | 🟦🟧🟦🟧 | 1 | 4 | 1 | 4 | balanced R/E |
-| **ANMT** | Enforcers | ⬜️⬜️⬛️⬜️ | 🟧🟧🟦🟧 | 4 | 4 | 1 | 4 | **C** (Authority), E |
+| **LNMP** | Merchants | ⬜️⬛️⬜️⬜️ | 🟦🟧🟦🟦 | 1 | 4 | 1 | 1 | **R** (Market), O |
+| **ANMP** | Modernizers | ⬛️⬛️⬜️⬜️ | 🟧🟧🟦🟦 | 4 | 4 | 1 | 1 | **C** (Authority), O |
+| **LNMT** | Stewards | ⬜️⬛️⬜️⬛️ | 🟦🟧🟦🟧 | 1 | 4 | 1 | 4 | balanced R/E |
+| **ANMT** | Enforcers | ⬛️⬛️⬜️⬛️ | 🟧🟧🟦🟧 | 4 | 4 | 1 | 4 | **C** (Authority), E |
 
 **Intensity Variations:**
 
