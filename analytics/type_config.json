@@ -1,0 +1,407 @@
+{
+  "description": "CORE Political Typology Configuration - All scores are represented as arrays in [C, O, R, E] format where C=Civil Rights, O=Openness, R=Redistribution, E=Ethics. Scores range from 0-5.",
+  "colors": {
+    "light": "#D9D9D9",
+    "background": "#121113",
+    "dark": "#232323",
+    "blue": "#1F6ADB",
+    "green": "#398A34",
+    "purple": "#7E568E",
+    "red": "#C0392B",
+    "orange": "#E67E22",
+    "yellow": "#EAB308"
+  },
+  "intensity_colors": {
+    "moderate": {
+      "less_government": "green",
+      "more_government": "yellow"
+    },
+    "default": {
+      "less_government": "blue",
+      "more_government": "orange"
+    },
+    "extreme": {
+      "less_government": "purple",
+      "more_government": "red"
+    }
+  },
+  "families": {
+    "GM": {
+      "name": "Builders",
+      "description": "Market Globalists",
+      "types": {
+        "LGMP": {
+          "code": "LGMP",
+          "name": "Optimists",
+          "core_scores": [1, 1, 1, 1],
+          "variations": {
+            "moderate": {
+              "name": "Pragmatists",
+              "scores": [2, 2, 2, 2]
+            },
+            "default": {
+              "name": "Optimists",
+              "scores": [1, 1, 1, 1]
+            },
+            "extreme": {
+              "name": "Visionaries",
+              "scores": [0, 0, 0, 0]
+            }
+          }
+        },
+        "AGMP": {
+          "code": "AGMP",
+          "name": "Architects",
+          "core_scores": [4, 1, 1, 1],
+          "variations": {
+            "moderate": {
+              "name": "Reformers",
+              "scores": [3, 2, 2, 2]
+            },
+            "default": {
+              "name": "Architects",
+              "scores": [4, 1, 1, 1]
+            },
+            "extreme": {
+              "name": "Masterplanners",
+              "scores": [5, 0, 0, 0]
+            }
+          }
+        },
+        "LGMT": {
+          "code": "LGMT",
+          "name": "Constitutionalists",
+          "core_scores": [1, 1, 1, 4],
+          "variations": {
+            "moderate": {
+              "name": "Conventionalists",
+              "scores": [2, 2, 2, 3]
+            },
+            "default": {
+              "name": "Constitutionalists",
+              "scores": [1, 1, 1, 4]
+            },
+            "extreme": {
+              "name": "Libertarians",
+              "scores": [0, 0, 0, 5]
+            }
+          }
+        },
+        "AGMT": {
+          "code": "AGMT",
+          "name": "Institutionalists",
+          "core_scores": [4, 1, 1, 4],
+          "variations": {
+            "moderate": {
+              "name": "Establishmentarians",
+              "scores": [3, 2, 2, 3]
+            },
+            "default": {
+              "name": "Institutionalists",
+              "scores": [4, 1, 1, 4]
+            },
+            "extreme": {
+              "name": "Guardians",
+              "scores": [5, 0, 0, 5]
+            }
+          }
+        }
+      }
+    },
+    "GS": {
+      "name": "Diplomats",
+      "description": "Social Globalists",
+      "types": {
+        "LGSP": {
+          "code": "LGSP",
+          "name": "Cooperators",
+          "core_scores": [1, 1, 4, 1],
+          "variations": {
+            "moderate": {
+              "name": "Facilitators",
+              "scores": [2, 2, 3, 2]
+            },
+            "default": {
+              "name": "Cooperators",
+              "scores": [1, 1, 4, 1]
+            },
+            "extreme": {
+              "name": "Solidarity Leaders",
+              "scores": [0, 0, 5, 0]
+            }
+          }
+        },
+        "AGSP": {
+          "code": "AGSP",
+          "name": "Technocrats",
+          "core_scores": [4, 1, 4, 1],
+          "variations": {
+            "moderate": {
+              "name": "Planners",
+              "scores": [3, 2, 3, 2]
+            },
+            "default": {
+              "name": "Technocrats",
+              "scores": [4, 1, 4, 1]
+            },
+            "extreme": {
+              "name": "Social Engineers",
+              "scores": [5, 0, 5, 0]
+            }
+          }
+        },
+        "LGST": {
+          "code": "LGST",
+          "name": "Humanists",
+          "core_scores": [1, 1, 4, 4],
+          "variations": {
+            "moderate": {
+              "name": "Caregivers",
+              "scores": [2, 2, 3, 3]
+            },
+            "default": {
+              "name": "Humanists",
+              "scores": [1, 1, 4, 4]
+            },
+            "extreme": {
+              "name": "Missionaries",
+              "scores": [0, 0, 5, 5]
+            }
+          }
+        },
+        "AGST": {
+          "code": "AGST",
+          "name": "Global Conservatives",
+          "core_scores": [4, 1, 4, 4],
+          "variations": {
+            "moderate": {
+              "name": "Corporatists",
+              "scores": [3, 2, 3, 3]
+            },
+            "default": {
+              "name": "Global Conservatives",
+              "scores": [4, 1, 4, 4]
+            },
+            "extreme": {
+              "name": "Paternalists",
+              "scores": [5, 0, 5, 5]
+            }
+          }
+        }
+      }
+    },
+    "NS": {
+      "name": "Unionists",
+      "description": "Social Nationalists",
+      "types": {
+        "LNSP": {
+          "code": "LNSP",
+          "name": "Laborists",
+          "core_scores": [1, 4, 4, 1],
+          "variations": {
+            "moderate": {
+              "name": "Organizers",
+              "scores": [2, 3, 3, 2]
+            },
+            "default": {
+              "name": "Laborists",
+              "scores": [1, 4, 4, 1]
+            },
+            "extreme": {
+              "name": "Syndicalists",
+              "scores": [0, 5, 5, 0]
+            }
+          }
+        },
+        "ANSP": {
+          "code": "ANSP",
+          "name": "Revolutionaries",
+          "core_scores": [4, 4, 4, 1],
+          "variations": {
+            "moderate": {
+              "name": "Collectivists",
+              "scores": [3, 3, 3, 2]
+            },
+            "default": {
+              "name": "Revolutionaries",
+              "scores": [4, 4, 4, 1]
+            },
+            "extreme": {
+              "name": "Communists",
+              "scores": [5, 5, 5, 0]
+            }
+          }
+        },
+        "LNST": {
+          "code": "LNST",
+          "name": "National Conservatives",
+          "core_scores": [1, 4, 4, 4],
+          "variations": {
+            "moderate": {
+              "name": "Populists",
+              "scores": [2, 3, 3, 3]
+            },
+            "default": {
+              "name": "Grassroots Traditionalists",
+              "scores": [1, 4, 4, 4]
+            },
+            "extreme": {
+              "name": "Supremacists",
+              "scores": [0, 5, 5, 5]
+            }
+          }
+        },
+        "ANST": {
+          "code": "ANST",
+          "name": "Order Conservatives",
+          "core_scores": [4, 4, 4, 4],
+          "variations": {
+            "moderate": {
+              "name": "Disciplinarians",
+              "scores": [3, 3, 3, 3]
+            },
+            "default": {
+              "name": "National Conservatives",
+              "scores": [4, 4, 4, 4]
+            },
+            "extreme": {
+              "name": "Totalitarians",
+              "scores": [5, 5, 5, 5]
+            }
+          }
+        }
+      }
+    },
+    "NM": {
+      "name": "Proprietors",
+      "description": "Market Nationalists",
+      "types": {
+        "LNMP": {
+          "code": "LNMP",
+          "name": "Merchants",
+          "core_scores": [1, 4, 1, 1],
+          "variations": {
+            "moderate": {
+              "name": "Tradesmen",
+              "scores": [2, 3, 2, 2]
+            },
+            "default": {
+              "name": "Merchants",
+              "scores": [1, 4, 1, 1]
+            },
+            "extreme": {
+              "name": "Isolationists",
+              "scores": [0, 5, 0, 0]
+            }
+          }
+        },
+        "ANMP": {
+          "code": "ANMP",
+          "name": "Modernizers",
+          "core_scores": [4, 4, 1, 1],
+          "variations": {
+            "moderate": {
+              "name": "Nationalists",
+              "scores": [3, 3, 2, 2]
+            },
+            "default": {
+              "name": "Modernizers",
+              "scores": [4, 4, 1, 1]
+            },
+            "extreme": {
+              "name": "Autarchs",
+              "scores": [5, 5, 0, 0]
+            }
+          }
+        },
+        "LNMT": {
+          "code": "LNMT",
+          "name": "Stewards",
+          "core_scores": [1, 4, 1, 4],
+          "variations": {
+            "moderate": {
+              "name": "Townspeople",
+              "scores": [2, 3, 2, 3]
+            },
+            "default": {
+              "name": "Stewards",
+              "scores": [1, 4, 1, 4]
+            },
+            "extreme": {
+              "name": "Separatists",
+              "scores": [0, 5, 0, 5]
+            }
+          }
+        },
+        "ANMT": {
+          "code": "ANMT",
+          "name": "Enforcers",
+          "core_scores": [4, 4, 1, 4],
+          "variations": {
+            "moderate": {
+              "name": "Sentinels",
+              "scores": [3, 3, 2, 3]
+            },
+            "default": {
+              "name": "Enforcers",
+              "scores": [4, 4, 1, 4]
+            },
+            "extreme": {
+              "name": "Fascists",
+              "scores": [5, 5, 0, 5]
+            }
+          }
+        }
+      }
+    }
+  },
+  "grid_positions": {
+    "description": "3x3 grid layout for visualizing CORE scores",
+    "positions": {
+      "0_0": {
+        "label": "anchor",
+        "color": "light",
+        "description": "Always light gray - anchors the grid"
+      },
+      "1_0": {
+        "dimension": "C",
+        "label": "Civil Rights",
+        "description": "Liberty (low) vs Authority (high)"
+      },
+      "2_0": {
+        "dimension": "O",
+        "label": "Openness",
+        "description": "Global (low) vs National (high)"
+      },
+      "0_1": {
+        "dimension": "R",
+        "label": "Redistribution",
+        "description": "Market (low) vs Social (high)"
+      },
+      "1_1": {
+        "dimension": "E",
+        "label": "Ethics",
+        "description": "Progressive (low) vs Traditional (high)"
+      },
+      "2_1": {
+        "label": "empty",
+        "color": "background",
+        "description": "Empty space"
+      },
+      "0_2": {
+        "label": "indicator",
+        "style": "dashed_border",
+        "color": "dark",
+        "description": "Visual indicator box with dashed border"
+      },
+      "1_2": {
+        "label": "status_1",
+        "description": "Status indicator (varies by type)"
+      },
+      "2_2": {
+        "label": "status_2",
+        "description": "Status indicator (varies by type)"
+      }
+    }
+  }
+}
