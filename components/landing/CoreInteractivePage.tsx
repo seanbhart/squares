@@ -4,6 +4,8 @@ import React from 'react';
 import styles from './CoreLanding.module.css';
 
 export default function CoreInteractivePage() {
+  const [hoveredIndex, setHoveredIndex] = React.useState<number | null>(null);
+  
   // Use 80% of the smaller viewport dimension
   const containerSize = 'min(80vh, 80vw)';
   
@@ -65,7 +67,29 @@ export default function CoreInteractivePage() {
   ];
 
   const renderCell = (type: 'empty' | 'filled' | 'special', i: number) => {
-    if (type === 'filled') return <div key={i} style={filled} />;
+    const isHovered = hoveredIndex === i;
+    
+    if (type === 'filled') {
+      const filledHoverStyle: React.CSSProperties = {
+        ...filled,
+        transform: isHovered ? 'scale(1.08)' : 'scale(1)',
+        boxShadow: isHovered 
+          ? '0 12px 24px rgba(0, 0, 0, 0.3), 0 6px 12px rgba(0, 0, 0, 0.2)' 
+          : '0 0 0 rgba(0, 0, 0, 0)',
+        transition: 'transform 0.2s ease, box-shadow 0.2s ease',
+        cursor: 'pointer',
+      };
+      
+      return (
+        <div 
+          key={i} 
+          style={filledHoverStyle}
+          onMouseEnter={() => setHoveredIndex(i)}
+          onMouseLeave={() => setHoveredIndex(null)}
+        />
+      );
+    }
+    
     if (type === 'empty') return <div key={i} style={base} />;
     return <div key={i} style={special} />;
   };
