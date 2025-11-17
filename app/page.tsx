@@ -1,6 +1,6 @@
-import LandingPage from '@/components/landing/LandingPage';
+import CoreInteractivePage from '@/components/landing/CoreInteractivePage';
 
 
 export default function Home() {
-  return <LandingPage />;
+  return <CoreInteractivePage />;
 }
