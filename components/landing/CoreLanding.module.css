@@ -1,9 +1,19 @@
 .page {
   min-height: 100vh;
-  padding: 4rem 1.5rem 5rem;
+  padding: 1.5rem;
   background: var(--background);
   color: var(--foreground);
   display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.gridFullscreen {
+  width: 100%;
+  max-width: 100vw;
+  max-height: 100vh;
+  display: flex;
+  align-items: center;
   justify-content: center;
 }
 
@@ -269,11 +279,11 @@
 }
 
 .grid {
-  width: 180px;
+  width: min(80vw, 80vh);
   max-width: 100%;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 4px;
+  gap: clamp(4px, 1.5vw, 16px);
 }
 
 .gridCell {
@@ -286,35 +296,15 @@
 }
 
 .gridCell[data-label="indicator"] {
-  background: transparent;
+  background: #18181b;
   border: none;
-}
-
-.gridCell[data-label="indicator"]::before {
-  content: '';
-  position: absolute;
-  inset: 0.3rem;
-  border-radius: 0.5rem;
-  /* four corner brackets, no full sides */
-  background:
-    /* top-left corner */
-    linear-gradient(to right, rgba(243, 244, 246, 0.9), rgba(243, 244, 246, 0.9)) top left / 30% 2px no-repeat,
-    linear-gradient(to bottom, rgba(243, 244, 246, 0.9), rgba(243, 244, 246, 0.9)) top left / 2px 30% no-repeat,
-    /* top-right corner */
-    linear-gradient(to left, rgba(243, 244, 246, 0.9), rgba(243, 244, 246, 0.9)) top right / 30% 2px no-repeat,
-    linear-gradient(to bottom, rgba(243, 244, 246, 0.9), rgba(243, 244, 246, 0.9)) top right / 2px 30% no-repeat,
-    /* bottom-left corner */
-    linear-gradient(to right, rgba(243, 244, 246, 0.9), rgba(243, 244, 246, 0.9)) bottom left / 30% 2px no-repeat,
-    linear-gradient(to top, rgba(243, 244, 246, 0.9), rgba(243, 244, 246, 0.9)) bottom left / 2px 30% no-repeat,
-    /* bottom-right corner */
-    linear-gradient(to left, rgba(243, 244, 246, 0.9), rgba(243, 244, 246, 0.9)) bottom right / 30% 2px no-repeat,
-    linear-gradient(to top, rgba(243, 244, 246, 0.9), rgba(243, 244, 246, 0.9)) bottom right / 2px 30% no-repeat;
+  overflow: visible;
 }
 
 .gridCellLabel {
   position: absolute;
-  inset: 0.3rem;
-  font-size: 0.7rem;
+  inset: 0.4rem;
+  font-size: 1.25rem;
   color: rgba(15, 23, 42, 0.9);
   display: flex;
   align-items: center;
@@ -323,13 +313,55 @@
 }
 
 .gridCellLabel span {
-  min-width: 22px;
-  height: 22px;
+  min-width: 44px;
+  height: 44px;
   background: rgba(15, 23, 42, 0.18);
   border-radius: 0.5rem;
   display: inline-flex;
   align-items: center;
   justify-content: center;
+}
+
+.indicatorCorners {
+  position: absolute;
+  inset: 0.3rem;
+}
+
+.indicatorCorners span {
+  position: absolute;
+  width: 34%;
+  height: 34%;
+  border-radius: 0.75rem;
+  border: 3px solid rgba(243, 244, 246, 0.9);
+  background: transparent;
+}
+
+.indicatorCornerTL {
+  top: 0;
+  left: 0;
+  border-right-color: transparent;
+  border-bottom-color: transparent;
+}
+
+.indicatorCornerTR {
+  top: 0;
+  right: 0;
+  border-left-color: transparent;
+  border-bottom-color: transparent;
+}
+
+.indicatorCornerBL {
+  bottom: 0;
+  left: 0;
+  border-right-color: transparent;
+  border-top-color: transparent;
+}
+
+.indicatorCornerBR {
+  bottom: 0;
+  right: 0;
+  border-left-color: transparent;
+  border-top-color: transparent;
 }
 
 .legend {
@@ -430,6 +462,6 @@
   }
 
   .grid {
-    width: 150px;
+    width: min(80vw, 80vh);
   }
 }
