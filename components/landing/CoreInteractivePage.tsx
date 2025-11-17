@@ -6,6 +6,14 @@ import styles from './CoreLanding.module.css';
 export default function CoreInteractivePage() {
   const [hoveredIndex, setHoveredIndex] = React.useState<number | null>(null);
   
+  // Map grid indices to CORE letters
+  const indexToLetter: Record<number, string> = {
+    1: 'C',  // (2,1) Civil Rights
+    2: 'O',  // (3,1) Openness
+    4: 'R',  // (2,2) Redistribution
+    5: 'E',  // (3,2) Ethics
+  };
+  
   // Use 80% of the smaller viewport dimension
   const containerSize = 'min(80vh, 80vw)';
   
@@ -68,6 +76,7 @@ export default function CoreInteractivePage() {
 
   const renderCell = (type: 'empty' | 'filled' | 'special', i: number) => {
     const isHovered = hoveredIndex === i;
+    const letter = indexToLetter[i];
     
     if (type === 'filled') {
       const filledHoverStyle: React.CSSProperties = {
@@ -78,6 +87,21 @@ export default function CoreInteractivePage() {
           : '0 0 0 rgba(0, 0, 0, 0)',
         transition: 'transform 0.2s ease, box-shadow 0.2s ease',
         cursor: 'pointer',
+        position: 'relative',
+      };
+      
+      const letterStyle: React.CSSProperties = {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        fontSize: '12vmin',
+        fontWeight: 'bold',
+        color: 'var(--background)',
+        opacity: isHovered ? 1 : 0,
+        transition: 'opacity 0.2s ease',
+        userSelect: 'none',
+        pointerEvents: 'none',
       };
       
       return (
@@ -86,7 +110,9 @@ export default function CoreInteractivePage() {
           style={filledHoverStyle}
           onMouseEnter={() => setHoveredIndex(i)}
           onMouseLeave={() => setHoveredIndex(null)}
-        />
+        >
+          {letter && <span style={letterStyle}>{letter}</span>}
+        </div>
       );
     }
     
