@@ -1,101 +1,168 @@
-// Bloc Configuration
-// Loads bloc configuration from shared JSON file
+// CORE Framework Configuration
+// Loads CORE (Civil Rights, Openness, Redistribution, Ethics) configuration from shared JSON file
 
-import blocConfigData from '../analytics/bloc_config.json';
+import coreConfigData from '../analytics/bloc_config.json';
 
 // Export the raw config data
-export const CONFIG = blocConfigData;
+export const CONFIG = coreConfigData;
 
-// Type definitions
-export type BlocId = keyof typeof CONFIG.blocNames;
-export type ReferenceIdeologyId = keyof typeof CONFIG.referenceIdeologies;
-export type AnyBlocId = BlocId | ReferenceIdeologyId;
+// Type definitions for the 4-letter call sign system
+export type TypeId = keyof typeof CONFIG.typeNames;
+export type FamilyId = keyof typeof CONFIG.familyNames;
+export type AxisId = keyof typeof CONFIG.axes;
 
-export interface BlocPosition {
+// Call sign letters
+export type CivilRightsLetter = 'L' | 'A';  // Liberty | Authority
+export type OpennessLetter = 'G' | 'N';      // Global | National  
+export type RedistributionLetter = 'M' | 'S'; // Market | Social
+export type EthicsLetter = 'P' | 'T';        // Progressive | Traditional
+
+export type CallSign = `${CivilRightsLetter}${OpennessLetter}${RedistributionLetter}${EthicsLetter}`;
+
+export interface TypePosition {
+  callSign: CallSign;
+  family: FamilyId;
   examples: string;
-  keyDimensions: string[];
-  trade_score: number;
-  abortion_score: number;
-  migration_score: number;
-  economics_score: number;
-  rights_score: number;
+  civil_rights_score: number;    // 0-6: Liberty to Authority
+  openness_score: number;         // 0-6: Global to National
+  redistribution_score: number;   // 0-6: Market to Social
+  ethics_score: number;           // 0-6: Progressive to Traditional
 }
 
-export interface BlocColors {
-  primary: string;
-  secondary: string;
-  tertiary: string;
+export interface TypeColors {
+  civilRights: string;
+  openness: string;
+  redistribution: string;
+  ethics: string;
+}
+
+export interface AxisDefinition {
+  name: string;
+  shortName: string;
+  lowPole: string;
+  highPole: string;
+  lowLabel: string;
+  highLabel: string;
   description: string;
+  icon: string;
 }
 
 // Export typed accessors
 export const COLOR_RAMP = CONFIG.colorRamp;
-export const BLOC_NAMES = CONFIG.blocNames;
-export const REFERENCE_IDEOLOGIES = CONFIG.referenceIdeologies;
-export const BLOC_DESCRIPTIONS = CONFIG.blocDescriptions;
+export const AXIS_COLORS = CONFIG.axisColors;
+export const TYPE_NAMES = CONFIG.typeNames;
+export const FAMILY_NAMES = CONFIG.familyNames;
+export const AXES = CONFIG.axes as Record<AxisId, AxisDefinition>;
+export const TYPE_DESCRIPTIONS = CONFIG.typeDescriptions;
 export const DIMENSION_MEANINGS = CONFIG.dimensionMeanings;
-export const IDEAL_BLOC_POSITIONS = CONFIG.idealBlocPositions as Record<AnyBlocId, BlocPosition>;
-export const BLOC_COLORS = CONFIG.blocColors as Record<BlocId, BlocColors>;
+export const TYPE_POSITIONS = CONFIG.typePositions as Record<TypeId, TypePosition>;
+export const TYPE_COLORS = CONFIG.typeColors as Record<TypeId, TypeColors>;
 
-// Create reverse mapping
-const allNames = { ...BLOC_NAMES, ...REFERENCE_IDEOLOGIES };
-export const BLOC_IDS: Record<string, AnyBlocId> = Object.entries(allNames).reduce(
-  (acc, [id, name]) => ({ ...acc, [name]: id as AnyBlocId }),
+// Create reverse mapping for type names
+export const TYPE_IDS: Record<string, TypeId> = Object.entries(TYPE_NAMES).reduce(
+  (acc, [id, name]) => ({ ...acc, [name]: id as TypeId }),
   {}
 );
 
-// Helper functions
-export function getBlocName(blocId: AnyBlocId): string {
-  return allNames[blocId] ?? blocId.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+// Helper functions for CORE framework
+
+/**
+ * Get the display name for a type
+ */
+export function getTypeName(typeId: TypeId): string {
+  return TYPE_NAMES[typeId] ?? typeId.toUpperCase();
 }
 
-export function getBlocId(blocName: string): AnyBlocId | undefined {
-  return BLOC_IDS[blocName];
+/**
+ * Get type ID from display name
+ */
+export function getTypeId(typeName: string): TypeId | undefined {
+  return TYPE_IDS[typeName];
 }
 
-export function getIdealPosition(blocId: AnyBlocId, dimension?: string): number | Partial<BlocPosition> | undefined {
-  const positions = IDEAL_BLOC_POSITIONS[blocId];
-  if (!positions) return undefined;
-  
-  if (dimension) {
-    return positions[dimension as keyof BlocPosition] as number;
-  }
-  
-  // Return only the score dimensions
+/**
+ * Get the position scores for a type
+ */
+export function getTypePosition(typeId: TypeId): TypePosition | undefined {
+  return TYPE_POSITIONS[typeId];
+}
+
+/**
+ * Get the colors for a type's four axes
+ */
+export function getTypeColors(typeId: TypeId): TypeColors | undefined {
+  return TYPE_COLORS[typeId];
+}
+
+/**
+ * Get all type IDs
+ */
+export function getAllTypes(): TypeId[] {
+  return Object.keys(TYPE_NAMES) as TypeId[];
+}
+
+/**
+ * Get all types in a specific family
+ */
+export function getTypesByFamily(familyId: FamilyId): TypeId[] {
+  return getAllTypes().filter(typeId => TYPE_POSITIONS[typeId]?.family === familyId);
+}
+
+/**
+ * Get type description
+ */
+export function getTypeDescription(typeId: TypeId): string {
+  return TYPE_DESCRIPTIONS[typeId] ?? '';
+}
+
+/**
+ * Get type examples
+ */
+export function getTypeExamples(typeId: TypeId): string {
+  return TYPE_POSITIONS[typeId]?.examples ?? '';
+}
+
+/**
+ * Generate call sign from scores
+ * Scores are 0-6 where 0 = low pole (L/G/M/P), 6 = high pole (A/N/S/T)
+ */
+export function generateCallSign(
+  civilRightsScore: number,
+  opennessScore: number,
+  redistributionScore: number,
+  ethicsScore: number
+): CallSign {
+  const c: CivilRightsLetter = civilRightsScore < 3 ? 'L' : 'A';
+  const o: OpennessLetter = opennessScore < 3 ? 'G' : 'N';
+  const r: RedistributionLetter = redistributionScore < 3 ? 'M' : 'S';
+  const e: EthicsLetter = ethicsScore < 3 ? 'P' : 'T';
+  return `${c}${o}${r}${e}`;
+}
+
+/**
+ * Get family from openness and redistribution letters
+ */
+export function getFamilyFromLetters(o: OpennessLetter, r: RedistributionLetter): FamilyId {
+  if (o === 'G' && r === 'M') return 'builders';
+  if (o === 'G' && r === 'S') return 'diplomats';
+  if (o === 'N' && r === 'S') return 'unionists';
+  if (o === 'N' && r === 'M') return 'proprietors';
+  return 'builders'; // fallback
+}
+
+/**
+ * Parse call sign into component letters
+ */
+export function parseCallSign(callSign: CallSign): {
+  civilRights: CivilRightsLetter;
+  openness: OpennessLetter;
+  redistribution: RedistributionLetter;
+  ethics: EthicsLetter;
+} {
   return {
-    trade_score: positions.trade_score,
-    abortion_score: positions.abortion_score,
-    migration_score: positions.migration_score,
-    economics_score: positions.economics_score,
-    rights_score: positions.rights_score,
+    civilRights: callSign[0] as CivilRightsLetter,
+    openness: callSign[1] as OpennessLetter,
+    redistribution: callSign[2] as RedistributionLetter,
+    ethics: callSign[3] as EthicsLetter,
   };
-}
-
-export function getKeyDimensions(blocId: AnyBlocId): string[] {
-  return IDEAL_BLOC_POSITIONS[blocId]?.keyDimensions ?? [];
-}
-
-export function getBlocColors(blocId: BlocId): BlocColors {
-  return BLOC_COLORS[blocId] ?? {
-    primary: '#808080',
-    secondary: '#808080',
-    tertiary: '#808080',
-    description: 'Gray - undefined bloc',
-  };
-}
-
-export function getAllBlocs(includeReference = false): AnyBlocId[] {
-  const blocs = Object.keys(BLOC_NAMES) as BlocId[];
-  if (includeReference) {
-    return [...blocs, ...Object.keys(REFERENCE_IDEOLOGIES)] as AnyBlocId[];
-  }
-  return blocs;
-}
-
-export function getBlocDescription(blocId: AnyBlocId): string {
-  return BLOC_DESCRIPTIONS[blocId] ?? '';
-}
-
-export function getBlocExamples(blocId: AnyBlocId): string {
-  return IDEAL_BLOC_POSITIONS[blocId]?.examples ?? '';
 }

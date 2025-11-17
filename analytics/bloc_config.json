@@ -3,292 +3,349 @@
     "purple": "#7e568e",
     "blue": "#1f6adb",
     "green": "#398a34",
-    "yellow": "#eab308",
+    "gold": "#eab308",
     "orange": "#e67e22",
-    "red": "#c0392b",
-    "darkSlate": "#383b3d"
+    "red": "#c0392b"
   },
-  "blocNames": {
-    "communists": "Communists",
-    "revolutionary_socialists": "Revolutionary Socialists",
-    "social_democrat_union": "Social Democrat Union",
-    "post_scarcity": "Postscarcity Syndicate",
-    "nordic_model": "Nordic Model",
-    "builder_bloc": "Builder Bloc",
-    "abundance_alliance": "Abundance Alliance",
-    "libertarian_lobby": "Libertarian Lobby",
-    "liberty_caucus": "Liberty Caucus",
-    "localist_league": "Localist League",
-    "natcon_corps": "NatCon Corps",
-    "postliberal_front": "Postliberal Front",
-    "fascists": "Fascists"
+  "axisColors": {
+    "civilRights": "#7e568e",
+    "openness": "#1f6adb",
+    "redistribution": "#398a34",
+    "ethics": "#eab308"
   },
-  "referenceIdeologies": {
-    "communists": "Communists",
-    "revolutionary_socialists": "Revolutionary Socialists",
-    "nordic_model": "Nordic Model",
-    "libertarian_lobby": "Libertarian Lobby",
-    "localist_league": "Localist League",
-    "fascists": "Fascists"
+  "typeNames": {
+    "lgmp": "Pragmatic Visionaries",
+    "agmp": "Authoritarian Technocrats",
+    "lgmt": "Traditionalist Builders",
+    "agmt": "Paternalist Developers",
+    "lgsp": "Progressive Internationalists",
+    "agsp": "Managed Globalists",
+    "lgst": "Conservative Diplomats",
+    "agst": "Hierarchical Globalists",
+    "lnsp": "Democratic Socialists",
+    "ansp": "State Socialists",
+    "lnst": "Communitarian Social Conservatives",
+    "anst": "National Authoritarians",
+    "lnmp": "Libertarian Nationalists",
+    "anmp": "Authoritarian Nationalists",
+    "lnmt": "Traditional Localists",
+    "anmt": "Authoritarian Traditionalists"
   },
-  "blocDescriptions": {
-    "communists": "Marxist-Leninist vanguard. Centrally planned economy, abolition of private property, dictatorship of the proletariat.",
-    "revolutionary_socialists": "Anti-capitalist left. Worker control of production, abolish capitalism via mass movements, democratic socialism with revolutionary aims.",
-    "social_democrat_union": "Protectionist social democrats. Labor-focused, anti-free trade, pro-choice, extensive redistribution, progressive rights.",
-    "post_scarcity": "Tech-optimist left. Open borders, heavy economic intervention (UBI, automation support), very progressive on social issues.",
-    "nordic_model": "Social democracy. Market economy with extensive welfare state, strong unions, high taxes.",
-    "builder_bloc": "Pragmatic progressives. Pro-growth, state capacity building, strategically interventionist economics, YIMBY.",
-    "abundance_alliance": "Market-oriented growth coalition. Free trade, pro-immigration, light-touch economics, YIMBY, deregulation.",
-    "libertarian_lobby": "Radical libertarians. Pure free market, minimal/no state, open borders, maximum individual liberty.",
-    "liberty_caucus": "Free-market conservatives. Free trade, pro-life, moderate immigration, laissez-faire economics, traditional values.",
-    "localist_league": "Place-based communitarians. Protectionist, restrictive immigration, localist economics, community values.",
-    "natcon_corps": "National conservatives. Very protectionist, restrictive immigration, industrial policy, traditional values.",
-    "postliberal_front": "Integralists. Anti-globalist, very pro-life, closed borders, corporatist economics, rejects liberal framework.",
-    "fascists": "Ultranationalist authoritarianism. Corporatist economics, extreme social control, racial/national purity."
+  "familyNames": {
+    "builders": "Builders",
+    "diplomats": "Diplomats",
+    "unionists": "Unionists",
+    "proprietors": "Proprietors"
   },
-  "dimensionMeanings": {
-    "privacy_score": "0=maximum privacy protections, 6=maximum surveillance state",
-    "labor_score": "0=anti-union/right-to-work, 6=maximum labor power/codetermination",
-    "abortion_score": "0=pro-choice, 6=pro-life",
-    "trade_score": "0=free trade/globalist, 6=protectionist/nationalist",
-    "free_speech_score": "0=absolute free speech, 6=maximum speech restrictions",
-    "ownership_score": "0=pure private ownership, 6=full state ownership",
-    "rights_score": "0=progressive individualism (anti-discrimination enforcement), 6=traditional/communitarian (pro-discrimination enforcement) - horseshoe pattern",
-    "migration_score": "0=open borders, 6=closed borders/restrictive"
-  },
-  "scoringMethodology": "Scores are based on historical practice rather than stated ideology. For example, Communists score high on border restrictions (Berlin Wall, Soviet exit visas) despite internationalist rhetoric.",
-  "idealBlocPositions": {
-    "communists": {
-      "playable": false,
-      "examples": "CPUSA, Party for Socialism and Liberation, Lenin, Stalin, Mao Zedong, Castro, Marxist-Leninist parties worldwide, vanguard party advocates",
-      "privacy_score": 6,
-      "labor_score": 6,
-      "abortion_score": 1,
-      "trade_score": 6,
-      "free_speech_score": 6,
-      "ownership_score": 6,
-      "rights_score": 5,
-      "migration_score": 5
+  "axes": {
+    "civilRights": {
+      "name": "Civil Rights",
+      "shortName": "C",
+      "lowPole": "L",
+      "highPole": "A",
+      "lowLabel": "Liberty",
+      "highLabel": "Authority",
+      "description": "Less state constraint ↔ More state constraint",
+      "icon": "key"
     },
-    "revolutionary_socialists": {
-      "playable": false,
-      "examples": "Socialist Alternative, Kshama Sawant (Seattle), Trotskyists, Rosa Luxemburg, Leon Trotsky, anti-imperialist left, hardline DSA members, Jacobin's revolutionary wing",
-      "privacy_score": 4,
-      "labor_score": 6,
-      "abortion_score": 0,
-      "trade_score": 5,
-      "free_speech_score": 4,
-      "ownership_score": 5,
-      "rights_score": 2,
-      "migration_score": 3
+    "openness": {
+      "name": "Openness",
+      "shortName": "O",
+      "lowPole": "G",
+      "highPole": "N",
+      "lowLabel": "Global",
+      "highLabel": "National",
+      "description": "Supranational integration ↔ National sovereignty",
+      "icon": "globe"
     },
-    "social_democrat_union": {
-      "playable": false,
-      "examples": "Bernie Sanders, AOC, The Squad, DSA, Jacobin magazine, labor unions, Jeremy Corbyn (UK), Jean-Luc Mélenchon (France), Podemos (Spain), democratic socialists, economic populist left",
-      "privacy_score": 1,
-      "labor_score": 5,
-      "abortion_score": 0,
-      "trade_score": 5,
-      "free_speech_score": 1,
-      "ownership_score": 4,
-      "rights_score": 0,
-      "migration_score": 2
+    "redistribution": {
+      "name": "Redistribution",
+      "shortName": "R",
+      "lowPole": "M",
+      "highPole": "S",
+      "lowLabel": "Market",
+      "highLabel": "Social",
+      "description": "Market allocation ↔ State redistribution",
+      "icon": "coins"
     },
-    "post_scarcity": {
-      "playable": false,
-      "examples": "Andrew Yang, Forward Party, UBI advocates, Aaron Bastani (UK), Nick Srnicek, Fully Automated Luxury Communism supporters, tech-optimist progressives, AI safety/acceleration debates, longtermist EAs, futurist left",
-      "privacy_score": 1,
-      "labor_score": 4,
-      "abortion_score": 0,
-      "trade_score": 1,
-      "free_speech_score": 0,
-      "ownership_score": 4,
-      "rights_score": 0,
-      "migration_score": 0
-    },
-    "nordic_model": {
-      "playable": false,
-      "examples": "Pete Buttigieg, Elizabeth Warren (USA, influenced by), Swedish Social Democrats, Danish system, Finnish model, pragmatic progressives who cite Scandinavia, European welfare state advocates",
-      "privacy_score": 1,
-      "labor_score": 4,
-      "abortion_score": 0,
-      "trade_score": 1,
-      "free_speech_score": 1,
-      "ownership_score": 2,
-      "rights_score": 1,
-      "migration_score": 3
-    },
-    "builder_bloc": {
-      "playable": false,
-      "examples": "Ezra Klein, Matt Yglesias, Jon Ossoff, Jerusalem Demsas, Derek Thompson, Jennifer Pahlka (USA, state capacity), Supply-Side Progressives, YIMBYs (progressive wing), New Liberals (UK), Progress Studies movement, Vox/Slow Boring writers",
-      "privacy_score": 1,
-      "labor_score": 2,
-      "abortion_score": 1,
-      "trade_score": 2,
-      "free_speech_score": 1,
-      "ownership_score": 1,
-      "rights_score": 2,
-      "migration_score": 1
-    },
-    "abundance_alliance": {
-      "playable": false,
-      "examples": "Tyler Cowen, Noah Smith, Neoliberal Project, Niskanen Center, Marginal Revolution blog, market YIMBYs, Scott Alexander/Astral Codex Ten, evidence-based policy advocates, pro-growth centrists, technocratic liberals",
-      "privacy_score": 0,
-      "labor_score": 1,
-      "abortion_score": 2,
-      "trade_score": 0,
-      "free_speech_score": 0,
-      "ownership_score": 0,
-      "rights_score": 2,
-      "migration_score": 0
-    },
-    "libertarian_lobby": {
-      "playable": false,
-      "examples": "Ron Paul, Rand Paul, Reason magazine, Cato Institute, Libertarian Party, Thomas Massie, anarcho-capitalists, Murray Rothbard, Free State Project, Bitcoin/crypto maximalists, Austrian School economists",
-      "privacy_score": 0,
-      "labor_score": 0,
-      "abortion_score": 1,
-      "trade_score": 0,
-      "free_speech_score": 0,
-      "ownership_score": 0,
-      "rights_score": 3,
-      "migration_score": 0
-    },
-    "liberty_caucus": {
-      "playable": false,
-      "examples": "Mitt Romney, Paul Ryan, Nikki Haley, Larry Hogan, Liz Cheney, Adam Kinzinger, Wall Street Journal editorial board, Chamber of Commerce, traditional business conservatives, pre-Trump GOP establishment, Reagan Republicans",
-      "privacy_score": 1,
-      "labor_score": 1,
-      "abortion_score": 4,
-      "trade_score": 0,
-      "free_speech_score": 1,
-      "ownership_score": 0,
-      "rights_score": 4,
-      "migration_score": 3
-    },
-    "localist_league": {
-      "playable": false,
-      "examples": "Front Porch Republic, Rod Dreher (USA, Benedict Option), Strong Towns (USA, Chuck Marohn), New Urbanist Congress, Wendell Berry readers, local food movement advocates, Main Street conservatives, communitarianism, subsidiarity advocates",
-      "privacy_score": 2,
-      "labor_score": 3,
-      "abortion_score": 4,
-      "trade_score": 5,
-      "free_speech_score": 2,
-      "ownership_score": 2,
-      "rights_score": 4,
-      "migration_score": 5
-    },
-    "natcon_corps": {
-      "playable": false,
-      "examples": "Donald Trump, J.D. Vance, Tucker Carlson, Steve Bannon, Matt Gaetz, MAGA movement, National Conservatism conferences, American Compass, Sohrab Ahmari, Patrick Deneen, Yoram Hazony, Viktor Orbán (Hungary), Marine Le Pen (France), America First, populist right",
-      "privacy_score": 4,
-      "labor_score": 3,
-      "abortion_score": 5,
-      "trade_score": 6,
-      "free_speech_score": 4,
-      "ownership_score": 3,
-      "rights_score": 5,
-      "migration_score": 6
-    },
-    "postliberal_front": {
-      "playable": false,
-      "examples": "Adrian Vermeule, Catholic integralism (USA/international), The Josias journal, Sohrab Ahmari (USA, hard-right wing), Patrick Deneen (Why Liberalism Failed), radical traditionalists, those seeking confessional state, rejecting Enlightenment liberalism entirely",
-      "privacy_score": 5,
-      "labor_score": 4,
-      "abortion_score": 6,
-      "trade_score": 6,
-      "free_speech_score": 6,
-      "ownership_score": 4,
-      "rights_score": 6,
-      "migration_score": 6
-    },
-    "fascists": {
-      "playable": false,
-      "examples": "Historical fascism (Mussolini's Italy, Nazi Germany), contemporary ultranationalism, Golden Dawn (Greece, disbanded), authoritarian nationalism, extreme far-right movements (reference ideology only - represents theoretical extreme, not advocating)",
-      "privacy_score": 6,
-      "labor_score": 4,
-      "abortion_score": 5,
-      "trade_score": 6,
-      "free_speech_score": 6,
-      "ownership_score": 4,
-      "rights_score": 6,
-      "migration_score": 6
+    "ethics": {
+      "name": "Ethics",
+      "shortName": "E",
+      "lowPole": "P",
+      "highPole": "T",
+      "lowLabel": "Progressive",
+      "highLabel": "Traditional",
+      "description": "Change-seeking ↔ Preservation-seeking",
+      "icon": "torch"
     }
   },
-  "blocColors": {
-    "communists": {
-      "primary": "#c0392b",
-      "secondary": "#c0392b",
-      "tertiary": "#383b3d",
-      "description": "Red compass and corners, dark slate center - vanguard party authoritarianism"
+  "typeDescriptions": {
+    "lgmp": "Liberty-oriented, globally-integrated market progressives who emphasize pragmatic growth and innovation.",
+    "agmp": "Authority-leaning technocrats who favor global markets but with significant state oversight and control.",
+    "lgmt": "Liberty-minded market builders with traditional values, emphasizing free enterprise and cultural preservation.",
+    "agmt": "Paternalistic developers who blend market mechanisms with traditional values under state guidance.",
+    "lgsp": "Progressive internationalists combining social redistribution with global integration and civil liberties.",
+    "agsp": "State-managed globalists who favor international redistribution with stronger government control.",
+    "lgst": "Conservative diplomats balancing global engagement with traditional values and civil liberties.",
+    "agst": "Hierarchical globalists combining international social policy with authoritarian governance structures.",
+    "lnsp": "Democratic socialists emphasizing national social programs while protecting civil liberties.",
+    "ansp": "State socialists who favor strong national redistribution under centralized authority.",
+    "lnst": "Communitarian social conservatives blending national solidarity with traditional values and some liberty.",
+    "anst": "National authoritarians combining closed borders, state redistribution, and traditional social control.",
+    "lnmp": "Libertarian nationalists who favor national sovereignty, free markets, and minimal government.",
+    "anmp": "Authoritarian nationalists emphasizing strong state control with market-oriented national economics.",
+    "lnmt": "Traditional localists valuing community-based markets, national identity, and cultural preservation.",
+    "anmt": "Authoritarian traditionalists combining strong state power, national markets, and traditional values."
+  },
+  "dimensionMeanings": {
+    "civil_rights_score": "0=maximum individual liberty, 6=maximum state authority",
+    "openness_score": "0=global integration, 6=national sovereignty",
+    "redistribution_score": "0=market allocation, 6=state redistribution",
+    "ethics_score": "0=progressive/change-seeking, 6=traditional/preservation-seeking"
+  },
+  "scoringMethodology": "Scores represent positions on four independent axes. Call signs are generated by selecting the letter corresponding to each axis position (L/A for Civil Rights, G/N for Openness, M/S for Redistribution, P/T for Ethics). Intensity (1-3) reflects strength of position.",
+  "typePositions": {
+    "lgmp": {
+      "callSign": "LGMP",
+      "family": "builders",
+      "examples": "Ezra Klein, Matt Yglesias, Progress Studies advocates, pragmatic YIMBYs, growth-oriented progressives",
+      "civil_rights_score": 1,
+      "openness_score": 1,
+      "redistribution_score": 2,
+      "ethics_score": 1
     },
-    "revolutionary_socialists": {
-      "primary": "#c0392b",
-      "secondary": "#383b3d",
-      "tertiary": "#c0392b",
-      "description": "Red compass, dark slate corners, red center - revolutionary anti-capitalist left"
+    "agmp": {
+      "callSign": "AGMP",
+      "family": "builders",
+      "examples": "Singapore model, authoritarian capitalism with progressive values, technocratic governance",
+      "civil_rights_score": 4,
+      "openness_score": 1,
+      "redistribution_score": 2,
+      "ethics_score": 1
     },
-    "social_democrat_union": {
-      "primary": "#c0392b",
-      "secondary": "#7e568e",
-      "tertiary": "#398a34",
-      "description": "Red compass, purple corners, green center - labor left coalition"
+    "lgmt": {
+      "callSign": "LGMT",
+      "family": "builders",
+      "examples": "Libertarian traditionalists, free-market conservatives with cultural preservation focus",
+      "civil_rights_score": 1,
+      "openness_score": 1,
+      "redistribution_score": 2,
+      "ethics_score": 5
     },
-    "post_scarcity": {
-      "primary": "#1f6adb",
-      "secondary": "#7e568e",
-      "description": "Blue compass, purple corners and center - tech-optimist progressive"
+    "agmt": {
+      "callSign": "AGMT",
+      "family": "builders",
+      "examples": "Paternalistic conservatives, guided capitalism with traditional values",
+      "civil_rights_score": 4,
+      "openness_score": 1,
+      "redistribution_score": 2,
+      "ethics_score": 5
     },
-    "nordic_model": {
-      "primary": "#eab308",
-      "secondary": "#1f6adb",
-      "tertiary": "#e67e22",
-      "description": "Yellow compass, blue corners, orange center - social democratic capitalism"
+    "lgsp": {
+      "callSign": "LGSP",
+      "family": "diplomats",
+      "examples": "Bernie Sanders, AOC, progressive internationalists, democratic socialists",
+      "civil_rights_score": 1,
+      "openness_score": 1,
+      "redistribution_score": 5,
+      "ethics_score": 1
     },
-    "builder_bloc": {
-      "primary": "#398a34",
-      "secondary": "#1f6adb",
-      "description": "Green compass, blue corners and center - pragmatic growth progressives"
+    "agsp": {
+      "callSign": "AGSP",
+      "family": "diplomats",
+      "examples": "China, managed global redistribution with state control",
+      "civil_rights_score": 5,
+      "openness_score": 1,
+      "redistribution_score": 5,
+      "ethics_score": 1
     },
-    "abundance_alliance": {
-      "primary": "#398a34",
-      "secondary": "#1f6adb",
-      "tertiary": "#eab308",
-      "description": "Green compass, blue corners, yellow center - market-oriented growth coalition"
+    "lgst": {
+      "callSign": "LGST",
+      "family": "diplomats",
+      "examples": "Traditional internationalists, globally-engaged social democrats with conservative values",
+      "civil_rights_score": 1,
+      "openness_score": 1,
+      "redistribution_score": 5,
+      "ethics_score": 5
     },
-    "libertarian_lobby": {
-      "primary": "#7e568e",
-      "secondary": "#7e568e",
-      "tertiary": "#1f6adb",
-      "description": "Purple compass and corners, blue center - maximum individual liberty"
+    "agst": {
+      "callSign": "AGST",
+      "family": "diplomats",
+      "examples": "Authoritarian welfare states with traditional values, hierarchical global engagement",
+      "civil_rights_score": 5,
+      "openness_score": 1,
+      "redistribution_score": 5,
+      "ethics_score": 5
     },
-    "liberty_caucus": {
-      "primary": "#e67e22",
-      "secondary": "#eab308",
-      "tertiary": "#7e568e",
-      "description": "Orange compass, yellow corners, purple center - free-market traditional conservatives"
+    "lnsp": {
+      "callSign": "LNSP",
+      "family": "unionists",
+      "examples": "National progressives, left-wing populists emphasizing sovereignty and social programs",
+      "civil_rights_score": 1,
+      "openness_score": 5,
+      "redistribution_score": 5,
+      "ethics_score": 1
     },
-    "localist_league": {
-      "primary": "#e67e22",
-      "secondary": "#c0392b",
-      "tertiary": "#eab308",
-      "description": "Orange compass, red corners, yellow center - place-based communitarians"
+    "ansp": {
+      "callSign": "ANSP",
+      "family": "unionists",
+      "examples": "Soviet-style socialism, authoritarian national redistribution",
+      "civil_rights_score": 5,
+      "openness_score": 5,
+      "redistribution_score": 5,
+      "ethics_score": 1
     },
-    "natcon_corps": {
-      "primary": "#e67e22",
-      "secondary": "#c0392b",
-      "description": "Orange compass, red corners and center - MAGA populist conservatives"
+    "lnst": {
+      "callSign": "LNST",
+      "family": "unionists",
+      "examples": "Communitarian conservatives, national solidarity with traditional values",
+      "civil_rights_score": 1,
+      "openness_score": 5,
+      "redistribution_score": 5,
+      "ethics_score": 5
     },
-    "postliberal_front": {
-      "primary": "#c0392b",
-      "secondary": "#383b3d",
-      "description": "Red compass, dark slate corners and center - integralist authoritarianism"
+    "anst": {
+      "callSign": "ANST",
+      "family": "unionists",
+      "examples": "National Bolshevism, authoritarian nationalist socialism with traditional control",
+      "civil_rights_score": 5,
+      "openness_score": 5,
+      "redistribution_score": 5,
+      "ethics_score": 5
     },
-    "fascists": {
-      "primary": "#383b3d",
-      "secondary": "#383b3d",
-      "tertiary": "#c0392b",
-      "description": "Dark slate compass and corners, red center - totalitarian nationalism"
+    "lnmp": {
+      "callSign": "LNMP",
+      "family": "proprietors",
+      "examples": "Libertarian nationalists, free markets with national sovereignty and progressive values",
+      "civil_rights_score": 1,
+      "openness_score": 5,
+      "redistribution_score": 2,
+      "ethics_score": 1
+    },
+    "anmp": {
+      "callSign": "ANMP",
+      "family": "proprietors",
+      "examples": "Viktor Orbán, authoritarian market nationalism with progressive rhetoric",
+      "civil_rights_score": 5,
+      "openness_score": 5,
+      "redistribution_score": 2,
+      "ethics_score": 1
+    },
+    "lnmt": {
+      "callSign": "LNMT",
+      "family": "proprietors",
+      "examples": "Rod Dreher, localist conservatives, traditional market nationalism",
+      "civil_rights_score": 1,
+      "openness_score": 5,
+      "redistribution_score": 2,
+      "ethics_score": 5
+    },
+    "anmt": {
+      "callSign": "ANMT",
+      "family": "proprietors",
+      "examples": "MAGA movement, Trump, authoritarian national conservatism",
+      "civil_rights_score": 5,
+      "openness_score": 5,
+      "redistribution_score": 2,
+      "ethics_score": 5
+    }
+  },
+  "typeColors": {
+    "lgmp": {
+      "civilRights": "#7e568e",
+      "openness": "#1f6adb",
+      "redistribution": "#398a34",
+      "ethics": "#eab308"
+    },
+    "agmp": {
+      "civilRights": "#e67e22",
+      "openness": "#1f6adb",
+      "redistribution": "#398a34",
+      "ethics": "#eab308"
+    },
+    "lgmt": {
+      "civilRights": "#7e568e",
+      "openness": "#1f6adb",
+      "redistribution": "#398a34",
+      "ethics": "#e67e22"
+    },
+    "agmt": {
+      "civilRights": "#e67e22",
+      "openness": "#1f6adb",
+      "redistribution": "#398a34",
+      "ethics": "#e67e22"
+    },
+    "lgsp": {
+      "civilRights": "#7e568e",
+      "openness": "#1f6adb",
+      "redistribution": "#c0392b",
+      "ethics": "#eab308"
+    },
+    "agsp": {
+      "civilRights": "#e67e22",
+      "openness": "#1f6adb",
+      "redistribution": "#c0392b",
+      "ethics": "#eab308"
+    },
+    "lgst": {
+      "civilRights": "#7e568e",
+      "openness": "#1f6adb",
+      "redistribution": "#c0392b",
+      "ethics": "#e67e22"
+    },
+    "agst": {
+      "civilRights": "#e67e22",
+      "openness": "#1f6adb",
+      "redistribution": "#c0392b",
+      "ethics": "#e67e22"
+    },
+    "lnsp": {
+      "civilRights": "#7e568e",
+      "openness": "#e67e22",
+      "redistribution": "#c0392b",
+      "ethics": "#eab308"
+    },
+    "ansp": {
+      "civilRights": "#e67e22",
+      "openness": "#e67e22",
+      "redistribution": "#c0392b",
+      "ethics": "#eab308"
+    },
+    "lnst": {
+      "civilRights": "#7e568e",
+      "openness": "#e67e22",
+      "redistribution": "#c0392b",
+      "ethics": "#e67e22"
+    },
+    "anst": {
+      "civilRights": "#e67e22",
+      "openness": "#e67e22",
+      "redistribution": "#c0392b",
+      "ethics": "#e67e22"
+    },
+    "lnmp": {
+      "civilRights": "#7e568e",
+      "openness": "#e67e22",
+      "redistribution": "#398a34",
+      "ethics": "#eab308"
+    },
+    "anmp": {
+      "civilRights": "#e67e22",
+      "openness": "#e67e22",
+      "redistribution": "#398a34",
+      "ethics": "#eab308"
+    },
+    "lnmt": {
+      "civilRights": "#7e568e",
+      "openness": "#e67e22",
+      "redistribution": "#398a34",
+      "ethics": "#e67e22"
+    },
+    "anmt": {
+      "civilRights": "#e67e22",
+      "openness": "#e67e22",
+      "redistribution": "#398a34",
+      "ethics": "#e67e22"
     }
   }
 }
