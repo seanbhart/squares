@@ -10,12 +10,18 @@ export default function CoreInteractivePage() {
   const [hoveredIndex, setHoveredIndex] = React.useState<number | null>(null);
   const [activeAxis, setActiveAxis] = React.useState<AxisKey | null>(null);
   const [hoveredValue, setHoveredValue] = React.useState<number | null>(null);
+  const [hasAnimated, setHasAnimated] = React.useState(false);
   const [selectedValues, setSelectedValues] = React.useState<Record<AxisKey, number | null>>({
     civilRights: null,
     openness: null,
     redistribution: null,
     ethics: null,
   });
+  
+  // Trigger entrance animation on mount
+  React.useEffect(() => {
+    setHasAnimated(true);
+  }, []);
   
   // Map grid indices to CORE letters and axis keys
   const indexToAxis: Record<number, AxisKey> = {
@@ -66,11 +72,11 @@ export default function CoreInteractivePage() {
   };
 
   const special: React.CSSProperties = {
-    width: '96%',
-    height: '96%',
+    width: '95%',
+    height: '95%',
     placeSelf: 'center',
     borderRadius: '16%',
-    border: 'clamp(2px, 0.8vmin, 8px) solid #d6d6d6',
+    border: 'clamp(5px, 1.3vmin, 13px) solid #d6d6d6',
     background: 'transparent',
     WebkitMask: `
       linear-gradient(#000 0 0) top left,
@@ -78,7 +84,7 @@ export default function CoreInteractivePage() {
       linear-gradient(#000 0 0) bottom left,
       linear-gradient(#000 0 0) bottom right
     `,
-    WebkitMaskSize: '30% 30%',
+    WebkitMaskSize: '32% 32%',
     WebkitMaskRepeat: 'no-repeat',
     mask: `
       linear-gradient(#000 0 0) top left,
@@ -121,6 +127,13 @@ export default function CoreInteractivePage() {
   const handleValueSelect = (axis: AxisKey, value: number) => {
     setSelectedValues(prev => ({ ...prev, [axis]: value }));
     setActiveAxis(null);
+  };
+  
+  // Get animation delay for entrance animation
+  const getAnimationDelay = (index: number): number => {
+    const animationOrder = [1, 2, 4, 5]; // C, O, R, E
+    const orderIndex = animationOrder.indexOf(index);
+    return orderIndex >= 0 ? orderIndex * 0.15 : 0; // 150ms between each
   };
 
   const renderCell = (type: 'empty' | 'filled' | 'special', i: number) => {
@@ -181,8 +194,9 @@ export default function CoreInteractivePage() {
     }
     
     if (type === 'filled') {
-      // Determine background color based on selected value
-      let backgroundColor = '#7b4c96'; // default purple
+      // Determine background based on selected value
+      let background: string;
+      
       if (selectedValue !== null) {
         const colorMap = [
           COLOR_RAMP.purple,
@@ -192,19 +206,26 @@ export default function CoreInteractivePage() {
           COLOR_RAMP.orange,
           COLOR_RAMP.red,
         ];
-        backgroundColor = colorMap[selectedValue] || backgroundColor;
+        background = colorMap[selectedValue] || COLOR_RAMP.blue;
+      } else {
+        // Default: diagonal split from green (bottom-left) to gold (top-right)
+        background = `linear-gradient(135deg, ${COLOR_RAMP.blue} 50%, ${COLOR_RAMP.red} 50%)`;
       }
+      
+      const animationDelay = getAnimationDelay(i);
+      const shouldAnimate = hasAnimated;
       
       const filledHoverStyle: React.CSSProperties = {
         ...filled,
-        background: backgroundColor,
-        transform: isHovered ? 'scale(1.08)' : 'scale(1)',
+        background,
+        transform: isHovered ? 'scale(1.08)' : undefined,
         boxShadow: isHovered 
           ? '0 12px 24px rgba(0, 0, 0, 0.3), 0 6px 12px rgba(0, 0, 0, 0.2)' 
-          : '0 0 0 rgba(0, 0, 0, 0)',
+          : undefined,
         transition: 'transform 0.2s ease, box-shadow 0.2s ease, background 0.3s ease',
         cursor: 'pointer',
         position: 'relative',
+        animation: shouldAnimate ? `riseAndFall 0.6s ease-in-out ${animationDelay}s forwards` : 'none',
       };
       
       const letterStyle: React.CSSProperties = {
@@ -365,10 +386,28 @@ export default function CoreInteractivePage() {
   };
 
   return (
-    <main className={styles.page}>
-      <div style={grid}>{cells.map(renderCell)}</div>
-      {renderModal()}
-    </main>
+    <>
+      <style dangerouslySetInnerHTML={{__html: `
+        @keyframes riseAndFall {
+          0% {
+            transform: translateY(0) scale(1);
+            box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+          }
+          50% {
+            transform: translateY(-20px) scale(1.05);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 10px 20px rgba(0, 0, 0, 0.3);
+          }
+          100% {
+            transform: translateY(0) scale(1);
+            box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+          }
+        }
+      `}} />
+      <main className={styles.page}>
+        <div style={grid}>{cells.map(renderCell)}</div>
+        {renderModal()}
+      </main>
+    </>
   );
 }
 
