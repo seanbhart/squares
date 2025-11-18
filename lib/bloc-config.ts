@@ -62,6 +62,7 @@ export interface AxisDefinition {
 export const COLOR_RAMP = CONFIG.colorRamp;
 export const AXIS_COLORS = CONFIG.axisColors;
 export const TYPE_NAMES = CONFIG.typeNames;
+export const TYPE_SINGULAR_NAMES = CONFIG.typeSingularNames;
 export const FAMILY_NAMES = CONFIG.familyNames;
 export const SUB_TYPES = CONFIG.subTypes as Record<TypeId, SubTypeVariation[]>;
 export const AXES = CONFIG.axes as Record<AxisId, AxisDefinition>;
@@ -83,6 +84,13 @@ export const TYPE_IDS: Record<string, TypeId> = Object.entries(TYPE_NAMES).reduc
  */
 export function getTypeName(typeId: TypeId): string {
   return TYPE_NAMES[typeId] ?? typeId.toUpperCase();
+}
+
+/**
+ * Get the singular display name for a type
+ */
+export function getTypeSingularName(typeId: TypeId): string {
+  return TYPE_SINGULAR_NAMES[typeId] ?? TYPE_NAMES[typeId] ?? typeId.toUpperCase();
 }
 
 /**

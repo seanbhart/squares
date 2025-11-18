@@ -2,7 +2,7 @@
 
 import React from 'react';
 import styles from './CoreLanding.module.css';
-import { COLOR_RAMP, AXES } from '@/lib/bloc-config';
+import { COLOR_RAMP, AXES, getAllTypes, getTypePosition, getTypeName, getTypeSingularName, generateCallSign, TypeId } from '@/lib/bloc-config';
 
 type AxisKey = 'civilRights' | 'openness' | 'redistribution' | 'ethics';
 
@@ -129,6 +129,9 @@ export default function CoreInteractivePage() {
     setActiveAxis(null);
   };
   
+  // Check if any selection has been made
+  const hasAnySelection = Object.values(selectedValues).some(v => v !== null);
+  
   // Get animation delay for entrance animation
   const getAnimationDelay = (index: number): number => {
     const animationOrder = [1, 2, 4, 5]; // C, O, R, E
@@ -149,22 +152,12 @@ export default function CoreInteractivePage() {
       const correspondingValue = correspondingAxis ? selectedValues[correspondingAxis] : null;
       const letterMapping = emptyLetterMap[i];
       
-      // Default intensity values for each axis (matching default colors)
-      const defaultIntensity: Record<number, number> = {
-        1: 1,  // C - blue (low)
-        2: 2,  // O - green (low)
-        4: 3,  // R - yellow (high)
-        5: 4,  // E - orange (high)
-      };
-      
-      let emptyColor = '#d6d6d6'; // default white/light gray
+      let emptyColor = '#d6d6d6'; // default grey
       let emptyLetter = '';
       
-      const intensityValue = correspondingValue !== null ? correspondingValue : (correspondingIndex ? defaultIntensity[correspondingIndex] : null);
-      
-      if (intensityValue !== null && letterMapping) {
+      if (correspondingValue !== null && letterMapping) {
         // White for intensity 0-2, black for intensity 3-5
-        const isLowIntensity = intensityValue <= 2;
+        const isLowIntensity = correspondingValue <= 2;
         emptyColor = isLowIntensity ? '#f0f0f0' : '#1a1a1a';
         emptyLetter = isLowIntensity ? letterMapping.low : letterMapping.high;
       }
@@ -216,20 +209,27 @@ export default function CoreInteractivePage() {
           COLOR_RAMP.orange,
           COLOR_RAMP.red,
         ];
-        background = colorMap[selectedValue] || COLOR_RAMP.blue;
+        background = colorMap[selectedValue] || '#696969';
       } else {
-        // Default colors for each axis
-        const defaultColors: Record<number, string> = {
-          1: COLOR_RAMP.blue,    // C - Civil Rights
-          2: COLOR_RAMP.green,   // O - Openness
-          4: COLOR_RAMP.gold,    // R - Redistribution
-          5: COLOR_RAMP.orange,  // E - Ethics
-        };
-        background = defaultColors[i] || COLOR_RAMP.blue;
+        // Default: grey for all colored squares before selection
+        background = '#696969';
       }
       
       const animationDelay = getAnimationDelay(i);
       const shouldAnimate = hasAnimated;
+      
+      // C square bounces repeatedly until selection is made
+      const shouldBounce = i === 1 && !hasAnySelection;
+      let animationValue = 'none';
+      if (shouldAnimate) {
+        animationValue = `riseAndFall 0.6s ease-in-out ${animationDelay}s forwards`;
+      }
+      if (shouldBounce) {
+        // Start bouncing after initial animation, repeat every 3 seconds
+        animationValue = shouldAnimate 
+          ? `riseAndFall 0.6s ease-in-out ${animationDelay}s forwards, bounce 3s ease-in-out 2s infinite`
+          : 'bounce 3s ease-in-out 0s infinite';
+      }
       
       const filledHoverStyle: React.CSSProperties = {
         ...filled,
@@ -241,7 +241,7 @@ export default function CoreInteractivePage() {
         transition: 'transform 0.2s ease, box-shadow 0.2s ease, background 0.3s ease',
         cursor: 'pointer',
         position: 'relative',
-        animation: shouldAnimate ? `riseAndFall 0.6s ease-in-out ${animationDelay}s forwards` : 'none',
+        animation: animationValue,
       };
       
       const letterStyle: React.CSSProperties = {
@@ -427,6 +427,408 @@ export default function CoreInteractivePage() {
     );
   };
 
+  const renderMiniGrid = (
+    civilRightsScore: number,
+    opennessScore: number,
+    redistributionScore: number,
+    ethicsScore: number
+  ) => {
+    const miniGridSize = 'min(25vmin, 150px)';
+    
+    const miniGrid: React.CSSProperties = {
+      display: 'grid',
+      gridTemplateColumns: 'repeat(3, 1fr)',
+      gap: '4%',
+      width: miniGridSize,
+      height: miniGridSize,
+    };
+    
+    const miniSquare: React.CSSProperties = {
+      width: '100%',
+      height: '100%',
+      borderRadius: '20%',
+    };
+    
+    const miniSpecial: React.CSSProperties = {
+      width: '95%',
+      height: '95%',
+      placeSelf: 'center',
+      borderRadius: '16%',
+      border: 'clamp(2px, 0.5vmin, 4px) solid #d6d6d6',
+      background: 'transparent',
+      WebkitMask: `
+        linear-gradient(#000 0 0) top left,
+        linear-gradient(#000 0 0) top right,
+        linear-gradient(#000 0 0) bottom left,
+        linear-gradient(#000 0 0) bottom right
+      `,
+      WebkitMaskSize: '32% 32%',
+      WebkitMaskRepeat: 'no-repeat',
+      mask: `
+        linear-gradient(#000 0 0) top left,
+        linear-gradient(#000 0 0) top right,
+        linear-gradient(#000 0 0) bottom left,
+        linear-gradient(#000 0 0) bottom right
+      `,
+      maskSize: '30% 30%',
+      maskRepeat: 'no-repeat',
+    };
+    
+    const scores = [civilRightsScore, opennessScore, redistributionScore, ethicsScore];
+    const colorMap = [
+      COLOR_RAMP.purple,
+      COLOR_RAMP.blue,
+      COLOR_RAMP.green,
+      COLOR_RAMP.gold,
+      COLOR_RAMP.orange,
+      COLOR_RAMP.red,
+    ];
+    
+    const cells = [
+      { type: 'empty', index: 0, scoreIndex: 0 },  // top-left empty (C)
+      { type: 'filled', index: 1, scoreIndex: 0 }, // C
+      { type: 'filled', index: 2, scoreIndex: 1 }, // O
+      { type: 'empty', index: 3, scoreIndex: 1 },  // left-middle empty (O)
+      { type: 'filled', index: 4, scoreIndex: 2 }, // R
+      { type: 'filled', index: 5, scoreIndex: 3 }, // E
+      { type: 'special', index: 6 },
+      { type: 'empty', index: 7, scoreIndex: 2 },  // bottom-middle empty (R)
+      { type: 'empty', index: 8, scoreIndex: 3 },  // bottom-right empty (E)
+    ];
+    
+    return (
+      <div style={miniGrid}>
+        {cells.map(cell => {
+          if (cell.type === 'special') {
+            return <div key={cell.index} style={miniSpecial} />;
+          }
+          
+          if (cell.type === 'filled' && cell.scoreIndex !== undefined) {
+            const score = scores[cell.scoreIndex];
+            const bgColor = colorMap[score] || '#696969';
+            return <div key={cell.index} style={{ ...miniSquare, background: bgColor }} />;
+          }
+          
+          if (cell.type === 'empty' && cell.scoreIndex !== undefined) {
+            const score = scores[cell.scoreIndex];
+            const isLowIntensity = score <= 2;
+            const bgColor = isLowIntensity ? '#f0f0f0' : '#1a1a1a';
+            return <div key={cell.index} style={{ ...miniSquare, background: bgColor }} />;
+          }
+          
+          return <div key={cell.index} style={{ ...miniSquare, background: '#d6d6d6' }} />;
+        })}
+      </div>
+    );
+  };
+
+  const renderSimilarBlocs = () => {
+    // Only show if all four axes are selected
+    const allSelected = Object.values(selectedValues).every(v => v !== null);
+    if (!allSelected) return null;
+    
+    const userScores = {
+      civilRights: selectedValues.civilRights!,
+      openness: selectedValues.openness!,
+      redistribution: selectedValues.redistribution!,
+      ethics: selectedValues.ethics!,
+    };
+    
+    // Calculate distance to all types
+    const allTypes = getAllTypes();
+    const typesWithDistance = allTypes.map(typeId => {
+      const position = getTypePosition(typeId);
+      if (!position) return null;
+      
+      const distance = Math.sqrt(
+        Math.pow(position.civil_rights_score - userScores.civilRights, 2) +
+        Math.pow(position.openness_score - userScores.openness, 2) +
+        Math.pow(position.redistribution_score - userScores.redistribution, 2) +
+        Math.pow(position.ethics_score - userScores.ethics, 2)
+      );
+      
+      return { typeId, position, distance, name: getTypeName(typeId) };
+    }).filter(t => t !== null);
+    
+    // Sort by distance and take top 3
+    const similarTypes = typesWithDistance
+      .sort((a, b) => a!.distance - b!.distance)
+      .slice(0, 3);
+    
+    const container: React.CSSProperties = {
+      marginTop: '3rem',
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      gap: '1rem',
+    };
+    
+    const heading: React.CSSProperties = {
+      fontSize: '1.5rem',
+      fontWeight: 'bold',
+      marginBottom: '0.5rem',
+    };
+    
+    const blocsContainer: React.CSSProperties = {
+      display: 'flex',
+      gap: '1.5rem',
+      flexWrap: 'wrap',
+      justifyContent: 'center',
+    };
+    
+    const blocCard: React.CSSProperties = {
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      gap: '0.75rem',
+      cursor: 'pointer',
+      transition: 'transform 0.2s ease, opacity 0.2s ease',
+    };
+    
+    const handleBlocClick = (position: { civil_rights_score: number; openness_score: number; redistribution_score: number; ethics_score: number }) => {
+      setSelectedValues({
+        civilRights: position.civil_rights_score,
+        openness: position.openness_score,
+        redistribution: position.redistribution_score,
+        ethics: position.ethics_score,
+      });
+    };
+    
+    const blocInfo: React.CSSProperties = {
+      textAlign: 'center',
+    };
+    
+    const blocName: React.CSSProperties = {
+      fontSize: '1.1rem',
+      fontWeight: 'bold',
+      marginBottom: '0.25rem',
+    };
+    
+    const blocCallSign: React.CSSProperties = {
+      fontSize: '0.9rem',
+      opacity: 0.7,
+      fontFamily: 'monospace',
+    };
+    
+    return (
+      <div style={container}>
+        <div style={heading}>Similar Blocs</div>
+        <div style={blocsContainer}>
+          {similarTypes.map(type => (
+            <div 
+              key={type!.typeId} 
+              style={blocCard}
+              onClick={() => handleBlocClick(type!.position)}
+              onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
+              onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+            >
+              {renderMiniGrid(
+                type!.position.civil_rights_score,
+                type!.position.openness_score,
+                type!.position.redistribution_score,
+                type!.position.ethics_score
+              )}
+              <div style={blocInfo}>
+                <div style={blocName}>{type!.name}</div>
+                <div style={blocCallSign}>{type!.position.callSign}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  };
+
+  const findMatchingBloc = () => {
+    // Check if all values are selected
+    const allSelected = Object.values(selectedValues).every(v => v !== null);
+    if (!allSelected) return null;
+    
+    // Find exact match
+    const allTypes = getAllTypes();
+    for (const typeId of allTypes) {
+      const position = getTypePosition(typeId);
+      if (!position) continue;
+      
+      if (
+        position.civil_rights_score === selectedValues.civilRights &&
+        position.openness_score === selectedValues.openness &&
+        position.redistribution_score === selectedValues.redistribution &&
+        position.ethics_score === selectedValues.ethics
+      ) {
+        return {
+          typeId,
+          name: getTypeName(typeId),
+          singularName: getTypeSingularName(typeId),
+          callSign: position.callSign,
+        };
+      }
+    }
+    
+    return null;
+  };
+
+  const renderSquaresSummary = () => {
+    if (!hasAnySelection) return null;
+    
+    const matchingBloc = findMatchingBloc();
+    const axisOrder: AxisKey[] = ['civilRights', 'openness', 'redistribution', 'ethics'];
+    const letterOrder = ['C', 'O', 'R', 'E'];
+    
+    const summaryContainer: React.CSSProperties = {
+      marginTop: '4rem',
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      gap: '0.75rem',
+    };
+    
+    const heading: React.CSSProperties = {
+      fontSize: '1.5rem',
+      fontWeight: 'bold',
+      marginBottom: '0.5rem',
+    };
+    
+    const matchBadge: React.CSSProperties = {
+      background: 'rgba(123, 76, 150, 0.2)',
+      border: '2px solid rgba(123, 76, 150, 0.5)',
+      borderRadius: '0.5rem',
+      padding: '0.75rem 1.5rem',
+      marginBottom: '0.5rem',
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      gap: '0.25rem',
+    };
+    
+    const matchLabel: React.CSSProperties = {
+      fontSize: '0.9rem',
+      opacity: 0.8,
+      textTransform: 'uppercase',
+      letterSpacing: '0.05em',
+    };
+    
+    const matchName: React.CSSProperties = {
+      fontSize: '1.3rem',
+      fontWeight: 'bold',
+    };
+    
+    const matchCallSign: React.CSSProperties = {
+      fontSize: '0.95rem',
+      opacity: 0.7,
+      fontFamily: 'monospace',
+    };
+    
+    const rowContainer: React.CSSProperties = {
+      display: 'flex',
+      gap: '0.5rem',
+      alignItems: 'center',
+    };
+    
+    const squareSize = 'min(15vmin, 80px)';
+    
+    const coloredSquare: React.CSSProperties = {
+      width: squareSize,
+      height: squareSize,
+      borderRadius: '20%',
+    };
+    
+    const emptySquareContainer: React.CSSProperties = {
+      position: 'relative',
+      width: squareSize,
+      height: squareSize,
+    };
+    
+    const emptySquare: React.CSSProperties = {
+      width: '100%',
+      height: '100%',
+      borderRadius: '20%',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+    };
+    
+    const letterLabel: React.CSSProperties = {
+      fontSize: '2.5rem',
+      fontWeight: 'bold',
+    };
+    
+    return (
+      <div style={summaryContainer}>
+        <div style={heading}>Your Squares are...</div>
+        
+        {matchingBloc && (
+          <div style={matchBadge}>
+            <div style={matchLabel}>You are a</div>
+            <div style={matchName}>{matchingBloc.singularName}</div>
+            <div style={matchCallSign}>{matchingBloc.callSign}</div>
+          </div>
+        )}
+        
+        {/* Colored squares row */}
+        <div style={rowContainer}>
+          {axisOrder.map((axis, idx) => {
+            const value = selectedValues[axis];
+            let bgColor = '#696969'; // default grey
+            
+            if (value !== null) {
+              const colorMap = [
+                COLOR_RAMP.purple,
+                COLOR_RAMP.blue,
+                COLOR_RAMP.green,
+                COLOR_RAMP.gold,
+                COLOR_RAMP.orange,
+                COLOR_RAMP.red,
+              ];
+              bgColor = colorMap[value];
+            }
+            
+            return (
+              <div key={axis} style={{ ...coloredSquare, background: bgColor }} />
+            );
+          })}
+        </div>
+        
+        {/* White/Black squares row with letters */}
+        <div style={rowContainer}>
+          {axisOrder.map((axis, idx) => {
+            const value = selectedValues[axis];
+            
+            // If no selection, show standard white with no letter
+            if (value === null) {
+              return (
+                <div key={`${axis}-empty`} style={emptySquareContainer}>
+                  <div style={{ ...emptySquare, background: '#d6d6d6' }} />
+                </div>
+              );
+            }
+            
+            // If selected, show appropriate color and letter
+            const isLowIntensity = value <= 2;
+            const bgColor = isLowIntensity ? '#f0f0f0' : '#1a1a1a';
+            const letterColor = isLowIntensity ? '#1a1a1a' : '#f0f0f0'; // Opposite of bg
+            
+            const letterMap = [
+              { low: 'L', high: 'A' },
+              { low: 'G', high: 'N' },
+              { low: 'M', high: 'S' },
+              { low: 'P', high: 'T' },
+            ];
+            const letter = isLowIntensity ? letterMap[idx].low : letterMap[idx].high;
+            
+            return (
+              <div key={`${axis}-empty`} style={emptySquareContainer}>
+                <div style={{ ...emptySquare, background: bgColor }}>
+                  <span style={{ ...letterLabel, color: letterColor }}>{letter}</span>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    );
+  };
+
   return (
     <>
       <style dangerouslySetInnerHTML={{__html: `
@@ -444,9 +846,24 @@ export default function CoreInteractivePage() {
             box-shadow: 0 0 0 rgba(0, 0, 0, 0);
           }
         }
+        
+        @keyframes bounce {
+          0%, 20%, 100% {
+            transform: translateY(0) scale(1);
+            box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+          }
+          10% {
+            transform: translateY(-20px) scale(1.05);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 10px 20px rgba(0, 0, 0, 0.3);
+          }
+        }
       `}} />
       <main className={styles.page}>
-        <div style={grid}>{cells.map(renderCell)}</div>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}>
+          <div style={grid}>{cells.map(renderCell)}</div>
+          {renderSquaresSummary()}
+          {renderSimilarBlocs()}
+        </div>
         {renderModal()}
       </main>
     </>

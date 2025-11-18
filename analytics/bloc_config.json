@@ -31,6 +31,24 @@
     "lnmt": "Townspeople",
     "anmt": "Sentinels"
   },
+  "typeSingularNames": {
+    "lgmp": "Pragmatist",
+    "agmp": "Reformer",
+    "lgmt": "Conventionalist",
+    "agmt": "Establishmentarian",
+    "lgsp": "Facilitator",
+    "agsp": "Planner",
+    "lgst": "Caregiver",
+    "agst": "Corporatist",
+    "lnsp": "Organizer",
+    "ansp": "Collectivist",
+    "lnst": "Populist",
+    "anst": "Disciplinarian",
+    "lnmp": "Tradesman",
+    "anmp": "Nationalist",
+    "lnmt": "Townsperson",
+    "anmt": "Sentinel"
+  },
   "familyNames": {
     "builders": "Builders",
     "diplomats": "Diplomats",
