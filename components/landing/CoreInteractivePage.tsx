@@ -149,12 +149,22 @@ export default function CoreInteractivePage() {
       const correspondingValue = correspondingAxis ? selectedValues[correspondingAxis] : null;
       const letterMapping = emptyLetterMap[i];
       
+      // Default intensity values for each axis (matching default colors)
+      const defaultIntensity: Record<number, number> = {
+        1: 1,  // C - blue (low)
+        2: 2,  // O - green (low)
+        4: 3,  // R - yellow (high)
+        5: 4,  // E - orange (high)
+      };
+      
       let emptyColor = '#d6d6d6'; // default white/light gray
       let emptyLetter = '';
       
-      if (correspondingValue !== null && letterMapping) {
+      const intensityValue = correspondingValue !== null ? correspondingValue : (correspondingIndex ? defaultIntensity[correspondingIndex] : null);
+      
+      if (intensityValue !== null && letterMapping) {
         // White for intensity 0-2, black for intensity 3-5
-        const isLowIntensity = correspondingValue <= 2;
+        const isLowIntensity = intensityValue <= 2;
         emptyColor = isLowIntensity ? '#f0f0f0' : '#1a1a1a';
         emptyLetter = isLowIntensity ? letterMapping.low : letterMapping.high;
       }
@@ -208,8 +218,14 @@ export default function CoreInteractivePage() {
         ];
         background = colorMap[selectedValue] || COLOR_RAMP.blue;
       } else {
-        // Default: diagonal split from green (bottom-left) to gold (top-right)
-        background = `linear-gradient(135deg, ${COLOR_RAMP.blue} 50%, ${COLOR_RAMP.red} 50%)`;
+        // Default colors for each axis
+        const defaultColors: Record<number, string> = {
+          1: COLOR_RAMP.blue,    // C - Civil Rights
+          2: COLOR_RAMP.green,   // O - Openness
+          4: COLOR_RAMP.gold,    // R - Redistribution
+          5: COLOR_RAMP.orange,  // E - Ethics
+        };
+        background = defaultColors[i] || COLOR_RAMP.blue;
       }
       
       const animationDelay = getAnimationDelay(i);
@@ -293,12 +309,29 @@ export default function CoreInteractivePage() {
       marginBottom: '1.5rem',
       borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
       paddingBottom: '1rem',
+      position: 'relative',
+    };
+    
+    const closeButton: React.CSSProperties = {
+      position: 'absolute',
+      top: 0,
+      right: 0,
+      background: 'transparent',
+      border: 'none',
+      fontSize: '1.5rem',
+      cursor: 'pointer',
+      padding: '0.25rem',
+      lineHeight: 1,
+      color: 'var(--foreground)',
+      opacity: 0.7,
+      transition: 'opacity 0.2s ease',
     };
     
     const modalTitle: React.CSSProperties = {
       fontSize: '1.5rem',
       fontWeight: 'bold',
       marginBottom: '0.5rem',
+      paddingRight: '2rem',
     };
     
     const modalSubtitle: React.CSSProperties = {
@@ -350,6 +383,15 @@ export default function CoreInteractivePage() {
       <div style={modalOverlay} onClick={() => setActiveAxis(null)}>
         <div style={modalContent} onClick={(e) => e.stopPropagation()}>
           <div style={modalHeader}>
+            <button 
+              style={closeButton}
+              onClick={() => setActiveAxis(null)}
+              onMouseEnter={(e) => e.currentTarget.style.opacity = '1'}
+              onMouseLeave={(e) => e.currentTarget.style.opacity = '0.7'}
+              aria-label="Close"
+            >
+              ✕
+            </button>
             <div style={modalTitle}>{axis.name}</div>
             <div style={modalSubtitle}>{axis.description}</div>
           </div>
