@@ -54,6 +54,8 @@ export interface AxisDefinition {
   highLabel: string;
   description: string;
   icon: string;
+  question: string;
+  values: [string, string, string, string, string, string]; // 6 descriptors from 0-5
 }
 
 // Export typed accessors
@@ -241,4 +243,20 @@ export function matchSubType(
   }
   
   return bestMatch;
+}
+
+/**
+ * Get the value descriptor for a given score (0-5) on an axis
+ */
+export function getAxisValueDescriptor(axisId: AxisId, score: number): string {
+  const axis = AXES[axisId];
+  const clampedScore = Math.max(0, Math.min(5, Math.round(score)));
+  return axis.values[clampedScore] ?? '';
+}
+
+/**
+ * Get all value descriptors for an axis
+ */
+export function getAxisValues(axisId: AxisId): string[] {
+  return AXES[axisId].values;
 }

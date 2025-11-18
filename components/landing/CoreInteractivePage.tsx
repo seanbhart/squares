@@ -235,16 +235,14 @@ export default function CoreInteractivePage() {
           
           <div style={valueList}>
             {colorScale.map((item, idx) => {
-              const isLowPole = item.value <= 2;
-              const poleName = isLowPole ? axis.lowLabel : axis.highLabel;
-              const intensity = item.label;
+              const descriptor = axis.values[item.value];
               
               return (
                 <div key={idx} style={valueItem}>
                   <div style={{ ...colorSquare, background: item.color }} />
                   <div style={valueText}>
                     <div style={valueName}>
-                      {item.value === 3 ? 'Neutral' : `${intensity} ${poleName}`}
+                      {descriptor}
                     </div>
                   </div>
                 </div>

@@ -464,7 +464,16 @@
       "lowLabel": "Liberty",
       "highLabel": "Authority",
       "description": "Less state constraint ↔ More state constraint",
-      "icon": "key"
+      "icon": "key",
+      "question": "How much should the government regulate individual behavior?",
+      "values": [
+        "abolish enforcement",
+        "civil libertarian",
+        "privacy protections",
+        "public safety measures",
+        "surveillance state",
+        "police state"
+      ]
     },
     "openness": {
       "name": "Openness",
@@ -474,7 +483,16 @@
       "lowLabel": "Global",
       "highLabel": "National",
       "description": "Supranational integration ↔ National sovereignty",
-      "icon": "globe"
+      "icon": "globe",
+      "question": "Should we prioritize international cooperation or national interests?",
+      "values": [
+        "open borders",
+        "free movement",
+        "trade agreements",
+        "controlled immigration",
+        "strict border security",
+        "closed borders"
+      ]
     },
     "redistribution": {
       "name": "Redistribution",
@@ -484,7 +502,16 @@
       "lowLabel": "Market",
       "highLabel": "Social",
       "description": "Market allocation ↔ State redistribution",
-      "icon": "coins"
+      "icon": "coins",
+      "question": "How should economic resources be distributed?",
+      "values": [
+        "pure capitalism",
+        "free markets",
+        "mixed economy",
+        "social programs",
+        "wealth redistribution",
+        "planned economy"
+      ]
     },
     "ethics": {
       "name": "Ethics",
@@ -494,7 +521,16 @@
       "lowLabel": "Progressive",
       "highLabel": "Traditional",
       "description": "Change-seeking ↔ Preservation-seeking",
-      "icon": "torch"
+      "icon": "torch",
+      "question": "How should society approach social and cultural norms?",
+      "values": [
+        "radical social change",
+        "progressive reform",
+        "incremental progress",
+        "preserve traditions",
+        "traditional values",
+        "enforce conformity"
+      ]
     }
   },
   "typeDescriptions": {
