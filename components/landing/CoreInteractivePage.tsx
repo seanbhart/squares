@@ -9,6 +9,13 @@ type AxisKey = 'civilRights' | 'openness' | 'redistribution' | 'ethics';
 export default function CoreInteractivePage() {
   const [hoveredIndex, setHoveredIndex] = React.useState<number | null>(null);
   const [activeAxis, setActiveAxis] = React.useState<AxisKey | null>(null);
+  const [hoveredValue, setHoveredValue] = React.useState<number | null>(null);
+  const [selectedValues, setSelectedValues] = React.useState<Record<AxisKey, number | null>>({
+    civilRights: null,
+    openness: null,
+    redistribution: null,
+    ethics: null,
+  });
   
   // Map grid indices to CORE letters and axis keys
   const indexToAxis: Record<number, AxisKey> = {
@@ -95,18 +102,107 @@ export default function CoreInteractivePage() {
     'empty',
   ];
 
+  // Map empty squares to their corresponding colored squares
+  const emptyToColoredMap: Record<number, number> = {
+    0: 1,  // top-left empty → C (civilRights)
+    3: 2,  // left-middle empty → O (openness)
+    7: 4,  // bottom-middle empty → R (redistribution)
+    8: 5,  // bottom-right empty → E (ethics)
+  };
+  
+  // Map empty squares to their letters based on intensity
+  const emptyLetterMap: Record<number, { low: string; high: string }> = {
+    0: { low: 'L', high: 'A' },  // Civil Rights
+    3: { low: 'G', high: 'N' },  // Openness
+    7: { low: 'M', high: 'S' },  // Redistribution
+    8: { low: 'P', high: 'T' },  // Ethics
+  };
+
+  const handleValueSelect = (axis: AxisKey, value: number) => {
+    setSelectedValues(prev => ({ ...prev, [axis]: value }));
+    setActiveAxis(null);
+  };
+
   const renderCell = (type: 'empty' | 'filled' | 'special', i: number) => {
     const isHovered = hoveredIndex === i;
     const letter = indexToLetter[i];
+    const axis = indexToAxis[i];
+    const selectedValue = axis ? selectedValues[axis] : null;
+    
+    // For empty squares, determine color based on corresponding colored square
+    if (type === 'empty') {
+      const correspondingIndex = emptyToColoredMap[i];
+      const correspondingAxis = correspondingIndex ? indexToAxis[correspondingIndex] : null;
+      const correspondingValue = correspondingAxis ? selectedValues[correspondingAxis] : null;
+      const letterMapping = emptyLetterMap[i];
+      
+      let emptyColor = '#d6d6d6'; // default white/light gray
+      let emptyLetter = '';
+      
+      if (correspondingValue !== null && letterMapping) {
+        // White for intensity 0-2, black for intensity 3-5
+        const isLowIntensity = correspondingValue <= 2;
+        emptyColor = isLowIntensity ? '#f0f0f0' : '#1a1a1a';
+        emptyLetter = isLowIntensity ? letterMapping.low : letterMapping.high;
+      }
+      
+      const emptyStyle: React.CSSProperties = {
+        ...base,
+        background: emptyColor,
+        transition: 'background 0.3s ease',
+        position: 'relative',
+        cursor: correspondingValue !== null ? 'default' : 'default',
+      };
+      
+      const emptyLetterStyle: React.CSSProperties = {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        fontSize: '12vmin',
+        fontWeight: 'bold',
+        color: emptyColor === '#1a1a1a' ? '#f0f0f0' : '#1a1a1a', // Inverse of background
+        opacity: isHovered && emptyLetter ? 1 : 0,
+        transition: 'opacity 0.2s ease',
+        userSelect: 'none',
+        pointerEvents: 'none',
+      };
+      
+      return (
+        <div 
+          key={i} 
+          style={emptyStyle}
+          onMouseEnter={() => setHoveredIndex(i)}
+          onMouseLeave={() => setHoveredIndex(null)}
+        >
+          {emptyLetter && <span style={emptyLetterStyle}>{emptyLetter}</span>}
+        </div>
+      );
+    }
     
     if (type === 'filled') {
+      // Determine background color based on selected value
+      let backgroundColor = '#7b4c96'; // default purple
+      if (selectedValue !== null) {
+        const colorMap = [
+          COLOR_RAMP.purple,
+          COLOR_RAMP.blue,
+          COLOR_RAMP.green,
+          COLOR_RAMP.gold,
+          COLOR_RAMP.orange,
+          COLOR_RAMP.red,
+        ];
+        backgroundColor = colorMap[selectedValue] || backgroundColor;
+      }
+      
       const filledHoverStyle: React.CSSProperties = {
         ...filled,
+        background: backgroundColor,
         transform: isHovered ? 'scale(1.08)' : 'scale(1)',
         boxShadow: isHovered 
           ? '0 12px 24px rgba(0, 0, 0, 0.3), 0 6px 12px rgba(0, 0, 0, 0.2)' 
           : '0 0 0 rgba(0, 0, 0, 0)',
-        transition: 'transform 0.2s ease, box-shadow 0.2s ease',
+        transition: 'transform 0.2s ease, box-shadow 0.2s ease, background 0.3s ease',
         cursor: 'pointer',
         position: 'relative',
       };
@@ -138,7 +234,7 @@ export default function CoreInteractivePage() {
       );
     }
     
-    if (type === 'empty') return <div key={i} style={base} />;
+    // Must be special type
     return <div key={i} style={special} />;
   };
 
@@ -199,6 +295,10 @@ export default function CoreInteractivePage() {
       display: 'flex',
       alignItems: 'center',
       gap: '1rem',
+      cursor: 'pointer',
+      padding: '0.5rem',
+      borderRadius: '0.5rem',
+      transition: 'background 0.2s ease',
     };
     
     const colorSquare: React.CSSProperties = {
@@ -236,9 +336,19 @@ export default function CoreInteractivePage() {
           <div style={valueList}>
             {colorScale.map((item, idx) => {
               const descriptor = axis.values[item.value];
+              const isHovered = hoveredValue === item.value;
               
               return (
-                <div key={idx} style={valueItem}>
+                <div 
+                  key={idx} 
+                  style={{
+                    ...valueItem,
+                    background: isHovered ? 'rgba(255, 255, 255, 0.1)' : 'transparent',
+                  }}
+                  onClick={() => handleValueSelect(activeAxis, item.value)}
+                  onMouseEnter={() => setHoveredValue(item.value)}
+                  onMouseLeave={() => setHoveredValue(null)}
+                >
                   <div style={{ ...colorSquare, background: item.color }} />
                   <div style={valueText}>
                     <div style={valueName}>
