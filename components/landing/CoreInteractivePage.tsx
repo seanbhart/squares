@@ -2,7 +2,7 @@
 
 import React from 'react';
 import styles from './CoreLanding.module.css';
-import { COLOR_RAMP, AXES, getAllTypes, getTypePosition, getTypeName, getTypeSingularName, generateCallSign, TypeId } from '@/lib/bloc-config';
+import { COLOR_RAMP, AXES, getAllTypes, getTypePosition, getTypeName, getTypeSingularName, getTypeDescription, generateCallSign, TypeId } from '@/lib/bloc-config';
 
 type AxisKey = 'civilRights' | 'openness' | 'redistribution' | 'ethics';
 
@@ -131,6 +131,17 @@ export default function CoreInteractivePage() {
   
   // Check if any selection has been made
   const hasAnySelection = Object.values(selectedValues).some(v => v !== null);
+  
+  const handleReset = () => {
+    setSelectedValues({
+      civilRights: null,
+      openness: null,
+      redistribution: null,
+      ethics: null,
+    });
+    setHasAnimated(false);
+    setTimeout(() => setHasAnimated(true), 50);
+  };
   
   // Get animation delay for entrance animation
   const getAnimationDelay = (index: number): number => {
@@ -550,8 +561,9 @@ export default function CoreInteractivePage() {
       return { typeId, position, distance, name: getTypeName(typeId) };
     }).filter(t => t !== null);
     
-    // Sort by distance and take top 3
+    // Sort by distance and take top 3, excluding exact match (distance === 0)
     const similarTypes = typesWithDistance
+      .filter(t => t!.distance > 0) // Exclude exact match
       .sort((a, b) => a!.distance - b!.distance)
       .slice(0, 3);
     
@@ -611,16 +623,14 @@ export default function CoreInteractivePage() {
     };
     
     return (
-      <div style={container}>
-        <div style={heading}>Similar Blocs</div>
-        <div style={blocsContainer}>
+      <div className={styles.similarContainer}>
+        <div className={styles.similarHeading}>Similar Blocs</div>
+        <div className={styles.blocsGrid}>
           {similarTypes.map(type => (
             <div 
               key={type!.typeId} 
-              style={blocCard}
+              className={styles.blocCard}
               onClick={() => handleBlocClick(type!.position)}
-              onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
-              onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
             >
               {renderMiniGrid(
                 type!.position.civil_rights_score,
@@ -628,9 +638,9 @@ export default function CoreInteractivePage() {
                 type!.position.redistribution_score,
                 type!.position.ethics_score
               )}
-              <div style={blocInfo}>
-                <div style={blocName}>{type!.name}</div>
-                <div style={blocCallSign}>{type!.position.callSign}</div>
+              <div className={styles.blocInfo}>
+                <div className={styles.blocName}>{type!.name}</div>
+                <div className={styles.blocCallSign}>{type!.position.callSign}</div>
               </div>
             </div>
           ))}
@@ -639,30 +649,68 @@ export default function CoreInteractivePage() {
     );
   };
 
-  const findMatchingBloc = () => {
+  const determineUserBloc = () => {
     // Check if all values are selected
     const allSelected = Object.values(selectedValues).every(v => v !== null);
     if (!allSelected) return null;
     
-    // Find exact match
+    const userScores = {
+      civilRights: selectedValues.civilRights!,
+      openness: selectedValues.openness!,
+      redistribution: selectedValues.redistribution!,
+      ethics: selectedValues.ethics!,
+    };
+    
+    // 1. Try to find exact match
     const allTypes = getAllTypes();
     for (const typeId of allTypes) {
       const position = getTypePosition(typeId);
       if (!position) continue;
       
       if (
-        position.civil_rights_score === selectedValues.civilRights &&
-        position.openness_score === selectedValues.openness &&
-        position.redistribution_score === selectedValues.redistribution &&
-        position.ethics_score === selectedValues.ethics
+        position.civil_rights_score === userScores.civilRights &&
+        position.openness_score === userScores.openness &&
+        position.redistribution_score === userScores.redistribution &&
+        position.ethics_score === userScores.ethics
       ) {
         return {
           typeId,
           name: getTypeName(typeId),
           singularName: getTypeSingularName(typeId),
+          description: getTypeDescription(typeId),
           callSign: position.callSign,
+          matchType: 'exact',
         };
       }
+    }
+    
+    // 2. If no exact match, find closest match (most similar)
+    const typesWithDistance = allTypes.map(typeId => {
+      const position = getTypePosition(typeId);
+      if (!position) return null;
+      
+      const distance = Math.sqrt(
+        Math.pow(position.civil_rights_score - userScores.civilRights, 2) +
+        Math.pow(position.openness_score - userScores.openness, 2) +
+        Math.pow(position.redistribution_score - userScores.redistribution, 2) +
+        Math.pow(position.ethics_score - userScores.ethics, 2)
+      );
+      
+      return { typeId, position, distance };
+    }).filter(t => t !== null);
+    
+    // Sort by distance and take top 1
+    const closest = typesWithDistance.sort((a, b) => a!.distance - b!.distance)[0];
+    
+    if (closest) {
+      return {
+        typeId: closest.typeId,
+        name: getTypeName(closest.typeId),
+        singularName: getTypeSingularName(closest.typeId),
+        description: getTypeDescription(closest.typeId),
+        callSign: closest.position.callSign,
+        matchType: 'similar',
+      };
     }
     
     return null;
@@ -671,59 +719,8 @@ export default function CoreInteractivePage() {
   const renderSquaresSummary = () => {
     if (!hasAnySelection) return null;
     
-    const matchingBloc = findMatchingBloc();
+    const userBloc = determineUserBloc();
     const axisOrder: AxisKey[] = ['civilRights', 'openness', 'redistribution', 'ethics'];
-    const letterOrder = ['C', 'O', 'R', 'E'];
-    
-    const summaryContainer: React.CSSProperties = {
-      marginTop: '4rem',
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      gap: '0.75rem',
-    };
-    
-    const heading: React.CSSProperties = {
-      fontSize: '1.5rem',
-      fontWeight: 'bold',
-      marginBottom: '0.5rem',
-    };
-    
-    const matchBadge: React.CSSProperties = {
-      background: 'rgba(123, 76, 150, 0.2)',
-      border: '2px solid rgba(123, 76, 150, 0.5)',
-      borderRadius: '0.5rem',
-      padding: '0.75rem 1.5rem',
-      marginBottom: '0.5rem',
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      gap: '0.25rem',
-    };
-    
-    const matchLabel: React.CSSProperties = {
-      fontSize: '0.9rem',
-      opacity: 0.8,
-      textTransform: 'uppercase',
-      letterSpacing: '0.05em',
-    };
-    
-    const matchName: React.CSSProperties = {
-      fontSize: '1.3rem',
-      fontWeight: 'bold',
-    };
-    
-    const matchCallSign: React.CSSProperties = {
-      fontSize: '0.95rem',
-      opacity: 0.7,
-      fontFamily: 'monospace',
-    };
-    
-    const rowContainer: React.CSSProperties = {
-      display: 'flex',
-      gap: '0.5rem',
-      alignItems: 'center',
-    };
     
     const squareSize = 'min(15vmin, 80px)';
     
@@ -731,12 +728,14 @@ export default function CoreInteractivePage() {
       width: squareSize,
       height: squareSize,
       borderRadius: '20%',
+      transition: 'transform 0.2s ease, box-shadow 0.2s ease',
     };
     
     const emptySquareContainer: React.CSSProperties = {
       position: 'relative',
       width: squareSize,
       height: squareSize,
+      transition: 'transform 0.2s ease',
     };
     
     const emptySquare: React.CSSProperties = {
@@ -754,22 +753,34 @@ export default function CoreInteractivePage() {
     };
     
     return (
-      <div style={summaryContainer}>
-        <div style={heading}>Your Squares are...</div>
+      <div className={styles.summaryContainer}>
         
-        {matchingBloc && (
-          <div style={matchBadge}>
-            <div style={matchLabel}>You are a</div>
-            <div style={matchName}>{matchingBloc.singularName}</div>
-            <div style={matchCallSign}>{matchingBloc.callSign}</div>
+        {userBloc && (
+          <div className={styles.matchBadge}>
+            <div className={styles.matchLabel}>
+              {userBloc.matchType === 'exact' ? 'You are a' : 'You are most similar to a'}
+            </div>
+            <div className={styles.matchName}>{userBloc.singularName}</div>
+            <div className={styles.matchCallSign}>{userBloc.callSign}</div>
+            <div className={styles.matchDescription}>{userBloc.description}</div>
           </div>
         )}
         
         {/* Colored squares row */}
-        <div style={rowContainer}>
+        <div className={styles.summaryRow}>
           {axisOrder.map((axis, idx) => {
             const value = selectedValues[axis];
             let bgColor = '#696969'; // default grey
+            
+            // Check if this axis is currently hovered in the main grid
+            const isHovered = hoveredIndex !== null && indexToAxis[hoveredIndex] === axis;
+            
+            const style = {
+              ...coloredSquare,
+              transform: isHovered ? 'scale(1.1)' : 'scale(1)',
+              boxShadow: isHovered ? '0 0 15px rgba(255, 255, 255, 0.3)' : 'none',
+              zIndex: isHovered ? 10 : 1,
+            };
             
             if (value !== null) {
               const colorMap = [
@@ -784,20 +795,29 @@ export default function CoreInteractivePage() {
             }
             
             return (
-              <div key={axis} style={{ ...coloredSquare, background: bgColor }} />
+              <div key={axis} style={{ ...style, background: bgColor }} />
             );
           })}
         </div>
         
         {/* White/Black squares row with letters */}
-        <div style={rowContainer}>
+        <div className={styles.summaryRow}>
           {axisOrder.map((axis, idx) => {
             const value = selectedValues[axis];
+            
+            // Check if this axis is currently hovered in the main grid
+            const isHovered = hoveredIndex !== null && indexToAxis[hoveredIndex] === axis;
+            
+            const containerStyle = {
+              ...emptySquareContainer,
+              transform: isHovered ? 'scale(1.1)' : 'scale(1)',
+              zIndex: isHovered ? 10 : 1,
+            };
             
             // If no selection, show standard white with no letter
             if (value === null) {
               return (
-                <div key={`${axis}-empty`} style={emptySquareContainer}>
+                <div key={`${axis}-empty`} style={containerStyle}>
                   <div style={{ ...emptySquare, background: '#d6d6d6' }} />
                 </div>
               );
@@ -817,10 +837,24 @@ export default function CoreInteractivePage() {
             const letter = isLowIntensity ? letterMap[idx].low : letterMap[idx].high;
             
             return (
-              <div key={`${axis}-empty`} style={emptySquareContainer}>
+              <div key={`${axis}-empty`} style={containerStyle}>
                 <div style={{ ...emptySquare, background: bgColor }}>
                   <span style={{ ...letterLabel, color: letterColor }}>{letter}</span>
                 </div>
+              </div>
+            );
+          })}
+        </div>
+        
+        {/* Value Labels row */}
+        <div className={styles.summaryRow}>
+          {axisOrder.map((axis, idx) => {
+            const value = selectedValues[axis];
+            const descriptor = value !== null ? AXES[axis].values[value] : '';
+            
+            return (
+              <div key={`${axis}-label`} className={styles.summaryColumn}>
+                <div className={styles.valueLabel}>{descriptor}</div>
               </div>
             );
           })}
@@ -860,9 +894,22 @@ export default function CoreInteractivePage() {
       `}} />
       <main className={styles.page}>
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}>
+          {!hasAnySelection && (
+            <div className={styles.ctaHint}>
+              <span className={styles.ctaIcon}>👆</span>
+              Tap a square to define your position
+            </div>
+          )}
+          
           <div style={grid}>{cells.map(renderCell)}</div>
           {renderSquaresSummary()}
           {renderSimilarBlocs()}
+          
+          {hasAnySelection && (
+            <button className={styles.resetButton} onClick={handleReset}>
+              <span>↺</span> Start Over
+            </button>
+          )}
         </div>
         {renderModal()}
       </main>
