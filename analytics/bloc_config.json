@@ -14,28 +14,446 @@
     "ethics": "#eab308"
   },
   "typeNames": {
-    "lgmp": "Pragmatic Visionaries",
-    "agmp": "Authoritarian Technocrats",
-    "lgmt": "Traditionalist Builders",
-    "agmt": "Paternalist Developers",
-    "lgsp": "Progressive Internationalists",
-    "agsp": "Managed Globalists",
-    "lgst": "Conservative Diplomats",
-    "agst": "Hierarchical Globalists",
-    "lnsp": "Democratic Socialists",
-    "ansp": "State Socialists",
-    "lnst": "Communitarian Social Conservatives",
-    "anst": "National Authoritarians",
-    "lnmp": "Libertarian Nationalists",
-    "anmp": "Authoritarian Nationalists",
-    "lnmt": "Traditional Localists",
-    "anmt": "Authoritarian Traditionalists"
+    "lgmp": "Pragmatists",
+    "agmp": "Reformers",
+    "lgmt": "Conventionalists",
+    "agmt": "Establishmentarians",
+    "lgsp": "Facilitators",
+    "agsp": "Planners",
+    "lgst": "Caregivers",
+    "agst": "Corporatists",
+    "lnsp": "Organizers",
+    "ansp": "Collectivists",
+    "lnst": "Populists",
+    "anst": "Disciplinarians",
+    "lnmp": "Tradesmen",
+    "anmp": "Nationalists",
+    "lnmt": "Townspeople",
+    "anmt": "Sentinels"
   },
   "familyNames": {
     "builders": "Builders",
     "diplomats": "Diplomats",
     "unionists": "Unionists",
     "proprietors": "Proprietors"
+  },
+  "subTypes": {
+    "lgmp": [
+      {
+        "name": "Pragmatists",
+        "intensity": 1,
+        "civil_rights_score": 2,
+        "openness_score": 2,
+        "redistribution_score": 2,
+        "ethics_score": 2
+      },
+      {
+        "name": "Optimists",
+        "intensity": 2,
+        "civil_rights_score": 1,
+        "openness_score": 1,
+        "redistribution_score": 1,
+        "ethics_score": 1
+      },
+      {
+        "name": "Visionaries",
+        "intensity": 3,
+        "civil_rights_score": 0,
+        "openness_score": 0,
+        "redistribution_score": 0,
+        "ethics_score": 0
+      }
+    ],
+    "agmp": [
+      {
+        "name": "Reformers",
+        "intensity": 1,
+        "civil_rights_score": 3,
+        "openness_score": 2,
+        "redistribution_score": 2,
+        "ethics_score": 2
+      },
+      {
+        "name": "Architects",
+        "intensity": 2,
+        "civil_rights_score": 4,
+        "openness_score": 1,
+        "redistribution_score": 1,
+        "ethics_score": 1
+      },
+      {
+        "name": "Masterplanners",
+        "intensity": 3,
+        "civil_rights_score": 5,
+        "openness_score": 0,
+        "redistribution_score": 0,
+        "ethics_score": 0
+      }
+    ],
+    "lgmt": [
+      {
+        "name": "Conventionalists",
+        "intensity": 1,
+        "civil_rights_score": 2,
+        "openness_score": 2,
+        "redistribution_score": 2,
+        "ethics_score": 3
+      },
+      {
+        "name": "Constitutionalists",
+        "intensity": 2,
+        "civil_rights_score": 1,
+        "openness_score": 1,
+        "redistribution_score": 1,
+        "ethics_score": 4
+      },
+      {
+        "name": "Libertarians",
+        "intensity": 3,
+        "civil_rights_score": 0,
+        "openness_score": 0,
+        "redistribution_score": 0,
+        "ethics_score": 5
+      }
+    ],
+    "agmt": [
+      {
+        "name": "Establishmentarians",
+        "intensity": 1,
+        "civil_rights_score": 3,
+        "openness_score": 2,
+        "redistribution_score": 2,
+        "ethics_score": 3
+      },
+      {
+        "name": "Institutionalists",
+        "intensity": 2,
+        "civil_rights_score": 4,
+        "openness_score": 1,
+        "redistribution_score": 1,
+        "ethics_score": 4
+      },
+      {
+        "name": "Guardians",
+        "intensity": 3,
+        "civil_rights_score": 5,
+        "openness_score": 0,
+        "redistribution_score": 0,
+        "ethics_score": 5
+      }
+    ],
+    "lgsp": [
+      {
+        "name": "Facilitators",
+        "intensity": 1,
+        "civil_rights_score": 2,
+        "openness_score": 2,
+        "redistribution_score": 3,
+        "ethics_score": 2
+      },
+      {
+        "name": "Cooperators",
+        "intensity": 2,
+        "civil_rights_score": 1,
+        "openness_score": 1,
+        "redistribution_score": 4,
+        "ethics_score": 1
+      },
+      {
+        "name": "Solidarity Leaders",
+        "intensity": 3,
+        "civil_rights_score": 0,
+        "openness_score": 0,
+        "redistribution_score": 5,
+        "ethics_score": 0
+      }
+    ],
+    "agsp": [
+      {
+        "name": "Planners",
+        "intensity": 1,
+        "civil_rights_score": 3,
+        "openness_score": 2,
+        "redistribution_score": 3,
+        "ethics_score": 2
+      },
+      {
+        "name": "Technocrats",
+        "intensity": 2,
+        "civil_rights_score": 4,
+        "openness_score": 1,
+        "redistribution_score": 4,
+        "ethics_score": 1
+      },
+      {
+        "name": "Social Engineers",
+        "intensity": 3,
+        "civil_rights_score": 5,
+        "openness_score": 0,
+        "redistribution_score": 5,
+        "ethics_score": 0
+      }
+    ],
+    "lgst": [
+      {
+        "name": "Caregivers",
+        "intensity": 1,
+        "civil_rights_score": 2,
+        "openness_score": 2,
+        "redistribution_score": 3,
+        "ethics_score": 3
+      },
+      {
+        "name": "Humanists",
+        "intensity": 2,
+        "civil_rights_score": 1,
+        "openness_score": 1,
+        "redistribution_score": 4,
+        "ethics_score": 4
+      },
+      {
+        "name": "Missionaries",
+        "intensity": 3,
+        "civil_rights_score": 0,
+        "openness_score": 0,
+        "redistribution_score": 5,
+        "ethics_score": 5
+      }
+    ],
+    "agst": [
+      {
+        "name": "Corporatists",
+        "intensity": 1,
+        "civil_rights_score": 3,
+        "openness_score": 2,
+        "redistribution_score": 3,
+        "ethics_score": 3
+      },
+      {
+        "name": "Global Conservatives",
+        "intensity": 2,
+        "civil_rights_score": 4,
+        "openness_score": 1,
+        "redistribution_score": 4,
+        "ethics_score": 4
+      },
+      {
+        "name": "Paternalists",
+        "intensity": 3,
+        "civil_rights_score": 5,
+        "openness_score": 0,
+        "redistribution_score": 5,
+        "ethics_score": 5
+      }
+    ],
+    "lnsp": [
+      {
+        "name": "Organizers",
+        "intensity": 1,
+        "civil_rights_score": 2,
+        "openness_score": 3,
+        "redistribution_score": 3,
+        "ethics_score": 2
+      },
+      {
+        "name": "Laborists",
+        "intensity": 2,
+        "civil_rights_score": 1,
+        "openness_score": 4,
+        "redistribution_score": 4,
+        "ethics_score": 1
+      },
+      {
+        "name": "Syndicalists",
+        "intensity": 3,
+        "civil_rights_score": 0,
+        "openness_score": 5,
+        "redistribution_score": 5,
+        "ethics_score": 0
+      }
+    ],
+    "ansp": [
+      {
+        "name": "Collectivists",
+        "intensity": 1,
+        "civil_rights_score": 3,
+        "openness_score": 3,
+        "redistribution_score": 3,
+        "ethics_score": 2
+      },
+      {
+        "name": "Revolutionaries",
+        "intensity": 2,
+        "civil_rights_score": 4,
+        "openness_score": 4,
+        "redistribution_score": 4,
+        "ethics_score": 1
+      },
+      {
+        "name": "Communists",
+        "intensity": 3,
+        "civil_rights_score": 5,
+        "openness_score": 5,
+        "redistribution_score": 5,
+        "ethics_score": 0
+      }
+    ],
+    "lnst": [
+      {
+        "name": "Populists",
+        "intensity": 1,
+        "civil_rights_score": 2,
+        "openness_score": 3,
+        "redistribution_score": 3,
+        "ethics_score": 3
+      },
+      {
+        "name": "Grassroots Traditionalists",
+        "intensity": 2,
+        "civil_rights_score": 1,
+        "openness_score": 4,
+        "redistribution_score": 4,
+        "ethics_score": 4
+      },
+      {
+        "name": "Supremacists",
+        "intensity": 3,
+        "civil_rights_score": 0,
+        "openness_score": 5,
+        "redistribution_score": 5,
+        "ethics_score": 5
+      }
+    ],
+    "anst": [
+      {
+        "name": "Disciplinarians",
+        "intensity": 1,
+        "civil_rights_score": 3,
+        "openness_score": 3,
+        "redistribution_score": 3,
+        "ethics_score": 3
+      },
+      {
+        "name": "National Conservatives",
+        "intensity": 2,
+        "civil_rights_score": 4,
+        "openness_score": 4,
+        "redistribution_score": 4,
+        "ethics_score": 4
+      },
+      {
+        "name": "Totalitarians",
+        "intensity": 3,
+        "civil_rights_score": 5,
+        "openness_score": 5,
+        "redistribution_score": 5,
+        "ethics_score": 5
+      }
+    ],
+    "lnmp": [
+      {
+        "name": "Tradesmen",
+        "intensity": 1,
+        "civil_rights_score": 2,
+        "openness_score": 3,
+        "redistribution_score": 2,
+        "ethics_score": 2
+      },
+      {
+        "name": "Merchants",
+        "intensity": 2,
+        "civil_rights_score": 1,
+        "openness_score": 4,
+        "redistribution_score": 1,
+        "ethics_score": 1
+      },
+      {
+        "name": "Isolationists",
+        "intensity": 3,
+        "civil_rights_score": 0,
+        "openness_score": 5,
+        "redistribution_score": 0,
+        "ethics_score": 0
+      }
+    ],
+    "anmp": [
+      {
+        "name": "Nationalists",
+        "intensity": 1,
+        "civil_rights_score": 3,
+        "openness_score": 3,
+        "redistribution_score": 2,
+        "ethics_score": 2
+      },
+      {
+        "name": "Modernizers",
+        "intensity": 2,
+        "civil_rights_score": 4,
+        "openness_score": 4,
+        "redistribution_score": 1,
+        "ethics_score": 1
+      },
+      {
+        "name": "Autarchs",
+        "intensity": 3,
+        "civil_rights_score": 5,
+        "openness_score": 5,
+        "redistribution_score": 0,
+        "ethics_score": 0
+      }
+    ],
+    "lnmt": [
+      {
+        "name": "Townspeople",
+        "intensity": 1,
+        "civil_rights_score": 2,
+        "openness_score": 3,
+        "redistribution_score": 2,
+        "ethics_score": 3
+      },
+      {
+        "name": "Stewards",
+        "intensity": 2,
+        "civil_rights_score": 1,
+        "openness_score": 4,
+        "redistribution_score": 1,
+        "ethics_score": 4
+      },
+      {
+        "name": "Separatists",
+        "intensity": 3,
+        "civil_rights_score": 0,
+        "openness_score": 5,
+        "redistribution_score": 0,
+        "ethics_score": 5
+      }
+    ],
+    "anmt": [
+      {
+        "name": "Sentinels",
+        "intensity": 1,
+        "civil_rights_score": 3,
+        "openness_score": 3,
+        "redistribution_score": 2,
+        "ethics_score": 3
+      },
+      {
+        "name": "Enforcers",
+        "intensity": 2,
+        "civil_rights_score": 4,
+        "openness_score": 4,
+        "redistribution_score": 1,
+        "ethics_score": 4
+      },
+      {
+        "name": "Fascists",
+        "intensity": 3,
+        "civil_rights_score": 5,
+        "openness_score": 5,
+        "redistribution_score": 0,
+        "ethics_score": 5
+      }
+    ]
   },
   "axes": {
     "civilRights": {
@@ -80,28 +498,28 @@
     }
   },
   "typeDescriptions": {
-    "lgmp": "Liberty-oriented, globally-integrated market progressives who emphasize pragmatic growth and innovation.",
-    "agmp": "Authority-leaning technocrats who favor global markets but with significant state oversight and control.",
-    "lgmt": "Liberty-minded market builders with traditional values, emphasizing free enterprise and cultural preservation.",
-    "agmt": "Paternalistic developers who blend market mechanisms with traditional values under state guidance.",
-    "lgsp": "Progressive internationalists combining social redistribution with global integration and civil liberties.",
-    "agsp": "State-managed globalists who favor international redistribution with stronger government control.",
-    "lgst": "Conservative diplomats balancing global engagement with traditional values and civil liberties.",
-    "agst": "Hierarchical globalists combining international social policy with authoritarian governance structures.",
-    "lnsp": "Democratic socialists emphasizing national social programs while protecting civil liberties.",
-    "ansp": "State socialists who favor strong national redistribution under centralized authority.",
-    "lnst": "Communitarian social conservatives blending national solidarity with traditional values and some liberty.",
-    "anst": "National authoritarians combining closed borders, state redistribution, and traditional social control.",
-    "lnmp": "Libertarian nationalists who favor national sovereignty, free markets, and minimal government.",
-    "anmp": "Authoritarian nationalists emphasizing strong state control with market-oriented national economics.",
-    "lnmt": "Traditional localists valuing community-based markets, national identity, and cultural preservation.",
-    "anmt": "Authoritarian traditionalists combining strong state power, national markets, and traditional values."
+    "lgmp": "Pragmatic builders who balance individual liberty with global market integration and progressive values.",
+    "agmp": "Reform-minded technocrats who combine state oversight with global markets and progressive modernization.",
+    "lgmt": "Conventional market builders who emphasize free enterprise while preserving traditional social values.",
+    "agmt": "Establishmentarian developers who blend guided markets with institutional authority and traditional norms.",
+    "lgsp": "Facilitators of global cooperation who support social programs with civil liberties and international engagement.",
+    "agsp": "Planners who manage international redistribution through coordinated state control and global frameworks.",
+    "lgst": "Caregivers who balance global engagement with social support and traditional community values.",
+    "agst": "Corporatist architects who implement hierarchical social policy through authoritarian global structures.",
+    "lnsp": "Organizers of national solidarity who build social programs while protecting democratic freedoms.",
+    "ansp": "Collectivists who enforce national redistribution through centralized state authority and unified control.",
+    "lnst": "Populists who champion national community solidarity grounded in traditional values and cultural identity.",
+    "anst": "Disciplinarians who impose strict national order through state redistribution and traditional social control.",
+    "lnmp": "Tradesmen who champion national markets with minimal state interference and free economic exchange.",
+    "anmp": "Nationalists who direct market activity through strong state control within closed borders.",
+    "lnmt": "Townspeople who preserve local traditions while maintaining community-based market relationships.",
+    "anmt": "Sentinels who enforce traditional order through authoritarian control of national markets and society."
   },
   "dimensionMeanings": {
-    "civil_rights_score": "0=maximum individual liberty, 6=maximum state authority",
-    "openness_score": "0=global integration, 6=national sovereignty",
-    "redistribution_score": "0=market allocation, 6=state redistribution",
-    "ethics_score": "0=progressive/change-seeking, 6=traditional/preservation-seeking"
+    "civil_rights_score": "0=maximum individual liberty, 5=maximum state authority",
+    "openness_score": "0=global integration, 5=national sovereignty",
+    "redistribution_score": "0=market allocation, 5=state redistribution",
+    "ethics_score": "0=progressive/change-seeking, 5=traditional/preservation-seeking"
   },
   "scoringMethodology": "Scores represent positions on four independent axes. Call signs are generated by selecting the letter corresponding to each axis position (L/A for Civil Rights, G/N for Openness, M/S for Redistribution, P/T for Ethics). Intensity (1-3) reflects strength of position.",
   "typePositions": {

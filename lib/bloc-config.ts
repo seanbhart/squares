@@ -19,14 +19,23 @@ export type EthicsLetter = 'P' | 'T';        // Progressive | Traditional
 
 export type CallSign = `${CivilRightsLetter}${OpennessLetter}${RedistributionLetter}${EthicsLetter}`;
 
+export interface SubTypeVariation {
+  name: string;
+  intensity: number;              // 1=moderate, 2=medium, 3=extreme
+  civil_rights_score: number;     // 0-5: Liberty to Authority
+  openness_score: number;          // 0-5: Global to National
+  redistribution_score: number;    // 0-5: Market to Social
+  ethics_score: number;            // 0-5: Progressive to Traditional
+}
+
 export interface TypePosition {
   callSign: CallSign;
   family: FamilyId;
   examples: string;
-  civil_rights_score: number;    // 0-6: Liberty to Authority
-  openness_score: number;         // 0-6: Global to National
-  redistribution_score: number;   // 0-6: Market to Social
-  ethics_score: number;           // 0-6: Progressive to Traditional
+  civil_rights_score: number;    // 0-5: Liberty to Authority
+  openness_score: number;         // 0-5: Global to National
+  redistribution_score: number;   // 0-5: Market to Social
+  ethics_score: number;           // 0-5: Progressive to Traditional
 }
 
 export interface TypeColors {
@@ -52,6 +61,7 @@ export const COLOR_RAMP = CONFIG.colorRamp;
 export const AXIS_COLORS = CONFIG.axisColors;
 export const TYPE_NAMES = CONFIG.typeNames;
 export const FAMILY_NAMES = CONFIG.familyNames;
+export const SUB_TYPES = CONFIG.subTypes as Record<TypeId, SubTypeVariation[]>;
 export const AXES = CONFIG.axes as Record<AxisId, AxisDefinition>;
 export const TYPE_DESCRIPTIONS = CONFIG.typeDescriptions;
 export const DIMENSION_MEANINGS = CONFIG.dimensionMeanings;
@@ -124,7 +134,7 @@ export function getTypeExamples(typeId: TypeId): string {
 
 /**
  * Generate call sign from scores
- * Scores are 0-6 where 0 = low pole (L/G/M/P), 6 = high pole (A/N/S/T)
+ * Scores are 0-5 where 0 = low pole (L/G/M/P), 5 = high pole (A/N/S/T)
  */
 export function generateCallSign(
   civilRightsScore: number,
@@ -132,10 +142,10 @@ export function generateCallSign(
   redistributionScore: number,
   ethicsScore: number
 ): CallSign {
-  const c: CivilRightsLetter = civilRightsScore < 3 ? 'L' : 'A';
-  const o: OpennessLetter = opennessScore < 3 ? 'G' : 'N';
-  const r: RedistributionLetter = redistributionScore < 3 ? 'M' : 'S';
-  const e: EthicsLetter = ethicsScore < 3 ? 'P' : 'T';
+  const c: CivilRightsLetter = civilRightsScore < 2.5 ? 'L' : 'A';
+  const o: OpennessLetter = opennessScore < 2.5 ? 'G' : 'N';
+  const r: RedistributionLetter = redistributionScore < 2.5 ? 'M' : 'S';
+  const e: EthicsLetter = ethicsScore < 2.5 ? 'P' : 'T';
   return `${c}${o}${r}${e}`;
 }
 
@@ -165,4 +175,70 @@ export function parseCallSign(callSign: CallSign): {
     redistribution: callSign[2] as RedistributionLetter,
     ethics: callSign[3] as EthicsLetter,
   };
+}
+
+/**
+ * Get sub-type variations for a type
+ * Returns an array of SubTypeVariation objects with scores
+ */
+export function getSubTypes(typeId: TypeId): SubTypeVariation[] {
+  return SUB_TYPES[typeId] ?? [];
+}
+
+/**
+ * Get a specific sub-type variation by intensity level (1-3)
+ * 1 = moderate intensity, 2 = medium intensity, 3 = extreme intensity
+ */
+export function getSubTypeByIntensity(typeId: TypeId, intensity: number): SubTypeVariation | undefined {
+  const subTypes = getSubTypes(typeId);
+  return subTypes.find(st => st.intensity === intensity);
+}
+
+/**
+ * Get a specific sub-type name by intensity level (1-3)
+ */
+export function getSubTypeName(typeId: TypeId, intensity: number): string {
+  const subType = getSubTypeByIntensity(typeId, intensity);
+  return subType?.name ?? '';
+}
+
+/**
+ * Get all sub-type names for a type (for backward compatibility)
+ */
+export function getSubTypeNames(typeId: TypeId): string[] {
+  return getSubTypes(typeId).map(st => st.name);
+}
+
+/**
+ * Find the best matching sub-type for given scores
+ * Returns the subtype with the smallest distance from the input scores
+ */
+export function matchSubType(
+  typeId: TypeId,
+  civilRightsScore: number,
+  opennessScore: number,
+  redistributionScore: number,
+  ethicsScore: number
+): SubTypeVariation | undefined {
+  const subTypes = getSubTypes(typeId);
+  if (subTypes.length === 0) return undefined;
+  
+  let bestMatch = subTypes[0];
+  let minDistance = Number.MAX_VALUE;
+  
+  for (const subType of subTypes) {
+    const distance = Math.sqrt(
+      Math.pow(subType.civil_rights_score - civilRightsScore, 2) +
+      Math.pow(subType.openness_score - opennessScore, 2) +
+      Math.pow(subType.redistribution_score - redistributionScore, 2) +
+      Math.pow(subType.ethics_score - ethicsScore, 2)
+    );
+    
+    if (distance < minDistance) {
+      minDistance = distance;
+      bestMatch = subType;
+    }
+  }
+  
+  return bestMatch;
 }
