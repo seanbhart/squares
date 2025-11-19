@@ -55,10 +55,14 @@ export default function CoreInteractivePage() {
     };
   }, [viewingBloc]);
   
-  // Trigger entrance animation on mount
+  // Trigger entrance animation when intro modal is closed
   React.useEffect(() => {
-    setHasAnimated(true);
-  }, []);
+    if (!showIntro) {
+      // Small delay to ensure smooth transition after modal closes
+      const timer = setTimeout(() => setHasAnimated(true), 100);
+      return () => clearTimeout(timer);
+    }
+  }, [showIntro]);
   
   // Map grid indices to CORE letters and axis keys
   const indexToAxis: Record<number, AxisKey> = {
@@ -328,6 +332,17 @@ export default function CoreInteractivePage() {
     
     const axis = AXES[activeAxis];
     
+    // Map axis to empty square index to get the letters
+    const axisToEmptyIndex: Record<AxisKey, number> = {
+      civilRights: 0,
+      openness: 3,
+      redistribution: 7,
+      ethics: 8,
+    };
+    
+    const emptyIndex = axisToEmptyIndex[activeAxis];
+    const letters = emptyLetterMap[emptyIndex];
+    
     const modalOverlay: React.CSSProperties = {
       position: 'fixed',
       top: 0,
@@ -385,6 +400,14 @@ export default function CoreInteractivePage() {
     const modalSubtitle: React.CSSProperties = {
       fontSize: '0.9rem',
       color: 'var(--foreground-secondary)',
+      marginBottom: '0.5rem',
+    };
+    
+    const modalDescription: React.CSSProperties = {
+      fontSize: '0.85rem',
+      color: 'var(--foreground-secondary)',
+      opacity: 0.8,
+      fontStyle: 'italic',
     };
     
     const valueList: React.CSSProperties = {
@@ -441,13 +464,33 @@ export default function CoreInteractivePage() {
               ✕
             </button>
             <div style={modalTitle}>{axis.name}</div>
-            <div style={modalSubtitle}>{axis.description}</div>
+            <div style={modalSubtitle}>{letters.low} = {axis.lowLabel} ↔ {letters.high} = {axis.highLabel}</div>
+            <div style={modalDescription}>{axis.description}</div>
           </div>
           
           <div style={valueList}>
             {colorScale.map((item, idx) => {
               const descriptor = axis.values[item.value];
               const isHovered = hoveredValue === item.value;
+              
+              // Determine which empty square letter to show (low for 0-2, high for 3-5)
+              const emptyLetter = item.value <= 2 ? letters.low : letters.high;
+              const emptySquareColor = item.value <= 2 ? '#FFFFFF' : '#000000';
+              
+              const emptySquareStyle: React.CSSProperties = {
+                width: '48px',
+                height: '48px',
+                borderRadius: '20%',
+                background: emptySquareColor,
+                flexShrink: 0,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: '1rem',
+                fontWeight: '700',
+                color: item.value <= 2 ? '#000000' : '#FFFFFF',
+                fontFamily: 'monospace',
+              };
               
               return (
                 <div 
@@ -460,6 +503,7 @@ export default function CoreInteractivePage() {
                   onMouseEnter={() => setHoveredValue(item.value)}
                   onMouseLeave={() => setHoveredValue(null)}
                 >
+                  <div style={emptySquareStyle}>{emptyLetter}</div>
                   <div style={{ ...colorSquare, background: item.color }} />
                   <div style={valueText}>
                     <div style={valueName}>
@@ -654,7 +698,7 @@ export default function CoreInteractivePage() {
     
     return (
       <div className={styles.similarContainer}>
-        <div className={styles.similarHeading}>Similar Blocs</div>
+        <div className={styles.similarHeading}>similar blocs</div>
         <div className={styles.blocsGrid}>
           {similarTypes.map(({ subType }) => (
             <div 
@@ -674,6 +718,38 @@ export default function CoreInteractivePage() {
               </div>
             </div>
           ))}
+        </div>
+      </div>
+    );
+  };
+
+  const renderHistoricalFigures = () => {
+    // Only show if all four axes are selected
+    const allSelected = Object.values(selectedValues).every(v => v !== null);
+    if (!allSelected) return null;
+
+    return (
+      <div className={styles.figuresSection}>
+        <div className={styles.figuresHeading}>history's patterns</div>
+        <p className={styles.figuresSubtext}>
+          see where famous figures land on CORE
+        </p>
+        <div className={styles.figuresPlaceholder}>
+          <div className={styles.figureCard}>
+            <div className={styles.figureAvatar}>?</div>
+            <div className={styles.figureName}>Historical Figure</div>
+            <div className={styles.figureGrid}>Coming Soon</div>
+          </div>
+          <div className={styles.figureCard}>
+            <div className={styles.figureAvatar}>?</div>
+            <div className={styles.figureName}>Modern Leader</div>
+            <div className={styles.figureGrid}>Coming Soon</div>
+          </div>
+          <div className={styles.figureCard}>
+            <div className={styles.figureAvatar}>?</div>
+            <div className={styles.figureName}>Political Icon</div>
+            <div className={styles.figureGrid}>Coming Soon</div>
+          </div>
         </div>
       </div>
     );
@@ -1018,6 +1094,7 @@ export default function CoreInteractivePage() {
           <div style={grid}>{cells.map(renderCell)}</div>
           {renderSquaresSummary()}
           {renderSimilarBlocs()}
+          {renderHistoricalFigures()}
           
           {hasAnySelection && (
             <button className={styles.resetButton} onClick={handleReset}>

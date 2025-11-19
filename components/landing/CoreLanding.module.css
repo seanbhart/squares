@@ -929,7 +929,7 @@
 .blurLabel {
   font-size: 1.2rem;
   font-weight: 700;
-  color: rgba(255, 255, 255, 0.4);
+  color: rgba(255, 255, 255, 0.9);
   filter: blur(0px);
   animation: blurOut 3s infinite alternate;
 }
@@ -983,10 +983,31 @@
   font-weight: 600;
 }
 
+.coreDescription {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.4;
+  text-align: center;
+  margin-top: 0.25rem;
+}
+
 .coreAxis {
   font-size: 0.8rem;
   opacity: 0.6;
   white-space: nowrap;
+  margin-top: 0.5rem;
+}
+
+.scrollIndicator {
+  margin-top: 2rem;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.5);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
 }
 
 .spectrumDisplay {
@@ -1015,6 +1036,225 @@
   font-size: 0.8rem;
   opacity: 0.6;
   font-family: monospace;
+}
+
+/* Spectrum Example Section */
+.spectrumExample {
+  width: 100%;
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 1rem;
+}
+
+.exampleTitle {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+  text-align: center;
+}
+
+.spectrumSquaresWrapper {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  margin: 1.5rem 0;
+  align-items: flex-start;
+}
+
+.squareColumn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.spectrumSquare {
+  width: 60px;
+  height: 60px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.squareColumn:nth-child(3) .spectrumSquare {
+  animation: pulseSquare 2s ease-in-out infinite;
+}
+
+@keyframes pulseSquare {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+.selectedLabel {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.9);
+  text-align: center;
+  line-height: 1.4;
+  max-width: 120px;
+  font-weight: 500;
+}
+
+.unselectedLabel {
+  font-size: 0.7rem;
+  color: rgba(255, 255, 255, 0.3);
+  text-align: center;
+  line-height: 1.3;
+  max-width: 120px;
+  font-weight: 400;
+}
+
+.sliderLabels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.sliderPole {
+  font-weight: 500;
+}
+
+
+.spectrumNote {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.6);
+  text-align: center;
+  font-style: italic;
+  margin-top: 0.5rem;
+}
+
+/* Bloc Example Section */
+.blocExample {
+  width: 100%;
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.exampleBlocCard {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+.exampleBlocTitle {
+  font-size: 1.2rem;
+  font-weight: 700;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.exampleBlocGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.5rem;
+  justify-self: center;
+  width: 120px;
+  margin: 0 auto;
+}
+
+.exampleSquare {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 0.25rem;
+}
+
+.exampleBlocBars {
+  display: flex;
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 600px;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.barsLeft {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  flex: 1;
+  align-items: flex-end;
+}
+
+.barsRight {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  flex: 1;
+  align-items: flex-start;
+}
+
+.spectrumRow {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  height: 28px;
+}
+
+.barLabel {
+  font-weight: 700;
+  width: 20px;
+  color: rgba(255, 255, 255, 0.9);
+  font-family: monospace;
+  flex-shrink: 0;
+}
+
+.miniSpectrumSquares {
+  display: flex;
+  gap: 3px;
+}
+
+.miniSquare {
+  width: 18px;
+  height: 18px;
+  border-radius: 3px;
+  transition: opacity 0.3s ease;
+  flex-shrink: 0;
+}
+
+.definitionRow {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.7);
+  text-align: left;
+  height: 28px;
+  display: flex;
+  align-items: center;
+}
+
+/* Historical Figures Section (Main Page) */
+.figuresSection {
+  width: 100%;
+  max-width: 900px;
+  margin: 3rem auto 2rem;
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.figuresHeading {
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-align: center;
+  color: var(--foreground);
+}
+
+.figuresSubtext {
+  font-size: 1rem;
+  color: var(--foreground-secondary);
+  text-align: center;
+  margin: 0;
 }
 
 .figuresPlaceholder {
@@ -1077,24 +1317,30 @@
 }
 
 .introTrigger {
-  margin-bottom: 1rem;
-  background: transparent;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  color: rgba(255, 255, 255, 0.6);
-  padding: 0.5rem 1rem;
+  margin-bottom: 3rem;
+  background: rgba(255, 255, 255, 0.08);
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  color: rgba(255, 255, 255, 0.9);
+  padding: 0.875rem 2rem;
   border-radius: 999px;
-  font-size: 0.8rem;
+  font-size: 1rem;
+  font-weight: 500;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.3s ease;
+  letter-spacing: 0.02em;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
 .introTrigger:hover {
-  border-color: rgba(255, 255, 255, 0.5);
+  border-color: rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.12);
   color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
 @keyframes blurOut {
   0% { filter: blur(0px); opacity: 1; }
-  50% { filter: blur(2px); opacity: 0.7; }
-  100% { filter: blur(4px); opacity: 0.4; }
+  50% { filter: blur(1px); opacity: 0.8; }
+  100% { filter: blur(2px); opacity: 0.6; }
 }

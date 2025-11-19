@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './CoreLanding.module.css';
-import { COLOR_RAMP } from '@/lib/bloc-config';
+import { COLOR_RAMP, AXES } from '@/lib/bloc-config';
 
 interface CoreIntroModalProps {
   isOpen: boolean;
@@ -15,10 +15,10 @@ export default function CoreIntroModal({ isOpen, onClose }: CoreIntroModalProps)
       <button className={styles.introClose} onClick={onClose}>×</button>
       
       <div className={styles.introContent}>
-        {/* Section 1: The Hook */}
+        {/* Section 1: Problem + Promise */}
         <section className={styles.introSection}>
           <h1 className={styles.introTitle}>
-            Political labels are <span className={styles.brokenText}>broken</span>.
+            political labels are <span className={styles.brokenText}>broken</span>
           </h1>
           <div className={styles.labelCloud}>
             <span className={styles.blurLabel} style={{ animationDelay: '0s' }}>Liberal</span>
@@ -27,80 +27,166 @@ export default function CoreIntroModal({ isOpen, onClose }: CoreIntroModalProps)
             <span className={styles.blurLabel} style={{ animationDelay: '0.6s' }}>Libertarian</span>
           </div>
           <p className={styles.introSubtitle}>
-            They reduce complex beliefs to oversimplified boxes.
-            <br />
-            You aren't just one word.
+            they cram complex beliefs into one word
           </p>
+          <div className={styles.scrollIndicator}>scroll to learn more ↓</div>
         </section>
 
-        {/* Section 2: CORE Explainer */}
+        {/* Section 2: Four Dimensions */}
         <section className={styles.introSection}>
-          <h2 className={styles.sectionTitle}>Meet C.O.R.E.</h2>
+          <h2 className={styles.sectionTitle}>meet CORE</h2>
           <p className={styles.sectionText}>
-            Your unique political DNA across four dimensions.
+            your political DNA across four independent dimensions
           </p>
           
           <div className={styles.coreGrid}>
             <div className={styles.coreItem}>
-              <div className={styles.coreLetter} style={{ color: COLOR_RAMP.purple }}>C</div>
+              <div className={styles.coreLetter} style={{ color: COLOR_RAMP.blue }}>C</div>
               <div className={styles.coreLabel}>Civil Rights</div>
-              <div className={styles.coreAxis}>Liberty ↔ Authority</div>
+              <div className={styles.coreDescription}>how tightly government should control individual behavior</div>
+              <div className={styles.coreAxis}>{AXES.civilRights.lowLabel} ↔ {AXES.civilRights.highLabel}</div>
             </div>
             <div className={styles.coreItem}>
-              <div className={styles.coreLetter} style={{ color: COLOR_RAMP.blue }}>O</div>
+              <div className={styles.coreLetter} style={{ color: COLOR_RAMP.green }}>O</div>
               <div className={styles.coreLabel}>Openness</div>
-              <div className={styles.coreAxis}>Global ↔ National</div>
+              <div className={styles.coreDescription}>how global vs national you want borders and trade to be</div>
+              <div className={styles.coreAxis}>{AXES.openness.lowLabel} ↔ {AXES.openness.highLabel}</div>
             </div>
             <div className={styles.coreItem}>
-              <div className={styles.coreLetter} style={{ color: COLOR_RAMP.green }}>R</div>
+              <div className={styles.coreLetter} style={{ color: COLOR_RAMP.gold }}>R</div>
               <div className={styles.coreLabel}>Redistribution</div>
-              <div className={styles.coreAxis}>Market ↔ Social</div>
+              <div className={styles.coreDescription}>how much markets vs the state should shape the economy</div>
+              <div className={styles.coreAxis}>{AXES.redistribution.lowLabel} ↔ {AXES.redistribution.highLabel}</div>
             </div>
             <div className={styles.coreItem}>
-              <div className={styles.coreLetter} style={{ color: COLOR_RAMP.gold }}>E</div>
+              <div className={styles.coreLetter} style={{ color: COLOR_RAMP.orange }}>E</div>
               <div className={styles.coreLabel}>Ethics</div>
-              <div className={styles.coreAxis}>Progressive ↔ Traditional</div>
+              <div className={styles.coreDescription}>how quickly social norms should change vs be preserved</div>
+              <div className={styles.coreAxis}>{AXES.ethics.lowLabel} ↔ {AXES.ethics.highLabel}</div>
             </div>
           </div>
         </section>
 
-        {/* Section 3: Spectrum */}
+        {/* Section 3: Spectrum Example */}
         <section className={styles.introSection}>
-          <h2 className={styles.sectionTitle}>The Spectrum</h2>
+          <h2 className={styles.sectionTitle}>each dimension is a six color spectrum</h2>
           <p className={styles.sectionText}>
-            It's not binary. Each square is a 6-point spectrum.
+            you're not just "for" or "against" something
+            <br />
+            on each dimension, you sit somewhere between the two poles
           </p>
           
-          <div className={styles.spectrumDisplay}>
-            <div className={styles.spectrumBar}>
+          <div className={styles.spectrumExample}>
+            <div className={styles.exampleTitle}>example: civil rights</div>
+            <div className={styles.spectrumSquaresWrapper}>
               {[COLOR_RAMP.purple, COLOR_RAMP.blue, COLOR_RAMP.green, COLOR_RAMP.gold, COLOR_RAMP.orange, COLOR_RAMP.red].map((color, i) => (
-                <div key={i} className={styles.spectrumColor} style={{ backgroundColor: color }} />
+                <div key={i} className={styles.squareColumn}>
+                  <div 
+                    className={styles.spectrumSquare}
+                    style={{ 
+                      backgroundColor: color,
+                      opacity: i === 2 ? 1 : 0.25
+                    }}
+                  />
+                  <div className={i === 2 ? styles.selectedLabel : styles.unselectedLabel}>
+                    {AXES.civilRights.values[i]}
+                  </div>
+                </div>
               ))}
             </div>
-            <div className={styles.spectrumLabels}>
-              <span>0 (Min)</span>
-              <span>5 (Max)</span>
+            <div className={styles.sliderLabels}>
+              <span className={styles.sliderPole}>more {AXES.civilRights.lowLabel}</span>
+              <span className={styles.sliderPole}>more {AXES.civilRights.highLabel}</span>
             </div>
           </div>
         </section>
 
-        {/* Section 4: Historical Figures Placeholder */}
+        {/* Section 4: Bloc Mapping */}
         <section className={styles.introSection}>
-          <h2 className={styles.sectionTitle}>History's Patterns</h2>
+          <h2 className={styles.sectionTitle}>your CORE "bloc" is your pattern</h2>
           <p className={styles.sectionText}>
-            See how famous figures map to the CORE framework.
+            after defining your position, we turn your four scores into a four-letter bloc and visual card.
           </p>
           
-          <div className={styles.figuresPlaceholder}>
-            <div className={styles.figureCard}>
-              <div className={styles.figureAvatar}>?</div>
-              <div className={styles.figureName}>Historical Figure</div>
-              <div className={styles.figureGrid}>Coming Soon</div>
-            </div>
-            <div className={styles.figureCard}>
-              <div className={styles.figureAvatar}>?</div>
-              <div className={styles.figureName}>Modern Leader</div>
-              <div className={styles.figureGrid}>Coming Soon</div>
+          <div className={styles.blocExample}>
+            <div className={styles.exampleBlocCard}>
+              <div className={styles.exampleBlocTitle}>example: Facilitator (LGSP)</div>
+              <div className={styles.exampleBlocGrid}>
+                <div className={styles.exampleSquare} style={{ backgroundColor: COLOR_RAMP.green }} />
+                <div className={styles.exampleSquare} style={{ backgroundColor: COLOR_RAMP.blue }} />
+                <div className={styles.exampleSquare} style={{ backgroundColor: COLOR_RAMP.red }} />
+                <div className={styles.exampleSquare} style={{ backgroundColor: COLOR_RAMP.blue }} />
+              </div>
+              <div className={styles.exampleBlocBars}>
+                <div className={styles.barsLeft}>
+                  <div className={styles.spectrumRow}>
+                    <span className={styles.barLabel}>C</span>
+                    <div className={styles.miniSpectrumSquares}>
+                      {[COLOR_RAMP.purple, COLOR_RAMP.blue, COLOR_RAMP.green, COLOR_RAMP.gold, COLOR_RAMP.orange, COLOR_RAMP.red].map((color, i) => (
+                        <div 
+                          key={i} 
+                          className={styles.miniSquare}
+                          style={{ 
+                            backgroundColor: color,
+                            opacity: i === 2 ? 1 : 0.2
+                          }}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                  <div className={styles.spectrumRow}>
+                    <span className={styles.barLabel}>O</span>
+                    <div className={styles.miniSpectrumSquares}>
+                      {[COLOR_RAMP.purple, COLOR_RAMP.blue, COLOR_RAMP.green, COLOR_RAMP.gold, COLOR_RAMP.orange, COLOR_RAMP.red].map((color, i) => (
+                        <div 
+                          key={i} 
+                          className={styles.miniSquare}
+                          style={{ 
+                            backgroundColor: color,
+                            opacity: i === 1 ? 1 : 0.2
+                          }}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                  <div className={styles.spectrumRow}>
+                    <span className={styles.barLabel}>R</span>
+                    <div className={styles.miniSpectrumSquares}>
+                      {[COLOR_RAMP.purple, COLOR_RAMP.blue, COLOR_RAMP.green, COLOR_RAMP.gold, COLOR_RAMP.orange, COLOR_RAMP.red].map((color, i) => (
+                        <div 
+                          key={i} 
+                          className={styles.miniSquare}
+                          style={{ 
+                            backgroundColor: color,
+                            opacity: i === 5 ? 1 : 0.2
+                          }}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                  <div className={styles.spectrumRow}>
+                    <span className={styles.barLabel}>E</span>
+                    <div className={styles.miniSpectrumSquares}>
+                      {[COLOR_RAMP.purple, COLOR_RAMP.blue, COLOR_RAMP.green, COLOR_RAMP.gold, COLOR_RAMP.orange, COLOR_RAMP.red].map((color, i) => (
+                        <div 
+                          key={i} 
+                          className={styles.miniSquare}
+                          style={{ 
+                            backgroundColor: color,
+                            opacity: i === 1 ? 1 : 0.2
+                          }}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                </div>
+                <div className={styles.barsRight}>
+                  <div className={styles.definitionRow}>L = {AXES.civilRights.lowLabel} on Civil Rights</div>
+                  <div className={styles.definitionRow}>G = {AXES.openness.lowLabel} on Openness</div>
+                  <div className={styles.definitionRow}>S = {AXES.redistribution.highLabel} on Redistribution</div>
+                  <div className={styles.definitionRow}>P = {AXES.ethics.lowLabel} on Ethics</div>
+                </div>
+              </div>
             </div>
           </div>
         </section>
@@ -108,7 +194,7 @@ export default function CoreIntroModal({ isOpen, onClose }: CoreIntroModalProps)
         {/* Section 5: CTA */}
         <section className={styles.introSection}>
           <button className={styles.startCta} onClick={onClose}>
-            Find Your Bloc
+            find your bloc
           </button>
         </section>
       </div>
