@@ -3,6 +3,7 @@
 import React from 'react';
 import styles from './CoreLanding.module.css';
 import { COLOR_RAMP, AXES, getAllTypes, getTypePosition, getTypeName, getTypeSingularName, getTypeDescription, getAllSubTypesWithMeta, generateCallSign, TypeId, SubTypeWithMeta, FAMILY_NAMES } from '@/lib/bloc-config';
+import CoreIntroModal from './CoreIntroModal';
 
 type AxisKey = 'civilRights' | 'openness' | 'redistribution' | 'ethics';
 
@@ -19,6 +20,7 @@ export default function CoreInteractivePage() {
   });
   const [viewingBloc, setViewingBloc] = React.useState<SubTypeWithMeta | null>(null);
   const [isLoaded, setIsLoaded] = React.useState(false);
+  const [showIntro, setShowIntro] = React.useState(true);
   
   // Persistence: Load from localStorage on mount
   React.useEffect(() => {
@@ -1001,6 +1003,11 @@ export default function CoreInteractivePage() {
       `}} />
       <main className={styles.page}>
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}>
+          
+          <button className={styles.introTrigger} onClick={() => setShowIntro(true)}>
+            About CORE
+          </button>
+
           {!hasAnySelection && (
             <div className={styles.ctaHint}>
               <span className={styles.ctaIcon}>👆</span>
@@ -1020,6 +1027,7 @@ export default function CoreInteractivePage() {
         </div>
         {renderModal()}
         {renderBlocModal()}
+        <CoreIntroModal isOpen={showIntro} onClose={() => setShowIntro(false)} />
       </main>
     </>
   );
