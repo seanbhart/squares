@@ -18,6 +18,28 @@ export default function CoreInteractivePage() {
     ethics: null,
   });
   const [viewingBloc, setViewingBloc] = React.useState<SubTypeWithMeta | null>(null);
+  const [isLoaded, setIsLoaded] = React.useState(false);
+  
+  // Persistence: Load from localStorage on mount
+  React.useEffect(() => {
+    const saved = localStorage.getItem('core_squares_selection');
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved);
+        setSelectedValues(parsed);
+      } catch (e) {
+        console.error('Failed to parse saved selection', e);
+      }
+    }
+    setIsLoaded(true);
+  }, []);
+
+  // Persistence: Save to localStorage when selection changes
+  React.useEffect(() => {
+    if (isLoaded) {
+      localStorage.setItem('core_squares_selection', JSON.stringify(selectedValues));
+    }
+  }, [selectedValues, isLoaded]);
   
   // Lock scroll when modal is open
   React.useEffect(() => {
