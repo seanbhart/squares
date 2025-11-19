@@ -2,7 +2,7 @@
 
 import React from 'react';
 import styles from './CoreLanding.module.css';
-import { COLOR_RAMP, AXES, getAllTypes, getTypePosition, getTypeName, getTypeSingularName, getTypeDescription, getAllSubTypesWithMeta, generateCallSign, TypeId, SubTypeWithMeta } from '@/lib/bloc-config';
+import { COLOR_RAMP, AXES, getAllTypes, getTypePosition, getTypeName, getTypeSingularName, getTypeDescription, getAllSubTypesWithMeta, generateCallSign, TypeId, SubTypeWithMeta, FAMILY_NAMES } from '@/lib/bloc-config';
 
 type AxisKey = 'civilRights' | 'openness' | 'redistribution' | 'ethics';
 
@@ -17,6 +17,19 @@ export default function CoreInteractivePage() {
     redistribution: null,
     ethics: null,
   });
+  const [viewingBloc, setViewingBloc] = React.useState<SubTypeWithMeta | null>(null);
+  
+  // Lock scroll when modal is open
+  React.useEffect(() => {
+    if (viewingBloc) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [viewingBloc]);
   
   // Trigger entrance animation on mount
   React.useEffect(() => {
@@ -599,15 +612,6 @@ export default function CoreInteractivePage() {
       transition: 'transform 0.2s ease, opacity 0.2s ease',
     };
     
-    const handleBlocClick = (position: { civil_rights_score: number; openness_score: number; redistribution_score: number; ethics_score: number }) => {
-      setSelectedValues({
-        civilRights: position.civil_rights_score,
-        openness: position.openness_score,
-        redistribution: position.redistribution_score,
-        ethics: position.ethics_score,
-      });
-    };
-    
     const blocInfo: React.CSSProperties = {
       textAlign: 'center',
     };
@@ -680,6 +684,13 @@ export default function CoreInteractivePage() {
           description: getTypeDescription(subType.typeId),
           callSign: subType.callSign,
           matchType: 'exact',
+          // Pass scores for modal
+          civil_rights_score: subType.civil_rights_score,
+          openness_score: subType.openness_score,
+          redistribution_score: subType.redistribution_score,
+          ethics_score: subType.ethics_score,
+          intensity: subType.intensity,
+          parentName: getTypeName(subType.typeId)
         };
       }
     }
@@ -709,10 +720,81 @@ export default function CoreInteractivePage() {
         description: getTypeDescription(subType.typeId),
         callSign: subType.callSign,
         matchType: 'similar',
+        // Pass scores for modal
+        civil_rights_score: subType.civil_rights_score,
+        openness_score: subType.openness_score,
+        redistribution_score: subType.redistribution_score,
+        ethics_score: subType.ethics_score,
+        intensity: subType.intensity,
+        parentName: getTypeName(subType.typeId)
       };
     }
     
     return null;
+  };
+  
+  const handleBlocClick = (subType: SubTypeWithMeta) => {
+    setViewingBloc(subType);
+  };
+
+  const renderBlocModal = () => {
+    if (!viewingBloc) return null;
+
+    const position = getTypePosition(viewingBloc.typeId);
+    if (!position) return null;
+
+    const familyName = FAMILY_NAMES[position.family] || position.family;
+    
+    const applyBloc = () => {
+      setSelectedValues({
+        civilRights: viewingBloc.civil_rights_score,
+        openness: viewingBloc.openness_score,
+        redistribution: viewingBloc.redistribution_score,
+        ethics: viewingBloc.ethics_score,
+      });
+      setViewingBloc(null);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
+    return (
+      <div className={styles.modalOverlay} onClick={() => setViewingBloc(null)}>
+        <div className={styles.modalContent} onClick={e => e.stopPropagation()}>
+          <button className={styles.modalClose} onClick={() => setViewingBloc(null)}>×</button>
+          
+          <div className={styles.modalHeader}>
+            <div style={{ transform: 'scale(1.5)', marginBottom: '4rem', marginTop: '2rem' }}>
+              {renderMiniGrid(
+                viewingBloc.civil_rights_score,
+                viewingBloc.openness_score,
+                viewingBloc.redistribution_score,
+                viewingBloc.ethics_score
+              )}
+            </div>
+            <div className={styles.modalName}>{viewingBloc.name}</div>
+            <div className={styles.modalCallSign}>{viewingBloc.callSign}</div>
+          </div>
+
+          <div className={styles.modalSection}>
+            <div className={styles.modalLabel}>Family</div>
+            <div className={styles.modalText}>{familyName}</div>
+          </div>
+
+          <div className={styles.modalSection}>
+            <div className={styles.modalLabel}>Description</div>
+            <div className={styles.modalText}>{getTypeDescription(viewingBloc.typeId)}</div>
+          </div>
+
+          <div className={styles.modalSection}>
+            <div className={styles.modalLabel}>Examples</div>
+            <div className={styles.modalExamples}>{position.examples}</div>
+          </div>
+
+          <button className={styles.applyButton} onClick={applyBloc}>
+            Apply to my squares
+          </button>
+        </div>
+      </div>
+    );
   };
 
   const renderSquaresSummary = () => {
@@ -755,7 +837,11 @@ export default function CoreInteractivePage() {
       <div className={styles.summaryContainer}>
         
         {userBloc && (
-          <div className={styles.matchBadge}>
+          <div 
+            className={styles.matchBadge} 
+            onClick={() => handleBlocClick(userBloc as unknown as SubTypeWithMeta)}
+            style={{ cursor: 'pointer' }}
+          >
             <div className={styles.matchLabel}>
               {userBloc.matchType === 'exact' ? 'You are a' : 'You are most similar to a'}
             </div>
@@ -911,6 +997,7 @@ export default function CoreInteractivePage() {
           )}
         </div>
         {renderModal()}
+        {renderBlocModal()}
       </main>
     </>
   );
