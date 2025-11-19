@@ -21,6 +21,7 @@ export type CallSign = `${CivilRightsLetter}${OpennessLetter}${RedistributionLet
 
 export interface SubTypeVariation {
   name: string;
+  singularName?: string;
   intensity: number;              // 1=moderate, 2=medium, 3=extreme
   civil_rights_score: number;     // 0-5: Liberty to Authority
   openness_score: number;          // 0-5: Global to National
@@ -188,11 +189,42 @@ export function parseCallSign(callSign: CallSign): {
 }
 
 /**
- * Get sub-type variations for a type
+ * Get all sub-type variations for a type
  * Returns an array of SubTypeVariation objects with scores
  */
 export function getSubTypes(typeId: TypeId): SubTypeVariation[] {
   return SUB_TYPES[typeId] ?? [];
+}
+
+export interface SubTypeWithMeta extends SubTypeVariation {
+  typeId: TypeId;
+  callSign: CallSign;
+  parentName: string;
+}
+
+/**
+ * Get all subtypes across all types with metadata
+ */
+export function getAllSubTypesWithMeta(): SubTypeWithMeta[] {
+  const allTypes = getAllTypes();
+  let allSubTypes: SubTypeWithMeta[] = [];
+  
+  for (const typeId of allTypes) {
+    const subTypes = getSubTypes(typeId);
+    const position = getTypePosition(typeId);
+    if (!position) continue;
+    
+    const subtypesWithMeta = subTypes.map(st => ({
+      ...st,
+      typeId,
+      callSign: position.callSign,
+      parentName: getTypeName(typeId),
+    }));
+    
+    allSubTypes = [...allSubTypes, ...subtypesWithMeta];
+  }
+  
+  return allSubTypes;
 }
 
 /**

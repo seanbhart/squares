@@ -2,7 +2,7 @@
 
 import React from 'react';
 import styles from './CoreLanding.module.css';
-import { COLOR_RAMP, AXES, getAllTypes, getTypePosition, getTypeName, getTypeSingularName, getTypeDescription, generateCallSign, TypeId } from '@/lib/bloc-config';
+import { COLOR_RAMP, AXES, getAllTypes, getTypePosition, getTypeName, getTypeSingularName, getTypeDescription, getAllSubTypesWithMeta, generateCallSign, TypeId, SubTypeWithMeta } from '@/lib/bloc-config';
 
 type AxisKey = 'civilRights' | 'openness' | 'redistribution' | 'ethics';
 
@@ -545,27 +545,29 @@ export default function CoreInteractivePage() {
       ethics: selectedValues.ethics!,
     };
     
-    // Calculate distance to all types
-    const allTypes = getAllTypes();
-    const typesWithDistance = allTypes.map(typeId => {
-      const position = getTypePosition(typeId);
-      if (!position) return null;
-      
+    const allSubTypes = getAllSubTypesWithMeta();
+    
+    // Calculate distance to all subtypes
+    const typesWithDistance = allSubTypes.map(subType => {
       const distance = Math.sqrt(
-        Math.pow(position.civil_rights_score - userScores.civilRights, 2) +
-        Math.pow(position.openness_score - userScores.openness, 2) +
-        Math.pow(position.redistribution_score - userScores.redistribution, 2) +
-        Math.pow(position.ethics_score - userScores.ethics, 2)
+        Math.pow(subType.civil_rights_score - userScores.civilRights, 2) +
+        Math.pow(subType.openness_score - userScores.openness, 2) +
+        Math.pow(subType.redistribution_score - userScores.redistribution, 2) +
+        Math.pow(subType.ethics_score - userScores.ethics, 2)
       );
       
-      return { typeId, position, distance, name: getTypeName(typeId) };
-    }).filter(t => t !== null);
+      return { subType, distance };
+    });
     
-    // Sort by distance and take top 3, excluding exact match (distance === 0)
-    const similarTypes = typesWithDistance
-      .filter(t => t!.distance > 0) // Exclude exact match
-      .sort((a, b) => a!.distance - b!.distance)
-      .slice(0, 3);
+    // Sort by distance
+    const sortedTypes = typesWithDistance.sort((a, b) => a.distance - b.distance);
+    
+    // Determine which bloc is being shown in the badge (either exact match or closest similar)
+    // We want to exclude this one from the list below
+    const badgeBloc = sortedTypes[0]; // The first one is always the best match
+    
+    // Take next 3
+    const similarTypes = sortedTypes.slice(1, 4);
     
     const container: React.CSSProperties = {
       marginTop: '3rem',
@@ -626,21 +628,21 @@ export default function CoreInteractivePage() {
       <div className={styles.similarContainer}>
         <div className={styles.similarHeading}>Similar Blocs</div>
         <div className={styles.blocsGrid}>
-          {similarTypes.map(type => (
+          {similarTypes.map(({ subType }) => (
             <div 
-              key={type!.typeId} 
+              key={`${subType.typeId}-${subType.intensity}`} 
               className={styles.blocCard}
-              onClick={() => handleBlocClick(type!.position)}
+              onClick={() => handleBlocClick(subType)}
             >
               {renderMiniGrid(
-                type!.position.civil_rights_score,
-                type!.position.openness_score,
-                type!.position.redistribution_score,
-                type!.position.ethics_score
+                subType.civil_rights_score,
+                subType.openness_score,
+                subType.redistribution_score,
+                subType.ethics_score
               )}
               <div className={styles.blocInfo}>
-                <div className={styles.blocName}>{type!.name}</div>
-                <div className={styles.blocCallSign}>{type!.position.callSign}</div>
+                <div className={styles.blocName}>{subType.name}</div>
+                <div className={styles.blocCallSign}>{subType.callSign}</div>
               </div>
             </div>
           ))}
@@ -661,54 +663,51 @@ export default function CoreInteractivePage() {
       ethics: selectedValues.ethics!,
     };
     
+    const allSubTypes = getAllSubTypesWithMeta();
+    
     // 1. Try to find exact match
-    const allTypes = getAllTypes();
-    for (const typeId of allTypes) {
-      const position = getTypePosition(typeId);
-      if (!position) continue;
-      
+    for (const subType of allSubTypes) {
       if (
-        position.civil_rights_score === userScores.civilRights &&
-        position.openness_score === userScores.openness &&
-        position.redistribution_score === userScores.redistribution &&
-        position.ethics_score === userScores.ethics
+        subType.civil_rights_score === userScores.civilRights &&
+        subType.openness_score === userScores.openness &&
+        subType.redistribution_score === userScores.redistribution &&
+        subType.ethics_score === userScores.ethics
       ) {
         return {
-          typeId,
-          name: getTypeName(typeId),
-          singularName: getTypeSingularName(typeId),
-          description: getTypeDescription(typeId),
-          callSign: position.callSign,
+          typeId: subType.typeId,
+          name: subType.name,
+          singularName: subType.singularName ?? subType.name,
+          description: getTypeDescription(subType.typeId),
+          callSign: subType.callSign,
           matchType: 'exact',
         };
       }
     }
     
     // 2. If no exact match, find closest match (most similar)
-    const typesWithDistance = allTypes.map(typeId => {
-      const position = getTypePosition(typeId);
-      if (!position) return null;
-      
+    const typesWithDistance = allSubTypes.map(subType => {
       const distance = Math.sqrt(
-        Math.pow(position.civil_rights_score - userScores.civilRights, 2) +
-        Math.pow(position.openness_score - userScores.openness, 2) +
-        Math.pow(position.redistribution_score - userScores.redistribution, 2) +
-        Math.pow(position.ethics_score - userScores.ethics, 2)
+        Math.pow(subType.civil_rights_score - userScores.civilRights, 2) +
+        Math.pow(subType.openness_score - userScores.openness, 2) +
+        Math.pow(subType.redistribution_score - userScores.redistribution, 2) +
+        Math.pow(subType.ethics_score - userScores.ethics, 2)
       );
       
-      return { typeId, position, distance };
-    }).filter(t => t !== null);
+      return { subType, distance };
+    });
     
     // Sort by distance and take top 1
-    const closest = typesWithDistance.sort((a, b) => a!.distance - b!.distance)[0];
+    const closest = typesWithDistance.sort((a, b) => a.distance - b.distance)[0];
     
     if (closest) {
+      const subType = closest.subType;
+      
       return {
-        typeId: closest.typeId,
-        name: getTypeName(closest.typeId),
-        singularName: getTypeSingularName(closest.typeId),
-        description: getTypeDescription(closest.typeId),
-        callSign: closest.position.callSign,
+        typeId: subType.typeId,
+        name: subType.name,
+        singularName: subType.singularName ?? subType.name,
+        description: getTypeDescription(subType.typeId),
+        callSign: subType.callSign,
         matchType: 'similar',
       };
     }

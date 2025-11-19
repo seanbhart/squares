@@ -59,6 +59,7 @@
     "lgmp": [
       {
         "name": "Pragmatists",
+        "singularName": "Pragmatist",
         "intensity": 1,
         "civil_rights_score": 2,
         "openness_score": 2,
@@ -67,6 +68,7 @@
       },
       {
         "name": "Optimists",
+        "singularName": "Optimist",
         "intensity": 2,
         "civil_rights_score": 1,
         "openness_score": 1,
@@ -75,6 +77,7 @@
       },
       {
         "name": "Visionaries",
+        "singularName": "Visionary",
         "intensity": 3,
         "civil_rights_score": 0,
         "openness_score": 0,
@@ -85,6 +88,7 @@
     "agmp": [
       {
         "name": "Reformers",
+        "singularName": "Reformer",
         "intensity": 1,
         "civil_rights_score": 3,
         "openness_score": 2,
@@ -93,6 +97,7 @@
       },
       {
         "name": "Architects",
+        "singularName": "Architect",
         "intensity": 2,
         "civil_rights_score": 4,
         "openness_score": 1,
@@ -101,6 +106,7 @@
       },
       {
         "name": "Masterplanners",
+        "singularName": "Masterplanner",
         "intensity": 3,
         "civil_rights_score": 5,
         "openness_score": 0,
@@ -111,6 +117,7 @@
     "lgmt": [
       {
         "name": "Conventionalists",
+        "singularName": "Conventionalist",
         "intensity": 1,
         "civil_rights_score": 2,
         "openness_score": 2,
@@ -119,6 +126,7 @@
       },
       {
         "name": "Constitutionalists",
+        "singularName": "Constitutionalist",
         "intensity": 2,
         "civil_rights_score": 1,
         "openness_score": 1,
@@ -127,6 +135,7 @@
       },
       {
         "name": "Libertarians",
+        "singularName": "Libertarian",
         "intensity": 3,
         "civil_rights_score": 0,
         "openness_score": 0,
@@ -137,6 +146,7 @@
     "agmt": [
       {
         "name": "Establishmentarians",
+        "singularName": "Establishmentarian",
         "intensity": 1,
         "civil_rights_score": 3,
         "openness_score": 2,
@@ -145,6 +155,7 @@
       },
       {
         "name": "Institutionalists",
+        "singularName": "Institutionalist",
         "intensity": 2,
         "civil_rights_score": 4,
         "openness_score": 1,
@@ -153,6 +164,7 @@
       },
       {
         "name": "Guardians",
+        "singularName": "Guardian",
         "intensity": 3,
         "civil_rights_score": 5,
         "openness_score": 0,
@@ -163,6 +175,7 @@
     "lgsp": [
       {
         "name": "Facilitators",
+        "singularName": "Facilitator",
         "intensity": 1,
         "civil_rights_score": 2,
         "openness_score": 2,
@@ -171,6 +184,7 @@
       },
       {
         "name": "Cooperators",
+        "singularName": "Cooperator",
         "intensity": 2,
         "civil_rights_score": 1,
         "openness_score": 1,
@@ -179,6 +193,7 @@
       },
       {
         "name": "Solidarity Leaders",
+        "singularName": "Solidarity Leader",
         "intensity": 3,
         "civil_rights_score": 0,
         "openness_score": 0,
@@ -189,6 +204,7 @@
     "agsp": [
       {
         "name": "Planners",
+        "singularName": "Planner",
         "intensity": 1,
         "civil_rights_score": 3,
         "openness_score": 2,
@@ -197,6 +213,7 @@
       },
       {
         "name": "Technocrats",
+        "singularName": "Technocrat",
         "intensity": 2,
         "civil_rights_score": 4,
         "openness_score": 1,
@@ -205,6 +222,7 @@
       },
       {
         "name": "Social Engineers",
+        "singularName": "Social Engineer",
         "intensity": 3,
         "civil_rights_score": 5,
         "openness_score": 0,
@@ -215,6 +233,7 @@
     "lgst": [
       {
         "name": "Caregivers",
+        "singularName": "Caregiver",
         "intensity": 1,
         "civil_rights_score": 2,
         "openness_score": 2,
@@ -223,6 +242,7 @@
       },
       {
         "name": "Humanists",
+        "singularName": "Humanist",
         "intensity": 2,
         "civil_rights_score": 1,
         "openness_score": 1,
@@ -231,6 +251,7 @@
       },
       {
         "name": "Missionaries",
+        "singularName": "Missionary",
         "intensity": 3,
         "civil_rights_score": 0,
         "openness_score": 0,
@@ -241,6 +262,7 @@
     "agst": [
       {
         "name": "Corporatists",
+        "singularName": "Corporatist",
         "intensity": 1,
         "civil_rights_score": 3,
         "openness_score": 2,
@@ -249,6 +271,7 @@
       },
       {
         "name": "Global Conservatives",
+        "singularName": "Global Conservative",
         "intensity": 2,
         "civil_rights_score": 4,
         "openness_score": 1,
@@ -257,6 +280,7 @@
       },
       {
         "name": "Paternalists",
+        "singularName": "Paternalist",
         "intensity": 3,
         "civil_rights_score": 5,
         "openness_score": 0,
@@ -267,6 +291,7 @@
     "lnsp": [
       {
         "name": "Organizers",
+        "singularName": "Organizer",
         "intensity": 1,
         "civil_rights_score": 2,
         "openness_score": 3,
@@ -275,6 +300,7 @@
       },
       {
         "name": "Laborists",
+        "singularName": "Laborist",
         "intensity": 2,
         "civil_rights_score": 1,
         "openness_score": 4,
@@ -283,6 +309,7 @@
       },
       {
         "name": "Syndicalists",
+        "singularName": "Syndicalist",
         "intensity": 3,
         "civil_rights_score": 0,
         "openness_score": 5,
@@ -293,6 +320,7 @@
     "ansp": [
       {
         "name": "Collectivists",
+        "singularName": "Collectivist",
         "intensity": 1,
         "civil_rights_score": 3,
         "openness_score": 3,
@@ -301,6 +329,7 @@
       },
       {
         "name": "Revolutionaries",
+        "singularName": "Revolutionary",
         "intensity": 2,
         "civil_rights_score": 4,
         "openness_score": 4,
@@ -309,6 +338,7 @@
       },
       {
         "name": "Communists",
+        "singularName": "Communist",
         "intensity": 3,
         "civil_rights_score": 5,
         "openness_score": 5,
@@ -319,6 +349,7 @@
     "lnst": [
       {
         "name": "Populists",
+        "singularName": "Populist",
         "intensity": 1,
         "civil_rights_score": 2,
         "openness_score": 3,
@@ -327,6 +358,7 @@
       },
       {
         "name": "Grassroots Traditionalists",
+        "singularName": "Grassroots Traditionalist",
         "intensity": 2,
         "civil_rights_score": 1,
         "openness_score": 4,
@@ -335,6 +367,7 @@
       },
       {
         "name": "Supremacists",
+        "singularName": "Supremacist",
         "intensity": 3,
         "civil_rights_score": 0,
         "openness_score": 5,
@@ -345,6 +378,7 @@
     "anst": [
       {
         "name": "Disciplinarians",
+        "singularName": "Disciplinarian",
         "intensity": 1,
         "civil_rights_score": 3,
         "openness_score": 3,
@@ -353,6 +387,7 @@
       },
       {
         "name": "National Conservatives",
+        "singularName": "National Conservative",
         "intensity": 2,
         "civil_rights_score": 4,
         "openness_score": 4,
@@ -361,6 +396,7 @@
       },
       {
         "name": "Totalitarians",
+        "singularName": "Totalitarian",
         "intensity": 3,
         "civil_rights_score": 5,
         "openness_score": 5,
@@ -371,6 +407,7 @@
     "lnmp": [
       {
         "name": "Tradesmen",
+        "singularName": "Tradesman",
         "intensity": 1,
         "civil_rights_score": 2,
         "openness_score": 3,
@@ -379,6 +416,7 @@
       },
       {
         "name": "Merchants",
+        "singularName": "Merchant",
         "intensity": 2,
         "civil_rights_score": 1,
         "openness_score": 4,
@@ -387,6 +425,7 @@
       },
       {
         "name": "Isolationists",
+        "singularName": "Isolationist",
         "intensity": 3,
         "civil_rights_score": 0,
         "openness_score": 5,
@@ -397,6 +436,7 @@
     "anmp": [
       {
         "name": "Nationalists",
+        "singularName": "Nationalist",
         "intensity": 1,
         "civil_rights_score": 3,
         "openness_score": 3,
@@ -405,6 +445,7 @@
       },
       {
         "name": "Modernizers",
+        "singularName": "Modernizer",
         "intensity": 2,
         "civil_rights_score": 4,
         "openness_score": 4,
@@ -413,6 +454,7 @@
       },
       {
         "name": "Autarchs",
+        "singularName": "Autarch",
         "intensity": 3,
         "civil_rights_score": 5,
         "openness_score": 5,
@@ -423,6 +465,7 @@
     "lnmt": [
       {
         "name": "Townspeople",
+        "singularName": "Townsperson",
         "intensity": 1,
         "civil_rights_score": 2,
         "openness_score": 3,
@@ -431,6 +474,7 @@
       },
       {
         "name": "Stewards",
+        "singularName": "Steward",
         "intensity": 2,
         "civil_rights_score": 1,
         "openness_score": 4,
@@ -439,6 +483,7 @@
       },
       {
         "name": "Separatists",
+        "singularName": "Separatist",
         "intensity": 3,
         "civil_rights_score": 0,
         "openness_score": 5,
@@ -449,6 +494,7 @@
     "anmt": [
       {
         "name": "Sentinels",
+        "singularName": "Sentinel",
         "intensity": 1,
         "civil_rights_score": 3,
         "openness_score": 3,
@@ -457,6 +503,7 @@
       },
       {
         "name": "Enforcers",
+        "singularName": "Enforcer",
         "intensity": 2,
         "civil_rights_score": 4,
         "openness_score": 4,
@@ -465,6 +512,7 @@
       },
       {
         "name": "Fascists",
+        "singularName": "Fascist",
         "intensity": 3,
         "civil_rights_score": 5,
         "openness_score": 5,
