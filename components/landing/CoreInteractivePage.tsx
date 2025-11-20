@@ -95,6 +95,7 @@ export default function CoreInteractivePage() {
   const grid: React.CSSProperties = {
     display: 'grid',
     gridTemplateColumns: 'repeat(3, 1fr)',
+    gridTemplateRows: 'repeat(3, 1fr)',
     gap: '4%',
     width: containerSize,
     height: containerSize,
@@ -104,12 +105,13 @@ export default function CoreInteractivePage() {
     width: '100%',
     height: '100%',
     borderRadius: '20%',
-    background: '#d6d6d6',
+    background: 'var(--gray-300)',
+    border: 'var(--square-border)',
   };
 
   const filled: React.CSSProperties = {
     ...base,
-    background: '#7b4c96',
+    background: 'var(--color-purple)',
   };
 
   const special: React.CSSProperties = {
@@ -117,7 +119,7 @@ export default function CoreInteractivePage() {
     height: '95%',
     placeSelf: 'center',
     borderRadius: '16%',
-    border: 'clamp(5px, 1.3vmin, 13px) solid #d6d6d6',
+    border: 'clamp(5px, 1.3vmin, 13px) solid var(--gray-300)',
     background: 'transparent',
     WebkitMask: `
       linear-gradient(#000 0 0) top left,
@@ -204,13 +206,13 @@ export default function CoreInteractivePage() {
       const correspondingValue = correspondingAxis ? selectedValues[correspondingAxis] : null;
       const letterMapping = emptyLetterMap[i];
       
-      let emptyColor = '#d6d6d6'; // default grey
+      let emptyColor = 'var(--gray-300)'; // default grey
       let emptyLetter = '';
       
       if (correspondingValue !== null && letterMapping) {
         // White for intensity 0-2, black for intensity 3-5
         const isLowIntensity = correspondingValue <= 2;
-        emptyColor = isLowIntensity ? '#f0f0f0' : '#1a1a1a';
+        emptyColor = isLowIntensity ? 'var(--gray-100)' : 'var(--gray-900)';
         emptyLetter = isLowIntensity ? letterMapping.low : letterMapping.high;
       }
       
@@ -229,7 +231,7 @@ export default function CoreInteractivePage() {
         transform: 'translate(-50%, -50%)',
         fontSize: '12vmin',
         fontWeight: 'bold',
-        color: emptyColor === '#1a1a1a' ? '#f0f0f0' : '#1a1a1a', // Inverse of background
+        color: emptyColor === 'var(--gray-900)' ? 'var(--gray-100)' : 'var(--gray-900)', // Inverse of background
         opacity: isHovered && emptyLetter ? 1 : 0,
         transition: 'opacity 0.2s ease',
         userSelect: 'none',
@@ -261,10 +263,10 @@ export default function CoreInteractivePage() {
           COLOR_RAMP.orange,
           COLOR_RAMP.red,
         ];
-        background = colorMap[selectedValue] || '#696969';
+        background = colorMap[selectedValue] || 'var(--gray-500)';
       } else {
         // Default: grey for all colored squares before selection
-        background = '#696969';
+        background = 'var(--gray-500)';
       }
       
       const animationDelay = getAnimationDelay(i);
@@ -358,7 +360,7 @@ export default function CoreInteractivePage() {
     };
     
     const modalContent: React.CSSProperties = {
-      background: 'var(--background)',
+      background: 'var(--gray-800)',
       borderRadius: '1rem',
       padding: '2rem',
       maxWidth: '500px',
@@ -475,7 +477,7 @@ export default function CoreInteractivePage() {
               
               // Determine which empty square letter to show (low for 0-2, high for 3-5)
               const emptyLetter = item.value <= 2 ? letters.low : letters.high;
-              const emptySquareColor = item.value <= 2 ? '#FFFFFF' : '#000000';
+              const emptySquareColor = item.value <= 2 ? 'var(--gray-100)' : 'var(--gray-900)';
               
               const emptySquareStyle: React.CSSProperties = {
                 width: '48px',
@@ -488,7 +490,7 @@ export default function CoreInteractivePage() {
                 justifyContent: 'center',
                 fontSize: '1rem',
                 fontWeight: '700',
-                color: item.value <= 2 ? '#000000' : '#FFFFFF',
+                color: item.value <= 2 ? 'var(--gray-900)' : 'var(--gray-100)',
                 fontFamily: 'monospace',
               };
               
@@ -530,6 +532,7 @@ export default function CoreInteractivePage() {
     const miniGrid: React.CSSProperties = {
       display: 'grid',
       gridTemplateColumns: 'repeat(3, 1fr)',
+      gridTemplateRows: 'repeat(3, 1fr)',
       gap: '4%',
       width: miniGridSize,
       height: miniGridSize,
@@ -539,6 +542,7 @@ export default function CoreInteractivePage() {
       width: '100%',
       height: '100%',
       borderRadius: '20%',
+      border: 'var(--square-border)',
     };
     
     const miniSpecial: React.CSSProperties = {
@@ -597,18 +601,18 @@ export default function CoreInteractivePage() {
           
           if (cell.type === 'filled' && cell.scoreIndex !== undefined) {
             const score = scores[cell.scoreIndex];
-            const bgColor = colorMap[score] || '#696969';
+            const bgColor = colorMap[score] || 'var(--gray-500)';
             return <div key={cell.index} style={{ ...miniSquare, background: bgColor }} />;
           }
           
           if (cell.type === 'empty' && cell.scoreIndex !== undefined) {
             const score = scores[cell.scoreIndex];
             const isLowIntensity = score <= 2;
-            const bgColor = isLowIntensity ? '#f0f0f0' : '#1a1a1a';
+            const bgColor = isLowIntensity ? 'var(--gray-100)' : 'var(--gray-900)';
             return <div key={cell.index} style={{ ...miniSquare, background: bgColor }} />;
           }
           
-          return <div key={cell.index} style={{ ...miniSquare, background: '#d6d6d6' }} />;
+          return <div key={cell.index} style={{ ...miniSquare, background: 'var(--gray-300)' }} />;
         })}
       </div>
     );
@@ -910,6 +914,7 @@ export default function CoreInteractivePage() {
       height: squareSize,
       borderRadius: '20%',
       transition: 'transform 0.2s ease, box-shadow 0.2s ease',
+      border: 'var(--square-border)',
     };
     
     const emptySquareContainer: React.CSSProperties = {
@@ -926,6 +931,7 @@ export default function CoreInteractivePage() {
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
+      border: 'var(--square-border)',
     };
     
     const letterLabel: React.CSSProperties = {
@@ -955,7 +961,7 @@ export default function CoreInteractivePage() {
         <div className={styles.summaryRow}>
           {axisOrder.map((axis, idx) => {
             const value = selectedValues[axis];
-            let bgColor = '#696969'; // default grey
+            let bgColor = 'var(--gray-500)'; // default grey
             
             // Check if this axis is currently hovered in the main grid
             const isHovered = hoveredIndex !== null && indexToAxis[hoveredIndex] === axis;
@@ -1003,15 +1009,15 @@ export default function CoreInteractivePage() {
             if (value === null) {
               return (
                 <div key={`${axis}-empty`} style={containerStyle}>
-                  <div style={{ ...emptySquare, background: '#d6d6d6' }} />
+                  <div style={{ ...emptySquare, background: 'var(--gray-300)' }} />
                 </div>
               );
             }
             
             // If selected, show appropriate color and letter
             const isLowIntensity = value <= 2;
-            const bgColor = isLowIntensity ? '#f0f0f0' : '#1a1a1a';
-            const letterColor = isLowIntensity ? '#1a1a1a' : '#f0f0f0'; // Opposite of bg
+            const bgColor = isLowIntensity ? 'var(--gray-100)' : 'var(--gray-900)';
+            const letterColor = isLowIntensity ? 'var(--gray-900)' : 'var(--gray-100)'; // Opposite of bg
             
             const letterMap = [
               { low: 'L', high: 'A' },

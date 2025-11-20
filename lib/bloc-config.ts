@@ -59,9 +59,24 @@ export interface AxisDefinition {
   values: [string, string, string, string, string, string]; // 6 descriptors from 0-5
 }
 
-// Export typed accessors
-export const COLOR_RAMP = CONFIG.colorRamp;
-export const AXIS_COLORS = CONFIG.axisColors;
+// Override colors to use CSS variables for the frontend
+const CSS_VARS = {
+  purple: 'var(--color-purple)',
+  blue: 'var(--color-blue)',
+  green: 'var(--color-green)',
+  gold: 'var(--color-gold)',
+  orange: 'var(--color-orange)',
+  red: 'var(--color-red)',
+};
+
+// Export typed accessors with CSS variables overrides
+export const COLOR_RAMP = CSS_VARS;
+export const AXIS_COLORS = {
+  civilRights: CSS_VARS.purple,
+  openness: CSS_VARS.blue,
+  redistribution: CSS_VARS.green,
+  ethics: CSS_VARS.gold,
+};
 export const TYPE_NAMES = CONFIG.typeNames;
 export const TYPE_SINGULAR_NAMES = CONFIG.typeSingularNames;
 export const FAMILY_NAMES = CONFIG.familyNames;

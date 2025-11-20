@@ -52,7 +52,19 @@ export const CORE_DIMENSIONS: CoreDimension[] = [
 
 // Cast JSON so we can traverse without over-typing everything
 const CONFIG: any = typeConfig as any;
-export const CORE_COLORS: Record<string, string> = CONFIG.colors ?? {};
+// Override colors with CSS variables for frontend centralization
+export const CORE_COLORS: Record<string, string> = {
+  ...(CONFIG.colors ?? {}),
+  light: 'var(--gray-300)',
+  background: 'var(--bg-primary)',
+  dark: 'var(--gray-800)',
+  blue: 'var(--color-blue)',
+  green: 'var(--color-green)',
+  purple: 'var(--color-purple)',
+  red: 'var(--color-red)',
+  orange: 'var(--color-orange)',
+  yellow: 'var(--color-gold)',
+};
 const INTENSITY_COLORS: any = CONFIG.intensity_colors ?? {};
 const GRID_POSITIONS: Record<string, any> = CONFIG.grid_positions?.positions ?? {};
 
