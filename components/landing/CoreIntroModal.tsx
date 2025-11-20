@@ -8,13 +8,27 @@ interface CoreIntroModalProps {
 }
 
 export default function CoreIntroModal({ isOpen, onClose }: CoreIntroModalProps) {
+  // Prevent bubbling up to the page container if clicked
+  const handleContentClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+  };
+
   if (!isOpen) return null;
 
   return (
     <div className={styles.introOverlay}>
-      <button className={styles.introClose} onClick={onClose}>×</button>
+      <button 
+        className={styles.introClose} 
+        onClick={(e) => {
+          e.stopPropagation();
+          onClose();
+        }}
+        aria-label="Close intro modal"
+      >
+        ×
+      </button>
       
-      <div className={styles.introContent}>
+      <div className={styles.introContent} onClick={handleContentClick}>
         {/* Section 1: Problem + Promise */}
         <section className={styles.introSection}>
           <h1 className={styles.introTitle}>
@@ -193,7 +207,13 @@ export default function CoreIntroModal({ isOpen, onClose }: CoreIntroModalProps)
 
         {/* Section 5: CTA */}
         <section className={styles.introSection}>
-          <button className={styles.startCta} onClick={onClose}>
+          <button 
+            className={styles.startCta} 
+            onClick={(e) => {
+              e.stopPropagation();
+              onClose();
+            }}
+          >
             find your bloc
           </button>
         </section>

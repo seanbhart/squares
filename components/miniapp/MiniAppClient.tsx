@@ -1,10 +1,10 @@
 'use client';
 
 import { useEffect, useState, useCallback } from 'react';
-import AssessmentSlides from './AssessmentSlides';
-import Leaderboard from './Leaderboard';
-import LeaderboardPlaceholder from './LeaderboardPlaceholder';
-import StickySpectrum from './StickySpectrum';
+import CoreAssessment, { CoreScores } from './CoreAssessment';
+// import Leaderboard from './Leaderboard';
+// import LeaderboardPlaceholder from './LeaderboardPlaceholder';
+// import StickySpectrum from './StickySpectrum';
 import FullPageLoadingSpinner from '@/components/FullPageLoadingSpinner';
 import styles from './MiniApp.module.css';
 
@@ -15,13 +15,8 @@ interface FarcasterUser {
   pfpUrl?: string;
 }
 
-interface UserSpectrum {
-  trade: number;
-  abortion: number;
-  migration: number;
-  economics: number;
-  rights: number;
-}
+// Use the new CoreScores type
+type UserSpectrum = CoreScores;
 
 export default function MiniAppClient() {
   const [user, setUser] = useState<FarcasterUser | null>(null);
@@ -32,16 +27,9 @@ export default function MiniAppClient() {
   const [pendingSpectrum, setPendingSpectrum] = useState<UserSpectrum | null>(null);
   const [hasCompletedOnce, setHasCompletedOnce] = useState(false);
   const [isPublic, setIsPublic] = useState(false);
-  const [currentStep, setCurrentStep] = useState<number>(0);
+  // const [currentStep, setCurrentStep] = useState<number>(0);
 
-  // Update current step when existing spectrum is loaded
-  useEffect(() => {
-    if (existingSpectrum) {
-      setCurrentStep(3); // Results slide
-    }
-  }, [existingSpectrum]);
-
-  // Initialize Farcaster SDK (lazy loaded as recommended for SSR-friendly apps)
+  // Initialize Farcaster SDK
   useEffect(() => {
     let readyCalled = false;
     let readyTimeout: NodeJS.Timeout | null = null;
@@ -49,14 +37,10 @@ export default function MiniAppClient() {
     const init = async () => {
       try {
         console.log('[Squares] Lazy loading Farcaster SDK...');
-        
-        // Dynamically import SDK (recommended for hybrid apps)
         const { sdk } = await import('@farcaster/miniapp-sdk');
         
-        // Fallback: call ready after 2 seconds no matter what to dismiss splash screen
         readyTimeout = setTimeout(async () => {
           if (!readyCalled) {
-            console.log('[Squares] Timeout - calling ready() as fallback');
             try {
               await sdk.actions.ready();
               readyCalled = true;
@@ -66,21 +50,13 @@ export default function MiniAppClient() {
           }
         }, 2000);
         
-        console.log('[Squares] SDK loaded, initializing...');
-        
-        // Get context from Farcaster
         const context = await sdk.context;
-        console.log('[Squares] SDK context received:', context);
-        
         const userInfo = context.user;
-        console.log('[Squares] User info:', userInfo);
 
-        // Signal that the app is ready FIRST to dismiss splash screen
         if (!readyCalled) {
           await sdk.actions.ready();
           readyCalled = true;
           if (readyTimeout) clearTimeout(readyTimeout);
-          console.log('[Squares] App signaled ready');
         }
 
         if (userInfo) {
@@ -92,50 +68,37 @@ export default function MiniAppClient() {
           };
           
           setUser(farcasterUser);
-          console.log('[Squares] Farcaster user set:', farcasterUser);
 
-          // Fetch existing spectrum if any
+          // Fetch existing spectrum
           console.log('[Squares] Fetching existing spectrum for FID:', userInfo.fid);
           const response = await fetch(`/api/farcaster/spectrum?fid=${userInfo.fid}`);
           const data = await response.json();
-          console.log('[Squares] Spectrum API response:', data);
 
-          if (data.spectrum) {
-            // User has taken the assessment before
-            const spectrum = {
-              trade: data.spectrum.trade_score,
-              abortion: data.spectrum.abortion_score,
-              migration: data.spectrum.migration_score,
-              economics: data.spectrum.economics_score,
-              rights: data.spectrum.rights_score,
+          // Check if data has new CORE fields
+          if (data.spectrum && 
+              data.spectrum.civil_rights_score !== undefined &&
+              data.spectrum.openness_score !== undefined &&
+              data.spectrum.redistribution_score !== undefined &&
+              data.spectrum.ethics_score !== undefined) {
+            
+            const spectrum: UserSpectrum = {
+              civilRights: data.spectrum.civil_rights_score,
+              openness: data.spectrum.openness_score,
+              redistribution: data.spectrum.redistribution_score,
+              ethics: data.spectrum.ethics_score,
             };
             setExistingSpectrum(spectrum);
             setHasCompletedOnce(true);
             setIsPublic(data.spectrum.is_public || false);
-            console.log('[Squares] Existing spectrum loaded:', spectrum);
-            console.log('[Squares] is_public:', data.spectrum.is_public);
           } else {
-            // New user, show assessment
+            // New user or old schema - treat as new
             setHasCompletedOnce(false);
-            console.log('[Squares] New user - no existing spectrum');
           }
         }
       } catch (error) {
         console.error('[Squares] Failed to initialize mini app:', error);
-        // Try to call ready even on error, but SDK might not be loaded
-        try {
-          const { sdk } = await import('@farcaster/miniapp-sdk');
-          if (!readyCalled) {
-            await sdk.actions.ready();
-            readyCalled = true;
-          }
-        } catch (e) {
-          console.error('[Squares] Could not load SDK in error handler:', e);
-        }
-        if (readyTimeout) clearTimeout(readyTimeout);
       } finally {
         setLoading(false);
-        console.log('[Squares] Initialization complete');
       }
     };
 
@@ -147,42 +110,29 @@ export default function MiniAppClient() {
   }, []);
 
   const handleAssessmentComplete = useCallback(async (spectrum: UserSpectrum, publicVisibility: boolean) => {
-    console.log('[Squares] Assessment complete called:', { spectrum, publicVisibility });
-    
-    if (!user) {
-      console.log('[Squares] No user found, cannot save');
-      return;
-    }
+    if (!user) return;
 
-    // Check if spectrum has changed from existing
+    // Check if spectrum has changed
     if (existingSpectrum && hasCompletedOnce) {
       const hasChanged = 
-        spectrum.trade !== existingSpectrum.trade ||
-        spectrum.abortion !== existingSpectrum.abortion ||
-        spectrum.migration !== existingSpectrum.migration ||
-        spectrum.economics !== existingSpectrum.economics ||
-        spectrum.rights !== existingSpectrum.rights;
+        spectrum.civilRights !== existingSpectrum.civilRights ||
+        spectrum.openness !== existingSpectrum.openness ||
+        spectrum.redistribution !== existingSpectrum.redistribution ||
+        spectrum.ethics !== existingSpectrum.ethics;
 
       if (hasChanged) {
-        console.log('[Squares] Spectrum changed, showing update prompt');
-        // Show update prompt
         setPendingSpectrum(spectrum);
         setShowUpdatePrompt(true);
         return;
       }
     }
 
-    // Save spectrum (new user or no changes)
-    console.log('[Squares] Saving spectrum...');
     await saveSpectrum(spectrum, publicVisibility);
     setHasCompletedOnce(true);
   }, [user, existingSpectrum, hasCompletedOnce]);
 
   const saveSpectrum = async (spectrum: UserSpectrum, publicVisibility: boolean) => {
-    if (!user) {
-      console.log('[Squares] No user, cannot save spectrum');
-      return;
-    }
+    if (!user) return;
 
     try {
       const payload = {
@@ -190,11 +140,9 @@ export default function MiniAppClient() {
         username: user.username,
         displayName: user.displayName,
         pfpUrl: user.pfpUrl,
-        spectrum,
+        spectrum, // Matches CoreScores structure
         isPublic: publicVisibility,
       };
-      
-      console.log('[Squares] Saving spectrum with payload:', payload);
       
       const response = await fetch('/api/farcaster/spectrum', {
         method: 'POST',
@@ -202,26 +150,18 @@ export default function MiniAppClient() {
         body: JSON.stringify(payload),
       });
 
-      console.log('[Squares] Save response status:', response.status);
       const data = await response.json();
-      console.log('[Squares] Save response data:', data);
 
       if (data.success) {
-        console.log('[Squares] Successfully saved spectrum!');
         setExistingSpectrum(spectrum);
         setIsPublic(publicVisibility);
         
-        // Add mini app if not already added
         try {
           const { sdk } = await import('@farcaster/miniapp-sdk');
           await sdk.actions.addMiniApp();
-          console.log('[Squares] Mini app added');
         } catch (e) {
-          // User may have already added the app
-          console.log('[Squares] App already added or user declined');
+          // Ignore if already added
         }
-      } else {
-        console.error('[Squares] Save failed:', data);
       }
     } catch (error) {
       console.error('[Squares] Failed to save spectrum:', error);
@@ -229,13 +169,12 @@ export default function MiniAppClient() {
   };
 
   const handleVisibilityChange = useCallback(async (publicVisibility: boolean) => {
-    console.log('[Squares] Visibility changed to:', publicVisibility);
     setIsPublic(publicVisibility);
-  }, []);
-
-  const handleStepChange = useCallback((step: number) => {
-    setCurrentStep(step);
-  }, []);
+    // Ideally we should save this change immediately if we have a spectrum
+    if (existingSpectrum) {
+      await saveSpectrum(existingSpectrum, publicVisibility);
+    }
+  }, [existingSpectrum]); // Added dependency
 
   const handleConfirmUpdate = async () => {
     if (pendingSpectrum) {
@@ -256,7 +195,6 @@ export default function MiniAppClient() {
 
   return (
     <div className={`${styles.container} ${styles.darkMode}`}>
-      {/* Update Prompt Modal */}
       {showUpdatePrompt && (
         <div className={styles.modal}>
           <div className={styles.modalContent}>
@@ -274,30 +212,25 @@ export default function MiniAppClient() {
         </div>
       )}
 
-      {/* Sticky Spectrum Header - Shows when on results slide (step 3) */}
-      {existingSpectrum && currentStep === 3 && (
+      {/* Sticky Spectrum Header - Commented out until updated */}
+      {/* {existingSpectrum && (
         <StickySpectrum spectrum={existingSpectrum} />
-      )}
+      )} */}
 
-      {/* Assessment Slides - Always visible at top */}
       {showAssessment && (
-        <AssessmentSlides
+        <CoreAssessment
           initialSpectrum={existingSpectrum || undefined}
-          initialStep={existingSpectrum ? 3 : 0}
+          initialStep={existingSpectrum ? 1 : 0} // Skip intro if existing
           initialIsPublic={isPublic}
-          username={user?.username}
           onComplete={handleAssessmentComplete}
           onVisibilityChange={handleVisibilityChange}
-          onStepChange={handleStepChange}
-          hideSpectrumCard={currentStep === 3}
         />
       )}
 
-      {/* Leaderboard Section - Only visible if user has revealed their spectrum */}
-      {isPublic && <Leaderboard currentFid={user?.fid} />}
+      {/* Leaderboard Section - Commented out until updated */}
+      {/* {isPublic && <Leaderboard currentFid={user?.fid} />} */}
       
-      {/* Placeholder - Shows when user hasn't revealed spectrum or doesn't have one */}
-      {!isPublic && <LeaderboardPlaceholder />}
+      {/* {!isPublic && <LeaderboardPlaceholder />} */}
     </div>
   );
 }

@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import styles from './CoreLanding.module.css';
 import { COLOR_RAMP, AXES, getAllTypes, getTypePosition, getTypeName, getTypeSingularName, getTypeDescription, getAllSubTypesWithMeta, generateCallSign, TypeId, SubTypeWithMeta, FAMILY_NAMES } from '@/lib/bloc-config';
 import CoreIntroModal from './CoreIntroModal';
@@ -10,7 +10,6 @@ type AxisKey = 'civilRights' | 'openness' | 'redistribution' | 'ethics';
 export default function CoreInteractivePage() {
   const [hoveredIndex, setHoveredIndex] = React.useState<number | null>(null);
   const [activeAxis, setActiveAxis] = React.useState<AxisKey | null>(null);
-  const [hoveredValue, setHoveredValue] = React.useState<number | null>(null);
   const [hasAnimated, setHasAnimated] = React.useState(false);
   const [selectedValues, setSelectedValues] = React.useState<Record<AxisKey, number | null>>({
     civilRights: null,
@@ -22,6 +21,14 @@ export default function CoreInteractivePage() {
   const [isLoaded, setIsLoaded] = React.useState(false);
   const [showIntro, setShowIntro] = React.useState(true);
   
+  // New State for Selection Overlay
+  const [tempValue, setTempValue] = useState<number | null>(null);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+  // Wheel values from Top (Red/High) to Bottom (Purple/Low)
+  // -1 represents the Grey/Null value in the center
+  const wheelValues = [5, 4, 3, -1, 2, 1, 0];
+
   // Persistence: Load from localStorage on mount
   React.useEffect(() => {
     const saved = localStorage.getItem('core_squares_selection');
@@ -43,9 +50,9 @@ export default function CoreInteractivePage() {
     }
   }, [selectedValues, isLoaded]);
   
-  // Lock scroll when modal is open
+  // Lock scroll when modal/overlay is open
   React.useEffect(() => {
-    if (viewingBloc) {
+    if (viewingBloc || activeAxis) {
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = 'unset';
@@ -53,7 +60,30 @@ export default function CoreInteractivePage() {
     return () => {
       document.body.style.overflow = 'unset';
     };
-  }, [viewingBloc]);
+  }, [viewingBloc, activeAxis]);
+  
+  // Initialize tempValue when activeAxis opens and scroll to position
+  useEffect(() => {
+    if (activeAxis) {
+      const current = selectedValues[activeAxis];
+      setTempValue(current ?? -1);
+
+      // Scroll to initial position
+      // Use a small timeout to ensure layout is ready
+      setTimeout(() => {
+        if (scrollContainerRef.current) {
+          const targetVal = current ?? -1;
+          const index = wheelValues.indexOf(targetVal);
+          if (index !== -1) {
+             const items = scrollContainerRef.current.querySelectorAll('[data-wheel-item]');
+             if (items[index]) {
+                items[index].scrollIntoView({ block: 'center', behavior: 'instant' });
+             }
+          }
+        }
+      }, 10);
+    }
+  }, [activeAxis]);
   
   // Trigger entrance animation when intro modal is closed
   React.useEffect(() => {
@@ -167,9 +197,13 @@ export default function CoreInteractivePage() {
     8: { low: 'P', high: 'T' },  // Ethics
   };
 
-  const handleValueSelect = (axis: AxisKey, value: number) => {
-    setSelectedValues(prev => ({ ...prev, [axis]: value }));
-    setActiveAxis(null);
+  const handleSaveSelection = () => {
+    if (activeAxis) {
+      // If tempValue is -1, it means "None" / Grey
+      const finalValue = tempValue === -1 ? null : tempValue;
+      setSelectedValues(prev => ({ ...prev, [activeAxis]: finalValue }));
+      setActiveAxis(null);
+    }
   };
   
   // Check if any selection has been made
@@ -329,7 +363,25 @@ export default function CoreInteractivePage() {
     return <div key={i} style={special} />;
   };
 
-  const renderModal = () => {
+  const handleScroll = () => {
+    if (!scrollContainerRef.current) return;
+    const container = scrollContainerRef.current;
+    
+    // Use the first item to measure height
+    const firstItem = container.querySelector('[data-wheel-item]');
+    if (!firstItem) return;
+    const itemHeight = firstItem.clientHeight;
+    
+    const scrollTop = container.scrollTop;
+    // Add half height to find center point match
+    const index = Math.round(scrollTop / itemHeight);
+    
+    if (index >= 0 && index < wheelValues.length) {
+       setTempValue(wheelValues[index]);
+    }
+  };
+
+  const renderSelectionOverlay = () => {
     if (!activeAxis) return null;
     
     const axis = AXES[activeAxis];
@@ -345,179 +397,105 @@ export default function CoreInteractivePage() {
     const emptyIndex = axisToEmptyIndex[activeAxis];
     const letters = emptyLetterMap[emptyIndex];
     
-    const modalOverlay: React.CSSProperties = {
-      position: 'fixed',
-      top: 0,
-      left: 0,
-      right: 0,
-      bottom: 0,
-      background: 'rgba(0, 0, 0, 0.7)',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      zIndex: 1000,
-      padding: '2rem',
-    };
+    // Determine Left "Indicator" Square visual
+    let indicatorBg = 'var(--gray-300)';
+    let indicatorLetter = '';
+    let indicatorTextColor = 'var(--gray-900)';
+
+    if (tempValue !== null && tempValue !== -1) {
+      const isLowIntensity = tempValue <= 2;
+      indicatorBg = isLowIntensity ? 'var(--gray-100)' : 'var(--gray-900)';
+      indicatorTextColor = isLowIntensity ? 'var(--gray-900)' : 'var(--gray-100)';
+      indicatorLetter = isLowIntensity ? letters.low : letters.high;
+    }
     
-    const modalContent: React.CSSProperties = {
-      background: 'var(--gray-800)',
-      borderRadius: '1rem',
-      padding: '2rem',
-      maxWidth: '500px',
-      width: '100%',
-      maxHeight: '80vh',
-      overflowY: 'auto',
-      boxShadow: '0 20px 60px rgba(0, 0, 0, 0.5)',
-    };
-    
-    const modalHeader: React.CSSProperties = {
-      marginBottom: '1.5rem',
-      borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
-      paddingBottom: '1rem',
-      position: 'relative',
-    };
-    
-    const closeButton: React.CSSProperties = {
-      position: 'absolute',
-      top: 0,
-      right: 0,
-      background: 'transparent',
-      border: 'none',
-      fontSize: '1.5rem',
-      cursor: 'pointer',
-      padding: '0.25rem',
-      lineHeight: 1,
-      color: 'var(--foreground)',
-      opacity: 0.7,
-      transition: 'opacity 0.2s ease',
-    };
-    
-    const modalTitle: React.CSSProperties = {
-      fontSize: '1.5rem',
-      fontWeight: 'bold',
-      marginBottom: '0.5rem',
-      paddingRight: '2rem',
-    };
-    
-    const modalSubtitle: React.CSSProperties = {
-      fontSize: '0.9rem',
-      color: 'var(--foreground-secondary)',
-      marginBottom: '0.5rem',
-    };
-    
-    const modalDescription: React.CSSProperties = {
-      fontSize: '0.85rem',
-      color: 'var(--foreground-secondary)',
-      opacity: 0.8,
-      fontStyle: 'italic',
-    };
-    
-    const valueList: React.CSSProperties = {
-      display: 'flex',
-      flexDirection: 'column',
-      gap: '0.75rem',
-    };
-    
-    const valueItem: React.CSSProperties = {
-      display: 'flex',
-      alignItems: 'center',
-      gap: '1rem',
-      cursor: 'pointer',
-      padding: '0.5rem',
-      borderRadius: '0.5rem',
-      transition: 'background 0.2s ease',
-    };
-    
-    const colorSquare: React.CSSProperties = {
-      width: '48px',
-      height: '48px',
-      borderRadius: '20%',
-      flexShrink: 0,
-      border: 'var(--square-border)',
-    };
-    
-    const valueText: React.CSSProperties = {
-      flex: 1,
-      display: 'flex',
-      flexDirection: 'column',
-    };
-    
-    const valueName: React.CSSProperties = {
-      fontSize: '1rem',
-      fontWeight: '600',
-      marginBottom: '0.25rem',
-    };
-    
-    const valueDescription: React.CSSProperties = {
-      fontSize: '0.85rem',
-      color: 'var(--foreground-secondary)',
-    };
-    
+    // Get label text for bottom
+    let labelText = 'Select Intensity';
+    if (tempValue !== null && tempValue !== -1) {
+      labelText = axis.values[tempValue];
+    } else if (tempValue === -1) {
+      labelText = 'Reset / No Selection';
+    }
+
     return (
-      <div style={modalOverlay} onClick={() => setActiveAxis(null)}>
-        <div style={modalContent} onClick={(e) => e.stopPropagation()}>
-          <div style={modalHeader}>
-            <button 
-              style={closeButton}
-              onClick={() => setActiveAxis(null)}
-              onMouseEnter={(e) => e.currentTarget.style.opacity = '1'}
-              onMouseLeave={(e) => e.currentTarget.style.opacity = '0.7'}
-              aria-label="Close"
-            >
-              ✕
-            </button>
-            <div style={modalTitle}>{axis.name}</div>
-            <div style={modalSubtitle}>{letters.low} = {axis.lowLabel} ↔ {letters.high} = {axis.highLabel}</div>
-            <div style={modalDescription}>{axis.description}</div>
-          </div>
+      <div className={styles.selectionOverlay} onClick={() => handleSaveSelection()}>
+        <div className={styles.selectionContainer} onClick={(e) => e.stopPropagation()}>
           
-          <div style={valueList}>
-            {colorScale.map((item, idx) => {
-              const descriptor = axis.values[item.value];
-              const isHovered = hoveredValue === item.value;
-              
-              // Determine which empty square letter to show (low for 0-2, high for 3-5)
-              const emptyLetter = item.value <= 2 ? letters.low : letters.high;
-              const emptySquareColor = item.value <= 2 ? 'var(--gray-100)' : 'var(--gray-900)';
-              
-              const emptySquareStyle: React.CSSProperties = {
-                width: '48px',
-                height: '48px',
-                borderRadius: '20%',
-                background: emptySquareColor,
-                flexShrink: 0,
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                fontSize: '1rem',
-                fontWeight: '700',
-                color: item.value <= 2 ? 'var(--gray-900)' : 'var(--gray-100)',
-                fontFamily: 'monospace',
-                border: 'var(--square-border)',
-              };
-              
-              return (
-                <div 
-                  key={idx} 
-                  style={{
-                    ...valueItem,
-                    background: isHovered ? 'rgba(255, 255, 255, 0.1)' : 'transparent',
-                  }}
-                  onClick={() => handleValueSelect(activeAxis, item.value)}
-                  onMouseEnter={() => setHoveredValue(item.value)}
-                  onMouseLeave={() => setHoveredValue(null)}
-                >
-                  <div style={emptySquareStyle}>{emptyLetter}</div>
-                  <div style={{ ...colorSquare, background: item.color }} />
-                  <div style={valueText}>
-                    <div style={valueName}>
-                      {descriptor}
+          <div className={styles.squaresRow}>
+            {/* Left: Indicator Square (Black/White + Letter) */}
+            <div 
+              className={styles.indicatorSquare} 
+              style={{ background: indicatorBg, color: indicatorTextColor, cursor: 'pointer' }}
+              onClick={handleSaveSelection}
+            >
+              {indicatorLetter}
+            </div>
+
+            {/* Right: Wheel Selector (Colored Stack) */}
+            <div className={styles.wheelWrapper}>
+              <div 
+                className={styles.wheelScrollArea} 
+                ref={scrollContainerRef}
+                onScroll={handleScroll}
+              >
+                {wheelValues.map((val, idx) => {
+                  // Visual props for this item
+                  const isSelected = tempValue === val;
+                  
+                  let bgColor = 'var(--gray-500)';
+                  if (val !== -1) {
+                      bgColor = colorScale.find(c => c.value === val)?.color || 'var(--gray-500)';
+                  } else {
+                      bgColor = 'var(--gray-500)'; // Grey for reset
+                  }
+                  
+                  // If not selected, fade out
+                  const opacity = isSelected ? 1 : 0.3;
+                  const scale = isSelected ? 1 : 0.8;
+
+                  return (
+                    <div 
+                      key={idx} 
+                      className={styles.wheelItem} 
+                      data-wheel-item
+                      onClick={() => {
+                        if (isSelected) {
+                          handleSaveSelection();
+                        } else {
+                          // Click to select/scroll to
+                          if (scrollContainerRef.current) {
+                             const items = scrollContainerRef.current.querySelectorAll('[data-wheel-item]');
+                             if (items[idx]) items[idx].scrollIntoView({ block: 'center', behavior: 'smooth' });
+                          }
+                        }
+                      }}
+                      style={{ cursor: isSelected ? 'pointer' : 'default' }}
+                    >
+                      <div 
+                        className={styles.wheelSquare}
+                        style={{ 
+                          background: bgColor,
+                          opacity,
+                          transform: `scale(${scale})`
+                        }}
+                      />
                     </div>
-                  </div>
-                </div>
-              );
-            })}
+                  );
+                })}
+              </div>
+            </div>
           </div>
+
+          {/* Label */}
+          <div className={styles.selectionLabel}>
+            {labelText}
+          </div>
+
+          {/* Save Button */}
+          <button className={styles.saveButton} onClick={handleSaveSelection}>
+            ✓
+          </button>
+
         </div>
       </div>
     );
@@ -655,52 +633,6 @@ export default function CoreInteractivePage() {
     
     // Take next 3
     const similarTypes = sortedTypes.slice(1, 4);
-    
-    const container: React.CSSProperties = {
-      marginTop: '3rem',
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      gap: '1rem',
-    };
-    
-    const heading: React.CSSProperties = {
-      fontSize: '1.5rem',
-      fontWeight: 'bold',
-      marginBottom: '0.5rem',
-    };
-    
-    const blocsContainer: React.CSSProperties = {
-      display: 'flex',
-      gap: '1.5rem',
-      flexWrap: 'wrap',
-      justifyContent: 'center',
-    };
-    
-    const blocCard: React.CSSProperties = {
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      gap: '0.75rem',
-      cursor: 'pointer',
-      transition: 'transform 0.2s ease, opacity 0.2s ease',
-    };
-    
-    const blocInfo: React.CSSProperties = {
-      textAlign: 'center',
-    };
-    
-    const blocName: React.CSSProperties = {
-      fontSize: '1.1rem',
-      fontWeight: 'bold',
-      marginBottom: '0.25rem',
-    };
-    
-    const blocCallSign: React.CSSProperties = {
-      fontSize: '0.9rem',
-      opacity: 0.7,
-      fontFamily: 'monospace',
-    };
     
     return (
       <div className={styles.similarContainer}>
@@ -1110,11 +1042,10 @@ export default function CoreInteractivePage() {
             </button>
           )}
         </div>
-        {renderModal()}
+        {renderSelectionOverlay()}
         {renderBlocModal()}
         <CoreIntroModal isOpen={showIntro} onClose={() => setShowIntro(false)} />
       </main>
     </>
   );
 }
-

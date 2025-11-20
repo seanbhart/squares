@@ -2,7 +2,7 @@
   min-height: 100vh;
   padding: 1.5rem;
   background: var(--gray-800);
-  color: var(--foreground);
+  color: var(--text-primary);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -39,7 +39,7 @@
 .subtitle {
   margin-top: 0.75rem;
   max-width: 36rem;
-  color: var(--foreground-secondary);
+  color: var(--text-secondary);
   font-size: 1rem;
   line-height: 1.6;
 }
@@ -269,7 +269,7 @@
 
 .callSignHint {
   font-size: 0.8rem;
-  color: var(--foreground-secondary);
+  color: var(--text-secondary);
 }
 
 .gridWrapper {
@@ -502,7 +502,7 @@
 
 .valueLabel {
   font-size: 0.75rem;
-  color: var(--foreground-secondary);
+  color: var(--text-secondary);
   text-align: center;
   line-height: 1.2;
   height: 2.4em; /* Fixed height for 2 lines */
@@ -558,7 +558,7 @@
   line-height: 1.5;
   text-align: center;
   max-width: 400px;
-  color: var(--foreground-secondary);
+  color: var(--text-secondary);
   font-style: italic;
   opacity: 0.9;
 }
@@ -621,7 +621,7 @@
 .blocName {
   font-size: 1.1rem;
   font-weight: 700;
-  color: var(--foreground);
+  color: var(--text-primary);
 }
 
 .blocCallSign {
@@ -796,7 +796,7 @@
   font-size: 0.8rem;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  color: var(--foreground-secondary);
+  color: var(--text-secondary);
   font-weight: 600;
   margin-bottom: 0.25rem;
 }
@@ -937,7 +937,7 @@
 
 .introSubtitle {
   font-size: 1.2rem;
-  color: var(--foreground-secondary);
+  color: var(--text-secondary);
   line-height: 1.6;
   max-width: 600px;
 }
@@ -1251,12 +1251,12 @@
   font-size: 1.5rem;
   font-weight: 700;
   text-align: center;
-  color: var(--foreground);
+  color: var(--text-primary);
 }
 
 .figuresSubtext {
   font-size: 1rem;
-  color: var(--foreground-secondary);
+  color: var(--text-secondary);
   text-align: center;
   margin: 0;
 }
@@ -1298,7 +1298,7 @@
 
 .figureGrid {
   font-size: 0.8rem;
-  color: var(--foreground-secondary);
+  color: var(--text-secondary);
   font-style: italic;
 }
 
@@ -1348,129 +1348,3 @@
   50% { filter: blur(1px); opacity: 0.8; }
   100% { filter: blur(2px); opacity: 0.6; }
 }
-
-/* Selection Overlay */
-.selectionOverlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.7);
-  backdrop-filter: blur(15px);
-  z-index: 2000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  animation: fadeIn 0.3s ease-out;
-}
-
-.selectionContainer {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1.5rem;
-  animation: zoomIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-@keyframes zoomIn {
-  from { transform: scale(0.8); opacity: 0; }
-  to { transform: scale(1); opacity: 1; }
-}
-
-.squaresRow {
-  display: flex;
-  align-items: center;
-  gap: 1.5rem;
-  position: relative;
-}
-
-.indicatorSquare {
-  width: min(25vmin, 140px);
-  height: min(25vmin, 140px);
-  border-radius: 20%;
-  background: var(--gray-300);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 4rem;
-  font-weight: 800;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-  transition: all 0.3s ease;
-  border: var(--square-border);
-}
-
-.wheelWrapper {
-  width: min(25vmin, 140px);
-  height: calc(min(25vmin, 140px) * 3); /* Show 3 items height approx */
-  position: relative;
-  overflow: hidden;
-  mask-image: linear-gradient(to bottom, transparent, black 20%, black 80%, transparent);
-  -webkit-mask-image: linear-gradient(to bottom, transparent, black 20%, black 80%, transparent);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.wheelScrollArea {
-  width: 100%;
-  height: 100%;
-  overflow-y: scroll;
-  scroll-snap-type: y mandatory;
-  padding-top: min(25vmin, 140px); /* Spacer */
-  padding-bottom: min(25vmin, 140px); /* Spacer */
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-}
-
-.wheelScrollArea::-webkit-scrollbar {
-  display: none;
-}
-
-.wheelItem {
-  width: 100%;
-  height: min(25vmin, 140px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  scroll-snap-align: center;
-}
-
-.wheelSquare {
-  width: 80%;
-  height: 80%;
-  border-radius: 20%;
-  transition: all 0.3s ease;
-  border: var(--square-border);
-}
-
-.selectionLabel {
-  font-size: 0.9rem;
-  color: rgba(255, 255, 255, 0.7);
-  font-weight: 500;
-  margin-top: -0.5rem;
-  height: 1.5rem;
-}
-
-.saveButton {
-  margin-top: 1rem;
-  background: white;
-  color: black;
-  border: none;
-  width: 3.5rem;
-  height: 3.5rem;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.5rem;
-  cursor: pointer;
-  transition: transform 0.2s, background 0.2s;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-}
-
-.saveButton:hover {
-  transform: scale(1.1);
-  background: var(--color-gold);
-}
-
