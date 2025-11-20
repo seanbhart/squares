@@ -433,6 +433,7 @@ export default function CoreInteractivePage() {
       height: '48px',
       borderRadius: '20%',
       flexShrink: 0,
+      border: 'var(--square-border)',
     };
     
     const valueText: React.CSSProperties = {
@@ -492,6 +493,7 @@ export default function CoreInteractivePage() {
                 fontWeight: '700',
                 color: item.value <= 2 ? 'var(--gray-900)' : 'var(--gray-100)',
                 fontFamily: 'monospace',
+                border: 'var(--square-border)',
               };
               
               return (

@@ -45,7 +45,7 @@
   --gray-900: #18181b;
 
   /* Component specifics */
-  --square-border: 1px solid rgba(255, 255, 255, 0.1);
+  --square-border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 * {
