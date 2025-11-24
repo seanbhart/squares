@@ -56,27 +56,35 @@ export default function CoreIntroModal({ isOpen, onClose }: CoreIntroModalProps)
           <div className={styles.coreGrid}>
             <div className={styles.coreItem}>
               <div className={styles.coreLetter}>C</div>
-              <div className={styles.coreLabel}>Civil Rights</div>
-              <div className={styles.coreDescription}>how tightly government should control individual behavior</div>
-              <div className={styles.coreAxis}>{AXES.civilRights.lowLabel} ↔ {AXES.civilRights.highLabel}</div>
+              <div className={styles.coreItemText}>
+                <div className={styles.coreLabel}>Civil Rights</div>
+                <div className={styles.coreDescription}>how tightly government should control individual behavior</div>
+                <div className={styles.coreAxis}>{AXES.civilRights.lowLabel} ↔ {AXES.civilRights.highLabel}</div>
+              </div>
             </div>
             <div className={styles.coreItem}>
               <div className={styles.coreLetter}>O</div>
-              <div className={styles.coreLabel}>Openness</div>
-              <div className={styles.coreDescription}>how global vs national you want borders and trade to be</div>
-              <div className={styles.coreAxis}>{AXES.openness.lowLabel} ↔ {AXES.openness.highLabel}</div>
+              <div className={styles.coreItemText}>
+                <div className={styles.coreLabel}>Openness</div>
+                <div className={styles.coreDescription}>how global vs national you want borders and trade to be</div>
+                <div className={styles.coreAxis}>{AXES.openness.lowLabel} ↔ {AXES.openness.highLabel}</div>
+              </div>
             </div>
             <div className={styles.coreItem}>
               <div className={styles.coreLetter}>R</div>
-              <div className={styles.coreLabel}>Redistribution</div>
-              <div className={styles.coreDescription}>how much markets vs the state should shape the economy</div>
-              <div className={styles.coreAxis}>{AXES.redistribution.lowLabel} ↔ {AXES.redistribution.highLabel}</div>
+              <div className={styles.coreItemText}>
+                <div className={styles.coreLabel}>Redistribution</div>
+                <div className={styles.coreDescription}>how much markets vs the state should shape the economy</div>
+                <div className={styles.coreAxis}>{AXES.redistribution.lowLabel} ↔ {AXES.redistribution.highLabel}</div>
+              </div>
             </div>
             <div className={styles.coreItem}>
               <div className={styles.coreLetter}>E</div>
-              <div className={styles.coreLabel}>Ethics</div>
-              <div className={styles.coreDescription}>how quickly social norms should change vs be preserved</div>
-              <div className={styles.coreAxis}>{AXES.ethics.lowLabel} ↔ {AXES.ethics.highLabel}</div>
+              <div className={styles.coreItemText}>
+                <div className={styles.coreLabel}>Ethics</div>
+                <div className={styles.coreDescription}>how quickly social norms should change vs be preserved</div>
+                <div className={styles.coreAxis}>{AXES.ethics.lowLabel} ↔ {AXES.ethics.highLabel}</div>
+              </div>
             </div>
           </div>
         </section>

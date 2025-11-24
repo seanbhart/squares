@@ -891,13 +891,18 @@ export default function CoreInteractivePage() {
           <button className={styles.modalClose} onClick={() => setViewingBloc(null)}>×</button>
           
           <div className={styles.modalHeader}>
-            <div style={{ transform: 'scale(1.5)', marginBottom: '4rem', marginTop: '2rem' }}>
+            <div style={{ transform: 'scale(1.5)', marginBottom: '3rem', marginTop: '1.5rem' }}>
               {renderMiniGrid(
                 viewingBloc.civil_rights_score,
                 viewingBloc.openness_score,
                 viewingBloc.redistribution_score,
                 viewingBloc.ethics_score
               )}
+            </div>
+            <div className={styles.modalHeaderActions}>
+              <button className={styles.applyButtonCompact} onClick={applyBloc}>
+                Apply to my squares
+              </button>
             </div>
             <div className={styles.modalName}>{viewingBloc.name}</div>
             <div className={styles.modalCallSign}>{viewingBloc.callSign}</div>
@@ -917,10 +922,6 @@ export default function CoreInteractivePage() {
             <div className={styles.modalLabel}>Examples</div>
             <div className={styles.modalExamples}>{position.examples}</div>
           </div>
-
-          <button className={styles.applyButton} onClick={applyBloc}>
-            Apply to my squares
-          </button>
         </div>
       </div>
     );
@@ -951,13 +952,18 @@ export default function CoreInteractivePage() {
           <button className={styles.modalClose} onClick={() => setViewingFigure(null)}>×</button>
           
           <div className={styles.modalHeader}>
-            <div style={{ transform: 'scale(1.5)', marginBottom: '4rem', marginTop: '2rem' }}>
+            <div style={{ transform: 'scale(1.5)', marginBottom: '3rem', marginTop: '1.5rem' }}>
               {renderMiniGrid(
                 viewingFigure.core_spectrum.civil_rights_score,
                 viewingFigure.core_spectrum.openness_score,
                 viewingFigure.core_spectrum.redistribution_score,
                 viewingFigure.core_spectrum.ethics_score
               )}
+            </div>
+            <div className={styles.modalHeaderActions}>
+              <button className={styles.applyButtonCompact} onClick={applyFigure}>
+                Apply to my squares
+              </button>
             </div>
             <div className={styles.modalName}>{viewingFigure.name}</div>
             {viewingFigure.lifespan && (
@@ -1002,10 +1008,6 @@ export default function CoreInteractivePage() {
               </div>
             </div>
           )}
-
-          <button className={styles.applyButton} onClick={applyFigure}>
-            Apply {viewingFigure.name}'s CORE to my squares
-          </button>
         </div>
       </div>
     );

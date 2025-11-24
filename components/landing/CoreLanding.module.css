@@ -770,6 +770,15 @@
   gap: 0.5rem;
 }
 
+.modalHeaderActions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+  margin-bottom: 1rem;
+}
+
 .modalName {
   font-size: 2rem;
   font-weight: 800;
@@ -883,6 +892,25 @@
   transform: scale(1.02);
 }
 
+/* Compact apply button for inline use */
+.applyButtonCompact {
+  background: white;
+  color: black;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s;
+  white-space: nowrap;
+}
+
+.applyButtonCompact:hover {
+  transform: scale(1.05);
+  background: var(--color-gold);
+}
+
 /* Intro Modal */
 .introOverlay {
   position: fixed;
@@ -942,13 +970,22 @@
   align-items: center;
   justify-content: center;
   text-align: center;
-  gap: 1.5rem;
+  gap: 1rem;
   width: 100%;
-  padding: 2rem;
+  padding: 1rem;
   scroll-snap-align: start;
   scroll-snap-stop: always;
   opacity: 0;
   animation: slideUp 0.8s ease-out forwards;
+}
+
+@media (max-width: 480px) {
+  .introSection {
+    padding: 0.75rem;
+    gap: 0.75rem;
+    justify-content: flex-start;
+    padding-top: 3rem;
+  }
 }
 
 .introSection:nth-child(1) { animation-delay: 0.1s; }
@@ -995,68 +1032,121 @@
 }
 
 .sectionTitle {
-  font-size: 2rem;
+  font-size: clamp(1.5rem, 5vw, 2rem);
   font-weight: 700;
   margin-bottom: 0.5rem;
 }
 
 .sectionText {
-  font-size: 1.1rem;
+  font-size: clamp(0.95rem, 3vw, 1.1rem);
   color: rgba(255, 255, 255, 0.8);
   max-width: 500px;
   line-height: 1.5;
+  padding: 0 1rem;
 }
 
 .coreGrid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 1.5rem;
+  gap: 1rem;
   margin-top: 1rem;
+  width: 100%;
+  max-width: 600px;
+}
+
+@media (max-width: 480px) {
+  .coreGrid {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
 }
 
 .coreItem {
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  padding: 2rem 1.5rem;
+  padding: 1.25rem 1rem;
   border-radius: 1rem;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.75rem;
+  gap: 0.5rem;
+}
+
+@media (max-width: 480px) {
+  .coreItem {
+    flex-direction: row;
+    padding: 1rem;
+    gap: 1rem;
+    text-align: left;
+  }
 }
 
 .coreLetter {
-  font-size: 2.5rem;
+  font-size: 2rem;
   font-weight: 900;
   line-height: 1;
   color: rgba(255, 255, 255, 0.95);
-  margin-bottom: 0.25rem;
+  flex-shrink: 0;
+}
+
+@media (max-width: 480px) {
+  .coreLetter {
+    font-size: 2.5rem;
+    width: 3rem;
+    text-align: center;
+  }
+}
+
+.coreItemText {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  flex: 1;
+}
+
+@media (max-width: 480px) {
+  .coreItemText {
+    align-items: flex-start;
+  }
 }
 
 .coreLabel {
-  font-size: 1.1rem;
+  font-size: 1rem;
   font-weight: 700;
   color: rgba(255, 255, 255, 0.95);
   letter-spacing: 0.02em;
 }
 
 .coreDescription {
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   color: rgba(255, 255, 255, 0.65);
-  line-height: 1.5;
+  line-height: 1.4;
   text-align: center;
-  margin-top: 0.25rem;
+}
+
+@media (max-width: 480px) {
+  .coreDescription {
+    text-align: left;
+    font-size: 0.8rem;
+  }
 }
 
 .coreAxis {
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   color: rgba(255, 255, 255, 0.85);
   font-weight: 600;
   white-space: nowrap;
-  margin-top: 0.5rem;
-  padding: 0.4rem 0.8rem;
+  margin-top: 0.25rem;
+  padding: 0.35rem 0.6rem;
   background: rgba(255, 255, 255, 0.08);
   border-radius: 0.5rem;
+}
+
+@media (max-width: 480px) {
+  .coreAxis {
+    font-size: 0.75rem;
+    padding: 0.25rem 0.5rem;
+  }
 }
 
 .scrollIndicator {
@@ -1105,12 +1195,12 @@
   max-width: 600px;
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
-  padding: 1rem;
+  gap: 1rem;
+  padding: 0.5rem;
 }
 
 .exampleTitle {
-  font-size: 1.1rem;
+  font-size: 1rem;
   font-weight: 600;
   color: rgba(255, 255, 255, 0.9);
   text-align: center;
@@ -1118,22 +1208,28 @@
 
 .spectrumSquaresWrapper {
   display: flex;
-  gap: 0.5rem;
+  gap: 0.35rem;
   justify-content: center;
-  margin: 1.5rem 0;
+  margin: 1rem 0;
   align-items: flex-start;
+}
+
+@media (max-width: 480px) {
+  .spectrumSquaresWrapper {
+    gap: 0.25rem;
+  }
 }
 
 .squareColumn {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.75rem;
+  gap: 0.5rem;
 }
 
 .spectrumSquare {
-  width: 60px;
-  height: 60px;
+  width: clamp(40px, 12vw, 60px);
+  height: clamp(40px, 12vw, 60px);
   border-radius: 8px;
   transition: all 0.3s ease;
   border: var(--square-border);
@@ -1149,20 +1245,20 @@
 }
 
 .selectedLabel {
-  font-size: 0.85rem;
+  font-size: clamp(0.65rem, 2.5vw, 0.85rem);
   color: rgba(255, 255, 255, 0.9);
   text-align: center;
-  line-height: 1.4;
-  max-width: 120px;
+  line-height: 1.3;
+  max-width: clamp(60px, 14vw, 120px);
   font-weight: 500;
 }
 
 .unselectedLabel {
-  font-size: 0.7rem;
+  font-size: clamp(0.55rem, 2vw, 0.7rem);
   color: rgba(255, 255, 255, 0.3);
   text-align: center;
-  line-height: 1.3;
-  max-width: 120px;
+  line-height: 1.2;
+  max-width: clamp(60px, 14vw, 120px);
   font-weight: 400;
 }
 
