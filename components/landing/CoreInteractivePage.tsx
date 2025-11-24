@@ -28,6 +28,7 @@ export default function CoreInteractivePage() {
   // State for Historical Figures Data
   const [figuresData, setFiguresData] = React.useState<any>(null);
   const [viewingFigure, setViewingFigure] = React.useState<any>(null);
+  const [showAllFigures, setShowAllFigures] = React.useState(false);
 
   // Wheel values from Top (Purple/Low) to Bottom (Red/High)
   // -1 represents the Grey/Null value in the center
@@ -730,10 +731,11 @@ export default function CoreInteractivePage() {
       return { figure, distance };
     }).filter((item: any) => item !== null);
 
-    // Sort by distance and take top 3
-    const closestFigures = figuresWithDistance
-      .sort((a: any, b: any) => a.distance - b.distance)
-      .slice(0, 3);
+    // Sort by distance
+    const sortedFigures = figuresWithDistance.sort((a: any, b: any) => a.distance - b.distance);
+    
+    // Show top 3 by default, or all if expanded
+    const displayFigures = showAllFigures ? sortedFigures : sortedFigures.slice(0, 3);
 
     return (
       <div className={styles.figuresSection}>
@@ -742,7 +744,7 @@ export default function CoreInteractivePage() {
           famous figures with similar CORE positions
         </p>
         <div className={styles.figuresPlaceholder}>
-          {closestFigures.map(({ figure }: any) => {
+          {displayFigures.map(({ figure }: any) => {
             const initials = figure.name
               .split(' ')
               .map((n: string) => n[0])
@@ -769,6 +771,15 @@ export default function CoreInteractivePage() {
             );
           })}
         </div>
+        
+        {sortedFigures.length > 3 && (
+          <button 
+            className={styles.expandButton} 
+            onClick={() => setShowAllFigures(!showAllFigures)}
+          >
+            {showAllFigures ? 'Show Less' : `Show All ${sortedFigures.length} Figures`}
+          </button>
+        )}
       </div>
     );
   };
