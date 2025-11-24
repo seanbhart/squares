@@ -965,38 +965,46 @@
 .coreItem {
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  padding: 1.5rem;
+  padding: 2rem 1.5rem;
   border-radius: 1rem;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.75rem;
 }
 
 .coreLetter {
   font-size: 2.5rem;
   font-weight: 900;
   line-height: 1;
+  color: rgba(255, 255, 255, 0.95);
+  margin-bottom: 0.25rem;
 }
 
 .coreLabel {
-  font-size: 1rem;
-  font-weight: 600;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.95);
+  letter-spacing: 0.02em;
 }
 
 .coreDescription {
-  font-size: 0.85rem;
-  color: rgba(255, 255, 255, 0.7);
-  line-height: 1.4;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.65);
+  line-height: 1.5;
   text-align: center;
   margin-top: 0.25rem;
 }
 
 .coreAxis {
-  font-size: 0.8rem;
-  opacity: 0.6;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.85);
+  font-weight: 600;
   white-space: nowrap;
   margin-top: 0.5rem;
+  padding: 0.4rem 0.8rem;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 0.5rem;
 }
 
 .scrollIndicator {
@@ -1363,6 +1371,7 @@
   align-items: center;
   justify-content: center;
   animation: fadeIn 0.3s ease-out;
+  --selector-size: min(28vh, 42vw);
 }
 
 .selectionContainer {
@@ -1378,6 +1387,30 @@
   to { transform: scale(1); opacity: 1; }
 }
 
+.selectionHeader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  text-align: center;
+}
+
+.selectionTitle {
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-transform: lowercase;
+  letter-spacing: 0.02em;
+  line-height: 1.1;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.selectionBinaryLabel {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.65);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
 .squaresRow {
   display: flex;
   align-items: center;
@@ -1386,14 +1419,14 @@
 }
 
 .indicatorSquare {
-  width: min(25vmin, 140px);
-  height: min(25vmin, 140px);
+  width: var(--selector-size);
+  height: var(--selector-size);
   border-radius: 20%;
   background: var(--gray-300);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 4rem;
+  font-size: calc(var(--selector-size) * 0.6);
   font-weight: 800;
   box-shadow: 0 20px 40px rgba(0,0,0,0.4);
   transition: all 0.3s ease;
@@ -1401,8 +1434,8 @@
 }
 
 .wheelWrapper {
-  width: min(25vmin, 140px);
-  height: calc(min(25vmin, 140px) * 3); /* Show 3 items height approx */
+  width: var(--selector-size);
+  height: calc(var(--selector-size) * 3); /* Show 3 items height approx */
   position: relative;
   overflow: hidden;
   mask-image: linear-gradient(to bottom, transparent, black 20%, black 80%, transparent);
@@ -1417,8 +1450,8 @@
   height: 100%;
   overflow-y: scroll;
   scroll-snap-type: y mandatory;
-  padding-top: min(25vmin, 140px); /* Spacer */
-  padding-bottom: min(25vmin, 140px); /* Spacer */
+  padding-top: var(--selector-size); /* Spacer */
+  padding-bottom: var(--selector-size); /* Spacer */
   scrollbar-width: none;
   -ms-overflow-style: none;
 }
@@ -1429,7 +1462,7 @@
 
 .wheelItem {
   width: 100%;
-  height: min(25vmin, 140px);
+  height: var(--selector-size);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1437,8 +1470,8 @@
 }
 
 .wheelSquare {
-  width: 80%;
-  height: 80%;
+  width: 100%;
+  height: 100%;
   border-radius: 20%;
   transition: all 0.3s ease;
   border: var(--square-border);

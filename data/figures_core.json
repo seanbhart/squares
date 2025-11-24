@@ -1,0 +1,3808 @@
+{
+  "featured": [
+    "Martin Luther King Jr.",
+    "Franklin D. Roosevelt",
+    "Ronald Reagan",
+    "Barack Obama",
+    "Donald Trump",
+    "Bernie Sanders",
+    "Elon Musk"
+  ],
+  "figures": [
+    {
+      "name": "Franklin D. Roosevelt",
+      "lifespan": "1882-1945",
+      "spectrum": [
+        4,
+        5,
+        4,
+        5,
+        3
+      ],
+      "timeline": [
+        {
+          "label": "New York Governor (1929-1932)",
+          "spectrum": [
+            3,
+            5,
+            3,
+            4,
+            3
+          ],
+          "note": "Labor reforms and unemployment relief programs signal emerging progressive economic approach.",
+          "core_spectrum": {
+            "civil_rights_score": 5,
+            "openness_score": 3,
+            "redistribution_score": 4,
+            "ethics_score": 3
+          }
+        },
+        {
+          "label": "Early Presidency (1933-1936)",
+          "spectrum": [
+            4,
+            5,
+            4,
+            5,
+            3
+          ],
+          "note": "New Deal programs expand public ownership and social support while maintaining strategic trade protections.",
+          "core_spectrum": {
+            "civil_rights_score": 5,
+            "openness_score": 4,
+            "redistribution_score": 5,
+            "ethics_score": 3
+          }
+        },
+        {
+          "label": "World War II Leadership (1937-1945)",
+          "spectrum": [
+            5,
+            5,
+            4,
+            5,
+            3
+          ],
+          "note": "War mobilization increases trade controls and state involvement, while civil liberties remain constrained.",
+          "core_spectrum": {
+            "civil_rights_score": 5,
+            "openness_score": 4,
+            "redistribution_score": 5,
+            "ethics_score": 3
+          }
+        }
+      ],
+      "core_spectrum": {
+        "civil_rights_score": 5,
+        "openness_score": 4,
+        "redistribution_score": 5,
+        "ethics_score": 3
+      }
+    },
+    {
+      "name": "Ronald Reagan",
+      "lifespan": "1911-2004",
+      "spectrum": [
+        1,
+        5,
+        2,
+        1,
+        3
+      ],
+      "timeline": [
+        {
+          "label": "California Governor (1967-1975)",
+          "spectrum": [
+            2,
+            5,
+            3,
+            2,
+            4
+          ],
+          "note": "Budget cuts and tax resistance begin the shift toward market-first economics and traditional rights framing.",
+          "core_spectrum": {
+            "civil_rights_score": 5,
+            "openness_score": 2,
+            "redistribution_score": 2,
+            "ethics_score": 4
+          }
+        },
+        {
+          "label": "Presidency (1981-1989)",
+          "spectrum": [
+            1,
+            5,
+            2,
+            1,
+            3
+          ],
+          "note": "Supply-side economics and deregulation dominate national policy; immigration reform expands quotas slightly.",
+          "core_spectrum": {
+            "civil_rights_score": 5,
+            "openness_score": 2,
+            "redistribution_score": 1,
+            "ethics_score": 3
+          }
+        }
+      ],
+      "core_spectrum": {
+        "civil_rights_score": 5,
+        "openness_score": 2,
+        "redistribution_score": 1,
+        "ethics_score": 3
+      }
+    },
+    {
+      "name": "Barack Obama",
+      "lifespan": "b. 1961",
+      "spectrum": [
+        2,
+        1,
+        1,
+        3,
+        0
+      ],
+      "timeline": [
+        {
+          "label": "Senate Career (2005-2008)",
+          "spectrum": [
+            2,
+            1,
+            2,
+            3,
+            1
+          ],
+          "note": "Support for free trade agreements balances with progressive rights expansion and immigration reforms.",
+          "core_spectrum": {
+            "civil_rights_score": 1,
+            "openness_score": 2,
+            "redistribution_score": 3,
+            "ethics_score": 1
+          }
+        },
+        {
+          "label": "First Term (2009-2012)",
+          "spectrum": [
+            2,
+            1,
+            1,
+            3,
+            0
+          ],
+          "note": "Affordable Care Act expands social programs while maintaining pro-trade stance and advancing LGBTQ rights.",
+          "core_spectrum": {
+            "civil_rights_score": 1,
+            "openness_score": 2,
+            "redistribution_score": 3,
+            "ethics_score": 0
+          }
+        },
+        {
+          "label": "Second Term (2013-2016)",
+          "spectrum": [
+            2,
+            1,
+            1,
+            3,
+            0
+          ],
+          "note": "DACA implementation and same-sex marriage support solidify progressive rights positions with market-friendly economics.",
+          "core_spectrum": {
+            "civil_rights_score": 1,
+            "openness_score": 2,
+            "redistribution_score": 3,
+            "ethics_score": 0
+          }
+        }
+      ],
+      "core_spectrum": {
+        "civil_rights_score": 1,
+        "openness_score": 2,
+        "redistribution_score": 3,
+        "ethics_score": 0
+      }
+    },
+    {
+      "name": "Donald Trump",
+      "lifespan": "b. 1946",
+      "spectrum": [
+        5,
+        2,
+        5,
+        1,
+        3
+      ],
+      "timeline": [
+        {
+          "label": "Business & Media Era (1980s-2015)",
+          "spectrum": [
+            3,
+            3,
+            3,
+            1,
+            3
+          ],
+          "note": "Public commentary favors strategic tariffs but not full trade wars; social positions align with conservative media.",
+          "core_spectrum": {
+            "civil_rights_score": 3,
+            "openness_score": 3,
+            "redistribution_score": 1,
+            "ethics_score": 3
+          }
+        },
+        {
+          "label": "First Presidency (2017-2021)",
+          "spectrum": [
+            5,
+            2,
+            5,
+            1,
+            3
+          ],
+          "note": "America First agenda brings heavy tariffs, strict immigration limits, and deregulation focus.",
+          "core_spectrum": {
+            "civil_rights_score": 2,
+            "openness_score": 5,
+            "redistribution_score": 1,
+            "ethics_score": 3
+          }
+        },
+        {
+          "label": "Second Presidency (2025-present)",
+          "spectrum": [
+            5,
+            2,
+            5,
+            1,
+            3
+          ],
+          "note": "Continuation of protectionist trade policies and immigration restrictions with traditional rights positions.",
+          "core_spectrum": {
+            "civil_rights_score": 2,
+            "openness_score": 5,
+            "redistribution_score": 1,
+            "ethics_score": 3
+          }
+        }
+      ],
+      "core_spectrum": {
+        "civil_rights_score": 2,
+        "openness_score": 5,
+        "redistribution_score": 1,
+        "ethics_score": 3
+      }
+    },
+    {
+      "name": "Margaret Thatcher",
+      "lifespan": "1925-2013",
+      "spectrum": [
+        0,
+        2,
+        5,
+        1,
+        4
+      ],
+      "timeline": [
+        {
+          "label": "Leader of the Opposition (1975-1979)",
+          "spectrum": [
+            1,
+            2,
+            4,
+            2,
+            4
+          ],
+          "note": "Campaign for privatization energizes market reforms while advocating traditional social policy.",
+          "core_spectrum": {
+            "civil_rights_score": 2,
+            "openness_score": 2,
+            "redistribution_score": 2,
+            "ethics_score": 4
+          }
+        },
+        {
+          "label": "Prime Minister (1979-1990)",
+          "spectrum": [
+            0,
+            2,
+            5,
+            1,
+            4
+          ],
+          "note": "Privatization, union reforms, and strict immigration caps define the Thatcher government.",
+          "core_spectrum": {
+            "civil_rights_score": 2,
+            "openness_score": 2,
+            "redistribution_score": 1,
+            "ethics_score": 4
+          }
+        }
+      ],
+      "core_spectrum": {
+        "civil_rights_score": 2,
+        "openness_score": 2,
+        "redistribution_score": 1,
+        "ethics_score": 4
+      }
+    },
+    {
+      "name": "Martin Luther King Jr.",
+      "lifespan": "1929-1968",
+      "spectrum": [
+        3,
+        5,
+        2,
+        4,
+        0
+      ],
+      "timeline": [
+        {
+          "label": "Montgomery Bus Boycott (1955-1956)",
+          "spectrum": [
+            3,
+            5,
+            2,
+            4,
+            0
+          ],
+          "note": "Economic boycotts foster mixed-market strategies while demanding full legal equality.",
+          "core_spectrum": {
+            "civil_rights_score": 5,
+            "openness_score": 2,
+            "redistribution_score": 4,
+            "ethics_score": 0
+          }
+        },
+        {
+          "label": "Poor People's Campaign (1967-1968)",
+          "spectrum": [
+            3,
+            5,
+            2,
+            5,
+            0
+          ],
+          "note": "Shift toward economic justice expands support for social programs without changing trade or rights stances.",
+          "core_spectrum": {
+            "civil_rights_score": 5,
+            "openness_score": 2,
+            "redistribution_score": 5,
+            "ethics_score": 0
+          }
+        }
+      ],
+      "core_spectrum": {
+        "civil_rights_score": 5,
+        "openness_score": 2,
+        "redistribution_score": 4,
+        "ethics_score": 0
+      }
+    },
+    {
+      "name": "Barry Goldwater",
+      "lifespan": "1909-1998",
+      "spectrum": [
+        1,
+        2,
+        3,
+        1,
+        1
+      ],
+      "timeline": [
+        {
+          "label": "Presidential Campaign (1964)",
+          "spectrum": [
+            1,
+            2,
+            4,
+            1,
+            4
+          ],
+          "note": "Campaign positions stress minimal regulation and traditional rights, with hawkish immigration stances.",
+          "core_spectrum": {
+            "civil_rights_score": 2,
+            "openness_score": 2,
+            "redistribution_score": 1,
+            "ethics_score": 4
+          }
+        },
+        {
+          "label": "Later Senate Career (1980s)",
+          "spectrum": [
+            1,
+            2,
+            3,
+            1,
+            1
+          ],
+          "note": "Becomes more libertarian on rights, supporting LGBTQ protections while keeping small-government economics.",
+          "core_spectrum": {
+            "civil_rights_score": 2,
+            "openness_score": 2,
+            "redistribution_score": 1,
+            "ethics_score": 1
+          }
+        }
+      ],
+      "core_spectrum": {
+        "civil_rights_score": 2,
+        "openness_score": 2,
+        "redistribution_score": 1,
+        "ethics_score": 1
+      }
+    },
+    {
+      "name": "Eleanor Roosevelt",
+      "lifespan": "1884-1962",
+      "spectrum": [
+        2,
+        3,
+        1,
+        4,
+        0
+      ],
+      "timeline": [
+        {
+          "label": "First Lady & Activist (1933-1945)",
+          "spectrum": [
+            2,
+            3,
+            1,
+            4,
+            1
+          ],
+          "note": "Promotes social safety nets and civil rights while supporting selective trade agreements.",
+          "core_spectrum": {
+            "civil_rights_score": 3,
+            "openness_score": 2,
+            "redistribution_score": 4,
+            "ethics_score": 1
+          }
+        },
+        {
+          "label": "UN Human Rights Advocate (1945-1962)",
+          "spectrum": [
+            2,
+            3,
+            1,
+            4,
+            0
+          ],
+          "note": "Universal Declaration work cements commitment to full legal equality and humanitarian migration policies.",
+          "core_spectrum": {
+            "civil_rights_score": 3,
+            "openness_score": 2,
+            "redistribution_score": 4,
+            "ethics_score": 0
+          }
+        }
+      ],
+      "core_spectrum": {
+        "civil_rights_score": 3,
+        "openness_score": 2,
+        "redistribution_score": 4,
+        "ethics_score": 0
+      }
+    },
+    {
+      "name": "John F. Kennedy",
+      "lifespan": "1917-1963",
+      "spectrum": [
+        2,
+        6,
+        2,
+        4,
+        2
+      ],
+      "timeline": [
+        {
+          "label": "Senate Career (1953-1960)",
+          "spectrum": [
+            2,
+            6,
+            2,
+            4,
+            3
+          ],
+          "note": "Moderate on rights and immigration, maintaining selective trade and mixed economic policies.",
+          "core_spectrum": {
+            "civil_rights_score": 5,
+            "openness_score": 2,
+            "redistribution_score": 4,
+            "ethics_score": 3
+          }
+        },
+        {
+          "label": "Presidency (1961-1963)",
+          "spectrum": [
+            2,
+            6,
+            2,
+            4,
+            2
+          ],
+          "note": "Civil rights advocacy increases openness, while New Frontier keeps balanced economic approach.",
+          "core_spectrum": {
+            "civil_rights_score": 5,
+            "openness_score": 2,
+            "redistribution_score": 4,
+            "ethics_score": 2
+          }
+        }
+      ],
+      "core_spectrum": {
+        "civil_rights_score": 5,
+        "openness_score": 2,
+        "redistribution_score": 4,
+        "ethics_score": 2
+      }
+    },
+    {
+      "name": "Lyndon B. Johnson",
+      "lifespan": "1908-1973",
+      "spectrum": [
+        3,
+        5,
+        1,
+        5,
+        1
+      ],
+      "timeline": [
+        {
+          "label": "Senate Majority Leader (1955-1960)",
+          "spectrum": [
+            3,
+            5,
+            2,
+            4,
+            2
+          ],
+          "note": "Builds consensus with moderate immigration and rights expansions, before Great Society agenda.",
+          "core_spectrum": {
+            "civil_rights_score": 5,
+            "openness_score": 2,
+            "redistribution_score": 4,
+            "ethics_score": 2
+          }
+        },
+        {
+          "label": "Great Society Era (1963-1968)",
+          "spectrum": [
+            3,
+            5,
+            1,
+            5,
+            1
+          ],
+          "note": "Medicare, Medicaid, and Voting Rights Act expand social programs and civil rights enforcement.",
+          "core_spectrum": {
+            "civil_rights_score": 5,
+            "openness_score": 2,
+            "redistribution_score": 5,
+            "ethics_score": 1
+          }
+        }
+      ],
+      "core_spectrum": {
+        "civil_rights_score": 5,
+        "openness_score": 2,
+        "redistribution_score": 5,
+        "ethics_score": 1
+      }
+    },
+    {
+      "name": "Richard Nixon",
+      "lifespan": "1913-1994",
+      "spectrum": [
+        4,
+        5,
+        4,
+        3,
+        3
+      ],
+      "timeline": [
+        {
+          "label": "Vice Presidency (1953-1961)",
+          "spectrum": [
+            3,
+            5,
+            3,
+            3,
+            4
+          ],
+          "note": "Anti-communist trade protections and traditional rights positions dominate the Eisenhower era.",
+          "core_spectrum": {
+            "civil_rights_score": 5,
+            "openness_score": 3,
+            "redistribution_score": 3,
+            "ethics_score": 4
+          }
+        },
+        {
+          "label": "Presidency (1969-1974)",
+          "spectrum": [
+            4,
+            5,
+            4,
+            3,
+            3
+          ],
+          "note": "Opens China while imposing wage/price controls, shifts to more moderate rights stance.",
+          "core_spectrum": {
+            "civil_rights_score": 5,
+            "openness_score": 4,
+            "redistribution_score": 3,
+            "ethics_score": 3
+          }
+        }
+      ],
+      "core_spectrum": {
+        "civil_rights_score": 5,
+        "openness_score": 4,
+        "redistribution_score": 3,
+        "ethics_score": 3
+      }
+    },
+    {
+      "name": "Gerald Ford",
+      "lifespan": "1913-2006",
+      "spectrum": [
+        1,
+        4,
+        3,
+        2,
+        2
+      ],
+      "timeline": [
+        {
+          "label": "House Minority Leader (1965-1973)",
+          "spectrum": [
+            1,
+            4,
+            3,
+            2,
+            3
+          ],
+          "note": "Supports selective immigration limits and traditional rights, with moderate economic policy.",
+          "core_spectrum": {
+            "civil_rights_score": 4,
+            "openness_score": 2,
+            "redistribution_score": 2,
+            "ethics_score": 3
+          }
+        },
+        {
+          "label": "Presidency (1974-1977)",
+          "spectrum": [
+            1,
+            4,
+            3,
+            2,
+            2
+          ],
+          "note": "Focus on healing post-Watergate sees slight moderation on rights while keeping market emphasis.",
+          "core_spectrum": {
+            "civil_rights_score": 4,
+            "openness_score": 2,
+            "redistribution_score": 2,
+            "ethics_score": 2
+          }
+        }
+      ],
+      "core_spectrum": {
+        "civil_rights_score": 4,
+        "openness_score": 2,
+        "redistribution_score": 2,
+        "ethics_score": 2
+      }
+    },
+    {
+      "name": "George H.W. Bush",
+      "lifespan": "1924-2018",
+      "spectrum": [
+        1,
+        4,
+        3,
+        1,
+        3
+      ],
+      "timeline": [
+        {
+          "label": "Vice Presidency (1981-1989)",
+          "spectrum": [
+            1,
+            4,
+            3,
+            1,
+            4
+          ],
+          "note": "Aligns with Reagan on deregulation and traditional rights while supporting selective immigration reforms.",
+          "core_spectrum": {
+            "civil_rights_score": 4,
+            "openness_score": 2,
+            "redistribution_score": 1,
+            "ethics_score": 4
+          }
+        },
+        {
+          "label": "Presidency (1989-1993)",
+          "spectrum": [
+            1,
+            4,
+            3,
+            1,
+            3
+          ],
+          "note": "Americans with Disabilities Act broadens rights protections even as economic policy stays market-focused.",
+          "core_spectrum": {
+            "civil_rights_score": 4,
+            "openness_score": 2,
+            "redistribution_score": 1,
+            "ethics_score": 3
+          }
+        }
+      ],
+      "core_spectrum": {
+        "civil_rights_score": 4,
+        "openness_score": 2,
+        "redistribution_score": 1,
+        "ethics_score": 3
+      }
+    },
+    {
+      "name": "Bill Clinton",
+      "lifespan": "b. 1946",
+      "spectrum": [
+        1,
+        2,
+        2,
+        2,
+        2
+      ],
+      "timeline": [
+        {
+          "label": "Governor of Arkansas (1983-1992)",
+          "spectrum": [
+            2,
+            2,
+            3,
+            3,
+            3
+          ],
+          "note": "Education reforms and welfare adjustments signal centrist economics with moderate rights expansion.",
+          "core_spectrum": {
+            "civil_rights_score": 2,
+            "openness_score": 2,
+            "redistribution_score": 3,
+            "ethics_score": 3
+          }
+        },
+        {
+          "label": "First Term (1993-1996)",
+          "spectrum": [
+            1,
+            2,
+            2,
+            2,
+            2
+          ],
+          "note": "NAFTA passage and welfare reform balance free trade with moderate social programs.",
+          "core_spectrum": {
+            "civil_rights_score": 2,
+            "openness_score": 2,
+            "redistribution_score": 2,
+            "ethics_score": 2
+          }
+        },
+        {
+          "label": "Second Term (1997-2001)",
+          "spectrum": [
+            1,
+            2,
+            2,
+            2,
+            2
+          ],
+          "note": "Budget surpluses and expanded immigration quotas maintain centrist third-way approach.",
+          "core_spectrum": {
+            "civil_rights_score": 2,
+            "openness_score": 2,
+            "redistribution_score": 2,
+            "ethics_score": 2
+          }
+        }
+      ],
+      "core_spectrum": {
+        "civil_rights_score": 2,
+        "openness_score": 2,
+        "redistribution_score": 2,
+        "ethics_score": 2
+      }
+    },
+    {
+      "name": "George W. Bush",
+      "lifespan": "b. 1946",
+      "spectrum": [
+        1,
+        5,
+        3,
+        2,
+        3
+      ],
+      "timeline": [
+        {
+          "label": "Texas Governor (1995-2000)",
+          "spectrum": [
+            1,
+            5,
+            3,
+            2,
+            4
+          ],
+          "note": "Faith-based initiatives and tort reform underscore traditional rights with moderate economics.",
+          "core_spectrum": {
+            "civil_rights_score": 5,
+            "openness_score": 2,
+            "redistribution_score": 2,
+            "ethics_score": 4
+          }
+        },
+        {
+          "label": "First Term (2001-2004)",
+          "spectrum": [
+            1,
+            5,
+            3,
+            2,
+            4
+          ],
+          "note": "Post-9/11 security measures tighten immigration and civil liberties while cutting taxes.",
+          "core_spectrum": {
+            "civil_rights_score": 5,
+            "openness_score": 2,
+            "redistribution_score": 2,
+            "ethics_score": 4
+          }
+        },
+        {
+          "label": "Second Term (2005-2009)",
+          "spectrum": [
+            1,
+            5,
+            3,
+            2,
+            3
+          ],
+          "note": "Immigration reform attempts moderate stance while maintaining traditional rights positions.",
+          "core_spectrum": {
+            "civil_rights_score": 5,
+            "openness_score": 2,
+            "redistribution_score": 2,
+            "ethics_score": 3
+          }
+        }
+      ],
+      "core_spectrum": {
+        "civil_rights_score": 5,
+        "openness_score": 2,
+        "redistribution_score": 2,
+        "ethics_score": 3
+      }
+    },
+    {
+      "name": "Jimmy Carter",
+      "lifespan": "b. 1924",
+      "spectrum": [
+        2,
+        2,
+        2,
+        4,
+        1
+      ],
+      "timeline": [
+        {
+          "label": "Georgia Governor (1971-1975)",
+          "spectrum": [
+            2,
+            2,
+            3,
+            4,
+            2
+          ],
+          "note": "Civil rights advocacy and government efficiency reforms signal progressive social stance with fiscal moderation.",
+          "core_spectrum": {
+            "civil_rights_score": 2,
+            "openness_score": 2,
+            "redistribution_score": 4,
+            "ethics_score": 2
+          }
+        },
+        {
+          "label": "Presidency (1977-1981)",
+          "spectrum": [
+            2,
+            2,
+            2,
+            4,
+            1
+          ],
+          "note": "Human rights diplomacy and Refugee Act expand protections while deregulation begins in aviation and trucking.",
+          "core_spectrum": {
+            "civil_rights_score": 2,
+            "openness_score": 2,
+            "redistribution_score": 4,
+            "ethics_score": 1
+          }
+        },
+        {
+          "label": "Post-Presidency (1981-present)",
+          "spectrum": [
+            2,
+            1,
+            1,
+            5,
+            0
+          ],
+          "note": "Humanitarian work and LGBTQ advocacy shift toward more progressive positions on rights and immigration.",
+          "core_spectrum": {
+            "civil_rights_score": 1,
+            "openness_score": 2,
+            "redistribution_score": 5,
+            "ethics_score": 0
+          }
+        }
+      ],
+      "core_spectrum": {
+        "civil_rights_score": 2,
+        "openness_score": 2,
+        "redistribution_score": 4,
+        "ethics_score": 1
+      }
+    },
+    {
+      "name": "Milton Friedman",
+      "lifespan": "1912-2006",
+      "spectrum": [
+        0,
+        1,
+        2,
+        0,
+        1
+      ],
+      "timeline": [
+        {
+          "label": "Academic Career (1950s-1970s)",
+          "spectrum": [
+            0,
+            1,
+            3,
+            0,
+            1
+          ],
+          "note": "Monetarism and free-market advocacy establish libertarian economic framework with civil liberties support.",
+          "core_spectrum": {
+            "civil_rights_score": 1,
+            "openness_score": 2,
+            "redistribution_score": 0,
+            "ethics_score": 1
+          }
+        },
+        {
+          "label": "Public Influence Era (1980s-2006)",
+          "spectrum": [
+            0,
+            1,
+            2,
+            0,
+            1
+          ],
+          "note": "Free to Choose advocacy promotes pure free markets, school vouchers, and opposition to licensing restrictions.",
+          "core_spectrum": {
+            "civil_rights_score": 1,
+            "openness_score": 1,
+            "redistribution_score": 0,
+            "ethics_score": 1
+          }
+        }
+      ],
+      "core_spectrum": {
+        "civil_rights_score": 1,
+        "openness_score": 1,
+        "redistribution_score": 0,
+        "ethics_score": 1
+      }
+    },
+    {
+      "name": "Paul Krugman",
+      "lifespan": "b. 1953",
+      "spectrum": [
+        1,
+        1,
+        1,
+        4,
+        0
+      ],
+      "timeline": [
+        {
+          "label": "Academic Economics (1980s-1990s)",
+          "spectrum": [
+            1,
+            2,
+            2,
+            3,
+            1
+          ],
+          "note": "New trade theory supports free trade with moderate regulation and progressive social positions.",
+          "core_spectrum": {
+            "civil_rights_score": 2,
+            "openness_score": 2,
+            "redistribution_score": 3,
+            "ethics_score": 1
+          }
+        },
+        {
+          "label": "Public Commentary (2000-present)",
+          "spectrum": [
+            1,
+            1,
+            1,
+            4,
+            0
+          ],
+          "note": "Keynesian advocacy emphasizes fiscal stimulus, healthcare expansion, and strong social safety net.",
+          "core_spectrum": {
+            "civil_rights_score": 1,
+            "openness_score": 1,
+            "redistribution_score": 4,
+            "ethics_score": 0
+          }
+        }
+      ],
+      "core_spectrum": {
+        "civil_rights_score": 1,
+        "openness_score": 1,
+        "redistribution_score": 4,
+        "ethics_score": 0
+      }
+    },
+    {
+      "name": "Elon Musk",
+      "lifespan": "b. 1971",
+      "spectrum": [
+        1,
+        2,
+        3,
+        1,
+        2
+      ],
+      "timeline": [
+        {
+          "label": "Early Business Career (2000-2015)",
+          "spectrum": [
+            1,
+            3,
+            2,
+            1,
+            2
+          ],
+          "note": "Focus on innovation and disruption favors minimal regulation with moderate social positions.",
+          "core_spectrum": {
+            "civil_rights_score": 3,
+            "openness_score": 2,
+            "redistribution_score": 1,
+            "ethics_score": 2
+          }
+        },
+        {
+          "label": "Obama-Biden Era Alignment (2016-2020)",
+          "spectrum": [
+            1,
+            2,
+            2,
+            1,
+            1
+          ],
+          "note": "Support for carbon taxes, EV subsidies, and Biden vote reflect alignment with moderate Democratic positions.",
+          "core_spectrum": {
+            "civil_rights_score": 2,
+            "openness_score": 2,
+            "redistribution_score": 1,
+            "ethics_score": 1
+          }
+        },
+        {
+          "label": "Political Shift (2021-2024)",
+          "spectrum": [
+            1,
+            2,
+            4,
+            1,
+            3
+          ],
+          "note": "COVID policy criticism, free speech absolutism, and Republican alignment shift toward libertarian-conservative positions.",
+          "core_spectrum": {
+            "civil_rights_score": 2,
+            "openness_score": 2,
+            "redistribution_score": 1,
+            "ethics_score": 3
+          }
+        }
+      ],
+      "core_spectrum": {
+        "civil_rights_score": 2,
+        "openness_score": 2,
+        "redistribution_score": 1,
+        "ethics_score": 2
+      }
+    },
+    {
+      "name": "Warren Buffett",
+      "lifespan": "b. 1930",
+      "spectrum": [
+        1,
+        1,
+        2,
+        3,
+        1
+      ],
+      "timeline": [
+        {
+          "label": "Investment Career (1960s-2000)",
+          "spectrum": [
+            1,
+            1,
+            2,
+            2,
+            1
+          ],
+          "note": "Value investing philosophy supports free markets with minimal regulation and moderate social positions.",
+          "core_spectrum": {
+            "civil_rights_score": 1,
+            "openness_score": 2,
+            "redistribution_score": 2,
+            "ethics_score": 1
+          }
+        },
+        {
+          "label": "Public Advocacy Era (2000-present)",
+          "spectrum": [
+            1,
+            1,
+            2,
+            3,
+            1
+          ],
+          "note": "Calls for higher taxes on wealthy and estate tax retention signal support for progressive taxation within capitalism.",
+          "core_spectrum": {
+            "civil_rights_score": 1,
+            "openness_score": 2,
+            "redistribution_score": 3,
+            "ethics_score": 1
+          }
+        }
+      ],
+      "core_spectrum": {
+        "civil_rights_score": 1,
+        "openness_score": 2,
+        "redistribution_score": 3,
+        "ethics_score": 1
+      }
+    },
+    {
+      "name": "Steve Jobs",
+      "lifespan": "1955-2011",
+      "spectrum": [
+        1,
+        2,
+        2,
+        1,
+        1
+      ],
+      "timeline": [
+        {
+          "label": "Apple Founding & Early Years (1976-1985)",
+          "spectrum": [
+            1,
+            3,
+            2,
+            1,
+            2
+          ],
+          "note": "Counterculture roots balance entrepreneurial capitalism with socially liberal personal views.",
+          "core_spectrum": {
+            "civil_rights_score": 3,
+            "openness_score": 2,
+            "redistribution_score": 1,
+            "ethics_score": 2
+          }
+        },
+        {
+          "label": "Return to Apple (1997-2011)",
+          "spectrum": [
+            1,
+            2,
+            2,
+            1,
+            1
+          ],
+          "note": "Global supply chain strategy embraces free trade while maintaining progressive social stances.",
+          "core_spectrum": {
+            "civil_rights_score": 2,
+            "openness_score": 2,
+            "redistribution_score": 1,
+            "ethics_score": 1
+          }
+        }
+      ],
+      "core_spectrum": {
+        "civil_rights_score": 2,
+        "openness_score": 2,
+        "redistribution_score": 1,
+        "ethics_score": 1
+      }
+    },
+    {
+      "name": "Bill Gates",
+      "lifespan": "b. 1955",
+      "spectrum": [
+        1,
+        1,
+        2,
+        2,
+        1
+      ],
+      "timeline": [
+        {
+          "label": "Microsoft CEO (1975-2000)",
+          "spectrum": [
+            0,
+            2,
+            2,
+            1,
+            1
+          ],
+          "note": "Aggressive business strategy favors pure free markets with minimal regulation and libertarian-leaning rights.",
+          "core_spectrum": {
+            "civil_rights_score": 2,
+            "openness_score": 1,
+            "redistribution_score": 1,
+            "ethics_score": 1
+          }
+        },
+        {
+          "label": "Philanthropic Focus (2000-present)",
+          "spectrum": [
+            1,
+            1,
+            2,
+            3,
+            1
+          ],
+          "note": "Global health initiatives and education reform support increased public investment in social programs.",
+          "core_spectrum": {
+            "civil_rights_score": 1,
+            "openness_score": 2,
+            "redistribution_score": 3,
+            "ethics_score": 1
+          }
+        }
+      ],
+      "core_spectrum": {
+        "civil_rights_score": 1,
+        "openness_score": 2,
+        "redistribution_score": 2,
+        "ethics_score": 1
+      }
+    },
+    {
+      "name": "Jeff Bezos",
+      "lifespan": "b. 1964",
+      "spectrum": [
+        0,
+        2,
+        2,
+        1,
+        1
+      ],
+      "timeline": [
+        {
+          "label": "Amazon Growth Era (1994-2020)",
+          "spectrum": [
+            0,
+            2,
+            2,
+            0,
+            1
+          ],
+          "note": "E-commerce disruption and opposition to sales tax collection favor minimal market regulation.",
+          "core_spectrum": {
+            "civil_rights_score": 2,
+            "openness_score": 1,
+            "redistribution_score": 0,
+            "ethics_score": 1
+          }
+        },
+        {
+          "label": "Diversification & Advocacy (2020-present)",
+          "spectrum": [
+            0,
+            2,
+            2,
+            1,
+            1
+          ],
+          "note": "Space ventures and climate pledge maintain free-market approach with increased focus on environmental issues.",
+          "core_spectrum": {
+            "civil_rights_score": 2,
+            "openness_score": 1,
+            "redistribution_score": 1,
+            "ethics_score": 1
+          }
+        }
+      ],
+      "core_spectrum": {
+        "civil_rights_score": 2,
+        "openness_score": 1,
+        "redistribution_score": 1,
+        "ethics_score": 1
+      }
+    },
+    {
+      "name": "Albert Einstein",
+      "lifespan": "1879-1955",
+      "spectrum": [
+        2,
+        1,
+        1,
+        5,
+        0
+      ],
+      "timeline": [
+        {
+          "label": "Academic Career (1905-1933)",
+          "spectrum": [
+            2,
+            2,
+            1,
+            4,
+            1
+          ],
+          "note": "Pacifist views and support for Weimar social democracy favor progressive economics and civil liberties.",
+          "core_spectrum": {
+            "civil_rights_score": 2,
+            "openness_score": 2,
+            "redistribution_score": 4,
+            "ethics_score": 1
+          }
+        },
+        {
+          "label": "American Exile (1933-1955)",
+          "spectrum": [
+            2,
+            1,
+            1,
+            5,
+            0
+          ],
+          "note": "Civil rights activism and democratic socialism advocacy emphasize social justice and nuclear disarmament.",
+          "core_spectrum": {
+            "civil_rights_score": 1,
+            "openness_score": 2,
+            "redistribution_score": 5,
+            "ethics_score": 0
+          }
+        }
+      ],
+      "core_spectrum": {
+        "civil_rights_score": 1,
+        "openness_score": 2,
+        "redistribution_score": 5,
+        "ethics_score": 0
+      }
+    },
+    {
+      "name": "Marie Curie",
+      "lifespan": "1867-1934",
+      "spectrum": [
+        2,
+        2,
+        2,
+        3,
+        0
+      ],
+      "timeline": [
+        {
+          "label": "Scientific Career (1890s-1934)",
+          "spectrum": [
+            2,
+            2,
+            2,
+            3,
+            0
+          ],
+          "note": "Focus on scientific research and education access supports progressive social programs and gender equality.",
+          "core_spectrum": {
+            "civil_rights_score": 2,
+            "openness_score": 2,
+            "redistribution_score": 3,
+            "ethics_score": 0
+          }
+        }
+      ],
+      "core_spectrum": {
+        "civil_rights_score": 2,
+        "openness_score": 2,
+        "redistribution_score": 3,
+        "ethics_score": 0
+      }
+    },
+    {
+      "name": "Jonas Salk",
+      "lifespan": "1914-1995",
+      "spectrum": [
+        2,
+        1,
+        1,
+        4,
+        1
+      ],
+      "timeline": [
+        {
+          "label": "Polio Vaccine Development (1947-1955)",
+          "spectrum": [
+            2,
+            1,
+            1,
+            4,
+            1
+          ],
+          "note": "Decision not to patent vaccine reflects commitment to public health over profit maximization.",
+          "core_spectrum": {
+            "civil_rights_score": 1,
+            "openness_score": 2,
+            "redistribution_score": 4,
+            "ethics_score": 1
+          }
+        },
+        {
+          "label": "Later Career & Institute (1963-1995)",
+          "spectrum": [
+            2,
+            1,
+            1,
+            4,
+            1
+          ],
+          "note": "Continued advocacy for accessible healthcare and public research funding maintains progressive stance.",
+          "core_spectrum": {
+            "civil_rights_score": 1,
+            "openness_score": 2,
+            "redistribution_score": 4,
+            "ethics_score": 1
+          }
+        }
+      ],
+      "core_spectrum": {
+        "civil_rights_score": 1,
+        "openness_score": 2,
+        "redistribution_score": 4,
+        "ethics_score": 1
+      }
+    },
+    {
+      "name": "Carl Sagan",
+      "lifespan": "1934-1996",
+      "spectrum": [
+        1,
+        1,
+        1,
+        3,
+        0
+      ],
+      "timeline": [
+        {
+          "label": "Academic & Public Science (1960s-1996)",
+          "spectrum": [
+            1,
+            1,
+            1,
+            3,
+            0
+          ],
+          "note": "Nuclear disarmament advocacy and science education support balanced public investment with civil liberties.",
+          "core_spectrum": {
+            "civil_rights_score": 1,
+            "openness_score": 1,
+            "redistribution_score": 3,
+            "ethics_score": 0
+          }
+        }
+      ],
+      "core_spectrum": {
+        "civil_rights_score": 1,
+        "openness_score": 1,
+        "redistribution_score": 3,
+        "ethics_score": 0
+      }
+    },
+    {
+      "name": "Jane Goodall",
+      "lifespan": "b. 1934",
+      "spectrum": [
+        2,
+        1,
+        1,
+        4,
+        0
+      ],
+      "timeline": [
+        {
+          "label": "Research Career (1960-1990)",
+          "spectrum": [
+            2,
+            2,
+            2,
+            3,
+            0
+          ],
+          "note": "Conservation work emphasizes environmental protection with moderate economic interventions.",
+          "core_spectrum": {
+            "civil_rights_score": 2,
+            "openness_score": 2,
+            "redistribution_score": 3,
+            "ethics_score": 0
+          }
+        },
+        {
+          "label": "Global Advocacy (1990-present)",
+          "spectrum": [
+            2,
+            1,
+            1,
+            4,
+            0
+          ],
+          "note": "Climate activism and youth empowerment programs support stronger environmental regulations and social programs.",
+          "core_spectrum": {
+            "civil_rights_score": 1,
+            "openness_score": 2,
+            "redistribution_score": 4,
+            "ethics_score": 0
+          }
+        }
+      ],
+      "core_spectrum": {
+        "civil_rights_score": 1,
+        "openness_score": 2,
+        "redistribution_score": 4,
+        "ethics_score": 0
+      }
+    },
+    {
+      "name": "Nelson Mandela",
+      "lifespan": "1918-2013",
+      "spectrum": [
+        2,
+        1,
+        1,
+        4,
+        0
+      ],
+      "timeline": [
+        {
+          "label": "Anti-Apartheid Activism (1944-1990)",
+          "spectrum": [
+            3,
+            2,
+            1,
+            5,
+            0
+          ],
+          "note": "Armed resistance and socialist economic views support extensive redistribution and full legal equality.",
+          "core_spectrum": {
+            "civil_rights_score": 2,
+            "openness_score": 2,
+            "redistribution_score": 5,
+            "ethics_score": 0
+          }
+        },
+        {
+          "label": "Presidency (1994-1999)",
+          "spectrum": [
+            2,
+            1,
+            1,
+            4,
+            0
+          ],
+          "note": "Reconciliation approach balances market-friendly reforms with strong social programs and rights protections.",
+          "core_spectrum": {
+            "civil_rights_score": 1,
+            "openness_score": 2,
+            "redistribution_score": 4,
+            "ethics_score": 0
+          }
+        }
+      ],
+      "core_spectrum": {
+        "civil_rights_score": 1,
+        "openness_score": 2,
+        "redistribution_score": 4,
+        "ethics_score": 0
+      }
+    },
+    {
+      "name": "Winston Churchill",
+      "lifespan": "1874-1965",
+      "spectrum": [
+        2,
+        4,
+        4,
+        3,
+        3
+      ],
+      "timeline": [
+        {
+          "label": "Liberal Party Era (1904-1924)",
+          "spectrum": [
+            2,
+            4,
+            3,
+            3,
+            3
+          ],
+          "note": "Social reforms and labor legislation balance market capitalism with welfare state beginnings.",
+          "core_spectrum": {
+            "civil_rights_score": 4,
+            "openness_score": 2,
+            "redistribution_score": 3,
+            "ethics_score": 3
+          }
+        },
+        {
+          "label": "World War II Leadership (1940-1945)",
+          "spectrum": [
+            3,
+            5,
+            5,
+            4,
+            3
+          ],
+          "note": "War economy and imperial defense drive protectionist policies and state controls.",
+          "core_spectrum": {
+            "civil_rights_score": 5,
+            "openness_score": 4,
+            "redistribution_score": 4,
+            "ethics_score": 3
+          }
+        },
+        {
+          "label": "Post-War PM (1951-1955)",
+          "spectrum": [
+            2,
+            4,
+            4,
+            3,
+            3
+          ],
+          "note": "Maintains welfare state while resisting nationalization and supporting Commonwealth immigration controls.",
+          "core_spectrum": {
+            "civil_rights_score": 4,
+            "openness_score": 3,
+            "redistribution_score": 3,
+            "ethics_score": 3
+          }
+        }
+      ],
+      "core_spectrum": {
+        "civil_rights_score": 4,
+        "openness_score": 3,
+        "redistribution_score": 3,
+        "ethics_score": 3
+      }
+    },
+    {
+      "name": "Mahatma Gandhi",
+      "lifespan": "1869-1948",
+      "spectrum": [
+        4,
+        2,
+        1,
+        5,
+        0
+      ],
+      "timeline": [
+        {
+          "label": "South African Activism (1893-1914)",
+          "spectrum": [
+            3,
+            2,
+            2,
+            4,
+            0
+          ],
+          "note": "Satyagraha development emphasizes self-sufficiency and civil rights within colonial framework.",
+          "core_spectrum": {
+            "civil_rights_score": 2,
+            "openness_score": 2,
+            "redistribution_score": 4,
+            "ethics_score": 0
+          }
+        },
+        {
+          "label": "Indian Independence Movement (1915-1948)",
+          "spectrum": [
+            4,
+            2,
+            1,
+            5,
+            0
+          ],
+          "note": "Swadeshi movement promotes local production and cottage industries with emphasis on social equality.",
+          "core_spectrum": {
+            "civil_rights_score": 2,
+            "openness_score": 2,
+            "redistribution_score": 5,
+            "ethics_score": 0
+          }
+        }
+      ],
+      "core_spectrum": {
+        "civil_rights_score": 2,
+        "openness_score": 2,
+        "redistribution_score": 5,
+        "ethics_score": 0
+      }
+    },
+    {
+      "name": "Henry Ford",
+      "lifespan": "1863-1947",
+      "spectrum": [
+        3,
+        4,
+        4,
+        1,
+        4
+      ],
+      "timeline": [
+        {
+          "label": "Early Industrial Era (1903-1920)",
+          "spectrum": [
+            2,
+            4,
+            4,
+            1,
+            4
+          ],
+          "note": "Mass production efficiency balanced with $5 workday reflects paternalistic capitalism.",
+          "core_spectrum": {
+            "civil_rights_score": 4,
+            "openness_score": 3,
+            "redistribution_score": 1,
+            "ethics_score": 4
+          }
+        },
+        {
+          "label": "Later Years (1920-1947)",
+          "spectrum": [
+            3,
+            4,
+            4,
+            1,
+            4
+          ],
+          "note": "Anti-union stance and isolationist views support protectionism with traditional social values.",
+          "core_spectrum": {
+            "civil_rights_score": 4,
+            "openness_score": 4,
+            "redistribution_score": 1,
+            "ethics_score": 4
+          }
+        }
+      ],
+      "core_spectrum": {
+        "civil_rights_score": 4,
+        "openness_score": 4,
+        "redistribution_score": 1,
+        "ethics_score": 4
+      }
+    },
+    {
+      "name": "Andrew Carnegie",
+      "lifespan": "1835-1919",
+      "spectrum": [
+        1,
+        3,
+        3,
+        1,
+        2
+      ],
+      "timeline": [
+        {
+          "label": "Steel Industry Dominance (1870-1901)",
+          "spectrum": [
+            0,
+            4,
+            4,
+            0,
+            3
+          ],
+          "note": "Monopolistic practices and union suppression exemplify Gilded Age capitalism.",
+          "core_spectrum": {
+            "civil_rights_score": 4,
+            "openness_score": 2,
+            "redistribution_score": 0,
+            "ethics_score": 3
+          }
+        },
+        {
+          "label": "Philanthropic Era (1901-1919)",
+          "spectrum": [
+            1,
+            3,
+            3,
+            2,
+            2
+          ],
+          "note": "Gospel of Wealth philosophy supports voluntary redistribution through libraries and education.",
+          "core_spectrum": {
+            "civil_rights_score": 3,
+            "openness_score": 2,
+            "redistribution_score": 2,
+            "ethics_score": 2
+          }
+        }
+      ],
+      "core_spectrum": {
+        "civil_rights_score": 3,
+        "openness_score": 2,
+        "redistribution_score": 1,
+        "ethics_score": 2
+      }
+    },
+    {
+      "name": "John D. Rockefeller",
+      "lifespan": "1839-1937",
+      "spectrum": [
+        1,
+        3,
+        4,
+        0,
+        3
+      ],
+      "timeline": [
+        {
+          "label": "Standard Oil Era (1870-1911)",
+          "spectrum": [
+            0,
+            4,
+            4,
+            0,
+            4
+          ],
+          "note": "Vertical integration and market control define pure free-market approach without government oversight.",
+          "core_spectrum": {
+            "civil_rights_score": 4,
+            "openness_score": 2,
+            "redistribution_score": 0,
+            "ethics_score": 4
+          }
+        },
+        {
+          "label": "Philanthropy & Legacy (1911-1937)",
+          "spectrum": [
+            1,
+            3,
+            4,
+            1,
+            3
+          ],
+          "note": "Foundation work in medicine and education softens public image while maintaining conservative values.",
+          "core_spectrum": {
+            "civil_rights_score": 3,
+            "openness_score": 2,
+            "redistribution_score": 1,
+            "ethics_score": 3
+          }
+        }
+      ],
+      "core_spectrum": {
+        "civil_rights_score": 3,
+        "openness_score": 2,
+        "redistribution_score": 0,
+        "ethics_score": 3
+      }
+    },
+    {
+      "name": "Cesar Chavez",
+      "lifespan": "1927-1993",
+      "spectrum": [
+        3,
+        2,
+        1,
+        5,
+        1
+      ],
+      "timeline": [
+        {
+          "label": "United Farm Workers Formation (1962-1975)",
+          "spectrum": [
+            3,
+            2,
+            1,
+            5,
+            1
+          ],
+          "note": "Grape boycotts and union organizing emphasize worker protections and fair labor practices.",
+          "core_spectrum": {
+            "civil_rights_score": 2,
+            "openness_score": 2,
+            "redistribution_score": 5,
+            "ethics_score": 1
+          }
+        },
+        {
+          "label": "Later Leadership (1975-1993)",
+          "spectrum": [
+            3,
+            2,
+            2,
+            5,
+            2
+          ],
+          "note": "Opposition to illegal immigration reflects concern for union wage standards while maintaining social justice focus.",
+          "core_spectrum": {
+            "civil_rights_score": 2,
+            "openness_score": 2,
+            "redistribution_score": 5,
+            "ethics_score": 2
+          }
+        }
+      ],
+      "core_spectrum": {
+        "civil_rights_score": 2,
+        "openness_score": 2,
+        "redistribution_score": 5,
+        "ethics_score": 1
+      }
+    },
+    {
+      "name": "Rosa Parks",
+      "lifespan": "1913-2005",
+      "spectrum": [
+        2,
+        2,
+        1,
+        4,
+        0
+      ],
+      "timeline": [
+        {
+          "label": "Civil Rights Activism (1955-1970s)",
+          "spectrum": [
+            2,
+            2,
+            1,
+            4,
+            0
+          ],
+          "note": "Bus boycott and NAACP work exemplify nonviolent resistance for full legal equality.",
+          "core_spectrum": {
+            "civil_rights_score": 2,
+            "openness_score": 2,
+            "redistribution_score": 4,
+            "ethics_score": 0
+          }
+        }
+      ],
+      "core_spectrum": {
+        "civil_rights_score": 2,
+        "openness_score": 2,
+        "redistribution_score": 4,
+        "ethics_score": 0
+      }
+    },
+    {
+      "name": "Susan B. Anthony",
+      "lifespan": "1820-1906",
+      "spectrum": [
+        2,
+        1,
+        2,
+        3,
+        0
+      ],
+      "timeline": [
+        {
+          "label": "Women's Suffrage Movement (1852-1906)",
+          "spectrum": [
+            2,
+            1,
+            2,
+            3,
+            0
+          ],
+          "note": "Voting rights advocacy and labor reform support progressive social programs with emphasis on equality.",
+          "core_spectrum": {
+            "civil_rights_score": 1,
+            "openness_score": 2,
+            "redistribution_score": 3,
+            "ethics_score": 0
+          }
+        }
+      ],
+      "core_spectrum": {
+        "civil_rights_score": 1,
+        "openness_score": 2,
+        "redistribution_score": 3,
+        "ethics_score": 0
+      }
+    },
+    {
+      "name": "Ruth Bader Ginsburg",
+      "lifespan": "1933-2020",
+      "spectrum": [
+        1,
+        0,
+        1,
+        3,
+        0
+      ],
+      "timeline": [
+        {
+          "label": "ACLU Advocacy (1970s)",
+          "spectrum": [
+            1,
+            1,
+            1,
+            3,
+            0
+          ],
+          "note": "Gender equality litigation establishes legal framework for reproductive rights and civil liberties.",
+          "core_spectrum": {
+            "civil_rights_score": 1,
+            "openness_score": 1,
+            "redistribution_score": 3,
+            "ethics_score": 0
+          }
+        },
+        {
+          "label": "Supreme Court (1993-2020)",
+          "spectrum": [
+            1,
+            0,
+            1,
+            3,
+            0
+          ],
+          "note": "Consistent liberal voting record supports abortion rights, immigration protections, and economic regulation.",
+          "core_spectrum": {
+            "civil_rights_score": 0,
+            "openness_score": 1,
+            "redistribution_score": 3,
+            "ethics_score": 0
+          }
+        }
+      ],
+      "core_spectrum": {
+        "civil_rights_score": 0,
+        "openness_score": 1,
+        "redistribution_score": 3,
+        "ethics_score": 0
+      }
+    },
+    {
+      "name": "Antonin Scalia",
+      "lifespan": "1936-2016",
+      "spectrum": [
+        1,
+        5,
+        3,
+        1,
+        4
+      ],
+      "timeline": [
+        {
+          "label": "Supreme Court (1986-2016)",
+          "spectrum": [
+            1,
+            5,
+            3,
+            1,
+            4
+          ],
+          "note": "Originalist interpretation supports deregulation, states' rights on abortion, and traditional rights definitions.",
+          "core_spectrum": {
+            "civil_rights_score": 5,
+            "openness_score": 2,
+            "redistribution_score": 1,
+            "ethics_score": 4
+          }
+        }
+      ],
+      "core_spectrum": {
+        "civil_rights_score": 5,
+        "openness_score": 2,
+        "redistribution_score": 1,
+        "ethics_score": 4
+      }
+    },
+    {
+      "name": "Thurgood Marshall",
+      "lifespan": "1908-1993",
+      "spectrum": [
+        2,
+        1,
+        1,
+        5,
+        0
+      ],
+      "timeline": [
+        {
+          "label": "NAACP Legal Defense (1940-1961)",
+          "spectrum": [
+            2,
+            1,
+            1,
+            5,
+            0
+          ],
+          "note": "Brown v. Board victory and civil rights litigation establish legal framework for desegregation.",
+          "core_spectrum": {
+            "civil_rights_score": 1,
+            "openness_score": 2,
+            "redistribution_score": 5,
+            "ethics_score": 0
+          }
+        },
+        {
+          "label": "Supreme Court (1967-1991)",
+          "spectrum": [
+            2,
+            1,
+            1,
+            5,
+            0
+          ],
+          "note": "Liberal voting record consistently supports social programs, civil rights expansion, and criminal justice reform.",
+          "core_spectrum": {
+            "civil_rights_score": 1,
+            "openness_score": 2,
+            "redistribution_score": 5,
+            "ethics_score": 0
+          }
+        }
+      ],
+      "core_spectrum": {
+        "civil_rights_score": 1,
+        "openness_score": 2,
+        "redistribution_score": 5,
+        "ethics_score": 0
+      }
+    },
+    {
+      "name": "Bernie Sanders",
+      "lifespan": "b. 1941",
+      "spectrum": [
+        3,
+        1,
+        1,
+        5,
+        0
+      ],
+      "timeline": [
+        {
+          "label": "Mayor of Burlington (1981-1989)",
+          "spectrum": [
+            3,
+            2,
+            2,
+            5,
+            1
+          ],
+          "note": "Municipal socialism and affordable housing initiatives establish progressive economic platform.",
+          "core_spectrum": {
+            "civil_rights_score": 2,
+            "openness_score": 2,
+            "redistribution_score": 5,
+            "ethics_score": 1
+          }
+        },
+        {
+          "label": "House & Senate Career (1991-2015)",
+          "spectrum": [
+            3,
+            1,
+            1,
+            5,
+            0
+          ],
+          "note": "Opposition to NAFTA and support for single-payer healthcare solidify democratic socialist positions.",
+          "core_spectrum": {
+            "civil_rights_score": 1,
+            "openness_score": 2,
+            "redistribution_score": 5,
+            "ethics_score": 0
+          }
+        },
+        {
+          "label": "Presidential Campaigns (2016-2020)",
+          "spectrum": [
+            3,
+            1,
+            1,
+            5,
+            0
+          ],
+          "note": "Medicare for All and wealth tax proposals advance social democratic economic platform.",
+          "core_spectrum": {
+            "civil_rights_score": 1,
+            "openness_score": 2,
+            "redistribution_score": 5,
+            "ethics_score": 0
+          }
+        }
+      ],
+      "core_spectrum": {
+        "civil_rights_score": 1,
+        "openness_score": 2,
+        "redistribution_score": 5,
+        "ethics_score": 0
+      }
+    },
+    {
+      "name": "Ayn Rand",
+      "lifespan": "1905-1982",
+      "spectrum": [
+        0,
+        1,
+        2,
+        0,
+        1
+      ],
+      "timeline": [
+        {
+          "label": "Literary & Philosophical Career (1943-1982)",
+          "spectrum": [
+            0,
+            1,
+            2,
+            0,
+            1
+          ],
+          "note": "Objectivist philosophy advocates pure laissez-faire capitalism with minimal state and individual rights primacy.",
+          "core_spectrum": {
+            "civil_rights_score": 1,
+            "openness_score": 1,
+            "redistribution_score": 0,
+            "ethics_score": 1
+          }
+        }
+      ],
+      "core_spectrum": {
+        "civil_rights_score": 1,
+        "openness_score": 1,
+        "redistribution_score": 0,
+        "ethics_score": 1
+      }
+    },
+    {
+      "name": "Noam Chomsky",
+      "lifespan": "b. 1928",
+      "spectrum": [
+        4,
+        1,
+        0,
+        6,
+        0
+      ],
+      "timeline": [
+        {
+          "label": "Anti-War Activism (1960s-1970s)",
+          "spectrum": [
+            4,
+            1,
+            0,
+            6,
+            0
+          ],
+          "note": "Vietnam War opposition and critique of U.S. foreign policy establish libertarian socialist framework.",
+          "core_spectrum": {
+            "civil_rights_score": 1,
+            "openness_score": 2,
+            "redistribution_score": 5,
+            "ethics_score": 0
+          }
+        },
+        {
+          "label": "Media Criticism Era (1980s-present)",
+          "spectrum": [
+            4,
+            1,
+            0,
+            6,
+            0
+          ],
+          "note": "Manufacturing Consent analysis supports anarcho-syndicalist economics with radical immigration openness.",
+          "core_spectrum": {
+            "civil_rights_score": 1,
+            "openness_score": 2,
+            "redistribution_score": 5,
+            "ethics_score": 0
+          }
+        }
+      ],
+      "core_spectrum": {
+        "civil_rights_score": 1,
+        "openness_score": 2,
+        "redistribution_score": 5,
+        "ethics_score": 0
+      }
+    },
+    {
+      "name": "Angela Merkel",
+      "lifespan": "b. 1954",
+      "spectrum": [
+        1,
+        3,
+        1,
+        3,
+        2
+      ],
+      "timeline": [
+        {
+          "label": "Early Chancellorship (2005-2011)",
+          "spectrum": [
+            1,
+            3,
+            2,
+            2,
+            3
+          ],
+          "note": "Labor market reforms and fiscal conservatism balance Christian democratic social market approach.",
+          "core_spectrum": {
+            "civil_rights_score": 3,
+            "openness_score": 2,
+            "redistribution_score": 2,
+            "ethics_score": 3
+          }
+        },
+        {
+          "label": "Refugee Crisis Era (2015-2021)",
+          "spectrum": [
+            1,
+            3,
+            1,
+            3,
+            2
+          ],
+          "note": "Open-door refugee policy shifts immigration stance while maintaining balanced economic approach.",
+          "core_spectrum": {
+            "civil_rights_score": 3,
+            "openness_score": 1,
+            "redistribution_score": 3,
+            "ethics_score": 2
+          }
+        }
+      ],
+      "core_spectrum": {
+        "civil_rights_score": 3,
+        "openness_score": 1,
+        "redistribution_score": 3,
+        "ethics_score": 2
+      }
+    },
+    {
+      "name": "Vladimir Putin",
+      "lifespan": "b. 1952",
+      "spectrum": [
+        5,
+        4,
+        5,
+        4,
+        5
+      ],
+      "timeline": [
+        {
+          "label": "First Presidential Terms (2000-2008)",
+          "spectrum": [
+            4,
+            4,
+            5,
+            3,
+            4
+          ],
+          "note": "Resource nationalism and centralized control establish state capitalism with conservative social policy.",
+          "core_spectrum": {
+            "civil_rights_score": 4,
+            "openness_score": 4,
+            "redistribution_score": 3,
+            "ethics_score": 4
+          }
+        },
+        {
+          "label": "Return to Power (2012-present)",
+          "spectrum": [
+            5,
+            4,
+            5,
+            4,
+            5
+          ],
+          "note": "Increased protectionism and anti-LGBTQ legislation shift toward more authoritarian nationalism.",
+          "core_spectrum": {
+            "civil_rights_score": 4,
+            "openness_score": 5,
+            "redistribution_score": 4,
+            "ethics_score": 5
+          }
+        }
+      ],
+      "core_spectrum": {
+        "civil_rights_score": 4,
+        "openness_score": 5,
+        "redistribution_score": 4,
+        "ethics_score": 5
+      }
+    },
+    {
+      "name": "Xi Jinping",
+      "lifespan": "b. 1953",
+      "spectrum": [
+        5,
+        4,
+        5,
+        6,
+        5
+      ],
+      "timeline": [
+        {
+          "label": "Early Leadership (2012-2017)",
+          "spectrum": [
+            5,
+            4,
+            5,
+            6,
+            5
+          ],
+          "note": "Anti-corruption campaign and state enterprise strengthening consolidate party control over economy.",
+          "core_spectrum": {
+            "civil_rights_score": 4,
+            "openness_score": 5,
+            "redistribution_score": 5,
+            "ethics_score": 5
+          }
+        },
+        {
+          "label": "Consolidation Era (2018-present)",
+          "spectrum": [
+            5,
+            4,
+            5,
+            6,
+            5
+          ],
+          "note": "Common prosperity initiative and tech crackdown increase state ownership with nationalist immigration controls.",
+          "core_spectrum": {
+            "civil_rights_score": 4,
+            "openness_score": 5,
+            "redistribution_score": 5,
+            "ethics_score": 5
+          }
+        }
+      ],
+      "core_spectrum": {
+        "civil_rights_score": 4,
+        "openness_score": 5,
+        "redistribution_score": 5,
+        "ethics_score": 5
+      }
+    },
+    {
+      "name": "Lee Kuan Yew",
+      "lifespan": "1923-2015",
+      "spectrum": [
+        1,
+        4,
+        5,
+        3,
+        4
+      ],
+      "timeline": [
+        {
+          "label": "Nation Building (1959-1990)",
+          "spectrum": [
+            1,
+            4,
+            5,
+            3,
+            4
+          ],
+          "note": "Authoritarian developmentalism combines free-market policies with strict social controls and limited migration.",
+          "core_spectrum": {
+            "civil_rights_score": 4,
+            "openness_score": 3,
+            "redistribution_score": 3,
+            "ethics_score": 4
+          }
+        },
+        {
+          "label": "Senior Minister (1990-2015)",
+          "spectrum": [
+            1,
+            4,
+            5,
+            3,
+            4
+          ],
+          "note": "Asian values advocacy maintains model of market capitalism with restricted civil liberties.",
+          "core_spectrum": {
+            "civil_rights_score": 4,
+            "openness_score": 3,
+            "redistribution_score": 3,
+            "ethics_score": 4
+          }
+        }
+      ],
+      "core_spectrum": {
+        "civil_rights_score": 4,
+        "openness_score": 3,
+        "redistribution_score": 3,
+        "ethics_score": 4
+      }
+    },
+    {
+      "name": "Pope John Paul II",
+      "lifespan": "1920-2005",
+      "spectrum": [
+        3,
+        6,
+        2,
+        4,
+        5
+      ],
+      "timeline": [
+        {
+          "label": "Early Papacy (1978-1989)",
+          "spectrum": [
+            3,
+            6,
+            2,
+            4,
+            5
+          ],
+          "note": "Anti-communist solidarity with Poland balances distributist economics and absolute pro-life positions.",
+          "core_spectrum": {
+            "civil_rights_score": 5,
+            "openness_score": 2,
+            "redistribution_score": 4,
+            "ethics_score": 5
+          }
+        },
+        {
+          "label": "Post-Cold War (1989-2005)",
+          "spectrum": [
+            3,
+            6,
+            2,
+            4,
+            5
+          ],
+          "note": "Critique of capitalism and consumerism maintains social teaching while opposing abortion and LGBTQ rights.",
+          "core_spectrum": {
+            "civil_rights_score": 5,
+            "openness_score": 2,
+            "redistribution_score": 4,
+            "ethics_score": 5
+          }
+        }
+      ],
+      "core_spectrum": {
+        "civil_rights_score": 5,
+        "openness_score": 2,
+        "redistribution_score": 4,
+        "ethics_score": 5
+      }
+    },
+    {
+      "name": "Pope Francis",
+      "lifespan": "b. 1936",
+      "spectrum": [
+        3,
+        5,
+        1,
+        5,
+        4
+      ],
+      "timeline": [
+        {
+          "label": "Archbishop of Buenos Aires (1998-2013)",
+          "spectrum": [
+            3,
+            5,
+            2,
+            5,
+            4
+          ],
+          "note": "Social justice focus and work with poor emphasize economic equality while maintaining traditional marriage doctrine.",
+          "core_spectrum": {
+            "civil_rights_score": 5,
+            "openness_score": 2,
+            "redistribution_score": 5,
+            "ethics_score": 4
+          }
+        },
+        {
+          "label": "Early Papacy (2013-2020)",
+          "spectrum": [
+            3,
+            5,
+            1,
+            5,
+            4
+          ],
+          "note": "Laudato Si' encyclical and refugee advocacy push progressive economics and immigration while softening LGBTQ rhetoric.",
+          "core_spectrum": {
+            "civil_rights_score": 5,
+            "openness_score": 2,
+            "redistribution_score": 5,
+            "ethics_score": 4
+          }
+        },
+        {
+          "label": "Recent Years (2020-present)",
+          "spectrum": [
+            3,
+            5,
+            1,
+            5,
+            3
+          ],
+          "note": "Civil union support and inclusive language signal modest shift on rights while maintaining strong social program advocacy.",
+          "core_spectrum": {
+            "civil_rights_score": 5,
+            "openness_score": 2,
+            "redistribution_score": 5,
+            "ethics_score": 3
+          }
+        }
+      ],
+      "core_spectrum": {
+        "civil_rights_score": 5,
+        "openness_score": 2,
+        "redistribution_score": 5,
+        "ethics_score": 4
+      }
+    },
+    {
+      "name": "Desmond Tutu",
+      "lifespan": "1931-2021",
+      "spectrum": [
+        2,
+        2,
+        1,
+        5,
+        0
+      ],
+      "timeline": [
+        {
+          "label": "Anti-Apartheid Activism (1970s-1994)",
+          "spectrum": [
+            2,
+            2,
+            1,
+            5,
+            1
+          ],
+          "note": "Economic sanctions advocacy and liberation theology support redistributive economics with civil rights focus.",
+          "core_spectrum": {
+            "civil_rights_score": 2,
+            "openness_score": 2,
+            "redistribution_score": 5,
+            "ethics_score": 1
+          }
+        },
+        {
+          "label": "Truth & Reconciliation (1995-2000)",
+          "spectrum": [
+            2,
+            2,
+            1,
+            5,
+            0
+          ],
+          "note": "Restorative justice work balances social programs with progressive rights including LGBTQ equality.",
+          "core_spectrum": {
+            "civil_rights_score": 2,
+            "openness_score": 2,
+            "redistribution_score": 5,
+            "ethics_score": 0
+          }
+        },
+        {
+          "label": "Global Advocacy (2000-2021)",
+          "spectrum": [
+            2,
+            2,
+            1,
+            5,
+            0
+          ],
+          "note": "Climate justice and LGBTQ rights activism establish progressive stance across all policy areas.",
+          "core_spectrum": {
+            "civil_rights_score": 2,
+            "openness_score": 2,
+            "redistribution_score": 5,
+            "ethics_score": 0
+          }
+        }
+      ],
+      "core_spectrum": {
+        "civil_rights_score": 2,
+        "openness_score": 2,
+        "redistribution_score": 5,
+        "ethics_score": 0
+      }
+    },
+    {
+      "name": "Billy Graham",
+      "lifespan": "1918-2018",
+      "spectrum": [
+        2,
+        4,
+        3,
+        3,
+        3
+      ],
+      "timeline": [
+        {
+          "label": "Early Crusades (1949-1960s)",
+          "spectrum": [
+            2,
+            5,
+            3,
+            3,
+            4
+          ],
+          "note": "Anti-communist preaching and traditional social values dominate with moderate economic positions.",
+          "core_spectrum": {
+            "civil_rights_score": 5,
+            "openness_score": 2,
+            "redistribution_score": 3,
+            "ethics_score": 4
+          }
+        },
+        {
+          "label": "Civil Rights Era (1960s-1970s)",
+          "spectrum": [
+            2,
+            4,
+            3,
+            3,
+            3
+          ],
+          "note": "Integration of crusades and friendship with MLK signal moderation on racial justice while maintaining conservative social theology.",
+          "core_spectrum": {
+            "civil_rights_score": 4,
+            "openness_score": 2,
+            "redistribution_score": 3,
+            "ethics_score": 3
+          }
+        },
+        {
+          "label": "Later Ministry (1980s-2018)",
+          "spectrum": [
+            2,
+            4,
+            3,
+            3,
+            3
+          ],
+          "note": "Distance from political partisanship and focus on gospel message maintain moderate evangelical positions.",
+          "core_spectrum": {
+            "civil_rights_score": 4,
+            "openness_score": 2,
+            "redistribution_score": 3,
+            "ethics_score": 3
+          }
+        }
+      ],
+      "core_spectrum": {
+        "civil_rights_score": 4,
+        "openness_score": 2,
+        "redistribution_score": 3,
+        "ethics_score": 3
+      }
+    },
+    {
+      "name": "Jerry Falwell Sr.",
+      "lifespan": "1933-2007",
+      "spectrum": [
+        1,
+        6,
+        4,
+        1,
+        5
+      ],
+      "timeline": [
+        {
+          "label": "Segregationist Era (1950s-1970s)",
+          "spectrum": [
+            2,
+            6,
+            5,
+            2,
+            6
+          ],
+          "note": "Opposition to integration and defense of segregated Christian academies reflect conservative social positions.",
+          "core_spectrum": {
+            "civil_rights_score": 5,
+            "openness_score": 4,
+            "redistribution_score": 2,
+            "ethics_score": 5
+          }
+        },
+        {
+          "label": "Moral Majority (1979-1989)",
+          "spectrum": [
+            1,
+            6,
+            4,
+            1,
+            5
+          ],
+          "note": "Political mobilization against abortion and LGBTQ rights combines with supply-side economic support.",
+          "core_spectrum": {
+            "civil_rights_score": 5,
+            "openness_score": 2,
+            "redistribution_score": 1,
+            "ethics_score": 5
+          }
+        },
+        {
+          "label": "Post-Cold War (1990-2007)",
+          "spectrum": [
+            1,
+            6,
+            4,
+            1,
+            5
+          ],
+          "note": "Continued cultural warfare and Republican alliance maintain conservative evangelical political engagement.",
+          "core_spectrum": {
+            "civil_rights_score": 5,
+            "openness_score": 2,
+            "redistribution_score": 1,
+            "ethics_score": 5
+          }
+        }
+      ],
+      "core_spectrum": {
+        "civil_rights_score": 5,
+        "openness_score": 2,
+        "redistribution_score": 1,
+        "ethics_score": 5
+      }
+    },
+    {
+      "name": "Pat Robertson",
+      "lifespan": "1930-2023",
+      "spectrum": [
+        2,
+        6,
+        4,
+        1,
+        5
+      ],
+      "timeline": [
+        {
+          "label": "700 Club & CBN Growth (1960s-1980s)",
+          "spectrum": [
+            2,
+            6,
+            4,
+            2,
+            5
+          ],
+          "note": "Charismatic theology and media empire building combine traditional values with entrepreneurial capitalism.",
+          "core_spectrum": {
+            "civil_rights_score": 5,
+            "openness_score": 3,
+            "redistribution_score": 2,
+            "ethics_score": 5
+          }
+        },
+        {
+          "label": "Presidential Run & Political Peak (1988-2000)",
+          "spectrum": [
+            2,
+            6,
+            4,
+            1,
+            5
+          ],
+          "note": "Christian Coalition mobilization pushes pro-life agenda and opposition to LGBTQ rights with economic conservatism.",
+          "core_spectrum": {
+            "civil_rights_score": 5,
+            "openness_score": 3,
+            "redistribution_score": 1,
+            "ethics_score": 5
+          }
+        },
+        {
+          "label": "Later Years (2000-2023)",
+          "spectrum": [
+            2,
+            6,
+            4,
+            1,
+            5
+          ],
+          "note": "Controversial statements and continued political advocacy maintain culture war focus with business interests.",
+          "core_spectrum": {
+            "civil_rights_score": 5,
+            "openness_score": 3,
+            "redistribution_score": 1,
+            "ethics_score": 5
+          }
+        }
+      ],
+      "core_spectrum": {
+        "civil_rights_score": 5,
+        "openness_score": 3,
+        "redistribution_score": 1,
+        "ethics_score": 5
+      }
+    },
+    {
+      "name": "Rick Warren",
+      "lifespan": "b. 1954",
+      "spectrum": [
+        2,
+        5,
+        3,
+        3,
+        4
+      ],
+      "timeline": [
+        {
+          "label": "Saddleback Church Growth (1980-2000)",
+          "spectrum": [
+            2,
+            5,
+            3,
+            3,
+            4
+          ],
+          "note": "Purpose Driven model emphasizes church growth with traditional evangelical theology and moderate politics.",
+          "core_spectrum": {
+            "civil_rights_score": 5,
+            "openness_score": 2,
+            "redistribution_score": 3,
+            "ethics_score": 4
+          }
+        },
+        {
+          "label": "Global Influence Era (2000-2020)",
+          "spectrum": [
+            2,
+            5,
+            3,
+            3,
+            3
+          ],
+          "note": "HIV/AIDS advocacy and poverty initiatives signal engagement with social issues while maintaining traditional marriage stance.",
+          "core_spectrum": {
+            "civil_rights_score": 5,
+            "openness_score": 2,
+            "redistribution_score": 3,
+            "ethics_score": 3
+          }
+        },
+        {
+          "label": "Recent Ministry (2020-present)",
+          "spectrum": [
+            2,
+            5,
+            3,
+            3,
+            3
+          ],
+          "note": "Mental health advocacy and reduced political engagement show shift toward pastoral focus with moderate conservatism.",
+          "core_spectrum": {
+            "civil_rights_score": 5,
+            "openness_score": 2,
+            "redistribution_score": 3,
+            "ethics_score": 3
+          }
+        }
+      ],
+      "core_spectrum": {
+        "civil_rights_score": 5,
+        "openness_score": 2,
+        "redistribution_score": 3,
+        "ethics_score": 4
+      }
+    },
+    {
+      "name": "Franklin Graham",
+      "lifespan": "b. 1952",
+      "spectrum": [
+        1,
+        6,
+        5,
+        1,
+        5
+      ],
+      "timeline": [
+        {
+          "label": "Early Ministry (1970s-2000)",
+          "spectrum": [
+            2,
+            5,
+            4,
+            2,
+            4
+          ],
+          "note": "Samaritan's Purse humanitarian work combines disaster relief with traditional evangelical theology.",
+          "core_spectrum": {
+            "civil_rights_score": 5,
+            "openness_score": 3,
+            "redistribution_score": 2,
+            "ethics_score": 4
+          }
+        },
+        {
+          "label": "Political Engagement (2001-2015)",
+          "spectrum": [
+            1,
+            6,
+            5,
+            1,
+            5
+          ],
+          "note": "Post-9/11 Islam criticism and Obama opposition shift toward explicit Republican partisanship.",
+          "core_spectrum": {
+            "civil_rights_score": 5,
+            "openness_score": 3,
+            "redistribution_score": 1,
+            "ethics_score": 5
+          }
+        },
+        {
+          "label": "Trump Era Alliance (2016-present)",
+          "spectrum": [
+            1,
+            6,
+            5,
+            1,
+            5
+          ],
+          "note": "Strong Trump endorsement and culture war focus depart from father's political caution.",
+          "core_spectrum": {
+            "civil_rights_score": 5,
+            "openness_score": 3,
+            "redistribution_score": 1,
+            "ethics_score": 5
+          }
+        }
+      ],
+      "core_spectrum": {
+        "civil_rights_score": 5,
+        "openness_score": 3,
+        "redistribution_score": 1,
+        "ethics_score": 5
+      }
+    },
+    {
+      "name": "Joel Osteen",
+      "lifespan": "b. 1963",
+      "spectrum": [
+        1,
+        3,
+        2,
+        2,
+        2
+      ],
+      "timeline": [
+        {
+          "label": "Lakewood Church Leadership (1999-present)",
+          "spectrum": [
+            1,
+            3,
+            2,
+            2,
+            2
+          ],
+          "note": "Prosperity gospel and positive thinking avoid explicit political stances while emphasizing individual success.",
+          "core_spectrum": {
+            "civil_rights_score": 3,
+            "openness_score": 2,
+            "redistribution_score": 2,
+            "ethics_score": 2
+          }
+        }
+      ],
+      "core_spectrum": {
+        "civil_rights_score": 3,
+        "openness_score": 2,
+        "redistribution_score": 2,
+        "ethics_score": 2
+      }
+    },
+    {
+      "name": "T.D. Jakes",
+      "lifespan": "b. 1957",
+      "spectrum": [
+        2,
+        4,
+        2,
+        3,
+        3
+      ],
+      "timeline": [
+        {
+          "label": "The Potter's House Era (1996-present)",
+          "spectrum": [
+            2,
+            4,
+            2,
+            3,
+            3
+          ],
+          "note": "Economic empowerment message combines prosperity teaching with Black church social consciousness.",
+          "core_spectrum": {
+            "civil_rights_score": 4,
+            "openness_score": 2,
+            "redistribution_score": 3,
+            "ethics_score": 3
+          }
+        }
+      ],
+      "core_spectrum": {
+        "civil_rights_score": 4,
+        "openness_score": 2,
+        "redistribution_score": 3,
+        "ethics_score": 3
+      }
+    },
+    {
+      "name": "James Dobson",
+      "lifespan": "b. 1936",
+      "spectrum": [
+        1,
+        6,
+        4,
+        1,
+        5
+      ],
+      "timeline": [
+        {
+          "label": "Focus on the Family Founding (1977-2000)",
+          "spectrum": [
+            1,
+            6,
+            4,
+            1,
+            5
+          ],
+          "note": "Family values focus and opposition to LGBTQ rights establish Christian Right psychological framework.",
+          "core_spectrum": {
+            "civil_rights_score": 5,
+            "openness_score": 2,
+            "redistribution_score": 1,
+            "ethics_score": 5
+          }
+        },
+        {
+          "label": "Political Mobilization (2000-2020)",
+          "spectrum": [
+            1,
+            6,
+            4,
+            1,
+            5
+          ],
+          "note": "Marriage amendment advocacy and Republican endorsements maintain culture war leadership.",
+          "core_spectrum": {
+            "civil_rights_score": 5,
+            "openness_score": 2,
+            "redistribution_score": 1,
+            "ethics_score": 5
+          }
+        }
+      ],
+      "core_spectrum": {
+        "civil_rights_score": 5,
+        "openness_score": 2,
+        "redistribution_score": 1,
+        "ethics_score": 5
+      }
+    },
+    {
+      "name": "Mother Teresa",
+      "lifespan": "1910-1997",
+      "spectrum": [
+        4,
+        6,
+        1,
+        5,
+        6
+      ],
+      "timeline": [
+        {
+          "label": "Missionaries of Charity (1950-1997)",
+          "spectrum": [
+            4,
+            6,
+            1,
+            5,
+            6
+          ],
+          "note": "Service to poorest of poor combines radical hospitality with absolute pro-life and traditional sexual ethics.",
+          "core_spectrum": {
+            "civil_rights_score": 5,
+            "openness_score": 2,
+            "redistribution_score": 5,
+            "ethics_score": 5
+          }
+        }
+      ],
+      "core_spectrum": {
+        "civil_rights_score": 5,
+        "openness_score": 2,
+        "redistribution_score": 5,
+        "ethics_score": 5
+      }
+    },
+    {
+      "name": "Dalai Lama (Tenzin Gyatso)",
+      "lifespan": "b. 1935",
+      "spectrum": [
+        2,
+        1,
+        1,
+        4,
+        1
+      ],
+      "timeline": [
+        {
+          "label": "Tibetan Leadership in Exile (1959-1990)",
+          "spectrum": [
+            3,
+            2,
+            1,
+            4,
+            2
+          ],
+          "note": "Nonviolent resistance to Chinese occupation emphasizes Buddhist economics and human rights.",
+          "core_spectrum": {
+            "civil_rights_score": 2,
+            "openness_score": 2,
+            "redistribution_score": 4,
+            "ethics_score": 2
+          }
+        },
+        {
+          "label": "Global Spiritual Leader (1990-2010)",
+          "spectrum": [
+            2,
+            1,
+            1,
+            4,
+            1
+          ],
+          "note": "Interfaith dialogue and environmental advocacy advance progressive social positions with Buddhist compassion.",
+          "core_spectrum": {
+            "civil_rights_score": 1,
+            "openness_score": 2,
+            "redistribution_score": 4,
+            "ethics_score": 1
+          }
+        },
+        {
+          "label": "Democratic Transition (2011-present)",
+          "spectrum": [
+            2,
+            1,
+            1,
+            4,
+            1
+          ],
+          "note": "Relinquishing political power and LGBTQ acceptance signal liberal shift within Buddhist framework.",
+          "core_spectrum": {
+            "civil_rights_score": 1,
+            "openness_score": 2,
+            "redistribution_score": 4,
+            "ethics_score": 1
+          }
+        }
+      ],
+      "core_spectrum": {
+        "civil_rights_score": 1,
+        "openness_score": 2,
+        "redistribution_score": 4,
+        "ethics_score": 1
+      }
+    },
+    {
+      "name": "Ayatollah Khomeini",
+      "lifespan": "1902-1989",
+      "spectrum": [
+        5,
+        6,
+        6,
+        6,
+        6
+      ],
+      "timeline": [
+        {
+          "label": "Iranian Revolution (1979-1989)",
+          "spectrum": [
+            5,
+            6,
+            6,
+            6,
+            6
+          ],
+          "note": "Islamic Republic establishment combines state control of economy with strict Sharia law and closed borders.",
+          "core_spectrum": {
+            "civil_rights_score": 5,
+            "openness_score": 5,
+            "redistribution_score": 5,
+            "ethics_score": 5
+          }
+        }
+      ],
+      "core_spectrum": {
+        "civil_rights_score": 5,
+        "openness_score": 5,
+        "redistribution_score": 5,
+        "ethics_score": 5
+      }
+    },
+    {
+      "name": "Archbishop Oscar Romero",
+      "lifespan": "1917-1980",
+      "spectrum": [
+        3,
+        3,
+        1,
+        5,
+        1
+      ],
+      "timeline": [
+        {
+          "label": "Early Ministry (1970-1977)",
+          "spectrum": [
+            2,
+            4,
+            2,
+            3,
+            2
+          ],
+          "note": "Conservative bishop maintains traditional Catholic positions with moderate social concern.",
+          "core_spectrum": {
+            "civil_rights_score": 4,
+            "openness_score": 2,
+            "redistribution_score": 3,
+            "ethics_score": 2
+          }
+        },
+        {
+          "label": "Liberation Theology Turn (1977-1980)",
+          "spectrum": [
+            3,
+            3,
+            1,
+            5,
+            1
+          ],
+          "note": "Witnessing violence shifts toward preferential option for poor and human rights advocacy.",
+          "core_spectrum": {
+            "civil_rights_score": 3,
+            "openness_score": 2,
+            "redistribution_score": 5,
+            "ethics_score": 1
+          }
+        }
+      ],
+      "core_spectrum": {
+        "civil_rights_score": 3,
+        "openness_score": 2,
+        "redistribution_score": 5,
+        "ethics_score": 1
+      }
+    },
+    {
+      "name": "Thich Nhat Hanh",
+      "lifespan": "1926-2022",
+      "spectrum": [
+        2,
+        1,
+        0,
+        4,
+        0
+      ],
+      "timeline": [
+        {
+          "label": "Vietnam War Peace Activism (1960s)",
+          "spectrum": [
+            2,
+            1,
+            0,
+            4,
+            0
+          ],
+          "note": "Engaged Buddhism and anti-war advocacy establish progressive nonviolent resistance framework.",
+          "core_spectrum": {
+            "civil_rights_score": 1,
+            "openness_score": 1,
+            "redistribution_score": 4,
+            "ethics_score": 0
+          }
+        },
+        {
+          "label": "Western Teaching Era (1970s-2022)",
+          "spectrum": [
+            2,
+            1,
+            0,
+            4,
+            0
+          ],
+          "note": "Mindfulness movement and environmental activism maintain progressive Buddhist social engagement.",
+          "core_spectrum": {
+            "civil_rights_score": 1,
+            "openness_score": 1,
+            "redistribution_score": 4,
+            "ethics_score": 0
+          }
+        }
+      ],
+      "core_spectrum": {
+        "civil_rights_score": 1,
+        "openness_score": 1,
+        "redistribution_score": 4,
+        "ethics_score": 0
+      }
+    },
+    {
+      "name": "Reinhold Niebuhr",
+      "lifespan": "1892-1971",
+      "spectrum": [
+        2,
+        3,
+        2,
+        4,
+        2
+      ],
+      "timeline": [
+        {
+          "label": "Social Gospel Era (1920s-1930s)",
+          "spectrum": [
+            3,
+            3,
+            2,
+            5,
+            2
+          ],
+          "note": "Socialist sympathies and labor activism reflect progressive Christian political theology.",
+          "core_spectrum": {
+            "civil_rights_score": 3,
+            "openness_score": 2,
+            "redistribution_score": 5,
+            "ethics_score": 2
+          }
+        },
+        {
+          "label": "Christian Realism (1940s-1971)",
+          "spectrum": [
+            2,
+            3,
+            2,
+            4,
+            2
+          ],
+          "note": "Cold War pragmatism and critique of utopianism balance progressive economics with international realism.",
+          "core_spectrum": {
+            "civil_rights_score": 3,
+            "openness_score": 2,
+            "redistribution_score": 4,
+            "ethics_score": 2
+          }
+        }
+      ],
+      "core_spectrum": {
+        "civil_rights_score": 3,
+        "openness_score": 2,
+        "redistribution_score": 4,
+        "ethics_score": 2
+      }
+    },
+    {
+      "name": "Dietrich Bonhoeffer",
+      "lifespan": "1906-1945",
+      "spectrum": [
+        2,
+        3,
+        2,
+        4,
+        1
+      ],
+      "timeline": [
+        {
+          "label": "Confessing Church Resistance (1933-1945)",
+          "spectrum": [
+            2,
+            3,
+            2,
+            4,
+            1
+          ],
+          "note": "Anti-Nazi resistance and theological opposition to totalitarianism combine Christian ethics with political courage.",
+          "core_spectrum": {
+            "civil_rights_score": 3,
+            "openness_score": 2,
+            "redistribution_score": 4,
+            "ethics_score": 1
+          }
+        }
+      ],
+      "core_spectrum": {
+        "civil_rights_score": 3,
+        "openness_score": 2,
+        "redistribution_score": 4,
+        "ethics_score": 1
+      }
+    },
+    {
+      "name": "John Stott",
+      "lifespan": "1921-2011",
+      "spectrum": [
+        2,
+        4,
+        2,
+        3,
+        4
+      ],
+      "timeline": [
+        {
+          "label": "Evangelical Leadership (1950-2011)",
+          "spectrum": [
+            2,
+            4,
+            2,
+            3,
+            4
+          ],
+          "note": "Lausanne Covenant and social concern movement balance evangelical orthodoxy with creation care and poverty focus.",
+          "core_spectrum": {
+            "civil_rights_score": 4,
+            "openness_score": 2,
+            "redistribution_score": 3,
+            "ethics_score": 4
+          }
+        }
+      ],
+      "core_spectrum": {
+        "civil_rights_score": 4,
+        "openness_score": 2,
+        "redistribution_score": 3,
+        "ethics_score": 4
+      }
+    },
+    {
+      "name": "Cornel West",
+      "lifespan": "b. 1953",
+      "spectrum": [
+        4,
+        1,
+        0,
+        6,
+        0
+      ],
+      "timeline": [
+        {
+          "label": "Academic & Prophetic Ministry (1980s-2010s)",
+          "spectrum": [
+            4,
+            1,
+            0,
+            6,
+            0
+          ],
+          "note": "Democratic socialism and Black prophetic tradition combine radical economic critique with full rights advocacy.",
+          "core_spectrum": {
+            "civil_rights_score": 1,
+            "openness_score": 2,
+            "redistribution_score": 5,
+            "ethics_score": 0
+          }
+        },
+        {
+          "label": "Political Activism (2015-present)",
+          "spectrum": [
+            4,
+            1,
+            0,
+            6,
+            0
+          ],
+          "note": "Sanders campaigns and Green Party run maintain democratic socialist religious progressivism.",
+          "core_spectrum": {
+            "civil_rights_score": 1,
+            "openness_score": 2,
+            "redistribution_score": 5,
+            "ethics_score": 0
+          }
+        }
+      ],
+      "core_spectrum": {
+        "civil_rights_score": 1,
+        "openness_score": 2,
+        "redistribution_score": 5,
+        "ethics_score": 0
+      }
+    },
+    {
+      "name": "Tim Keller",
+      "lifespan": "1950-2023",
+      "spectrum": [
+        2,
+        4,
+        3,
+        3,
+        4
+      ],
+      "timeline": [
+        {
+          "label": "Redeemer Presbyterian Founding (1989-2017)",
+          "spectrum": [
+            2,
+            4,
+            3,
+            3,
+            4
+          ],
+          "note": "Urban ministry model combines Reformed theology with racial justice concern and traditional sexual ethics.",
+          "core_spectrum": {
+            "civil_rights_score": 4,
+            "openness_score": 2,
+            "redistribution_score": 3,
+            "ethics_score": 4
+          }
+        },
+        {
+          "label": "Public Theology Era (2017-2023)",
+          "spectrum": [
+            2,
+            4,
+            3,
+            3,
+            3
+          ],
+          "note": "Trump criticism and 'third way' politics position between culture war extremes with orthodox theology.",
+          "core_spectrum": {
+            "civil_rights_score": 4,
+            "openness_score": 2,
+            "redistribution_score": 3,
+            "ethics_score": 3
+          }
+        }
+      ],
+      "core_spectrum": {
+        "civil_rights_score": 4,
+        "openness_score": 2,
+        "redistribution_score": 3,
+        "ethics_score": 4
+      }
+    },
+    {
+      "name": "Russell Moore",
+      "lifespan": "b. 1971",
+      "spectrum": [
+        2,
+        5,
+        3,
+        3,
+        3
+      ],
+      "timeline": [
+        {
+          "label": "Southern Baptist Leadership (2013-2021)",
+          "spectrum": [
+            2,
+            5,
+            4,
+            3,
+            4
+          ],
+          "note": "Religious liberty focus and adoption advocacy maintain conservative positions with racial reconciliation emphasis.",
+          "core_spectrum": {
+            "civil_rights_score": 5,
+            "openness_score": 3,
+            "redistribution_score": 3,
+            "ethics_score": 4
+          }
+        },
+        {
+          "label": "Trump-Era Dissent (2016-present)",
+          "spectrum": [
+            2,
+            5,
+            3,
+            3,
+            3
+          ],
+          "note": "Trump criticism and departure from SBC signal shift toward less partisan evangelical conservatism.",
+          "core_spectrum": {
+            "civil_rights_score": 5,
+            "openness_score": 2,
+            "redistribution_score": 3,
+            "ethics_score": 3
+          }
+        }
+      ],
+      "core_spectrum": {
+        "civil_rights_score": 5,
+        "openness_score": 2,
+        "redistribution_score": 3,
+        "ethics_score": 3
+      }
+    },
+    {
+      "name": "Beth Moore",
+      "lifespan": "b. 1957",
+      "spectrum": [
+        2,
+        4,
+        2,
+        3,
+        2
+      ],
+      "timeline": [
+        {
+          "label": "Bible Study Ministry (1990s-2016)",
+          "spectrum": [
+            2,
+            5,
+            3,
+            3,
+            4
+          ],
+          "note": "Women's ministry focus maintains complementarian theology with evangelical orthodoxy.",
+          "core_spectrum": {
+            "civil_rights_score": 5,
+            "openness_score": 2,
+            "redistribution_score": 3,
+            "ethics_score": 4
+          }
+        },
+        {
+          "label": "Prophetic Turn (2016-present)",
+          "spectrum": [
+            2,
+            4,
+            2,
+            3,
+            2
+          ],
+          "note": "Trump criticism and departure from SBC over abuse and sexism signal moderate shift on rights and politics.",
+          "core_spectrum": {
+            "civil_rights_score": 4,
+            "openness_score": 2,
+            "redistribution_score": 3,
+            "ethics_score": 2
+          }
+        }
+      ],
+      "core_spectrum": {
+        "civil_rights_score": 4,
+        "openness_score": 2,
+        "redistribution_score": 3,
+        "ethics_score": 2
+      }
+    }
+  ]
+}

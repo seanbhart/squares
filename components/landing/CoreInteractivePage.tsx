@@ -24,11 +24,15 @@ export default function CoreInteractivePage() {
   // New State for Selection Overlay
   const [tempValue, setTempValue] = useState<number | null>(null);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
+  
+  // State for Historical Figures Data
+  const [figuresData, setFiguresData] = React.useState<any>(null);
+  const [viewingFigure, setViewingFigure] = React.useState<any>(null);
 
-  // Wheel values from Top (Red/High) to Bottom (Purple/Low)
+  // Wheel values from Top (Purple/Low) to Bottom (Red/High)
   // -1 represents the Grey/Null value in the center
-  const wheelValues = [5, 4, 3, -1, 2, 1, 0];
-
+  const wheelValues = [0, 1, 2, -1, 3, 4, 5];
+  
   // Persistence: Load from localStorage on mount
   React.useEffect(() => {
     const saved = localStorage.getItem('core_squares_selection');
@@ -52,7 +56,7 @@ export default function CoreInteractivePage() {
   
   // Lock scroll when modal/overlay is open
   React.useEffect(() => {
-    if (viewingBloc || activeAxis) {
+    if (viewingBloc || activeAxis || viewingFigure) {
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = 'unset';
@@ -60,7 +64,7 @@ export default function CoreInteractivePage() {
     return () => {
       document.body.style.overflow = 'unset';
     };
-  }, [viewingBloc, activeAxis]);
+  }, [viewingBloc, activeAxis, viewingFigure]);
   
   // Initialize tempValue when activeAxis opens and scroll to position
   useEffect(() => {
@@ -93,6 +97,13 @@ export default function CoreInteractivePage() {
       return () => clearTimeout(timer);
     }
   }, [showIntro]);
+  
+  // Load figures data on mount
+  React.useEffect(() => {
+    import('@/data/figures_core.json')
+      .then(data => setFiguresData(data.default || data))
+      .catch(err => console.error('Failed to load figures data:', err));
+  }, []);
   
   // Map grid indices to CORE letters and axis keys
   const indexToAxis: Record<number, AxisKey> = {
@@ -202,7 +213,7 @@ export default function CoreInteractivePage() {
       // If tempValue is -1, it means "None" / Grey
       const finalValue = tempValue === -1 ? null : tempValue;
       setSelectedValues(prev => ({ ...prev, [activeAxis]: finalValue }));
-      setActiveAxis(null);
+    setActiveAxis(null);
     }
   };
   
@@ -416,11 +427,19 @@ export default function CoreInteractivePage() {
     } else if (tempValue === -1) {
       labelText = 'Reset / No Selection';
     }
-
+    
     return (
       <div className={styles.selectionOverlay} onClick={() => handleSaveSelection()}>
         <div className={styles.selectionContainer} onClick={(e) => e.stopPropagation()}>
           
+          {/* Header: Axis Name and Binary Label */}
+          <div className={styles.selectionHeader}>
+            <div className={styles.selectionTitle}>{axis.name}</div>
+            <div className={styles.selectionBinaryLabel}>
+              {letters.low} = {axis.lowLabel} ↔ {letters.high} = {axis.highLabel}
+            </div>
+          </div>
+
           <div className={styles.squaresRow}>
             {/* Left: Indicator Square (Black/White + Letter) */}
             <div 
@@ -429,8 +448,8 @@ export default function CoreInteractivePage() {
               onClick={handleSaveSelection}
             >
               {indicatorLetter}
-            </div>
-
+          </div>
+          
             {/* Right: Wheel Selector (Colored Stack) */}
             <div className={styles.wheelWrapper}>
               <div 
@@ -452,10 +471,17 @@ export default function CoreInteractivePage() {
                   // If not selected, fade out
                   const opacity = isSelected ? 1 : 0.3;
                   const scale = isSelected ? 1 : 0.8;
-
-                  return (
-                    <div 
-                      key={idx} 
+                  
+                  // Get contrasting text color for the colored square label
+                  let coloredSquareTextColor = '#fff';
+                  if (val !== -1) {
+                    // For warm colors (gold, orange, red), use dark text; for cool colors (purple, blue, green), use white
+                    coloredSquareTextColor = val >= 3 ? '#000' : '#fff';
+                  }
+              
+              return (
+                <div 
+                  key={idx} 
                       className={styles.wheelItem} 
                       data-wheel-item
                       onClick={() => {
@@ -473,22 +499,39 @@ export default function CoreInteractivePage() {
                     >
                       <div 
                         className={styles.wheelSquare}
-                        style={{ 
+                  style={{
                           background: bgColor,
                           opacity,
-                          transform: `scale(${scale})`
+                          transform: `scale(${scale})`,
+                          position: 'relative',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
                         }}
-                      />
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
+                      >
+                        {isSelected && labelText !== 'Reset / No Selection' && (
+                          <span style={{
+                            color: coloredSquareTextColor,
+                            fontSize: 'clamp(0.9rem, 4vmin, 1.8rem)',
+                            fontWeight: 700,
+                            textAlign: 'center',
+                            padding: '0.5rem',
+                            lineHeight: 1.2,
+                            textShadow: val >= 3 
+                              ? '0 1px 2px rgba(255,255,255,0.3)' 
+                              : '0 1px 3px rgba(0,0,0,0.4)',
+                            pointerEvents: 'none',
+                            userSelect: 'none',
+                          }}>
+                            {labelText}
+                          </span>
+                        )}
+                  </div>
+                </div>
+              );
+            })}
           </div>
-
-          {/* Label */}
-          <div className={styles.selectionLabel}>
-            {labelText}
+            </div>
           </div>
 
           {/* Save Button */}
@@ -664,30 +707,67 @@ export default function CoreInteractivePage() {
   const renderHistoricalFigures = () => {
     // Only show if all four axes are selected
     const allSelected = Object.values(selectedValues).every(v => v !== null);
-    if (!allSelected) return null;
+    if (!allSelected || !figuresData || !figuresData.figures) return null;
+
+    const userScores = {
+      civilRights: selectedValues.civilRights!,
+      openness: selectedValues.openness!,
+      redistribution: selectedValues.redistribution!,
+      ethics: selectedValues.ethics!,
+    };
+
+    // Calculate distance to all figures
+    const figuresWithDistance = figuresData.figures.map((figure: any) => {
+      if (!figure.core_spectrum) return null;
+      
+      const distance = Math.sqrt(
+        Math.pow(figure.core_spectrum.civil_rights_score - userScores.civilRights, 2) +
+        Math.pow(figure.core_spectrum.openness_score - userScores.openness, 2) +
+        Math.pow(figure.core_spectrum.redistribution_score - userScores.redistribution, 2) +
+        Math.pow(figure.core_spectrum.ethics_score - userScores.ethics, 2)
+      );
+      
+      return { figure, distance };
+    }).filter((item: any) => item !== null);
+
+    // Sort by distance and take top 3
+    const closestFigures = figuresWithDistance
+      .sort((a: any, b: any) => a.distance - b.distance)
+      .slice(0, 3);
 
     return (
       <div className={styles.figuresSection}>
         <div className={styles.figuresHeading}>history's patterns</div>
         <p className={styles.figuresSubtext}>
-          see where famous figures land on CORE
+          famous figures with similar CORE positions
         </p>
         <div className={styles.figuresPlaceholder}>
-          <div className={styles.figureCard}>
-            <div className={styles.figureAvatar}>?</div>
-            <div className={styles.figureName}>Historical Figure</div>
-            <div className={styles.figureGrid}>Coming Soon</div>
-          </div>
-          <div className={styles.figureCard}>
-            <div className={styles.figureAvatar}>?</div>
-            <div className={styles.figureName}>Modern Leader</div>
-            <div className={styles.figureGrid}>Coming Soon</div>
-          </div>
-          <div className={styles.figureCard}>
-            <div className={styles.figureAvatar}>?</div>
-            <div className={styles.figureName}>Political Icon</div>
-            <div className={styles.figureGrid}>Coming Soon</div>
-          </div>
+          {closestFigures.map(({ figure }: any) => {
+            const initials = figure.name
+              .split(' ')
+              .map((n: string) => n[0])
+              .join('');
+            
+            return (
+              <div 
+                key={figure.name} 
+                className={styles.figureCard}
+                onClick={() => setViewingFigure(figure)}
+                style={{ cursor: 'pointer' }}
+              >
+                <div className={styles.figureAvatar}>{initials}</div>
+                <div className={styles.figureName}>{figure.name}</div>
+                <div style={{ marginTop: '0.5rem' }}>
+                  {renderMiniGrid(
+                    figure.core_spectrum.civil_rights_score,
+                    figure.core_spectrum.openness_score,
+                    figure.core_spectrum.redistribution_score,
+                    figure.core_spectrum.ethics_score
+                  )}
+                </div>
+              </div>
+            );
+          })}
         </div>
       </div>
     );
@@ -829,6 +909,64 @@ export default function CoreInteractivePage() {
 
           <button className={styles.applyButton} onClick={applyBloc}>
             Apply to my squares
+          </button>
+        </div>
+      </div>
+    );
+  };
+
+  const renderFigureModal = () => {
+    if (!viewingFigure) return null;
+
+    const applyFigure = () => {
+      setSelectedValues({
+        civilRights: viewingFigure.core_spectrum.civil_rights_score,
+        openness: viewingFigure.core_spectrum.openness_score,
+        redistribution: viewingFigure.core_spectrum.redistribution_score,
+        ethics: viewingFigure.core_spectrum.ethics_score,
+      });
+      setViewingFigure(null);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
+    const initials = viewingFigure.name
+      .split(' ')
+      .map((n: string) => n[0])
+      .join('');
+
+    return (
+      <div className={styles.modalOverlay} onClick={() => setViewingFigure(null)}>
+        <div className={styles.modalContent} onClick={e => e.stopPropagation()}>
+          <button className={styles.modalClose} onClick={() => setViewingFigure(null)}>×</button>
+          
+          <div className={styles.modalHeader}>
+            <div style={{ transform: 'scale(1.5)', marginBottom: '4rem', marginTop: '2rem' }}>
+              {renderMiniGrid(
+                viewingFigure.core_spectrum.civil_rights_score,
+                viewingFigure.core_spectrum.openness_score,
+                viewingFigure.core_spectrum.redistribution_score,
+                viewingFigure.core_spectrum.ethics_score
+              )}
+            </div>
+            <div className={styles.modalName}>{viewingFigure.name}</div>
+            {viewingFigure.lifespan && (
+              <div className={styles.modalCallSign}>{viewingFigure.lifespan}</div>
+            )}
+          </div>
+
+          {viewingFigure.timeline && viewingFigure.timeline.length > 0 && (
+            <div className={styles.modalSection}>
+              <div className={styles.modalLabel}>Timeline</div>
+              {viewingFigure.timeline.map((period: any, idx: number) => (
+                <div key={idx} className={styles.modalText} style={{ marginBottom: '0.75rem' }}>
+                  <strong>{period.label}:</strong> {period.note}
+                </div>
+              ))}
+            </div>
+          )}
+
+          <button className={styles.applyButton} onClick={applyFigure}>
+            Apply {viewingFigure.name}'s CORE to my squares
           </button>
         </div>
       </div>
@@ -1044,6 +1182,7 @@ export default function CoreInteractivePage() {
         </div>
         {renderSelectionOverlay()}
         {renderBlocModal()}
+        {renderFigureModal()}
         <CoreIntroModal isOpen={showIntro} onClose={() => setShowIntro(false)} />
       </main>
     </>
