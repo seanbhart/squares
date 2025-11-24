@@ -968,11 +968,38 @@ export default function CoreInteractivePage() {
           {viewingFigure.timeline && viewingFigure.timeline.length > 0 && (
             <div className={styles.modalSection}>
               <div className={styles.modalLabel}>Timeline</div>
-              {viewingFigure.timeline.map((period: any, idx: number) => (
-                <div key={idx} className={styles.modalText} style={{ marginBottom: '0.75rem' }}>
-                  <strong>{period.label}:</strong> {period.note}
-                </div>
-              ))}
+              <div className={styles.timelineContainer}>
+                {viewingFigure.timeline.map((period: any, idx: number) => (
+                  <div 
+                    key={idx} 
+                    className={styles.timelineItem}
+                    onClick={() => {
+                      setSelectedValues({
+                        civilRights: period.core_spectrum.civil_rights_score,
+                        openness: period.core_spectrum.openness_score,
+                        redistribution: period.core_spectrum.redistribution_score,
+                        ethics: period.core_spectrum.ethics_score,
+                      });
+                      setViewingFigure(null);
+                      window.scrollTo({ top: 0, behavior: 'smooth' });
+                    }}
+                    style={{ cursor: 'pointer' }}
+                  >
+                    <div className={styles.timelineGrid}>
+                      {renderMiniGrid(
+                        period.core_spectrum.civil_rights_score,
+                        period.core_spectrum.openness_score,
+                        period.core_spectrum.redistribution_score,
+                        period.core_spectrum.ethics_score
+                      )}
+                    </div>
+                    <div className={styles.timelineContent}>
+                      <div className={styles.timelineLabel}>{period.label}</div>
+                      <div className={styles.timelineNote}>{period.note}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
           )}
 
