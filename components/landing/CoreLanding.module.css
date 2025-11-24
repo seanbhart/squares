@@ -1056,7 +1056,8 @@
 @media (max-width: 480px) {
   .coreGrid {
     grid-template-columns: 1fr;
-    gap: 0.75rem;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
   }
 }
 
@@ -1074,9 +1075,11 @@
 @media (max-width: 480px) {
   .coreItem {
     flex-direction: row;
-    padding: 1rem;
-    gap: 1rem;
+    padding: 0.6rem 0.75rem;
+    gap: 0.6rem;
     text-align: left;
+    align-items: center;
+    border-radius: 0.6rem;
   }
 }
 
@@ -1090,8 +1093,8 @@
 
 @media (max-width: 480px) {
   .coreLetter {
-    font-size: 2.5rem;
-    width: 3rem;
+    font-size: 1.75rem;
+    width: 2rem;
     text-align: center;
   }
 }
@@ -1106,6 +1109,7 @@
 @media (max-width: 480px) {
   .coreItemText {
     align-items: flex-start;
+    gap: 0.1rem;
   }
 }
 
@@ -1114,6 +1118,13 @@
   font-weight: 700;
   color: rgba(255, 255, 255, 0.95);
   letter-spacing: 0.02em;
+}
+
+@media (max-width: 480px) {
+  .coreLabel {
+    font-size: 0.85rem;
+    line-height: 1.2;
+  }
 }
 
 .coreDescription {
@@ -1125,8 +1136,10 @@
 
 @media (max-width: 480px) {
   .coreDescription {
+    font-size: 0.7rem;
+    line-height: 1.25;
     text-align: left;
-    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.6);
   }
 }
 
@@ -1143,8 +1156,9 @@
 
 @media (max-width: 480px) {
   .coreAxis {
-    font-size: 0.75rem;
-    padding: 0.25rem 0.5rem;
+    font-size: 0.65rem;
+    padding: 0.2rem 0.4rem;
+    margin-top: 0.15rem;
   }
 }
 
@@ -1402,6 +1416,14 @@
   gap: 1.5rem;
 }
 
+@media (max-width: 480px) {
+  .figuresSection {
+    padding: 1rem;
+    gap: 1rem;
+    margin: 2rem auto 1rem;
+  }
+}
+
 .figuresHeading {
   font-size: 1.5rem;
   font-weight: 700;
@@ -1418,22 +1440,37 @@
 
 .figuresPlaceholder {
   display: flex;
-  gap: 2rem;
+  gap: 1.5rem;
   flex-wrap: wrap;
   justify-content: center;
+}
+
+@media (max-width: 480px) {
+  .figuresPlaceholder {
+    gap: 0.75rem;
+    width: 100%;
+  }
 }
 
 .figureCard {
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid rgba(255, 255, 255, 0.05);
-  padding: 2rem;
+  padding: 1.5rem 1rem;
   border-radius: 1rem;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1rem;
+  gap: 0.75rem;
   width: 200px;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@media (max-width: 480px) {
+  .figureCard {
+    width: calc(50% - 0.5rem);
+    padding: 1rem 0.5rem;
+    gap: 0.5rem;
+  }
 }
 
 .figureCard:hover {
@@ -1455,8 +1492,23 @@
   color: rgba(255, 255, 255, 0.3);
 }
 
+@media (max-width: 480px) {
+  .figureAvatar {
+    width: 50px;
+    height: 50px;
+    font-size: 1.25rem;
+  }
+}
+
 .figureName {
   font-weight: 600;
+  text-align: center;
+}
+
+@media (max-width: 480px) {
+  .figureName {
+    font-size: 0.85rem;
+  }
 }
 
 .figureGrid {
