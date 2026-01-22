@@ -1,5 +1,10 @@
 'use client';
 
+/**
+ * @deprecated This component uses the legacy TAMER framework.
+ * See SquaresWidget.tsx for migration details to CORE framework.
+ */
+
 import React, { useState } from 'react';
 import { SquaresWidget } from './SquaresWidget';
 
@@ -15,6 +20,7 @@ const COLORS = {
   border: 'rgba(255, 255, 255, 0.08)',
 } as const;
 
+// TODO: CORE Migration - Change to 6 colors for 0-5 scale (remove dark slate)
 const COLOR_RAMP = [
   "#7e568e", // Purple
   "#1f6adb", // Blue
@@ -150,6 +156,7 @@ export function SquaresEmbedReact({
             <h3 style={{ margin: '0 0 12px 0', fontSize: 'clamp(1.375rem, 3vw, 1.75rem)', fontWeight: 700, color: COLORS.textPrimary, lineHeight: 1.2 }}>
               Square Your Political Personality
             </h3>
+            {/* TODO: CORE Migration - Change to "four political dimensions" */}
             <p style={{ margin: 0, fontSize: 'clamp(0.9375rem, 2vw, 1rem)', color: COLORS.textSecondary, lineHeight: '1.5' }}>
               Square yourself across five political dimensions
             </p>
@@ -172,6 +179,8 @@ export function SquaresEmbedReact({
                 Martin Luther King Jr.
               </span>
             </div>
+            {/* TODO: CORE Migration - Change to 4 ColorSquares with CORE dimension labels:
+                Civil Rights, Openness, Redistribution, Ethics */}
             <div style={{ textAlign: 'center' }}>
               <div style={{ marginBottom: '12px', display: 'flex', justifyContent: 'center', gap: 'clamp(6px, 1.5vw, 12px)' }}>
                 <ColorSquare value={2} size={48} />

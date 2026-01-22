@@ -4,7 +4,7 @@ import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
 import FullPageLoadingSpinner from "@/components/FullPageLoadingSpinner";
 import styles from "./figures.module.css";
-import { POLICIES, getScoreColor, getEmojiSquare } from "@/lib/tamer-config";
+import { CORE_DIMENSIONS, getDimensionColor } from "@/lib/core-config";
 import { ClipboardIcon, CheckIcon, MessageCircleIcon } from "@/components/icons";
 import FiguresChatBox, { type Message } from "@/components/FiguresChatBox";
 import type { Figure, FiguresData } from "@/lib/api/figures";
@@ -110,17 +110,24 @@ export default function FiguresPage() {
     loadFigures();
   }, []);
 
-  const userEmojiSignature = userAssessment 
-    ? POLICIES.map((_, index) => getEmojiSquare(userAssessment[index] ?? 3)).join('')
+  // Generate emoji signature for CORE (4 dimensions, 0-5 scale)
+  const getEmojiForScore = (score: number): string => {
+    // CORE uses 0-5 scale (6 values)
+    const emojis = ['🟦', '🟩', '🟨', '🟧', '🟥', '🟪'];
+    return emojis[Math.min(Math.max(score, 0), 5)];
+  };
+
+  const userEmojiSignature = userAssessment
+    ? CORE_DIMENSIONS.map((_, index) => getEmojiForScore(userAssessment[index] ?? 2)).join('')
     : null;
 
-  const letters = ['T', 'A', 'M', 'E', 'R'];
+  const letters = ['C', 'O', 'R', 'E'];
 
   const handleShareFigure = async (figureName: string, spectrum: (number | null)[], label?: string) => {
-    const emojiPattern = spectrum.map(value => value !== null ? getEmojiSquare(value) : '⬜').join('');
-    const shareText = label 
-      ? `Political spectrum for ${figureName} (${label}):\n${emojiPattern}\n\nTrade, Abortion, Migration, Economics, Rights — Square yourself at squares.vote`
-      : `Political spectrum for ${figureName}:\n${emojiPattern}\n\nTrade, Abortion, Migration, Economics, Rights — Square yourself at squares.vote`;
+    const emojiPattern = spectrum.map(value => value !== null ? getEmojiForScore(value) : '⬜').join('');
+    const shareText = label
+      ? `Political spectrum for ${figureName} (${label}):\n${emojiPattern}\n\nCivil Rights, Openness, Redistribution, Ethics — Square yourself at squares.vote`
+      : `Political spectrum for ${figureName}:\n${emojiPattern}\n\nCivil Rights, Openness, Redistribution, Ethics — Square yourself at squares.vote`;
 
     // Try native share first (mobile)
     if (navigator.share) {
@@ -179,10 +186,10 @@ export default function FiguresPage() {
   const handleMobileChatOpen = () => {
     setMobileChatOpen(true);
     setMobileOverlayMode('chat');
-    setSelectedFigure({ 
-      name: '', 
-      spectrum: [3, 3, 3, 3, 3], 
-      isFromChat: true 
+    setSelectedFigure({
+      name: '',
+      spectrum: [2, 2, 2, 2],
+      isFromChat: true
     } as ChatFigure);
   };
 
@@ -216,7 +223,7 @@ export default function FiguresPage() {
   const handleShare = async () => {
     if (!userEmojiSignature) return;
 
-    const shareText = `My political personality Squares:\n${userEmojiSignature}\n\nTrade, Abortion, Migration, Economics, Rights — Square yourself at squares.vote`;
+    const shareText = `My political personality Squares:\n${userEmojiSignature}\n\nCivil Rights, Openness, Redistribution, Ethics — Square yourself at squares.vote`;
 
     // Try native share first (mobile)
     if (navigator.share) {
@@ -294,25 +301,12 @@ export default function FiguresPage() {
           <div className={styles.userCard}>
             <h2 className={styles.userTitle}>Your Pattern</h2>
             <div className={styles.userSquares}>
-              {POLICIES.map((policy, index) => {
-                const value = userAssessment[index] ?? 3;
-                const color = getScoreColor(policy.key, value);
-                
-                // Format labels to be consistent with slides
-                const getDisplayLabel = (label: string) => {
-                  if (label === 'Migration / Immigration') {
-                    return { line1: 'Migration /', line2: 'Immigration' };
-                  }
-                  if (label === 'Rights (civil liberties)') {
-                    return { line1: 'Rights', line2: '(civil liberties)' };
-                  }
-                  return { line1: label, line2: null };
-                };
-                
-                const displayLabel = getDisplayLabel(policy.label);
-                
+              {CORE_DIMENSIONS.map((dimension, index) => {
+                const value = userAssessment[index] ?? 2;
+                const color = getDimensionColor(value);
+
                 return (
-                  <div key={policy.key} className={styles.userSquareItem}>
+                  <div key={dimension.key} className={styles.userSquareItem}>
                     <div
                       className={styles.userSquare}
                       style={{ backgroundColor: color }}
@@ -320,13 +314,7 @@ export default function FiguresPage() {
                       <span className={styles.squareLetter}>{letters[index]}</span>
                     </div>
                     <span className={styles.squareLabel}>
-                      {displayLabel.line1}
-                      {displayLabel.line2 && (
-                        <>
-                          <br />
-                          {displayLabel.line2}
-                        </>
-                      )}
+                      {dimension.name}
                     </span>
                   </div>
                 );
@@ -403,14 +391,16 @@ export default function FiguresPage() {
                     <p className={styles.figureLifespan}>{figure.lifespan}</p>
                     <div className={styles.figureSquares}>
                       {figure.spectrum.map((value, index) => {
-                        const policy = POLICIES[index];
-                        const color = getScoreColor(policy.key, value);
+                        const dimension = CORE_DIMENSIONS[index];
+                        if (!dimension) return null;
+                        const color = getDimensionColor(value);
+                        const label = value <= 2 ? dimension.negativeLabel : dimension.positiveLabel;
                         return (
                           <div
-                            key={policy.key}
+                            key={dimension.key}
                             className={styles.figureSquare}
                             style={{ backgroundColor: color }}
-                            title={`${policy.label}: ${policy.colorRamp[value]}`}
+                            title={`${dimension.name}: ${label}`}
                           />
                         );
                       })}
@@ -496,14 +486,17 @@ export default function FiguresPage() {
             
             <div className={styles.detailSquares}>
               {selectedFigure.spectrum.map((value, index) => {
-                const policy = POLICIES[index];
-                const color = value !== null ? getScoreColor(policy.key, value) : '#ffffff';
-                const label = value !== null ? policy.colorRamp[value] : 'Unknown';
+                const dimension = CORE_DIMENSIONS[index];
+                if (!dimension) return null;
+                const color = value !== null ? getDimensionColor(value) : '#ffffff';
+                const label = value !== null
+                  ? (value <= 2 ? dimension.negativeLabel : dimension.positiveLabel)
+                  : 'Unknown';
                 return (
-                  <div key={policy.key} className={styles.detailSquareItem}>
+                  <div key={dimension.key} className={styles.detailSquareItem}>
                     <div
                       className={styles.detailSquare}
-                      style={{ 
+                      style={{
                         backgroundColor: color,
                         border: value === null ? '2px solid #dee2e6' : undefined
                       }}
@@ -511,7 +504,7 @@ export default function FiguresPage() {
                       <span className={styles.squareLetter}>{letters[index]}</span>
                     </div>
                     <div className={styles.detailSquareInfo}>
-                      <span className={styles.detailSquareLabel}>{policy.label}</span>
+                      <span className={styles.detailSquareLabel}>{dimension.name}</span>
                       <span className={styles.detailSquareValue}>{label}</span>
                     </div>
                   </div>
@@ -536,14 +529,16 @@ export default function FiguresPage() {
                     </div>
                     <div className={styles.timelineSquares}>
                       {entry.spectrum.map((value, idx) => {
-                        const policy = POLICIES[idx];
-                        const color = getScoreColor(policy.key, value);
+                        const dimension = CORE_DIMENSIONS[idx];
+                        if (!dimension) return null;
+                        const color = getDimensionColor(value);
+                        const label = value <= 2 ? dimension.negativeLabel : dimension.positiveLabel;
                         return (
                           <div
-                            key={policy.key}
+                            key={dimension.key}
                             className={styles.timelineSquare}
                             style={{ backgroundColor: color }}
-                            title={`${policy.label}: ${policy.colorRamp[value]}`}
+                            title={`${dimension.name}: ${label}`}
                           />
                         );
                       })}
@@ -580,7 +575,7 @@ export default function FiguresPage() {
 
       <footer className={styles.footer}>
         <p>
-          <a href={dataUrl} className={styles.footerLink}>Public Data</a> • Squaring political personalities with <a href={mainSiteUrl} className={styles.footerLink}>TAME-R</a> • <a href={developerUrl} className={styles.footerLink}>Developers</a>
+          <a href={dataUrl} className={styles.footerLink}>Public Data</a> • Squaring political personalities with <a href={mainSiteUrl} className={styles.footerLink}>CORE</a> • <a href={developerUrl} className={styles.footerLink}>Developers</a>
         </p>
         <a href={mainSiteUrl} className={styles.footerButton}>Take the Assessment</a>
       </footer>

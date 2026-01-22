@@ -1,11 +1,20 @@
-import { COLOR_RAMP } from '@/lib/tamer-config';
 import styles from './LoadingSpinner.module.css';
+
+// CORE color ramp (6 colors for 0-5 scale)
+const CORE_COLOR_RAMP = [
+  '#9B59B6', // purple (0)
+  '#3498DB', // blue (1)
+  '#2ECC71', // green (2)
+  '#F1C40F', // yellow (3)
+  '#E67E22', // orange (4)
+  '#E74C3C', // red (5)
+];
 
 export default function LoadingSpinner() {
   return (
     <div className={styles.loadingContainer}>
       <div className={styles.loadingSpinner}>
-        {COLOR_RAMP.map((color, index) => (
+        {CORE_COLOR_RAMP.map((color, index) => (
           <div
             key={index}
             className={styles.loadingSquare}

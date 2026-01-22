@@ -2,6 +2,24 @@
 
 import React, { useState, useCallback } from 'react';
 
+/**
+ * @deprecated This widget uses the legacy TAMER framework (5 dimensions, 0-6 scale).
+ * It needs to be migrated to the CORE framework (4 dimensions: Civil Rights, Openness,
+ * Redistribution, Ethics with 0-5 scale).
+ *
+ * TODO: CORE Migration Required
+ * - Change POLICIES from 5 TAMER dimensions to 4 CORE dimensions (C, O, R, E)
+ * - Update COLOR_RAMP from 7 colors (0-6) to 6 colors (0-5)
+ * - Update POSITION_LABELS to 6 values per dimension using bloc_config.json axes.*.values
+ * - Update EXAMPLE_FIGURES to use 4-element spectrum arrays
+ * - Update getEmojiSquare to use 6-emoji array
+ * - Update getSignatureText to use 'C', 'O', 'R', 'E' letters
+ * - Update all UI text references (e.g., "7-color spectrum" -> "6-color spectrum")
+ *
+ * Reference files:
+ * - /lib/core-config.ts for CORE_DIMENSIONS definitions
+ * - /analytics/bloc_config.json for dimension labels and values
+ */
 export interface SquaresWidgetProps {
   onClose: (spectrum?: Record<string, number>) => void;
   primaryColor?: string;
@@ -9,6 +27,7 @@ export interface SquaresWidgetProps {
   initialStep?: number;
 }
 
+// TODO: CORE Migration - Update theme colors if needed for new framework
 // Theme colors matching app/globals.css
 const COLORS = {
   bgPrimary: '#121113',
@@ -23,6 +42,11 @@ const COLORS = {
   borderStrong: 'rgba(255, 255, 255, 0.12)',
 } as const;
 
+// TODO: CORE Migration - Replace with 4 CORE dimensions:
+// { key: 'civilRights', label: 'Civil Rights', shortName: 'C' },
+// { key: 'openness', label: 'Openness', shortName: 'O' },
+// { key: 'redistribution', label: 'Redistribution', shortName: 'R' },
+// { key: 'ethics', label: 'Ethics', shortName: 'E' },
 const POLICIES = [
   { key: 'trade', label: 'Trade', emoji: '🌐' },
   { key: 'abortion', label: 'Abortion', emoji: '🤰' },
@@ -31,6 +55,9 @@ const POLICIES = [
   { key: 'rights', label: 'Rights', emoji: '🏳️‍🌈' },
 ];
 
+// TODO: CORE Migration - Change to 6 colors for 0-5 scale:
+// ["#7e568e", "#1f6adb", "#398a34", "#eab308", "#e67e22", "#c0392b"]
+// (Remove the 7th dark slate color)
 const COLOR_RAMP = [
   "#7e568e", // Purple (Trade)
   "#1f6adb", // Blue (Abortion)
@@ -41,6 +68,11 @@ const COLOR_RAMP = [
   "#383b3d", // Dark slate
 ] as const;
 
+// TODO: CORE Migration - Replace with 4 CORE dimensions, 6 values each (from bloc_config.json):
+// civilRights: ['abolish enforcement', 'civil libertarian', 'privacy protections', 'public safety measures', 'surveillance state', 'police state']
+// openness: ['open borders', 'free movement', 'trade agreements', 'controlled immigration', 'strict border security', 'closed borders']
+// redistribution: ['pure capitalism', 'free markets', 'mixed economy', 'social programs', 'wealth redistribution', 'planned economy']
+// ethics: ['radical social change', 'progressive reform', 'incremental progress', 'preserve traditions', 'traditional values', 'enforce conformity']
 const POSITION_LABELS: Record<string, string[]> = {
   trade: [
     'free trade',
@@ -89,24 +121,27 @@ const POSITION_LABELS: Record<string, string[]> = {
   ]
 };
 
+// TODO: CORE Migration - Update to 4-element spectrum arrays [C, O, R, E]:
+// Example: { name: 'Example', spectrum: [2, 1, 3, 2], ... }
+// Scores should be 0-5 for each dimension
 const EXAMPLE_FIGURES = [
-  { 
-    name: 'Martin Luther King Jr.', 
-    spectrum: [2, 1, 2, 4, 0], 
+  {
+    name: 'Martin Luther King Jr.',
+    spectrum: [2, 1, 2, 4, 0],
     period: '1963-1965',
     title: 'Civil Rights Movement Leadership',
     description: 'Led the March on Washington and Selma campaign, advocating for civil rights legislation and voting rights while maintaining nonviolent resistance.'
   },
-  { 
-    name: 'Ronald Reagan', 
-    spectrum: [0, 5, 3, 1, 4], 
+  {
+    name: 'Ronald Reagan',
+    spectrum: [0, 5, 3, 1, 4],
     period: '1981-1989',
     title: 'Reagan Presidency',
     description: 'Presidency marked by supply-side economics, conservative social policies, and strong anti-communist foreign policy during the Cold War.'
   },
-  { 
-    name: 'Franklin D. Roosevelt', 
-    spectrum: [3, 2, 2, 5, 2], 
+  {
+    name: 'Franklin D. Roosevelt',
+    spectrum: [3, 2, 2, 5, 2],
     period: '1933-1936',
     title: 'First New Deal',
     description: 'First term implementing the New Deal programs to combat the Great Depression through unprecedented government intervention in the economy.'
@@ -145,11 +180,14 @@ export function SquaresWidget({
   const [currentDimension, setCurrentDimension] = useState(0);
   const [selectedSpectrumDimension, setSelectedSpectrumDimension] = useState(0);
 
+  // TODO: CORE Migration - Change to 6 emojis for 0-5 scale:
+  // ['🟪', '🟦', '🟩', '🟨', '🟧', '🟥']
   const getEmojiSquare = (value: number): string => {
     const emojis = ['🟪', '🟦', '🟩', '🟨', '🟧', '🟥', '⬛️'];
     return emojis[value] || '🟨';
   };
 
+  // TODO: CORE Migration - Change to ['C', 'O', 'R', 'E'] letters
   const getSignatureText = () => {
     const letters = ['T', 'A', 'M', 'E', 'R'];
     return POLICIES.map((p, i) => `${letters[i]}${spectrum[p.key]}`).join(' ');

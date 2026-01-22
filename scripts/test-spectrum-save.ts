@@ -18,17 +18,16 @@ const supabase = createClient(supabaseUrl, supabaseServiceKey);
 async function testSpectrumSave() {
   console.log('Testing spectrum save...\n');
 
-  // Test data
+  // Test data (CORE framework: 0-5 scale)
   const testData = {
     fid: 999999, // Use a test FID
     username: 'testuser',
     display_name: 'Test User',
     pfp_url: 'https://example.com/avatar.jpg',
-    trade_score: 2,
-    abortion_score: 5,
-    migration_score: 3,
-    economics_score: 1,
-    rights_score: 4,
+    civil_rights_score: 2,
+    openness_score: 3,
+    redistribution_score: 1,
+    ethics_score: 4,
     is_public: true,
   };
 
@@ -81,7 +80,7 @@ async function testSpectrumSave() {
 
   console.log(`Found ${publicData?.length || 0} public entries:`);
   publicData?.forEach((entry) => {
-    console.log(`  - FID ${entry.fid}: ${entry.display_name || entry.username} [${entry.trade_score},${entry.abortion_score},${entry.migration_score},${entry.economics_score},${entry.rights_score}] Public: ${entry.is_public}`);
+    console.log(`  - FID ${entry.fid}: ${entry.display_name || entry.username} [${entry.civil_rights_score},${entry.openness_score},${entry.redistribution_score},${entry.ethics_score}] Public: ${entry.is_public}`);
   });
 
   console.log('\n✅ Test complete!');

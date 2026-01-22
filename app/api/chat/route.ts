@@ -1,5 +1,6 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { NextRequest, NextResponse } from "next/server";
+import { extractSpectrumData } from "@/lib/extract-spectrum-data";
 
 const anthropic = new Anthropic({
   apiKey: process.env.CLAUDE_API_KEY,
@@ -120,60 +121,7 @@ async function reviewAssessment(lastUserMessage: string, assessment: string): Pr
   return { approved, feedback };
 }
 
-// Helper to extract spectrum data from assessment text
-function extractSpectrumData(assessment: string): {
-  name?: string;
-  spectrum?: (number | null)[];
-  typeCode?: string;
-  confidence?: number;
-  reasoning?: string;
-} | null {
-  try {
-    // Look for pattern: [# ][Name] [emojis] ([type code])
-    // Handles markdown headings and optional type codes
-    // Using 'u' flag for proper Unicode/emoji handling
-    const nameMatch = assessment.match(/^#?\s*([^\n#]+?)\s+[🟪🟦🟩🟨🟧🟥⬜]+\s*\(([LAGNMSPTE]{4})\)/mu);
-    if (!nameMatch) return null;
-
-    const name = nameMatch[1].trim();
-    const typeCode = nameMatch[2] || undefined;
-
-    // Extract individual dimension scores by finding emoji patterns for CORE dimensions
-    // Handles markdown bold formatting (**Civil Rights:**)
-    const spectrum: (number | null)[] = [];
-    const dimensionLines = assessment.match(/\*?\*?(?:Civil Rights|Openness|Redistribution|Ethics):?\*?\*?\s*[🟪🟦🟩🟨🟧🟥⬜]/gu);
-
-    if (dimensionLines && dimensionLines.length === 4) {
-      dimensionLines.forEach(line => {
-        const emoji = line.match(/[🟪🟦🟩🟨🟧🟥⬜]/u)?.[0];
-        // CORE uses 0-5 scale (no ⬛️ 6)
-        const emojiToScore: Record<string, number | null> = {
-          '🟪': 0, '🟦': 1, '🟩': 2, '🟨': 3, '🟧': 4, '🟥': 5, '⬜': null
-        };
-        if (emoji && emoji in emojiToScore) {
-          spectrum.push(emojiToScore[emoji]);
-        }
-      });
-    }
-
-    // Extract confidence
-    const confidenceMatch = assessment.match(/Overall Confidence:\s*(\d+)%/);
-    const confidence = confidenceMatch ? parseInt(confidenceMatch[1]) : undefined;
-
-    // Extract reasoning
-    const reasoningMatch = assessment.match(/Reasoning:\s*([\s\S]+?)(?:\n\n|$)/);
-    const reasoning = reasoningMatch ? reasoningMatch[1].trim() : undefined;
-
-    if (spectrum.length === 4) {
-      return { name, spectrum, typeCode, confidence, reasoning };
-    }
-
-    return null;
-  } catch (error) {
-    console.error("Error extracting spectrum data:", error);
-    return null;
-  }
-}
+// extractSpectrumData is now imported from @/lib/extract-spectrum-data
 
 export async function POST(request: NextRequest) {
   try {

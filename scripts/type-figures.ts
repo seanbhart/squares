@@ -9,21 +9,18 @@ const anthropic = new Anthropic({
   apiKey: process.env.CLAUDE_API_KEY,
 });
 
-const ASSESSOR_PROMPT = `You are an expert assistant for squares.vote, which uses the TAME-R typology to map political positions across five policy dimensions:
+const ASSESSOR_PROMPT = `You are an expert assistant for squares.vote, which uses the CORE framework to map political positions across four dimensions:
 
-**TAME-R Dimensions:**
-1. **Trade** - Government intervention in EXTERNAL economic interactions. From unrestricted free trade with foreign markets (0) to protectionist tariffs and closed borders to goods/capital (6). This measures barriers to international commerce, NOT domestic economic policy.
-2. **Abortion** - From no gestational limit (0) to total ban (6)
-3. **Migration/Immigration** - From open borders (0) to no immigration (6)
-4. **Economics** - DOMESTIC capital ownership and economic planning. From pure private ownership/free market (0) to full state ownership/central planning (6). This measures public vs. private control of production, NOT trade policy.
-5. **Rights (civil liberties)** - From full legal equality (0) to criminalization (6)
+**CORE Dimensions (0-5 scale):**
+1. **Civil Rights (C)** - State constraint on personal freedoms. From minimal state constraint/maximum liberty (0) to maximum state constraint/authority (5). Measures surveillance, policing, civil liberties, and personal autonomy.
+2. **Openness (O)** - National vs global orientation. From supranational integration/open borders (0) to national sovereignty/closed borders (5). Measures trade policy, immigration, and international cooperation.
+3. **Redistribution (R)** - Economic allocation method. From pure market allocation (0) to full state redistribution (5). Measures taxation, welfare, public ownership, and economic intervention.
+4. **Ethics (E)** - Social change orientation. From progressive/change-seeking (0) to traditional/preservation-seeking (5). Measures stance on social issues, cultural values, and institutional change.
 
-Each dimension uses a 7-point scale (0-6) representing the level of government intervention—from minimal restrictions and maximum individual freedom to extensive regulation and state control.
-
-**IMPORTANT**: Trade and Economics are SEPARATE dimensions. A figure can support free trade (low Trade score) while favoring state ownership (high Economics score), or vice versa. Always assess them independently based on distinct policy areas.
+Each dimension uses a 6-point scale (0-5) representing the spectrum from individual freedom/change to state control/tradition.
 
 **Your Role:**
-- Provide TAME-R assessments for public figures
+- Provide CORE assessments for public figures
 - Explain your reasoning clearly, citing specific positions or actions
 - Express confidence levels (0-100%) for each assessment
 
@@ -33,28 +30,28 @@ Each dimension uses a 7-point scale (0-6) representing the level of government i
 3. **Cite specific evidence**: Every dimension score must reference at least one concrete action, policy, or decision. Generic statements like "supports X" are insufficient—specify WHAT they did.
 4. **Distinguish eras**: If a figure's actions changed over time, assess their overall record or specify which period you're evaluating.
 5. **Avoid hallucination**: If you're uncertain about a specific action or policy, say so explicitly. Do not fabricate votes, policies, or positions.
-6. **Default to status quo**: When evidence is limited, assume the figure accepts either (a) their community's current position, or (b) existing laws/cultural norms. Do NOT assume extreme positions (0-1 or 5-6) without explicit evidence.
-7. **Require evidence for extremes**: Only assign scores of 0-1 or 5-6 if there is specific, documented evidence of the figure actively advocating for or implementing those extreme positions, OR if their tightly-connected community explicitly advocates for them.
+6. **Default to status quo**: When evidence is limited, assume the figure accepts either (a) their community's current position, or (b) existing laws/cultural norms. Do NOT assume extreme positions (0 or 5) without explicit evidence.
+7. **Require evidence for extremes**: Only assign scores of 0 or 5 if there is specific, documented evidence of the figure actively advocating for or implementing those extreme positions, OR if their tightly-connected community explicitly advocates for them.
 
 **Confidence Thresholds:**
 - **Living persons**: Only provide assessment if confidence ≥ 50%
 - **Historical figures**: Only provide assessment if confidence ≥ 30%
 
-When providing a TAME-R assessment, format it as JSON:
+When providing a CORE assessment, format it as JSON:
 {
-  "spectrum": [trade, abortion, migration, economics, rights],
+  "spectrum": [civil_rights, openness, redistribution, ethics],
   "confidence": 75,
   "reasoning": "detailed explanation with specific evidence"
 }
 
 Return ONLY valid JSON, no other text.`;
 
-const REVIEWER_PROMPT = `You are a peer reviewer for TAME-R assessments. Your job is to verify the quality and accuracy of political typings.
+const REVIEWER_PROMPT = `You are a peer reviewer for CORE assessments. Your job is to verify the quality and accuracy of political typings.
 
 **Review Criteria:**
 1. **Evidence Quality**: Does each dimension cite specific, verifiable actions (not just rhetoric)?
-2. **Trade vs Economics Separation**: Are Trade (external commerce) and Economics (domestic ownership) assessed independently?
-3. **Extreme Score Justification**: Are scores of 0-1 or 5-6 backed by concrete evidence of active advocacy/implementation?
+2. **Dimension Independence**: Are all four dimensions (Civil Rights, Openness, Redistribution, Ethics) assessed independently based on distinct policy areas?
+3. **Extreme Score Justification**: Are scores of 0 or 5 backed by concrete evidence of active advocacy/implementation?
 4. **No Assumptions**: Are scores based on documented actions, not inferred from party/ideology?
 5. **Logical Consistency**: Do the scores align with the cited evidence?
 
@@ -97,9 +94,9 @@ type ReviewResult = {
 };
 
 async function getAssessment(name: string, period?: string, retries = 3): Promise<AssessmentResult> {
-  const prompt = period 
-    ? `Provide a TAME-R assessment for ${name} during the period: ${period}`
-    : `Provide a TAME-R assessment for: ${name}`;
+  const prompt = period
+    ? `Provide a CORE assessment for ${name} during the period: ${period}`
+    : `Provide a CORE assessment for: ${name}`;
 
   for (let attempt = 1; attempt <= retries; attempt++) {
     try {
