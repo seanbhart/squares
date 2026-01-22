@@ -1,5 +1,7 @@
 # CORE Migration Summary
 
+> **Note:** For the complete transition roadmap including marketing plans, see [ROADMAP.md](./ROADMAP.md)
+
 ## ✅ Completed: Ready for Launch
 
 ### Core Interactive Experience
@@ -126,23 +128,13 @@ core_is_user_set BOOLEAN (default: false)
 
 ## 🎯 Next Steps for Full CORE Migration
 
-1. **Create CORE Assessment Flow**
-   - Build new assessment component for users to set CORE scores
-   - Replace old TAMER assessment with CORE
-   - Save directly to CORE fields with `core_is_user_set = true`
+> **See [ROADMAP.md](./ROADMAP.md) for the complete transition plan with detailed tasks, marketing placeholders, and timeline.**
 
-2. **Update Miniapp**
-   - Convert Farcaster miniapp to use CORE
-   - Update leaderboard to show CORE positions
-   - Migrate miniapp users to CORE
+### Summary of Remaining Work
 
-3. **Admin & Analytics**
-   - Update admin dashboard to show CORE data
-   - Update analytics to track CORE dimensions
-   - Create CORE-specific insights
-
-4. **Documentation**
-   - Update all docs to reference CORE instead of TAMER
-   - Create API documentation for CORE endpoints
-   - Update embedding instructions
+1. **Technical Migration** - Chatbot, Miniapp, Admin dashboard
+2. **Historical Figures** - Complete CORE data migration, remove TAMER arrays
+3. **Website Enhancements** - Interactive content, improved UX
+4. **Marketing Campaign** - Farcaster announcements, community engagement
+5. **Analytics & Iteration** - Tracking, feedback loops
 
