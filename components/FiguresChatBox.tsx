@@ -14,6 +14,7 @@ export type Message = {
 type SpectrumData = {
   name: string;
   spectrum: (number | null)[];
+  typeCode?: string;
   confidence?: number;
   reasoning?: string;
 };

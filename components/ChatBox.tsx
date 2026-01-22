@@ -59,7 +59,7 @@ export default function ChatBox() {
           <div className={styles.placeholder}>
             <p>👋 Ask Squares anything!</p>
             <p className={styles.examples}>
-              Try: "What does TAME-R stand for?" or "Type Bernie Sanders"
+              Try: "What does CORE stand for?" or "Type Bernie Sanders"
             </p>
           </div>
         )}

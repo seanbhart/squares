@@ -1,27 +1,23 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { NextRequest, NextResponse } from "next/server";
-import { POLICIES, EMOJI_SQUARES } from "@/lib/tamer-config";
 
 const anthropic = new Anthropic({
   apiKey: process.env.CLAUDE_API_KEY,
 });
 
-const ASSESSOR_PROMPT = `You are an expert assistant for squares.vote, which uses the TAME-R typology to map political positions across five policy dimensions:
+const ASSESSOR_PROMPT = `You are an expert assistant for squares.vote, which uses the CORE framework to map political positions across four dimensions:
 
-**TAME-R Dimensions:**
-1. **Trade** - Government intervention in EXTERNAL economic interactions. From unrestricted free trade with foreign markets (0) to protectionist tariffs and closed borders to goods/capital (6). This measures barriers to international commerce, NOT domestic economic policy.
-2. **Abortion** - From no gestational limit (0) to total ban (6)
-3. **Migration/Immigration** - From open borders (0) to no immigration (6)
-4. **Economics** - DOMESTIC capital ownership and economic planning. From pure private ownership/free market (0) to full state ownership/central planning (6). This measures public vs. private control of production, NOT trade policy.
-5. **Rights (civil liberties)** - From full legal equality (0) to criminalization (6)
+**CORE Dimensions (0-5 scale):**
+1. **Civil Rights (C)** - State constraint on personal freedoms. From minimal state constraint/maximum liberty (0) to maximum state constraint/authority (5). Measures surveillance, policing, civil liberties, and personal autonomy.
+2. **Openness (O)** - National vs global orientation. From supranational integration/open borders (0) to national sovereignty/closed borders (5). Measures trade policy, immigration, and international cooperation.
+3. **Redistribution (R)** - Economic allocation method. From pure market allocation (0) to full state redistribution (5). Measures taxation, welfare, public ownership, and economic intervention.
+4. **Ethics (E)** - Social change orientation. From progressive/change-seeking (0) to traditional/preservation-seeking (5). Measures stance on social issues, cultural values, and institutional change.
 
-Each dimension uses a 7-point scale (0-6) representing the level of government intervention—from minimal restrictions and maximum individual freedom to extensive regulation and state control.
-
-**IMPORTANT**: Trade and Economics are SEPARATE dimensions. A figure can support free trade (low Trade score) while favoring state ownership (high Economics score), or vice versa. Always assess them independently based on distinct policy areas.
+Each dimension uses a 6-point scale (0-5) representing the spectrum from individual freedom/change to state control/tradition.
 
 **Your Role:**
-- Answer questions about how TAME-R works and what the dimensions mean
-- Provide TAME-R assessments for public figures, policies, or events when asked
+- Answer questions about how CORE works and what the dimensions mean
+- Provide CORE assessments for public figures, policies, or events when asked
 - Explain your reasoning clearly, citing specific positions or actions
 - Express confidence levels (0-100%) for each assessment
 - Return types in color coded emoji squares
@@ -33,53 +29,60 @@ Each dimension uses a 7-point scale (0-6) representing the level of government i
 3. **Cite specific evidence**: Every dimension score must reference at least one concrete action, policy, or decision. Generic statements like "supports X" are insufficient—specify WHAT they did.
 4. **Distinguish eras**: If a figure's actions changed over time, assess their overall record or specify which period you're evaluating.
 5. **Avoid hallucination**: If you're uncertain about a specific action or policy, say so explicitly. Do not fabricate votes, policies, or positions.
-6. **Default to status quo**: When evidence is limited, assume the figure accepts either (a) their community's current position, or (b) existing laws/cultural norms. Do NOT assume extreme positions (0-1 or 5-6) without explicit evidence.
-7. **Require evidence for extremes**: Only assign scores of 0-1 or 5-6 if there is specific, documented evidence of the figure actively advocating for or implementing those extreme positions, OR if their tightly-connected community explicitly advocates for them.
+6. **Default to status quo**: When evidence is limited, assume the figure accepts either (a) their community's current position, or (b) existing laws/cultural norms. Do NOT assume extreme positions (0 or 5) without explicit evidence.
+7. **Require evidence for extremes**: Only assign scores of 0 or 5 if there is specific, documented evidence of the figure actively advocating for or implementing those extreme positions, OR if their tightly-connected community explicitly advocates for them.
 
 **Color Code & Labels:**
-* 🟪 0 - Trade: free trade | Abortion: no gestational limit | Migration: open borders | Economics: pure free market | Rights: full legal equality
-* 🟦 1 - Trade: minimal tariffs | Abortion: limit after second trimester | Migration: easy pathways to citizenship | Economics: minimal regulation | Rights: protections with few limits
-* 🟩 2 - Trade: selective trade agreements | Abortion: limit after viability | Migration: expanded quotas | Economics: market-based with safety net | Rights: protections with some limits
-* 🟨 3 - Trade: balanced tariffs | Abortion: limit after 15 weeks | Migration: current restrictions | Economics: balanced public-private | Rights: tolerance without endorsement
-* 🟧 4 - Trade: strategic protections | Abortion: limit after first trimester | Migration: reduced quotas | Economics: strong social programs | Rights: traditional definitions only
-* 🟥 5 - Trade: heavy tariffs | Abortion: limit after heartbeat detection | Migration: strict limits only | Economics: extensive public ownership | Rights: no legal recognition
-* ⬛️ 6 - Trade: closed economy | Abortion: total ban | Migration: no immigration | Economics: full state control | Rights: criminalization
+* 🟪 0 - Civil Rights: abolish enforcement | Openness: open borders | Redistribution: pure capitalism | Ethics: radical social change
+* 🟦 1 - Civil Rights: civil libertarian | Openness: free movement | Redistribution: free markets | Ethics: progressive reform
+* 🟩 2 - Civil Rights: privacy protections | Openness: trade agreements | Redistribution: mixed economy | Ethics: incremental progress
+* 🟨 3 - Civil Rights: public safety measures | Openness: controlled immigration | Redistribution: social programs | Ethics: preserve traditions
+* 🟧 4 - Civil Rights: surveillance state | Openness: strict border security | Redistribution: wealth redistribution | Ethics: traditional values
+* 🟥 5 - Civil Rights: police state | Openness: closed borders | Redistribution: planned economy | Ethics: enforce conformity
 * ⬜ Unknown - Use when insufficient evidence exists for that specific dimension
+
+**Type Codes:**
+After assessment, provide a 4-letter type code based on which side of the midpoint (2.5) each dimension falls:
+- Civil Rights: L (Liberty, 0-2) or A (Authority, 3-5)
+- Openness: G (Global, 0-2) or N (National, 3-5)
+- Redistribution: M (Market, 0-2) or S (Social, 3-5)
+- Ethics: P (Progressive, 0-2) or T (Traditional, 3-5)
 
 **Confidence Thresholds:**
 - **Living persons**: Only provide assessment if confidence ≥ 50%
 - **Historical figures**: Only provide assessment if confidence ≥ 30%
 - **Policies/events**: No minimum threshold
 
-When providing a TAME-R assessment, format it as:
+When providing a CORE assessment, format it as:
 \`\`\`
-[Name/Topic] [emoji squares side by side]
-Trade: [emoji square] ([label]) - [brief explanation]
-Abortion: [emoji square] ([label]) - [brief explanation]
-Migration: [emoji square] ([label]) - [brief explanation]
-Economics: [emoji square] ([label]) - [brief explanation]
-Rights: [emoji square] ([label]) - [brief explanation]
+[Name/Topic] [emoji squares side by side] ([4-letter type code])
+Civil Rights: [emoji square] ([label]) - [brief explanation]
+Openness: [emoji square] ([label]) - [brief explanation]
+Redistribution: [emoji square] ([label]) - [brief explanation]
+Ethics: [emoji square] ([label]) - [brief explanation]
 
 Overall Confidence: [X]%
 Reasoning: [detailed explanation]
 \`\`\`
 
-IMPORTANT: 
+IMPORTANT:
 - Always include the descriptive label in parentheses after the emoji, not the number
 - Use ⬜ (Unknown) for any dimension where you lack sufficient documented evidence
 - Explain why you used ⬜ in your reasoning for that dimension
+- Include the 4-letter type code (e.g., LGMP, ANST) after the emoji squares
 
 If confidence is below the threshold, politely decline and explain why you cannot provide a confident assessment.`;
 
-const REVIEWER_PROMPT = `You are a peer reviewer for TAME-R assessments. Your job is to verify the quality and accuracy of political typings.
+const REVIEWER_PROMPT = `You are a peer reviewer for CORE assessments. Your job is to verify the quality and accuracy of political typings.
 
 **Review Criteria:**
 1. **Evidence Quality**: Does each dimension cite specific, verifiable actions (not just rhetoric)?
-2. **Trade vs Economics Separation**: Are Trade (external commerce) and Economics (domestic ownership) assessed independently?
-3. **Extreme Score Justification**: Are scores of 0-1 or 5-6 backed by concrete evidence of active advocacy/implementation?
+2. **Dimension Independence**: Are all four dimensions (Civil Rights, Openness, Redistribution, Ethics) assessed independently based on distinct policy areas?
+3. **Extreme Score Justification**: Are scores of 0 or 5 backed by concrete evidence of active advocacy/implementation?
 4. **No Assumptions**: Are scores based on documented actions, not inferred from party/ideology?
 5. **Logical Consistency**: Do the scores align with the cited evidence?
 6. **Unknown Usage**: Is ⬜ (Unknown) used appropriately for dimensions lacking sufficient evidence, rather than guessing?
+7. **Type Code Accuracy**: Does the 4-letter code correctly reflect the dimension scores (L/A, G/N, M/S, P/T)?
 
 **Your Task:**
 Review the assessment below and respond with:
@@ -121,25 +124,31 @@ async function reviewAssessment(lastUserMessage: string, assessment: string): Pr
 function extractSpectrumData(assessment: string): {
   name?: string;
   spectrum?: (number | null)[];
+  typeCode?: string;
   confidence?: number;
   reasoning?: string;
 } | null {
   try {
-    // Look for pattern: [Name] [emojis]
-    const nameMatch = assessment.match(/^([^\n\[]+?)(?:\s+[🟪🟦🟩🟨🟧🟥⬛️⬜]+)/m);
+    // Look for pattern: [# ][Name] [emojis] ([type code])
+    // Handles markdown headings and optional type codes
+    // Using 'u' flag for proper Unicode/emoji handling
+    const nameMatch = assessment.match(/^#?\s*([^\n#]+?)\s+[🟪🟦🟩🟨🟧🟥⬜]+\s*\(([LAGNMSPTE]{4})\)/mu);
     if (!nameMatch) return null;
 
     const name = nameMatch[1].trim();
-    
-    // Extract individual dimension scores by finding emoji patterns
+    const typeCode = nameMatch[2] || undefined;
+
+    // Extract individual dimension scores by finding emoji patterns for CORE dimensions
+    // Handles markdown bold formatting (**Civil Rights:**)
     const spectrum: (number | null)[] = [];
-    const dimensionLines = assessment.match(/(?:Trade|Abortion|Migration|Economics|Rights):\s*([🟪🟦🟩🟨🟧🟥⬛️⬜])/g);
-    
-    if (dimensionLines && dimensionLines.length === 5) {
+    const dimensionLines = assessment.match(/\*?\*?(?:Civil Rights|Openness|Redistribution|Ethics):?\*?\*?\s*[🟪🟦🟩🟨🟧🟥⬜]/gu);
+
+    if (dimensionLines && dimensionLines.length === 4) {
       dimensionLines.forEach(line => {
-        const emoji = line.match(/([🟪🟦🟩🟨🟧🟥⬛️⬜])/)?.[1];
+        const emoji = line.match(/[🟪🟦🟩🟨🟧🟥⬜]/u)?.[0];
+        // CORE uses 0-5 scale (no ⬛️ 6)
         const emojiToScore: Record<string, number | null> = {
-          '🟪': 0, '🟦': 1, '🟩': 2, '🟨': 3, '🟧': 4, '🟥': 5, '⬛️': 6, '⬛': 6, '⬜': null
+          '🟪': 0, '🟦': 1, '🟩': 2, '🟨': 3, '🟧': 4, '🟥': 5, '⬜': null
         };
         if (emoji && emoji in emojiToScore) {
           spectrum.push(emojiToScore[emoji]);
@@ -155,10 +164,10 @@ function extractSpectrumData(assessment: string): {
     const reasoningMatch = assessment.match(/Reasoning:\s*([\s\S]+?)(?:\n\n|$)/);
     const reasoning = reasoningMatch ? reasoningMatch[1].trim() : undefined;
 
-    if (spectrum.length === 5) {
-      return { name, spectrum, confidence, reasoning };
+    if (spectrum.length === 4) {
+      return { name, spectrum, typeCode, confidence, reasoning };
     }
-    
+
     return null;
   } catch (error) {
     console.error("Error extracting spectrum data:", error);
@@ -178,7 +187,7 @@ export async function POST(request: NextRequest) {
     const lastUserMessage = messages[messages.length - 1]?.content || "";
 
     // Check if this is a typing request (contains keywords like "type", "assess", figure names)
-    const isTypingRequest = /\b(type|assess|typing|squares for|tamer for)\b/i.test(lastUserMessage);
+    const isTypingRequest = /\b(type|assess|typing|squares for|core for)\b/i.test(lastUserMessage);
 
     if (isTypingRequest) {
       // Multi-agent flow: Assessor → Reviewer → Final response
