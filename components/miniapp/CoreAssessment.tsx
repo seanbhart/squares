@@ -1,9 +1,8 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './CoreAssessment.module.css';
-import { COLOR_RAMP, AXES, getAllSubTypesWithMeta, getTypeDescription, getTypeName, getTypePosition, FAMILY_NAMES, SubTypeWithMeta } from '@/lib/bloc-config';
-import { CheckIcon, ClipboardIcon } from '@/components/icons';
+import { AXES } from '@/lib/bloc-config';
 import { sdk } from '@farcaster/miniapp-sdk';
 
 type AxisKey = 'civilRights' | 'openness' | 'redistribution' | 'ethics';
@@ -35,16 +34,13 @@ export default function CoreAssessment({
   // Grid State
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [activeAxis, setActiveAxis] = useState<AxisKey | null>(null);
-  const [hoveredValue, setHoveredValue] = useState<number | null>(null);
   const [selectedValues, setSelectedValues] = useState<Record<AxisKey, number | null>>({
     civilRights: initialSpectrum?.civilRights ?? null,
     openness: initialSpectrum?.openness ?? null,
     redistribution: initialSpectrum?.redistribution ?? null,
     ethics: initialSpectrum?.ethics ?? null,
   });
-  const [viewingBloc, setViewingBloc] = useState<SubTypeWithMeta | null>(null);
   const [isPublic, setIsPublic] = useState(initialIsPublic);
-  const [copiedSpectrum, setCopiedSpectrum] = useState(false);
 
   // Auto-save when all dimensions are selected
   useEffect(() => {
@@ -201,7 +197,6 @@ export default function CoreAssessment({
   const renderCell = (type: 'empty' | 'filled' | 'special', i: number) => {
     const axis = indexToAxis[i];
     const selectedValue = axis ? selectedValues[axis] : null;
-    const isHovered = hoveredIndex === i;
 
     // Empty Squares
     if (type === 'empty') {

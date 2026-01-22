@@ -1,3 +1,17 @@
+/**
+ * @deprecated TAMER LEGACY CODE - DO NOT USE
+ *
+ * This component uses the old TAMER framework (5 dimensions, 0-6 scale).
+ * The project has migrated to CORE framework (4 dimensions, 0-5 scale).
+ *
+ * Use CoreAssessment from '@/components/miniapp/CoreAssessment' instead.
+ *
+ * This file is kept for reference but should not be used in new code.
+ * The /map route that uses this component has been disabled.
+ *
+ * TAMER dimensions: Trade, Abortion, Migration, Economics, Rights
+ * CORE dimensions: Civil Rights, Openness, Redistribution, Ethics
+ */
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
@@ -7,6 +21,7 @@ import { ClipboardIcon, CheckIcon } from '@/components/icons';
 
 type Answers = Record<number, number>; // dimensionIndex -> value
 
+/** @deprecated Use CoreAssessment instead */
 export default function ScrollAssessment() {
   const [answers, setAnswers] = useState<Answers>({});
   const [copyState, setCopyState] = useState<'idle' | 'copied' | 'error'>('idle');

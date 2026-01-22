@@ -1,9 +1,22 @@
+/**
+ * @deprecated TAMER LEGACY CODE - DO NOT USE
+ *
+ * This component uses the old TAMER framework (5 dimensions, 0-6 scale).
+ * The project has migrated to CORE framework (4 dimensions, 0-5 scale).
+ *
+ * This component was designed to be used with ScrollAssessment but is
+ * not currently imported anywhere. It is kept for reference only.
+ *
+ * TAMER dimensions: Trade, Abortion, Migration, Economics, Rights
+ * CORE dimensions: Civil Rights, Openness, Redistribution, Ethics
+ */
 'use client';
 
 import styles from './AssessmentQuestion.module.css';
 import { getScoreColor, POLICIES } from '@/lib/tamer-config';
 import type { PolicyKey } from '@/lib/tamer-config';
 
+/** @deprecated Use CoreAssessment instead */
 interface AssessmentQuestionProps {
   policyKey: PolicyKey;
   label: string;
@@ -31,6 +44,7 @@ export default function AssessmentQuestion({
   hasBeenTouched = false,
   allAnswers = {},
 }: AssessmentQuestionProps) {
+  /** @deprecated Use CoreAssessment instead */
   return (
     <section className={styles.section}>
       <div className={styles.content}>

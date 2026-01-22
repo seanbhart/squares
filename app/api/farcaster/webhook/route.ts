@@ -1,54 +1,67 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { supabaseServer } from '@/lib/supabase/server'
-
-interface WebhookEvent {
-  header: string
-  payload: string
-  signature: string
-}
-
-interface NotificationDetails {
-  url: string
-  token: string
-}
-
-interface DecodedPayload {
-  event: 'frame_added' | 'frame_removed' | 'miniapp_added' | 'miniapp_removed' | 'notifications_enabled' | 'notifications_disabled'
-  notificationDetails?: NotificationDetails
-}
-
-interface DecodedHeader {
-  fid: number
-  type: string
-  key: string
-}
+import {
+  type ParseWebhookEvent,
+  parseWebhookEvent,
+  verifyAppKeyWithNeynar,
+} from '@farcaster/miniapp-node'
 
 export async function POST(request: NextRequest) {
   try {
-    const body: WebhookEvent = await request.json()
-    
-    const { header, payload, signature } = body
-    
-    // Decode payload
-    const decodedPayload: DecodedPayload = JSON.parse(
-      Buffer.from(payload, 'base64url').toString('utf-8')
-    )
-    
-    const { event, notificationDetails } = decodedPayload
-    
-    // Extract FID from header
-    const decodedHeader: DecodedHeader = JSON.parse(
-      Buffer.from(header, 'base64url').toString('utf-8')
-    )
-    const fid = decodedHeader.fid
-    
-    console.log(`[Webhook] Received event: ${event} for FID: ${fid}`)
-    console.log(`[Webhook] Notification details:`, notificationDetails)
+    const body = await request.json()
+
+    // Verify webhook signature using Farcaster's official library
+    // This validates that the webhook came from a legitimate Farcaster client
+    // and was signed with a valid app key for the user
+    let data: Awaited<ReturnType<typeof parseWebhookEvent>>
+    try {
+      data = await parseWebhookEvent(body, verifyAppKeyWithNeynar)
+    } catch (e: unknown) {
+      const error = e as ParseWebhookEvent.ErrorType
+
+      switch (error.name) {
+        case 'VerifyJsonFarcasterSignature.InvalidDataError':
+        case 'VerifyJsonFarcasterSignature.InvalidEventDataError':
+          console.error('[Webhook] Invalid webhook data:', error.message)
+          return NextResponse.json(
+            { error: 'Invalid webhook data' },
+            { status: 400 }
+          )
+        case 'VerifyJsonFarcasterSignature.InvalidAppKeyError':
+          console.error('[Webhook] Invalid app key - signature verification failed')
+          return NextResponse.json(
+            { error: 'Invalid signature' },
+            { status: 401 }
+          )
+        case 'VerifyJsonFarcasterSignature.VerifyAppKeyError':
+          console.error('[Webhook] Error verifying app key:', error.message)
+          // Internal error - caller may want to retry
+          return NextResponse.json(
+            { error: 'Verification service error' },
+            { status: 503 }
+          )
+        default:
+          console.error('[Webhook] Signature verification failed:', error)
+          return NextResponse.json(
+            { error: 'Signature verification failed' },
+            { status: 401 }
+          )
+      }
+    }
+
+    const { fid, event } = data
+    const notificationDetails = 'notificationDetails' in event ? event.notificationDetails : undefined
+
+    // Log only non-sensitive metadata (redact tokens)
+    console.log(`[Webhook] Received event: ${event.event} for FID: ${fid}`)
+    if (notificationDetails) {
+      console.log(`[Webhook] Notification URL provided: ${notificationDetails.url ? 'yes' : 'no'}, Token provided: ${notificationDetails.token ? 'yes' : 'no'}`)
+    }
     
     const supabase = await supabaseServer()
-    
-    switch (event) {
-      case 'frame_added':
+    const eventType = event.event
+
+    switch (eventType) {
       case 'miniapp_added':
         // User added/installed your frame/miniapp
         // IMPORTANT: Just adding the app does NOT mean notifications are enabled
@@ -157,7 +170,6 @@ export async function POST(request: NextRequest) {
         }
         break
         
-      case 'frame_removed':
       case 'miniapp_removed':
         // User removed/uninstalled your frame/miniapp - mark as not installed
         // We keep the record for historical tracking but mark app_installed = false
@@ -181,9 +193,8 @@ export async function POST(request: NextRequest) {
         break
         
       default:
-        // Log unexpected events so we can add support for them
-        console.log(`[Webhook] Unknown event type: ${event} for FID ${fid}`)
-        console.log(`[Webhook] Full payload:`, decodedPayload)
+        // Log unexpected events so we can add support for them (redacted - no sensitive data)
+        console.log(`[Webhook] Unknown event type: ${eventType} for FID ${fid}`)
         break
     }
     

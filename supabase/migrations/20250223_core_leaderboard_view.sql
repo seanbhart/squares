@@ -1,8 +1,9 @@
 -- Create a CORE-based leaderboard view with diversity score based on 4 CORE dimensions
 -- This replaces the TAMER-based farcaster_leaderboard view for the miniapp
 
-CREATE OR REPLACE VIEW core_leaderboard AS
-SELECT
+CREATE OR REPLACE VIEW core_leaderboard
+WITH (security_invoker = true)
+AS SELECT
   fs.id,
   fs.fid,
   fs.username,

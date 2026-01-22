@@ -1,3 +1,17 @@
+/**
+ * @deprecated TAMER LEGACY CODE - DO NOT USE
+ *
+ * This component uses the old TAMER framework (5 dimensions, 0-6 scale).
+ * The project has migrated to CORE framework (4 dimensions, 0-5 scale).
+ *
+ * Use CoreAssessment from '@/components/miniapp/CoreAssessment' instead.
+ * CoreAssessment is now used in MiniAppClient.tsx for the Farcaster miniapp.
+ *
+ * This file is kept for reference but is not imported anywhere.
+ *
+ * TAMER dimensions: Trade, Abortion, Migration, Economics, Rights
+ * CORE dimensions: Civil Rights, Openness, Redistribution, Ethics
+ */
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
@@ -6,6 +20,7 @@ import { COLOR_RAMP } from '@/lib/tamer-config';
 import { ClipboardIcon, CheckIcon } from '@/components/icons';
 import { sdk } from '@farcaster/miniapp-sdk';
 
+/** @deprecated Use CoreAssessment instead */
 interface AssessmentSlidesProps {
   initialSpectrum?: UserSpectrum;
   initialStep?: number;
@@ -63,6 +78,7 @@ function ColorSquare({ value, size = 36 }: { value: number; size?: number }) {
   );
 }
 
+/** @deprecated Use CoreAssessment instead */
 export default function AssessmentSlides({ initialSpectrum, initialStep = 0, initialIsPublic = false, hideSpectrumCard = false, username, onComplete, onVisibilityChange, onStepChange }: AssessmentSlidesProps) {
   const [step, setStep] = useState(initialStep);
   const [currentDimension, setCurrentDimension] = useState(0);
