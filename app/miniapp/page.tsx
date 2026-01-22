@@ -5,10 +5,10 @@ import FullPageLoadingSpinner from '@/components/FullPageLoadingSpinner';
 
 export const metadata: Metadata = {
   title: 'Squares Political Spectrum',
-  description: 'Square your political personality across Trade, Abortion, Migration, Economics, and Rights. Compare with the community and discover where you stand.',
+  description: 'Map your political personality across the CORE framework: Civil Rights, Openness, Redistribution, and Ethics. Compare with the community and discover where you stand.',
   openGraph: {
     title: 'Squares Political Spectrum',
-    description: "You're not one word—your politics are unique. Square your political personality into shareable emojis.",
+    description: "You're not one word—your politics are unique. Map your political personality using the CORE framework.",
     url: 'https://farcaster.squares.vote/miniapp',
     siteName: 'Squares',
     images: [
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Squares Political Spectrum',
-    description: "You're not one word—your politics are unique. Square your political personality into shareable emojis.",
+    description: "You're not one word—your politics are unique. Map your political personality using the CORE framework.",
     images: ['https://farcaster.squares.vote/og-image.png'],
   },
   other: {

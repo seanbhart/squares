@@ -11,13 +11,12 @@ interface LeaderboardEntry {
   username?: string;
   display_name?: string;
   pfp_url?: string;
-  trade_score: number;
-  abortion_score: number;
-  migration_score: number;
-  economics_score: number;
-  rights_score: number;
+  civil_rights_score: number;
+  openness_score: number;
+  redistribution_score: number;
+  ethics_score: number;
   times_updated: number;
-  diversity_score: number;
+  diversity_score?: number;
   created_at: string;
 }
 
@@ -25,9 +24,10 @@ interface LeaderboardProps {
   currentFid?: number;
 }
 
+// CORE emoji mapping for 0-5 scale (6 emojis)
 function getEmojiSquare(value: number): string {
-  const emojis = ['🟪', '🟦', '🟩', '🟨', '🟧', '🟥', '⬛️'];
-  return emojis[value] || '🟨';
+  const emojis = ['🟪', '🟦', '🟩', '🟨', '🟧', '🟥'];
+  return emojis[Math.max(0, Math.min(5, value))] || '🟨';
 }
 
 export default function Leaderboard({ currentFid }: LeaderboardProps) {
@@ -41,10 +41,11 @@ export default function Leaderboard({ currentFid }: LeaderboardProps) {
 
   const fetchLeaderboard = async () => {
     try {
+      // Fetch from the CORE spectrums view
       const response = await fetch('/api/farcaster/leaderboard?sortBy=recent&limit=50');
       const data = await response.json();
-      const entries = data.leaderboard || [];
-      
+      let entries = data.leaderboard || [];
+
       // Pin current user to top if they exist in the leaderboard
       if (currentFid) {
         const currentUserIndex = entries.findIndex((e: LeaderboardEntry) => e.fid === currentFid);
@@ -53,7 +54,7 @@ export default function Leaderboard({ currentFid }: LeaderboardProps) {
           entries.unshift(currentUserEntry);
         }
       }
-      
+
       setLeaderboard(entries);
     } catch (error) {
       console.error('Failed to fetch leaderboard:', error);
@@ -72,17 +73,16 @@ export default function Leaderboard({ currentFid }: LeaderboardProps) {
 
   const handleCopyEntry = useCallback(async (entry: LeaderboardEntry, e: React.MouseEvent) => {
     e.stopPropagation(); // Prevent triggering the profile view
-    
+
     const emojis = [
-      entry.trade_score,
-      entry.abortion_score,
-      entry.migration_score,
-      entry.economics_score,
-      entry.rights_score,
+      entry.civil_rights_score,
+      entry.openness_score,
+      entry.redistribution_score,
+      entry.ethics_score,
     ].map(getEmojiSquare).join('');
 
     const text = entry.username ? `${emojis} @${entry.username}` : emojis;
-    
+
     try {
       await navigator.clipboard.writeText(text);
       setCopiedFid(entry.fid);
@@ -129,11 +129,10 @@ export default function Leaderboard({ currentFid }: LeaderboardProps) {
 
             <div className={styles.spectrum}>
               {[
-                entry.trade_score,
-                entry.abortion_score,
-                entry.migration_score,
-                entry.economics_score,
-                entry.rights_score,
+                entry.civil_rights_score,
+                entry.openness_score,
+                entry.redistribution_score,
+                entry.ethics_score,
               ].map((score, idx) => (
                 <span key={idx} style={{ fontSize: '1.5rem', lineHeight: 1 }}>
                   {getEmojiSquare(score)}
@@ -162,7 +161,7 @@ export default function Leaderboard({ currentFid }: LeaderboardProps) {
 
         {leaderboard.length === 0 && (
           <div className={styles.empty}>
-            No entries yet. Be the first to Square your political personality!
+            No entries yet. Be the first to map your political personality!
           </div>
         )}
       </div>

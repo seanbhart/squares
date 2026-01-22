@@ -94,6 +94,7 @@ export async function POST(request: NextRequest) {
       redistribution_score: spectrum.redistribution,
       ethics_score: spectrum.ethics,
       is_public: isPublic,
+      core_is_user_set: true,
     };
 
     if (existing) {

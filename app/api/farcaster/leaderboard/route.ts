@@ -11,10 +11,10 @@ export async function GET(request: NextRequest) {
 
     const supabase = await supabaseServer();
 
+    // Use public_core_spectrums view which has CORE fields
     let query = supabase
-      .from('farcaster_leaderboard')
+      .from('public_core_spectrums')
       .select('*')
-      .eq('is_public', true)
       .limit(limit);
 
     // Apply sorting

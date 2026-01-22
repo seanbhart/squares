@@ -2,9 +2,8 @@
 
 import { useEffect, useState, useCallback } from 'react';
 import CoreAssessment, { CoreScores } from './CoreAssessment';
-// import Leaderboard from './Leaderboard';
-// import LeaderboardPlaceholder from './LeaderboardPlaceholder';
-// import StickySpectrum from './StickySpectrum';
+import Leaderboard from './Leaderboard';
+import StickySpectrum from './StickySpectrum';
 import FullPageLoadingSpinner from '@/components/FullPageLoadingSpinner';
 import styles from './MiniApp.module.css';
 
@@ -212,10 +211,10 @@ export default function MiniAppClient() {
         </div>
       )}
 
-      {/* Sticky Spectrum Header - Commented out until updated */}
-      {/* {existingSpectrum && (
+      {/* Sticky Spectrum Header */}
+      {existingSpectrum && (
         <StickySpectrum spectrum={existingSpectrum} />
-      )} */}
+      )}
 
       {showAssessment && (
         <CoreAssessment
@@ -227,10 +226,8 @@ export default function MiniAppClient() {
         />
       )}
 
-      {/* Leaderboard Section - Commented out until updated */}
-      {/* {isPublic && <Leaderboard currentFid={user?.fid} />} */}
-      
-      {/* {!isPublic && <LeaderboardPlaceholder />} */}
+      {/* Leaderboard Section */}
+      {isPublic && <Leaderboard currentFid={user?.fid} />}
     </div>
   );
 }
