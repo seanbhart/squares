@@ -1,6 +1,6 @@
 # Squares.vote CORE Transition Roadmap
 
-> **Last Updated:** January 2025
+> **Last Updated:** January 22, 2025
 > **Status:** Active Development
 > **Framework:** TAMER (legacy) → CORE (current)
 
@@ -22,47 +22,48 @@ This roadmap outlines the complete transition from the legacy TAMER framework (5
 
 ## Phase 1: Complete CORE Technical Migration
 
-### 1.1 Chatbot Conversion ⬜
+### 1.1 Chatbot Conversion ✅ COMPLETED
 **Priority:** Medium
 **Effort:** Medium
-**Files:** `app/api/chat/route.ts`, `components/ChatBox.tsx`, `components/ChatModal.tsx`
+**Files:** `app/api/chat/route.ts`, `components/ChatBox.tsx`, `components/FiguresChatBox.tsx`
 
 #### Tasks
-- [ ] Update system prompts to reference CORE dimensions instead of TAMER
-- [ ] Modify AI response parsing to output CORE scores (0-5 scale, 4 dimensions)
-- [ ] Update chat UI to display CORE dimensions with appropriate labels
-- [ ] Create new prompt templates explaining CORE framework to the AI
-- [ ] Update confidence thresholds for CORE assessment
+- [x] Update system prompts to reference CORE dimensions instead of TAMER
+- [x] Modify AI response parsing to output CORE scores (0-5 scale, 4 dimensions)
+- [x] Update chat UI to display CORE dimensions with appropriate labels
+- [x] Create new prompt templates explaining CORE framework to the AI
+- [x] Update confidence thresholds for CORE assessment
+- [x] Fixed Unicode emoji handling in extractSpectrumData() for proper regex parsing
 - [ ] Test with diverse political figures and viewpoints
 - [ ] Add CORE-specific follow-up questions
 
 #### Technical Notes
-- Current chatbot uses dual-agent system (Assessor + Peer Reviewer)
-- Prompts distinguish Trade (external) from Economics (domestic)
+- Dual-agent system (Assessor + Peer Reviewer) updated for CORE
+- AI outputs CORE scores using emoji color scale (🟪🟦🟩🟨🟧🟥)
 - Confidence thresholds: 50% living persons, 30% historical figures
-- Consider maintaining backward compatibility during transition
 
 ---
 
-### 1.2 Farcaster Miniapp Conversion ⬜
+### 1.2 Farcaster Miniapp Conversion ✅ COMPLETED
 **Priority:** High
 **Effort:** High
 **Files:** `app/miniapp/*`, `components/miniapp/*`
 
 #### Tasks
-- [ ] Convert `CoreAssessment.tsx` to use CORE questions instead of TAMER
-- [ ] Update `AssessmentSlides.tsx` with CORE dimension explanations
-- [ ] Modify `StickySpectrum.tsx` to display 4-dimension CORE visualization
-- [ ] Update `Leaderboard.tsx` to rank/display CORE scores
-- [ ] Modify database queries to save/retrieve CORE scores with `core_is_user_set = true`
-- [ ] Update share functionality to show CORE results
+- [x] Convert `CoreAssessment.tsx` to use CORE questions instead of TAMER
+- [x] Update intro slides with CORE dimension explanations
+- [x] Update `Leaderboard.tsx` to rank/display CORE scores
+- [x] Modify database queries to save/retrieve CORE scores with `core_is_user_set = true`
+- [x] Update share functionality to show CORE results
+- [x] Fixed corner bracket styling (transparent background, white brackets)
+- [x] Fixed loading spinner (7 colored squares including dark grey)
 - [ ] Update Farcaster frame metadata for CORE
 - [ ] Test end-to-end miniapp flow
 
 #### Database Changes
-- Ensure miniapp writes to CORE fields directly (not TAMER)
-- Set `core_is_user_set = true` for user-submitted CORE scores
-- Update `public_core_spectrums` view if needed
+- Miniapp writes to CORE fields directly
+- `core_is_user_set = true` for user-submitted CORE scores
+- `public_core_spectrums` view updated
 
 ---
 
@@ -81,16 +82,39 @@ This roadmap outlines the complete transition from the legacy TAMER framework (5
 
 ---
 
-### 1.4 Legacy Code Cleanup ⬜
+### 1.4 Legacy Code Cleanup ✅ COMPLETED
 **Priority:** Low
 **Effort:** Low
 
 #### Tasks
-- [ ] Remove or archive `components/assessment/` (legacy TAMER UI)
-- [ ] Clean up unused TAMER-specific landing sections
-- [ ] Remove TAMER config exports that are no longer needed
+- [x] Remove or archive `components/assessment/` (legacy TAMER UI)
+- [x] Clean up unused TAMER-specific landing sections
+- [x] Delete `lib/tamer-config.ts`
+- [x] Remove TAMER imports from LoadingSpinner and other components
+- [x] Updated figures page to CORE-only display
+- [x] Updated Supabase edge function for CORE
 - [ ] Update type definitions to deprecate TAMER types
-- [ ] Archive `lib/tamer-config.ts` once migration is complete
+
+---
+
+### 1.5 Testing Framework ✅ COMPLETED (NEW)
+**Priority:** Medium
+**Effort:** Medium
+
+#### Tasks
+- [x] Set up Vitest testing framework
+- [x] Configure test environment with proper TypeScript support
+- [x] Create 104 unit tests covering:
+  - CORE configuration and dimensions
+  - BLOC configuration and utilities
+  - Color scales and mappings
+  - Chatbot response parsing (extractSpectrumData)
+  - TAMER to CORE conversion logic
+- [x] All tests passing
+
+#### Files
+- `vitest.config.ts` - Test configuration
+- `__tests__/` - Test files directory
 
 ---
 
@@ -326,10 +350,11 @@ This roadmap outlines the complete transition from the legacy TAMER framework (5
 
 | Phase | Description | Priority | Status |
 |-------|-------------|----------|--------|
-| 1.1 | Chatbot Conversion | Medium | Not Started |
-| 1.2 | Miniapp Conversion | High | Not Started |
+| 1.1 | Chatbot Conversion | Medium | ✅ Complete |
+| 1.2 | Miniapp Conversion | High | ✅ Complete |
 | 1.3 | Admin Conversion | Low | Not Started |
-| 1.4 | Legacy Cleanup | Low | Not Started |
+| 1.4 | Legacy Cleanup | Low | ✅ Complete |
+| 1.5 | Testing Framework | Medium | ✅ Complete |
 | 2.1 | Historical Data Migration | High | Partial |
 | 2.2 | Figures Experience | Medium | Not Started |
 | 3.1 | Interactive Content | High | Not Started |
@@ -358,8 +383,8 @@ For auto-converted scores (when users haven't explicitly set CORE):
 ### Key Files Reference
 - Core config: `lib/core-config.ts`
 - BLOC config: `lib/bloc-config.ts`
-- TAMER config: `lib/tamer-config.ts`
 - Converter: `lib/tamer-to-core-converter.ts`
 - Historical figures (CORE): `data/figures_core.json`
-- Historical figures (TAMER): `data/figures.json`
+- Historical figures (TAMER - legacy): `data/figures.json`
 - Migration SQL: `supabase/migrations/20250221_populate_core_from_tamer.sql`
+- Tests: `__tests__/` directory (104 unit tests)
