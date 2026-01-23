@@ -76,7 +76,7 @@
   border-radius: 8px;
   top: 102px;
   left: 0px;
-  background: rgba(60, 60, 70, 0.9);
+  background: transparent;
 }
 
 /* Corner brackets using pseudo-elements */
