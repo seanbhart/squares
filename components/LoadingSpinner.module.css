@@ -29,7 +29,7 @@
 /* Grid layout pattern for CORE (3 columns x 3 rows, 6 colors + bracket):
    Row 0: Blue(1), Green(2), Yellow(3)
    Row 1: Purple(0), [empty], Orange(4)
-   Row 2: Bracket, Red(5), [empty]
+   Row 2: Bracket, [empty], Red(5)
 */
 
 .loadingSquare:nth-child(1) {
@@ -63,9 +63,9 @@
 }
 
 .loadingSquare:nth-child(6) {
-  /* Red (index 5) - position (1, 2) - moved to fill Black's old position */
+  /* Red (index 5) - position (2, 2) */
   top: 102px;
-  left: 51px;
+  left: 102px;
 }
 
 /* Square with corner bracket borders - bottom left */
