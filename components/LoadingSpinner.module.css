@@ -26,10 +26,10 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
-/* Grid layout pattern for CORE (3 columns x 3 rows, 6 colors + bracket):
+/* Grid layout pattern for CORE (3 columns x 3 rows, 7 colors + bracket):
    Row 0: Blue(1), Green(2), Yellow(3)
    Row 1: Purple(0), [empty], Orange(4)
-   Row 2: Bracket, [empty], Red(5)
+   Row 2: Bracket, Grey(6), Red(5)
 */
 
 .loadingSquare:nth-child(1) {
@@ -68,6 +68,12 @@
   left: 102px;
 }
 
+.loadingSquare:nth-child(7) {
+  /* Dark Grey (index 6) - position (1, 2) */
+  top: 102px;
+  left: 51px;
+}
+
 /* Square with corner bracket borders - bottom left */
 .loadingSquareBracket {
   position: absolute;
@@ -76,8 +82,7 @@
   border-radius: 8px;
   top: 102px;
   left: 0px;
-  background: #3a3a42;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  background: transparent;
 }
 
 /* Corner brackets using pseudo-elements */
