@@ -23,7 +23,7 @@
   width: 42px;
   height: 42px;
   border-radius: 8px;
-  box-shadow: 0 2px 8px var(--gray-400);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
 /* Grid layout pattern for CORE (3 columns x 3 rows, 6 colors + bracket):
@@ -76,7 +76,8 @@
   border-radius: 8px;
   top: 102px;
   left: 0px;
-  background: transparent;
+  background: #3a3a42;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
 /* Corner brackets using pseudo-elements */
