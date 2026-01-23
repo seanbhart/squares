@@ -265,15 +265,40 @@ export default function CoreAssessment({
       );
     }
 
-    // Special Square (bottom left)
+    // Special Square (bottom left) - corner brackets
+    const bracketSize = 'clamp(18px, 5vmin, 40px)';
+    const bracketThickness = 'clamp(4px, 1vmin, 8px)';
+    const bracketColor = 'var(--gray-300)';
+    const bracketRadius = '25%';
+
+    const cornerStyle = (position: 'tl' | 'tr' | 'bl' | 'br'): React.CSSProperties => {
+      const base: React.CSSProperties = {
+        position: 'absolute',
+        width: bracketSize,
+        height: bracketSize,
+        borderColor: bracketColor,
+        borderStyle: 'solid',
+        borderWidth: '0',
+      };
+
+      switch (position) {
+        case 'tl':
+          return { ...base, top: '8%', left: '8%', borderTopWidth: bracketThickness, borderLeftWidth: bracketThickness, borderTopLeftRadius: bracketRadius };
+        case 'tr':
+          return { ...base, top: '8%', right: '8%', borderTopWidth: bracketThickness, borderRightWidth: bracketThickness, borderTopRightRadius: bracketRadius };
+        case 'bl':
+          return { ...base, bottom: '8%', left: '8%', borderBottomWidth: bracketThickness, borderLeftWidth: bracketThickness, borderBottomLeftRadius: bracketRadius };
+        case 'br':
+          return { ...base, bottom: '8%', right: '8%', borderBottomWidth: bracketThickness, borderRightWidth: bracketThickness, borderBottomRightRadius: bracketRadius };
+      }
+    };
+
     return (
-      <div key={i} className={styles.gridCell} style={{ background: 'transparent', border: 'none' }}>
-        <div style={{
-          width: '95%', height: '95%', placeSelf: 'center', borderRadius: '16%',
-          border: 'clamp(5px, 1.3vmin, 13px) solid var(--gray-300)',
-          mask: `linear-gradient(#000 0 0) top left, linear-gradient(#000 0 0) top right, linear-gradient(#000 0 0) bottom left, linear-gradient(#000 0 0) bottom right`,
-          maskSize: '30% 30%', maskRepeat: 'no-repeat'
-        }} />
+      <div key={i} className={styles.gridCell} style={{ background: 'transparent', border: 'none', position: 'relative' }}>
+        <div style={cornerStyle('tl')} />
+        <div style={cornerStyle('tr')} />
+        <div style={cornerStyle('bl')} />
+        <div style={cornerStyle('br')} />
       </div>
     );
   };
