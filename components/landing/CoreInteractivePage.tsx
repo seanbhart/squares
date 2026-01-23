@@ -157,28 +157,14 @@ export default function CoreInteractivePage() {
   };
 
   const special: React.CSSProperties = {
-    width: '95%',
-    height: '95%',
-    placeSelf: 'center',
-    borderRadius: '16%',
-    border: 'clamp(5px, 1.3vmin, 13px) solid var(--gray-300)',
+    width: '100%',
+    height: '100%',
+    borderRadius: '20%',
     background: 'transparent',
-    WebkitMask: `
-      linear-gradient(#000 0 0) top left,
-      linear-gradient(#000 0 0) top right,
-      linear-gradient(#000 0 0) bottom left,
-      linear-gradient(#000 0 0) bottom right
-    `,
-    WebkitMaskSize: '32% 32%',
-    WebkitMaskRepeat: 'no-repeat',
-    mask: `
-      linear-gradient(#000 0 0) top left,
-      linear-gradient(#000 0 0) top right,
-      linear-gradient(#000 0 0) bottom left,
-      linear-gradient(#000 0 0) bottom right
-    `,
-    maskSize: '30% 30%',
-    maskRepeat: 'no-repeat',
+    position: 'relative',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
   };
 
   const cells: Array<'empty' | 'filled' | 'special'> = [
@@ -371,8 +357,42 @@ export default function CoreInteractivePage() {
       );
     }
     
-    // Must be special type
-    return <div key={i} style={special} />;
+    // Must be special type - render corner brackets
+    const bracketSize = 'clamp(18px, 5vmin, 40px)';
+    const bracketThickness = 'clamp(4px, 1vmin, 8px)';
+    const bracketColor = 'var(--gray-300)';
+    const bracketRadius = '25%';
+
+    const cornerStyle = (position: 'tl' | 'tr' | 'bl' | 'br'): React.CSSProperties => {
+      const base: React.CSSProperties = {
+        position: 'absolute',
+        width: bracketSize,
+        height: bracketSize,
+        borderColor: bracketColor,
+        borderStyle: 'solid',
+        borderWidth: '0',
+      };
+
+      switch (position) {
+        case 'tl':
+          return { ...base, top: '8%', left: '8%', borderTopWidth: bracketThickness, borderLeftWidth: bracketThickness, borderTopLeftRadius: bracketRadius };
+        case 'tr':
+          return { ...base, top: '8%', right: '8%', borderTopWidth: bracketThickness, borderRightWidth: bracketThickness, borderTopRightRadius: bracketRadius };
+        case 'bl':
+          return { ...base, bottom: '8%', left: '8%', borderBottomWidth: bracketThickness, borderLeftWidth: bracketThickness, borderBottomLeftRadius: bracketRadius };
+        case 'br':
+          return { ...base, bottom: '8%', right: '8%', borderBottomWidth: bracketThickness, borderRightWidth: bracketThickness, borderBottomRightRadius: bracketRadius };
+      }
+    };
+
+    return (
+      <div key={i} style={special}>
+        <div style={cornerStyle('tl')} />
+        <div style={cornerStyle('tr')} />
+        <div style={cornerStyle('bl')} />
+        <div style={cornerStyle('br')} />
+      </div>
+    );
   };
 
   const handleScroll = () => {
@@ -570,28 +590,11 @@ export default function CoreInteractivePage() {
     };
     
     const miniSpecial: React.CSSProperties = {
-      width: '95%',
-      height: '95%',
-      placeSelf: 'center',
-      borderRadius: '16%',
-      border: 'clamp(2px, 0.5vmin, 4px) solid #d6d6d6',
+      width: '100%',
+      height: '100%',
+      borderRadius: '20%',
       background: 'transparent',
-      WebkitMask: `
-        linear-gradient(#000 0 0) top left,
-        linear-gradient(#000 0 0) top right,
-        linear-gradient(#000 0 0) bottom left,
-        linear-gradient(#000 0 0) bottom right
-      `,
-      WebkitMaskSize: '32% 32%',
-      WebkitMaskRepeat: 'no-repeat',
-      mask: `
-        linear-gradient(#000 0 0) top left,
-        linear-gradient(#000 0 0) top right,
-        linear-gradient(#000 0 0) bottom left,
-        linear-gradient(#000 0 0) bottom right
-      `,
-      maskSize: '30% 30%',
-      maskRepeat: 'no-repeat',
+      position: 'relative',
     };
     
     const scores = [civilRightsScore, opennessScore, redistributionScore, ethicsScore];
@@ -616,11 +619,46 @@ export default function CoreInteractivePage() {
       { type: 'empty', index: 8, scoreIndex: 3 },  // bottom-right empty (E)
     ];
     
+    // Corner bracket styles for mini grid
+    const miniBracketSize = 'clamp(6px, 1.5vmin, 12px)';
+    const miniBracketThickness = 'clamp(1.5px, 0.4vmin, 3px)';
+    const miniBracketColor = '#d6d6d6';
+    const miniBracketRadius = '25%';
+
+    const miniCornerStyle = (position: 'tl' | 'tr' | 'bl' | 'br'): React.CSSProperties => {
+      const base: React.CSSProperties = {
+        position: 'absolute',
+        width: miniBracketSize,
+        height: miniBracketSize,
+        borderColor: miniBracketColor,
+        borderStyle: 'solid',
+        borderWidth: '0',
+      };
+
+      switch (position) {
+        case 'tl':
+          return { ...base, top: '8%', left: '8%', borderTopWidth: miniBracketThickness, borderLeftWidth: miniBracketThickness, borderTopLeftRadius: miniBracketRadius };
+        case 'tr':
+          return { ...base, top: '8%', right: '8%', borderTopWidth: miniBracketThickness, borderRightWidth: miniBracketThickness, borderTopRightRadius: miniBracketRadius };
+        case 'bl':
+          return { ...base, bottom: '8%', left: '8%', borderBottomWidth: miniBracketThickness, borderLeftWidth: miniBracketThickness, borderBottomLeftRadius: miniBracketRadius };
+        case 'br':
+          return { ...base, bottom: '8%', right: '8%', borderBottomWidth: miniBracketThickness, borderRightWidth: miniBracketThickness, borderBottomRightRadius: miniBracketRadius };
+      }
+    };
+
     return (
       <div style={miniGrid}>
         {cells.map(cell => {
           if (cell.type === 'special') {
-            return <div key={cell.index} style={miniSpecial} />;
+            return (
+              <div key={cell.index} style={miniSpecial}>
+                <div style={miniCornerStyle('tl')} />
+                <div style={miniCornerStyle('tr')} />
+                <div style={miniCornerStyle('bl')} />
+                <div style={miniCornerStyle('br')} />
+              </div>
+            );
           }
           
           if (cell.type === 'filled' && cell.scoreIndex !== undefined) {
