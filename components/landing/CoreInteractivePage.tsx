@@ -357,11 +357,11 @@ export default function CoreInteractivePage() {
       );
     }
     
-    // Must be special type - render corner brackets
-    const bracketSize = 'clamp(18px, 5vmin, 40px)';
+    // Must be special type - render corner brackets only, no background
+    const bracketSize = 'clamp(22px, 6vmin, 50px)';
     const bracketThickness = 'clamp(4px, 1vmin, 8px)';
-    const bracketColor = 'var(--gray-300)';
-    const bracketRadius = '25%';
+    const bracketColor = 'rgba(255, 255, 255, 0.85)';
+    const bracketRadius = '35%';
 
     const cornerStyle = (position: 'tl' | 'tr' | 'bl' | 'br'): React.CSSProperties => {
       const base: React.CSSProperties = {
@@ -375,13 +375,13 @@ export default function CoreInteractivePage() {
 
       switch (position) {
         case 'tl':
-          return { ...base, top: '8%', left: '8%', borderTopWidth: bracketThickness, borderLeftWidth: bracketThickness, borderTopLeftRadius: bracketRadius };
+          return { ...base, top: '5%', left: '5%', borderTopWidth: bracketThickness, borderLeftWidth: bracketThickness, borderTopLeftRadius: bracketRadius };
         case 'tr':
-          return { ...base, top: '8%', right: '8%', borderTopWidth: bracketThickness, borderRightWidth: bracketThickness, borderTopRightRadius: bracketRadius };
+          return { ...base, top: '5%', right: '5%', borderTopWidth: bracketThickness, borderRightWidth: bracketThickness, borderTopRightRadius: bracketRadius };
         case 'bl':
-          return { ...base, bottom: '8%', left: '8%', borderBottomWidth: bracketThickness, borderLeftWidth: bracketThickness, borderBottomLeftRadius: bracketRadius };
+          return { ...base, bottom: '5%', left: '5%', borderBottomWidth: bracketThickness, borderLeftWidth: bracketThickness, borderBottomLeftRadius: bracketRadius };
         case 'br':
-          return { ...base, bottom: '8%', right: '8%', borderBottomWidth: bracketThickness, borderRightWidth: bracketThickness, borderBottomRightRadius: bracketRadius };
+          return { ...base, bottom: '5%', right: '5%', borderBottomWidth: bracketThickness, borderRightWidth: bracketThickness, borderBottomRightRadius: bracketRadius };
       }
     };
 
@@ -620,10 +620,10 @@ export default function CoreInteractivePage() {
     ];
     
     // Corner bracket styles for mini grid
-    const miniBracketSize = 'clamp(6px, 1.5vmin, 12px)';
+    const miniBracketSize = 'clamp(8px, 2vmin, 16px)';
     const miniBracketThickness = 'clamp(1.5px, 0.4vmin, 3px)';
-    const miniBracketColor = '#d6d6d6';
-    const miniBracketRadius = '25%';
+    const miniBracketColor = 'rgba(255, 255, 255, 0.85)';
+    const miniBracketRadius = '35%';
 
     const miniCornerStyle = (position: 'tl' | 'tr' | 'bl' | 'br'): React.CSSProperties => {
       const base: React.CSSProperties = {
@@ -637,13 +637,13 @@ export default function CoreInteractivePage() {
 
       switch (position) {
         case 'tl':
-          return { ...base, top: '8%', left: '8%', borderTopWidth: miniBracketThickness, borderLeftWidth: miniBracketThickness, borderTopLeftRadius: miniBracketRadius };
+          return { ...base, top: '5%', left: '5%', borderTopWidth: miniBracketThickness, borderLeftWidth: miniBracketThickness, borderTopLeftRadius: miniBracketRadius };
         case 'tr':
-          return { ...base, top: '8%', right: '8%', borderTopWidth: miniBracketThickness, borderRightWidth: miniBracketThickness, borderTopRightRadius: miniBracketRadius };
+          return { ...base, top: '5%', right: '5%', borderTopWidth: miniBracketThickness, borderRightWidth: miniBracketThickness, borderTopRightRadius: miniBracketRadius };
         case 'bl':
-          return { ...base, bottom: '8%', left: '8%', borderBottomWidth: miniBracketThickness, borderLeftWidth: miniBracketThickness, borderBottomLeftRadius: miniBracketRadius };
+          return { ...base, bottom: '5%', left: '5%', borderBottomWidth: miniBracketThickness, borderLeftWidth: miniBracketThickness, borderBottomLeftRadius: miniBracketRadius };
         case 'br':
-          return { ...base, bottom: '8%', right: '8%', borderBottomWidth: miniBracketThickness, borderRightWidth: miniBracketThickness, borderBottomRightRadius: miniBracketRadius };
+          return { ...base, bottom: '5%', right: '5%', borderBottomWidth: miniBracketThickness, borderRightWidth: miniBracketThickness, borderBottomRightRadius: miniBracketRadius };
       }
     };
 

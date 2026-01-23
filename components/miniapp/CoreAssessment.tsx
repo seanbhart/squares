@@ -265,11 +265,11 @@ export default function CoreAssessment({
       );
     }
 
-    // Special Square (bottom left) - corner brackets
-    const bracketSize = 'clamp(18px, 5vmin, 40px)';
+    // Special Square (bottom left) - corner brackets only, no background
+    const bracketSize = 'clamp(22px, 6vmin, 50px)';
     const bracketThickness = 'clamp(4px, 1vmin, 8px)';
-    const bracketColor = 'var(--gray-300)';
-    const bracketRadius = '25%';
+    const bracketColor = 'rgba(255, 255, 255, 0.85)';
+    const bracketRadius = '35%';
 
     const cornerStyle = (position: 'tl' | 'tr' | 'bl' | 'br'): React.CSSProperties => {
       const base: React.CSSProperties = {
@@ -283,18 +283,18 @@ export default function CoreAssessment({
 
       switch (position) {
         case 'tl':
-          return { ...base, top: '8%', left: '8%', borderTopWidth: bracketThickness, borderLeftWidth: bracketThickness, borderTopLeftRadius: bracketRadius };
+          return { ...base, top: '5%', left: '5%', borderTopWidth: bracketThickness, borderLeftWidth: bracketThickness, borderTopLeftRadius: bracketRadius };
         case 'tr':
-          return { ...base, top: '8%', right: '8%', borderTopWidth: bracketThickness, borderRightWidth: bracketThickness, borderTopRightRadius: bracketRadius };
+          return { ...base, top: '5%', right: '5%', borderTopWidth: bracketThickness, borderRightWidth: bracketThickness, borderTopRightRadius: bracketRadius };
         case 'bl':
-          return { ...base, bottom: '8%', left: '8%', borderBottomWidth: bracketThickness, borderLeftWidth: bracketThickness, borderBottomLeftRadius: bracketRadius };
+          return { ...base, bottom: '5%', left: '5%', borderBottomWidth: bracketThickness, borderLeftWidth: bracketThickness, borderBottomLeftRadius: bracketRadius };
         case 'br':
-          return { ...base, bottom: '8%', right: '8%', borderBottomWidth: bracketThickness, borderRightWidth: bracketThickness, borderBottomRightRadius: bracketRadius };
+          return { ...base, bottom: '5%', right: '5%', borderBottomWidth: bracketThickness, borderRightWidth: bracketThickness, borderBottomRightRadius: bracketRadius };
       }
     };
 
     return (
-      <div key={i} className={styles.gridCell} style={{ background: 'transparent', border: 'none', position: 'relative' }}>
+      <div key={i} className={styles.gridCell} style={{ background: 'transparent', border: 'none', boxShadow: 'none', position: 'relative' }}>
         <div style={cornerStyle('tl')} />
         <div style={cornerStyle('tr')} />
         <div style={cornerStyle('bl')} />

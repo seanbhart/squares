@@ -26,10 +26,10 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
-/* Grid layout pattern (3 columns x 3 rows):
+/* Grid layout pattern for CORE (3 columns x 3 rows, 6 colors + bracket):
    Row 0: Blue(1), Green(2), Yellow(3)
    Row 1: Purple(0), [empty], Orange(4)
-   Row 2: [empty], Black(6), Red(5)
+   Row 2: Bracket, Red(5), [empty]
 */
 
 .loadingSquare:nth-child(1) {
@@ -63,18 +63,12 @@
 }
 
 .loadingSquare:nth-child(6) {
-  /* Red (index 5) - position (2, 2) */
-  top: 102px;
-  left: 102px;
-}
-
-.loadingSquare:nth-child(7) {
-  /* Black (index 6) - position (1, 2) */
+  /* Red (index 5) - position (1, 2) - moved to fill Black's old position */
   top: 102px;
   left: 51px;
 }
 
-/* Transparent square with corner bracket borders - bottom left */
+/* Square with corner bracket borders - bottom left */
 .loadingSquareBracket {
   position: absolute;
   width: 42px;
@@ -82,7 +76,7 @@
   border-radius: 8px;
   top: 102px;
   left: 0px;
-  background: transparent;
+  background: rgba(30, 30, 35, 0.8);
 }
 
 /* Corner brackets using pseudo-elements */
@@ -90,51 +84,51 @@
 .loadingSquareBracket::after {
   content: '';
   position: absolute;
-  width: 12px;
-  height: 12px;
-  border: 2px solid rgba(255, 255, 255, 0.8);
+  width: 14px;
+  height: 14px;
+  border: 3px solid rgba(255, 255, 255, 0.9);
 }
 
 /* Top-left corner bracket */
 .loadingSquareBracket::before {
-  top: 0;
-  left: 0;
+  top: 2px;
+  left: 2px;
   border-right: none;
   border-bottom: none;
-  border-radius: 8px 0 0 0;
+  border-radius: 6px 0 0 0;
 }
 
 /* Bottom-right corner bracket */
 .loadingSquareBracket::after {
-  bottom: 0;
-  right: 0;
+  bottom: 2px;
+  right: 2px;
   border-left: none;
   border-top: none;
-  border-radius: 0 0 8px 0;
+  border-radius: 0 0 6px 0;
 }
 
 /* Top-right corner bracket */
 .bracketTopRight {
   position: absolute;
-  top: 0;
-  right: 0;
-  width: 12px;
-  height: 12px;
-  border: 2px solid rgba(255, 255, 255, 0.8);
+  top: 2px;
+  right: 2px;
+  width: 14px;
+  height: 14px;
+  border: 3px solid rgba(255, 255, 255, 0.9);
   border-left: none;
   border-bottom: none;
-  border-radius: 0 8px 0 0;
+  border-radius: 0 6px 0 0;
 }
 
 /* Bottom-left corner bracket */
 .bracketBottomLeft {
   position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 12px;
-  height: 12px;
-  border: 2px solid rgba(255, 255, 255, 0.8);
+  bottom: 2px;
+  left: 2px;
+  width: 14px;
+  height: 14px;
+  border: 3px solid rgba(255, 255, 255, 0.9);
   border-right: none;
   border-top: none;
-  border-radius: 0 0 0 8px;
+  border-radius: 0 0 0 6px;
 }
