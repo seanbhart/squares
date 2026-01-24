@@ -1,6 +1,6 @@
 # Squares.vote CORE Transition Roadmap
 
-> **Last Updated:** January 22, 2025
+> **Last Updated:** January 23, 2025
 > **Status:** Active Development
 > **Framework:** TAMER (legacy) → CORE (current)
 
@@ -326,6 +326,327 @@ This roadmap outlines the complete transition from the legacy TAMER framework (5
 
 ---
 
+## Phase 6: UX Psychology & Assessment Design
+
+> **Source:** Psych-UX strategist analysis (January 2025)
+> **Goal:** Improve measurement validity, reduce bias, and optimize user experience
+
+---
+
+### 6.1 CORE Assessment Questionnaire ⬜
+**Priority:** High
+**Effort:** High
+**Rationale:** Direct selection on abstract dimensions may capture symbolic identity rather than operational beliefs. Scenario-based questions provide more valid measurement.
+
+#### Assessment Questions (16 Total)
+
+##### Civil Rights (C) Questions
+
+**Q1: The Security Camera Scenario**
+> A city is considering installing AI-powered security cameras throughout public spaces. Supporters say it will reduce crime by 30%. Critics say it creates a surveillance state. Where do you stand?
+
+- **Format:** 7-point slider
+- **Scale:** "Privacy matters more" (Liberty) ↔ "Crime reduction is worth it" (Authority)
+- **Reasoning:** Real trade-off with concrete stakes; both positions defensible
+
+**Q5: The Drug Legalization Question**
+> Consider the legalization of recreational drugs beyond alcohol and tobacco. Some argue adults should be free to make their own choices about substances; others argue government should restrict access to protect public health.
+
+- **Format:** 7-point slider
+- **Scale:** "Adults should decide" (Liberty) ↔ "Government should restrict" (Authority)
+- **Reasoning:** Cleanly measures paternalism; includes alcohol/tobacco reference points
+
+**Q9: The Speech Dilemma**
+> A controversial speaker is invited to give a talk at a public university. Some students find the speaker's views deeply offensive and want the event canceled. Others argue that universities should allow diverse viewpoints.
+
+- **Format:** 4-option forced choice
+- **Options:** Allow freely / Allow with distance / Move off-campus / Cancel
+- **Reasoning:** Tests whether someone prioritizes individual liberty or collective welfare
+
+**Q12: The Parental Rights Scenario**
+> Parents want to make a decision for their minor child that medical professionals consider potentially harmful to the child's wellbeing. Who should have final authority?
+
+- **Format:** 7-point slider
+- **Scale:** "Professionals/courts override" ↔ "Parents have primary authority"
+- **Reasoning:** Inverts typical Liberty-Authority mapping; tests consistency of principle
+- **Note:** Weight at 0.5 due to complexity
+
+**Q16: The Mandatory Service Question**
+> Some countries require all young adults to complete a period of mandatory national service (military or civilian). Supporters say it builds shared identity. Opponents say it's an infringement on individual freedom.
+
+- **Format:** 7-point slider
+- **Scale:** "Unacceptable infringement" (Liberty) ↔ "Reasonable obligation" (Authority)
+- **Reasoning:** Involves direct state control over individuals' time—fundamental liberty test
+
+##### Openness (O) Questions
+
+**Q2: The Factory Closing**
+> A factory in your region is closing because the company can produce goods more cheaply overseas. 500 local jobs will be lost, but consumers nationwide will benefit from lower prices.
+
+- **Format:** 7-point slider
+- **Scale:** "This is how markets should work" (Global) ↔ "Protect local jobs" (National)
+- **Reasoning:** Triggers tension between abstract efficiency and concrete local impact
+
+**Q6: The Immigration Scenario**
+> Your country receives applications from skilled workers around the world who want to immigrate. How should immigration policy balance economic benefits against effects on national identity and social cohesion?
+
+- **Format:** 7-point slider
+- **Scale:** "Prioritize openness—diversity strengthens us" (Global) ↔ "Prioritize cohesion" (National)
+- **Reasoning:** Focuses on skilled immigration to remove economic competition confound
+
+**Q11: The National Symbols Question**
+> How important is it to you that your country maintains distinct national symbols, holidays, language requirements, and cultural traditions—even as the population becomes more diverse?
+
+- **Format:** 7-point slider
+- **Scale:** "Not important—culture should evolve" (Global) ↔ "Very important—traditions unite us" (National)
+- **Reasoning:** Measures cultural nationalism separately from economic nationalism
+
+**Q15: The International Cooperation Dilemma**
+> Your country is considering joining an international agreement. The agreement would achieve better outcomes globally but requires your country to follow rules it didn't fully choose and sometimes accept decisions that aren't in its immediate national interest.
+
+- **Format:** 7-point slider
+- **Scale:** "Yes—global problems need cooperation" (Global) ↔ "No—don't cede sovereignty" (National)
+- **Reasoning:** Directly measures willingness to trade sovereignty for collective benefits
+
+##### Redistribution (R) Questions
+
+**Q3: The Inheritance Dilemma**
+> A wealthy person dies and wants to leave their entire $10 million estate to their children. Some argue this is their right; others argue large inheritances create unfair advantages. What portion should go to the heirs vs. be taxed for public services?
+
+- **Format:** Visual percentage slider (0% tax → 100% tax)
+- **Reasoning:** Inheritance pits property rights against equality of opportunity; cleaner than income taxation
+
+**Q7: The Healthcare System**
+> **System A:** Private insurance with government help for those who can't afford it. More choice but variable coverage.
+> **System B:** Universal government healthcare for everyone. Equal coverage but less choice and potentially longer waits.
+
+- **Format:** 7-point slider
+- **Scale:** "Strongly prefer System A" (Market) ↔ "Strongly prefer System B" (Social)
+- **Reasoning:** Paradigmatic redistribution battleground; both systems presented with genuine pros/cons
+
+**Q10: The Budget Allocation**
+> Imagine deciding how your country allocates budget between two poverty reduction approaches:
+> **Approach A:** Lower taxes and reduce regulations so businesses can create jobs.
+> **Approach B:** Higher taxes on wealthy to fund direct assistance programs.
+
+- **Format:** Visual allocation slider (100% A ↔ 100% B)
+- **Reasoning:** Isolates economic philosophy by holding goal constant (poverty reduction), varying means
+
+**Q13: The Wealth Creation Question**
+> **Statement A:** "Wealthy people have mostly earned their success through hard work. Their wealth benefits society through investment and job creation."
+> **Statement B:** "Wealth largely reflects luck and systemic advantages. Society has a right to redistribute it more equally."
+
+- **Format:** 7-point slider
+- **Reasoning:** Measures foundational belief about sources of wealth (Haidt's "proportionality" foundation)
+
+##### Ethics (E) Questions
+
+**Q4: The Curriculum Controversy**
+> A school district is updating its health curriculum. One group wants comprehensive information about gender identity and sexuality reflecting current research. Another group wants to maintain the traditional curriculum focused on biological sex and conventional relationships.
+
+- **Format:** 7-point slider
+- **Scale:** "Update to reflect current understanding" (Progressive) ↔ "Preserve traditional approach" (Traditional)
+- **Reasoning:** Education concerns transmission of values to next generation; avoids inflammatory framing
+
+**Q8: The Tradition Question**
+> Consider traditions, customs, and social norms practiced for generations (religious practices, family structures, community rituals, gender roles). How should society approach these inherited practices?
+
+- **Format:** 7-point slider
+- **Scale:** "Critically examine and update" (Progressive) ↔ "Presume wisdom in tradition" (Traditional)
+- **Reasoning:** Measures meta-level orientation toward tradition itself
+
+**Q14: The Social Change Pace Question**
+> Society's moral views evolve over time. Some changes that seemed radical eventually became accepted (e.g., interracial marriage, women voting). When new social movements push for changes in norms and values, what's your general instinct?
+
+- **Format:** 7-point slider
+- **Scale:** "Change is usually progress—embrace it" (Progressive) ↔ "Caution is wise—unforeseen consequences" (Traditional)
+- **Reasoning:** Measures dispositional orientation toward change independent of specific issues
+
+#### Implementation Tasks
+- [ ] Design question UI components with 7-point slider and forced-choice formats
+- [ ] Implement scoring algorithm (7-point → 0-5 scale mapping)
+- [ ] Build questionnaire flow with interleaved dimensions
+- [ ] Add optional attention check question after Q8
+- [ ] Create "help me decide" pathway for uncertain users
+- [ ] Implement confidence scoring (Cronbach's alpha per dimension)
+- [ ] Add progress indicators during assessment
+- [ ] Store question responses for validation analysis
+- [ ] A/B test questionnaire vs. direct selection completion rates
+
+#### Scoring Reference
+| 7-point Response | CORE Score |
+|------------------|------------|
+| 1 | 0.0 |
+| 2 | 0.8 |
+| 3 | 1.7 |
+| 4 | 2.5 |
+| 5 | 3.3 |
+| 6 | 4.2 |
+| 7 | 5.0 |
+
+---
+
+### 6.2 About Section Redesign ⬜
+**Priority:** High
+**Effort:** Medium
+**Files:** `components/landing/CoreIntroModal.tsx`
+
+#### Current Issues
+1. **Cognitive overload** - 5 new concepts before any action is too much
+2. **Binary pole labels** trigger defensiveness (Liberty ↔ Authority)
+3. **"Political DNA" metaphor** implies fixedness
+4. **Section 4 (bloc explanation)** is major drop-off point—too abstract pre-assessment
+
+#### Structural Changes
+- [ ] Cut Section 4 (bloc explanation) from pre-assessment flow
+- [ ] Merge Sections 2 and 3 into single "here's how it works" section
+- [ ] Move bloc/family explanation to post-assessment results page
+- [ ] Add time estimate near CTA ("Takes about 3 minutes")
+- [ ] Add privacy assurance ("Your results are private")
+
+#### Copy Revisions
+
+**Section 1 (Problem) - Revised:**
+> "Left. Right. Liberal. Conservative. These labels are broken—they cram your entire worldview into a single word. But you're not one word. Your politics are as unique as you are."
+
+**Section 2 (Solution) - Revised:**
+> "CORE measures four independent dimensions of political thinking—from how you view civil rights to how you think about economic systems. Instead of a label, you'll see exactly where you sit on each spectrum."
+
+**Section 3 (CTA) - Revised:**
+> "Discover your political profile"
+> "Takes about 3 minutes. Results are private."
+
+#### Language & Tone Tasks
+- [ ] Change all-lowercase to sentence case (approachable but professional)
+- [ ] Replace "political DNA" with "political profile" or "political coordinates"
+- [ ] Reframe dimensions as questions rather than positions where possible
+- [ ] A/B test "Find your bloc" vs "Discover your profile" vs "Start the assessment"
+
+#### Additional Improvements
+- [ ] Add brief credibility signal ("Based on political science research")
+- [ ] Add micro-progress indicators during assessment
+- [ ] Make 6-color spectrum more prominent, less explained
+- [ ] Use animation to show spectrum filling in as example
+
+---
+
+### 6.3 CORE Interaction Design Improvements ⬜
+**Priority:** High
+**Effort:** High
+**Files:** `components/landing/CoreInteractivePage.tsx`, `components/miniapp/CoreAssessment.tsx`, `analytics/bloc_config.json`
+
+#### Color Semantics Fix
+**Issue:** Purple-to-red gradient carries unintended US political meaning (purple = bipartisan, red = Republican)
+
+- [ ] Consider single-hue gradients (light-to-dark blue) or neutral colors
+- [ ] Alternative: Randomize which pole gets which color per user
+- [ ] At minimum: Add explicit framing "Colors indicate intensity, not political party"
+- [ ] A/B test color palettes on completion rate and test-retest reliability
+
+#### Extreme Descriptor Reframing
+**Issue:** Current descriptors pathologize strong positions ("police state", "enforce conformity")
+
+| Current | Revised (Self-Affirming) |
+|---------|-------------------------|
+| "police state" | "strong national security" |
+| "abolish enforcement" | "community self-governance" |
+| "surveillance state" | "comprehensive public safety" |
+| "closed borders" | "national sovereignty priority" |
+| "open borders" | "free movement of people" |
+| "planned economy" | "coordinated economic planning" |
+| "pure capitalism" | "free market economy" |
+| "enforce conformity" | "preserve cultural heritage" |
+| "radical social change" | "transformative reform" |
+
+- [ ] Update `bloc_config.json` with revised descriptors
+- [ ] Ensure each position sounds like something its genuine holder would proudly claim
+- [ ] Add concrete policy examples at each intensity level
+
+#### Historical Figures Anchoring
+**Issue:** "Apply to my squares" feature encourages identity borrowing
+
+- [ ] Remove or restrict "Apply to my squares" functionality
+- [ ] Show figures only for information, not selection transfer
+- [ ] If keeping: Require confirmation "This will replace your selections"
+- [ ] Diversify figure examples with less polarizing, more historical figures
+- [ ] Add uncertainty indicators: "Based on public statements, [Figure] is estimated to be..."
+
+#### Bouncing Animation Fix
+**Issue:** Current infinite bounce may cause accessibility issues and order effects
+
+- [ ] Limit bounce duration (stop after 10-15 seconds or 3 cycles)
+- [ ] Trigger on scroll completion (start only after user scrolls past intro)
+- [ ] Consider subtle alternative (gentle pulse or glow instead of movement)
+- [ ] Respect `prefers-reduced-motion` CSS media query
+
+#### Grid Layout Clarification
+- [ ] Clarify empty square purpose (they show binary letters after selection)
+- [ ] Evaluate special bracket square—make meaningful or remove
+- [ ] Add dimension labels to grid for better orientation
+
+#### Intensity Scale Improvements
+**Issue:** No true neutral option; users with mixed views are forced to choose
+
+- [ ] Consider separating direction from intensity (two-step selection)
+- [ ] Add explicit uncertainty option: "I'm genuinely uncertain on this dimension"
+- [ ] Ensure equal-interval labels (work with political scientists to calibrate)
+- [ ] Remove or clarify the grey reset option meaning
+
+#### Completion Psychology
+- [ ] Add progress feedback ("2 of 4 complete")
+- [ ] Provide partial results after 2-3 selections ("Based on what we know so far...")
+- [ ] Show estimated time ("This takes about 2 minutes")
+- [ ] Consider dimension ordering (put most engaging/concrete first—possibly Redistribution)
+
+#### Rename "Ethics" Dimension
+**Issue:** "Ethics" implies other positions are unethical
+
+- [ ] Rename to "Social Values" or "Cultural Change"
+- [ ] Update all references in config, UI, and documentation
+
+---
+
+### 6.4 Validation & Testing ⬜
+**Priority:** Medium
+**Effort:** Medium
+
+#### Measurement Validation Tasks
+- [ ] **Convergent validity:** Correlate CORE scores with established measures (Social Dominance Orientation for C, Moral Foundations Questionnaire for E)
+- [ ] **Discriminant validity:** Factor analysis should yield 4 separate factors
+- [ ] **Test-retest reliability:** Administer twice with 2-week gap; correlation should exceed 0.7
+- [ ] **Predictive validity:** CORE scores should predict policy preferences, voting behavior, media consumption
+- [ ] **Cross-cultural adaptation:** Localize scenarios for non-US contexts
+
+#### User Research Tasks
+- [ ] Track drop-off by section in about modal
+- [ ] Measure time-to-CTA in intro flow
+- [ ] A/B test modal length (full vs. simplified 3-section)
+- [ ] Post-assessment survey: "Did the intro help you understand what to expect?"
+- [ ] Qualitative interviews: What did users understand each dimension to mean?
+- [ ] Eye-tracking study: Where do users look first? Does bouncing C dominate attention?
+- [ ] Compare completion rates: questionnaire vs. direct selection
+
+#### Behavioral Tracking
+- [ ] Track which dimension users abandon on most often
+- [ ] Monitor partial completion rates
+- [ ] Compare direct selection reliability to questionnaire reliability
+
+---
+
+### 6.5 Ethical Safeguards ⬜
+**Priority:** High
+**Effort:** Low
+
+#### Implementation Tasks
+- [ ] Ensure no deception: Users told upfront this measures political orientation
+- [ ] Ensure no manipulation: Questions reveal, not shape, preferences
+- [ ] Add privacy commitment: Results not sold or used for targeting without consent
+- [ ] Preserve nuance: Results present spectrums, not binary labels
+- [ ] No pathologizing: All positions within normal range presented as legitimate viewpoints
+- [ ] Add data deletion option for user-submitted assessments
+
+---
+
 ## Additional Recommendations
 
 ### Technical Improvements
@@ -365,6 +686,11 @@ This roadmap outlines the complete transition from the legacy TAMER framework (5
 | 4.3 | Community Engagement | Medium | Not Started |
 | 5.1 | Analytics | Medium | Not Started |
 | 5.2 | Feedback Loop | Ongoing | Not Started |
+| 6.1 | CORE Assessment Questionnaire | High | Not Started |
+| 6.2 | About Section Redesign | High | Not Started |
+| 6.3 | Interaction Design Improvements | High | Not Started |
+| 6.4 | Validation & Testing | Medium | Not Started |
+| 6.5 | Ethical Safeguards | High | Not Started |
 
 ---
 
