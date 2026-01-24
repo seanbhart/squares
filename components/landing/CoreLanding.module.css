@@ -1855,8 +1855,8 @@
   }
 }
 
-/* Section 2A: Animated Spectrum Bar */
-.spectrumBarContainer {
+/* Section 2A: Spectrum Squares */
+.spectrumSquaresContainer {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1866,38 +1866,30 @@
   max-width: 400px;
 }
 
-.spectrumBarAnimated {
-  width: 100%;
-  height: 8px;
-  border-radius: 999px;
-  background: linear-gradient(
-    to right,
-    var(--color-purple),
-    var(--color-blue),
-    var(--color-green),
-    var(--color-gold),
-    var(--color-orange),
-    var(--color-red)
-  );
-  position: relative;
-  overflow: visible;
+.introSpectrumRow {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
 }
 
-.spectrumMarker {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 20px;
-  height: 20px;
-  background: white;
-  border-radius: 50%;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-  animation: markerSlide 4s ease-in-out infinite;
+.introSpectrumSquare {
+  width: clamp(36px, 10vw, 50px);
+  height: clamp(36px, 10vw, 50px);
+  border-radius: 8px;
+  opacity: 0;
+  animation: squareFadeIn 0.5s ease-out forwards;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
-@keyframes markerSlide {
-  0%, 100% { left: 10%; }
-  50% { left: 85%; }
+@keyframes squareFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 .spectrumCaption {

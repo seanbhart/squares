@@ -3,6 +3,33 @@
 import React, { useState, useMemo } from 'react';
 import styles from './CoreQuestionnaire.module.css';
 
+// Position labels for slider questions - 7 positions mapping to the spectrum
+const POSITION_LABELS: Record<string, string[]> = {
+  q1: ["Privacy is paramount", "Privacy usually wins", "Lean toward privacy", "Weighing both equally", "Lean toward security", "Security usually wins", "Security is paramount"],
+  q2: ["Embrace free trade", "Accept market outcomes", "Lean toward efficiency", "Balancing both concerns", "Lean toward protection", "Prioritize local jobs", "Protect jobs first"],
+  q4: ["Update curriculum now", "Favor modernizing", "Lean toward updating", "Case-by-case basis", "Lean toward tradition", "Favor preservation", "Preserve tradition fully"],
+  q5: ["Full personal choice", "Mostly personal choice", "Lean toward autonomy", "Balance both concerns", "Lean toward regulation", "Mostly restrict access", "Full government control"],
+  q6: ["Maximize openness", "Favor more immigration", "Lean toward openness", "Balance both values", "Lean toward cohesion", "Favor less immigration", "Prioritize cohesion"],
+  q7: ["Fully private system", "Mostly private", "Lean toward private", "Mixed approach", "Lean toward universal", "Mostly universal", "Fully universal system"],
+  q8: ["Question all traditions", "Favor critical review", "Lean toward updating", "Evaluate case-by-case", "Lean toward preserving", "Favor keeping traditions", "Preserve traditions strongly"],
+  q11: ["Symbols unimportant", "Mostly unimportant", "Lean toward flexibility", "Moderately important", "Lean toward preserving", "Quite important", "Symbols very important"],
+  q12: ["Experts should decide", "Favor expert oversight", "Lean toward oversight", "Shared responsibility", "Lean toward parents", "Favor parental authority", "Parents decide fully"],
+  q13: ["Wealth is earned", "Mostly earned", "Lean toward earned", "Mix of both factors", "Lean toward luck", "Mostly circumstance", "Wealth reflects luck"],
+  q14: ["Embrace change readily", "Generally favor change", "Lean toward change", "Depends on context", "Lean toward caution", "Generally favor caution", "Strong caution needed"],
+  q15: ["Global approach essential", "Favor cooperation", "Lean toward cooperation", "Balance both concerns", "Lean toward sovereignty", "Favor national control", "Sovereignty paramount"],
+  q16: ["Unacceptable requirement", "Generally oppose", "Lean against service", "Conflicted on this", "Lean toward service", "Generally support", "Reasonable obligation"],
+};
+
+// Colors for the 6 spectrum squares (we show 6 to match CORE's color scheme)
+const SPECTRUM_COLORS = [
+  'var(--color-purple)',
+  'var(--color-blue)',
+  'var(--color-green)',
+  'var(--color-gold)',
+  'var(--color-orange)',
+  'var(--color-red)',
+];
+
 // Question types
 type QuestionType = 'slider' | 'forced-choice' | 'percentage';
 
@@ -361,25 +388,40 @@ export default function CoreQuestionnaire({ onComplete, onCancel }: CoreQuestion
 
   const renderSliderQuestion = (q: SliderQuestion) => {
     const value = getCurrentSliderValue();
-    const labels = ['', q.lowLabel, '', '', 'Mixed feelings', '', '', q.highLabel];
+    const positionLabels = POSITION_LABELS[q.id] || [];
 
     return (
       <div className={styles.questionContent}>
         <p className={styles.questionText}>{q.text}</p>
 
-        <div className={styles.sliderContainer}>
-          <input
-            type="range"
-            min="1"
-            max="7"
-            value={value}
-            onChange={(e) => handleSliderChange(parseInt(e.target.value))}
-            className={styles.slider}
-          />
-          <div className={styles.sliderLabels}>
-            <span className={styles.sliderLabel}>{q.lowLabel}</span>
-            <span className={styles.sliderLabel}>{q.highLabel}</span>
+        <div className={styles.squaresContainer}>
+          <div className={styles.squaresRow}>
+            {SPECTRUM_COLORS.map((color, idx) => {
+              // Map 6 squares to 7 positions: 0->1, 1->2, 2->3, 3->5, 4->6, 5->7
+              // Position 4 (middle) is selected when value is 4
+              const squarePosition = idx < 3 ? idx + 1 : idx + 2;
+              const isSelected = value === squarePosition || (idx === 2 && value === 4);
+
+              return (
+                <button
+                  key={idx}
+                  className={`${styles.spectrumSquareBtn} ${isSelected ? styles.spectrumSquareSelected : ''}`}
+                  style={{ backgroundColor: color }}
+                  onClick={() => handleSliderChange(squarePosition)}
+                  aria-label={positionLabels[squarePosition - 1] || `Position ${squarePosition}`}
+                />
+              );
+            })}
           </div>
+          <div className={styles.squaresLabels}>
+            <span className={styles.squareLabel}>{q.lowLabel}</span>
+            <span className={styles.squareLabel}>{q.highLabel}</span>
+          </div>
+          {positionLabels[value - 1] && (
+            <div className={styles.selectedPositionLabel}>
+              {positionLabels[value - 1]}
+            </div>
+          )}
         </div>
       </div>
     );
@@ -387,27 +429,38 @@ export default function CoreQuestionnaire({ onComplete, onCancel }: CoreQuestion
 
   const renderPercentageQuestion = (q: PercentageQuestion) => {
     const value = getCurrentPercentageValue();
+    // Map percentage to 6-square selection (0-16%, 17-33%, 34-50%, 51-66%, 67-83%, 84-100%)
+    const selectedSquare = Math.min(5, Math.floor(value / 17));
 
     return (
       <div className={styles.questionContent}>
         <p className={styles.questionText}>{q.text}</p>
 
-        <div className={styles.percentageContainer}>
+        <div className={styles.squaresContainer}>
           <div className={styles.percentageDisplay}>
             <span>{100 - value}%</span>
             <span>{value}%</span>
           </div>
-          <input
-            type="range"
-            min="0"
-            max="100"
-            value={value}
-            onChange={(e) => handlePercentageChange(parseInt(e.target.value))}
-            className={styles.slider}
-          />
-          <div className={styles.sliderLabels}>
-            <span className={styles.sliderLabel}>{q.lowLabel}</span>
-            <span className={styles.sliderLabel}>{q.highLabel}</span>
+          <div className={styles.squaresRow}>
+            {SPECTRUM_COLORS.map((color, idx) => {
+              const isSelected = idx === selectedSquare;
+              // Calculate percentage for this square position
+              const squarePercentage = Math.round((idx / 5) * 100);
+
+              return (
+                <button
+                  key={idx}
+                  className={`${styles.spectrumSquareBtn} ${isSelected ? styles.spectrumSquareSelected : ''}`}
+                  style={{ backgroundColor: color }}
+                  onClick={() => handlePercentageChange(squarePercentage)}
+                  aria-label={`${squarePercentage}%`}
+                />
+              );
+            })}
+          </div>
+          <div className={styles.squaresLabels}>
+            <span className={styles.squareLabel}>{q.lowLabel}</span>
+            <span className={styles.squareLabel}>{q.highLabel}</span>
           </div>
         </div>
       </div>

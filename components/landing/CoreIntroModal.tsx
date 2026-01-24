@@ -98,10 +98,16 @@ export default function CoreIntroModal({ isOpen, onClose, onStartQuestionnaire }
             <span className={styles.coreLetterAnimated} style={{ color: COLOR_RAMP.gold, animationDelay: '0.8s' }}>E</span>
           </div>
 
-          {/* Animated spectrum bar */}
-          <div className={styles.spectrumBarContainer}>
-            <div className={styles.spectrumBarAnimated}>
-              <div className={styles.spectrumMarker} />
+          {/* Spectrum squares */}
+          <div className={styles.spectrumSquaresContainer}>
+            <div className={styles.introSpectrumRow}>
+              {[COLOR_RAMP.purple, COLOR_RAMP.blue, COLOR_RAMP.green, COLOR_RAMP.gold, COLOR_RAMP.orange, COLOR_RAMP.red].map((color, i) => (
+                <div
+                  key={i}
+                  className={styles.introSpectrumSquare}
+                  style={{ backgroundColor: color, animationDelay: `${0.1 * i}s` }}
+                />
+              ))}
             </div>
             <p className={styles.spectrumCaption}>You'll land somewhere on each one</p>
           </div>
