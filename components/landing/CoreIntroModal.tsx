@@ -12,10 +12,10 @@ interface CoreIntroModalProps {
 
 // Dimension data for cycling display
 const DIMENSIONS = [
-  { letter: 'C', name: 'Civil Rights', description: 'How you balance liberty and authority', color: COLOR_RAMP.purple },
-  { letter: 'O', name: 'Openness', description: 'How global or national your outlook is', color: COLOR_RAMP.blue },
-  { letter: 'R', name: 'Redistribution', description: 'How you view economic fairness', color: COLOR_RAMP.green },
-  { letter: 'E', name: 'Ethics', description: 'How you approach social change', color: COLOR_RAMP.gold },
+  { letter: 'C', name: 'Civil Rights', description: 'Where you draw the line between freedom and order', color: COLOR_RAMP.purple },
+  { letter: 'O', name: 'Openness', description: 'How far your sense of "us" extends', color: COLOR_RAMP.blue },
+  { letter: 'R', name: 'Redistribution', description: 'Who you think should have what', color: COLOR_RAMP.green },
+  { letter: 'E', name: 'Ethics', description: 'Whether progress should be fast or careful', color: COLOR_RAMP.gold },
 ];
 
 export default function CoreIntroModal({ isOpen, onClose, onStartQuestionnaire }: CoreIntroModalProps) {
@@ -64,7 +64,7 @@ export default function CoreIntroModal({ isOpen, onClose, onStartQuestionnaire }
         {/* Section 1: Problem Statement */}
         <section className={styles.introSection}>
           <h1 className={styles.introTitle}>
-            political labels are <span className={styles.brokenText}>broken</span>
+            labels <span className={styles.brokenText}>lie</span>
           </h1>
           <div className={styles.labelCloud}>
             <span className={styles.blurLabel} style={{ animationDelay: '0s' }}>Liberal</span>
@@ -73,19 +73,16 @@ export default function CoreIntroModal({ isOpen, onClose, onStartQuestionnaire }
             <span className={styles.blurLabel} style={{ animationDelay: '0.6s' }}>Libertarian</span>
           </div>
           <p className={styles.introSubtitle}>
-            They cram your entire worldview into a single word.
+            One word can't capture what you actually believe.
             <br />
-            But you're not one word—your politics are unique.
+            Your politics have depth—let's map it.
           </p>
-          <div className={styles.scrollIndicator}>scroll to learn more ↓</div>
+          <div className={styles.scrollIndicator}>see how ↓</div>
         </section>
 
         {/* Section 2A: Meet CORE - Simple Concept */}
         <section className={styles.introSection}>
-          <h2 className={styles.sectionTitle}>Meet CORE</h2>
-          <p className={styles.sectionText}>
-            Four dimensions. No labels.
-          </p>
+          <h2 className={styles.sectionTitle}>Four dimensions. One map.</h2>
 
           {/* Animated letters */}
           <div className={styles.coreLettersRow}>
@@ -109,13 +106,13 @@ export default function CoreIntroModal({ isOpen, onClose, onStartQuestionnaire }
                 />
               ))}
             </div>
-            <p className={styles.spectrumCaption}>You'll land somewhere on each one</p>
+            <p className={styles.spectrumCaption}>Where do you land on each?</p>
           </div>
         </section>
 
         {/* Section 2B: What CORE Measures - Cycling Single Card */}
         <section className={styles.introSection}>
-          <h2 className={styles.sectionTitle}>What CORE measures</h2>
+          <h2 className={styles.sectionTitle}>What shapes your politics</h2>
 
           {/* Single cycling dimension display */}
           <div className={styles.dimensionCycler}>
@@ -153,7 +150,7 @@ export default function CoreIntroModal({ isOpen, onClose, onStartQuestionnaire }
                 onClose();
               }}
             >
-              Select your positions
+              I know where I stand
             </button>
 
             {onStartQuestionnaire && (
@@ -166,16 +163,16 @@ export default function CoreIntroModal({ isOpen, onClose, onStartQuestionnaire }
                     onStartQuestionnaire();
                   }}
                 >
-                  Help me find my positions
+                  Help me figure it out
                 </button>
                 <p className={styles.ctaHelperText}>
-                  16 scenario-based questions
+                  16 quick scenarios
                 </p>
               </>
             )}
 
             <p className={styles.ctaFootnote}>
-              Takes about 3 minutes. Your results are private.
+              3 minutes. Completely private.
             </p>
           </div>
         </section>
