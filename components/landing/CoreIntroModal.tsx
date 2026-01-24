@@ -1,6 +1,8 @@
-import React from 'react';
+'use client';
+
+import React, { useState, useEffect } from 'react';
 import styles from './CoreLanding.module.css';
-import { COLOR_RAMP, AXES } from '@/lib/bloc-config';
+import { COLOR_RAMP } from '@/lib/bloc-config';
 
 interface CoreIntroModalProps {
   isOpen: boolean;
@@ -8,13 +10,42 @@ interface CoreIntroModalProps {
   onStartQuestionnaire?: () => void;
 }
 
+// Dimension data for cycling display
+const DIMENSIONS = [
+  { letter: 'C', name: 'Civil Rights', description: 'How you balance liberty and authority', color: COLOR_RAMP.purple },
+  { letter: 'O', name: 'Openness', description: 'How global or national your outlook is', color: COLOR_RAMP.blue },
+  { letter: 'R', name: 'Redistribution', description: 'How you view economic fairness', color: COLOR_RAMP.green },
+  { letter: 'E', name: 'Ethics', description: 'How you approach social change', color: COLOR_RAMP.gold },
+];
+
 export default function CoreIntroModal({ isOpen, onClose, onStartQuestionnaire }: CoreIntroModalProps) {
-  // Prevent bubbling up to the page container if clicked
+  const [activeDimension, setActiveDimension] = useState(0);
+
+  // Auto-cycle through dimensions
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const interval = setInterval(() => {
+      setActiveDimension((prev) => (prev + 1) % DIMENSIONS.length);
+    }, 2500);
+
+    return () => clearInterval(interval);
+  }, [isOpen]);
+
+  // Reset dimension when modal opens
+  useEffect(() => {
+    if (isOpen) {
+      setActiveDimension(0);
+    }
+  }, [isOpen]);
+
   const handleContentClick = (e: React.MouseEvent) => {
     e.stopPropagation();
   };
 
   if (!isOpen) return null;
+
+  const currentDim = DIMENSIONS[activeDimension];
 
   return (
     <div className={styles.introOverlay}>
@@ -49,74 +80,64 @@ export default function CoreIntroModal({ isOpen, onClose, onStartQuestionnaire }
           <div className={styles.scrollIndicator}>scroll to learn more ↓</div>
         </section>
 
-        {/* Section 2: CORE Introduction + Spectrum (merged) */}
+        {/* Section 2A: Meet CORE - Simple Concept */}
         <section className={styles.introSection}>
           <h2 className={styles.sectionTitle}>Meet CORE</h2>
           <p className={styles.sectionText}>
-            CORE measures four independent dimensions of political thinking—from how you view civil rights to how you think about economic systems.
+            Four dimensions. No labels.
           </p>
 
-          <div className={styles.coreGrid}>
-            <div className={styles.coreItem}>
-              <div className={styles.coreLetter}>C</div>
-              <div className={styles.coreItemText}>
-                <div className={styles.coreLabel}>Civil Rights</div>
-                <div className={styles.coreDescription}>How tightly government should control individual behavior</div>
-                <div className={styles.coreAxis}>{AXES.civilRights.lowLabel} ↔ {AXES.civilRights.highLabel}</div>
-              </div>
-            </div>
-            <div className={styles.coreItem}>
-              <div className={styles.coreLetter}>O</div>
-              <div className={styles.coreItemText}>
-                <div className={styles.coreLabel}>Openness</div>
-                <div className={styles.coreDescription}>How global vs national you want borders and trade to be</div>
-                <div className={styles.coreAxis}>{AXES.openness.lowLabel} ↔ {AXES.openness.highLabel}</div>
-              </div>
-            </div>
-            <div className={styles.coreItem}>
-              <div className={styles.coreLetter}>R</div>
-              <div className={styles.coreItemText}>
-                <div className={styles.coreLabel}>Redistribution</div>
-                <div className={styles.coreDescription}>How much markets vs the state should shape the economy</div>
-                <div className={styles.coreAxis}>{AXES.redistribution.lowLabel} ↔ {AXES.redistribution.highLabel}</div>
-              </div>
-            </div>
-            <div className={styles.coreItem}>
-              <div className={styles.coreLetter}>E</div>
-              <div className={styles.coreItemText}>
-                <div className={styles.coreLabel}>Ethics</div>
-                <div className={styles.coreDescription}>How quickly social norms should change vs be preserved</div>
-                <div className={styles.coreAxis}>{AXES.ethics.lowLabel} ↔ {AXES.ethics.highLabel}</div>
-              </div>
-            </div>
+          {/* Animated letters */}
+          <div className={styles.coreLettersRow}>
+            <span className={styles.coreLetterAnimated} style={{ color: COLOR_RAMP.purple, animationDelay: '0.2s' }}>C</span>
+            <span className={styles.coreLetterDot}>·</span>
+            <span className={styles.coreLetterAnimated} style={{ color: COLOR_RAMP.blue, animationDelay: '0.4s' }}>O</span>
+            <span className={styles.coreLetterDot}>·</span>
+            <span className={styles.coreLetterAnimated} style={{ color: COLOR_RAMP.green, animationDelay: '0.6s' }}>R</span>
+            <span className={styles.coreLetterDot}>·</span>
+            <span className={styles.coreLetterAnimated} style={{ color: COLOR_RAMP.gold, animationDelay: '0.8s' }}>E</span>
           </div>
 
-          <p className={styles.sectionText} style={{ marginTop: '2rem' }}>
-            Each dimension is a spectrum. Instead of a label, you'll see exactly where you sit on each one.
-          </p>
-
-          <div className={styles.spectrumExample}>
-            <div className={styles.spectrumSquaresWrapper}>
-              {[COLOR_RAMP.purple, COLOR_RAMP.blue, COLOR_RAMP.green, COLOR_RAMP.gold, COLOR_RAMP.orange, COLOR_RAMP.red].map((color, i) => (
-                <div key={i} className={styles.squareColumn}>
-                  <div
-                    className={styles.spectrumSquare}
-                    style={{
-                      backgroundColor: color,
-                      opacity: 1
-                    }}
-                  />
-                </div>
-              ))}
+          {/* Animated spectrum bar */}
+          <div className={styles.spectrumBarContainer}>
+            <div className={styles.spectrumBarAnimated}>
+              <div className={styles.spectrumMarker} />
             </div>
-            <div className={styles.sliderLabels}>
-              <span className={styles.sliderPole}>Low intensity</span>
-              <span className={styles.sliderPole}>High intensity</span>
+            <p className={styles.spectrumCaption}>You'll land somewhere on each one</p>
+          </div>
+        </section>
+
+        {/* Section 2B: What CORE Measures - Cycling Single Card */}
+        <section className={styles.introSection}>
+          <h2 className={styles.sectionTitle}>What CORE measures</h2>
+
+          {/* Single cycling dimension display */}
+          <div className={styles.dimensionCycler}>
+            <div
+              className={styles.dimensionDisplay}
+              key={activeDimension}
+            >
+              <span className={styles.dimensionDisplayLetter} style={{ color: currentDim.color }}>
+                {currentDim.letter}
+              </span>
+              <span className={styles.dimensionDisplayName}>{currentDim.name}</span>
+              <span className={styles.dimensionDisplayDesc}>{currentDim.description}</span>
+            </div>
+
+            {/* Progress dots */}
+            <div className={styles.dimensionDots}>
+              {DIMENSIONS.map((_, i) => (
+                <span
+                  key={i}
+                  className={`${styles.dimensionDot} ${i === activeDimension ? styles.dimensionDotActive : ''}`}
+                  style={i === activeDimension ? { backgroundColor: DIMENSIONS[i].color } : {}}
+                />
+              ))}
             </div>
           </div>
         </section>
 
-        {/* Section 3: CTA with time estimate and privacy note */}
+        {/* Section 3: CTA */}
         <section className={styles.introSection}>
           <div className={styles.ctaContainer}>
             <button
@@ -126,7 +147,7 @@ export default function CoreIntroModal({ isOpen, onClose, onStartQuestionnaire }
                 onClose();
               }}
             >
-              Select your positions directly
+              Select your positions
             </button>
 
             {onStartQuestionnaire && (
@@ -142,7 +163,7 @@ export default function CoreIntroModal({ isOpen, onClose, onStartQuestionnaire }
                   Help me find my positions
                 </button>
                 <p className={styles.ctaHelperText}>
-                  Answer 16 scenario-based questions
+                  16 scenario-based questions
                 </p>
               </>
             )}
