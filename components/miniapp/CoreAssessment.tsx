@@ -92,7 +92,7 @@ export default function CoreAssessment({
       getEmoji(selectedValues.ethics!)
     ].join('');
     
-    const shareText = `My CORE political bloc: ${emojis}\n\nCheck yours:`;
+    const shareText = `I just discovered my political CORE: ${emojis}\n\nThink you're similar? Find your call sign:`;
     
     try {
       await sdk.actions.composeCast({
@@ -403,11 +403,11 @@ export default function CoreAssessment({
         <div className={styles.summaryContainer}>
           <div className={styles.resultsButtons}>
             <button onClick={handleShare} className={styles.startCta} style={{ width: '100%', marginTop: '1rem' }}>
-              Share Bloc
+              Share your CORE
             </button>
             <div style={{ display: 'flex', gap: '1rem', width: '100%' }}>
               <button onClick={handleToggleVisibility} className={styles.resetButton} style={{ flex: 1, justifyContent: 'center' }}>
-                {isPublic ? 'Hide' : 'Show'}
+                {isPublic ? 'Make Private' : 'Make Public'}
               </button>
               <button onClick={handleReset} className={styles.resetButton} style={{ flex: 1, justifyContent: 'center' }}>
                 Reset

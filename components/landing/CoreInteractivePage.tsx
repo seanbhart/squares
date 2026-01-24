@@ -245,6 +245,60 @@ export default function CoreInteractivePage() {
     setShowQuestionnaire(false);
     setShowIntro(true);
   };
+
+  // Check if all dimensions are complete
+  const isProfileComplete = Object.values(selectedValues).every(v => v !== null);
+
+  // Get emoji for score value
+  const getEmoji = (value: number) => {
+    const map = ['🟪', '🟦', '🟩', '🟨', '🟧', '🟥'];
+    return map[value] || '⬜';
+  };
+
+  // Generate share text
+  const generateShareText = () => {
+    if (!isProfileComplete) return '';
+    const emojis = [
+      getEmoji(selectedValues.civilRights!),
+      getEmoji(selectedValues.openness!),
+      getEmoji(selectedValues.redistribution!),
+      getEmoji(selectedValues.ethics!),
+    ].join('');
+    const userBloc = determineUserBloc();
+    const blocName = userBloc?.singularName || 'unique';
+    return `I just discovered my political CORE: ${emojis}\n\nI'm a ${blocName} (${userBloc?.callSign || 'XXXX'}).\n\nWhat's your call sign? Find out:`;
+  };
+
+  // Handle web share
+  const handleWebShare = async () => {
+    const shareText = generateShareText();
+    const shareUrl = 'https://squares.vote';
+
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: 'My CORE Political Profile',
+          text: shareText,
+          url: shareUrl,
+        });
+      } catch (err) {
+        // User cancelled or error - fall back to clipboard
+        handleCopyToClipboard(shareText, shareUrl);
+      }
+    } else {
+      handleCopyToClipboard(shareText, shareUrl);
+    }
+  };
+
+  const handleCopyToClipboard = (text: string, url: string) => {
+    const fullText = `${text}\n${url}`;
+    navigator.clipboard.writeText(fullText).then(() => {
+      alert('Copied to clipboard! Share it anywhere.');
+    }).catch(() => {
+      // Fallback for older browsers
+      prompt('Copy this text to share:', fullText);
+    });
+  };
   
   // Get animation delay for entrance animation
   const getAnimationDelay = (index: number): number => {
@@ -1121,18 +1175,32 @@ export default function CoreInteractivePage() {
       <div className={styles.summaryContainer}>
         
         {userBloc && (
-          <div 
-            className={styles.matchBadge} 
-            onClick={() => handleBlocClick(userBloc as unknown as SubTypeWithMeta)}
-            style={{ cursor: 'pointer' }}
-          >
-            <div className={styles.matchLabel}>
-              {userBloc.matchType === 'exact' ? 'You are a' : 'You are most similar to a'}
+          <>
+            {/* Completion celebration */}
+            {isProfileComplete && (
+              <div className={styles.completionCelebration}>
+                Your CORE profile is complete!
+              </div>
+            )}
+            <div
+              className={styles.matchBadge}
+              onClick={() => handleBlocClick(userBloc as unknown as SubTypeWithMeta)}
+              style={{ cursor: 'pointer' }}
+            >
+              <div className={styles.matchLabel}>
+                {userBloc.matchType === 'exact' ? 'You are a' : 'You are most similar to a'}
+              </div>
+              <div className={styles.matchName}>{userBloc.singularName}</div>
+              <div className={styles.matchCallSign}>{userBloc.callSign}</div>
+              <div className={styles.matchDescription}>{userBloc.description}</div>
             </div>
-            <div className={styles.matchName}>{userBloc.singularName}</div>
-            <div className={styles.matchCallSign}>{userBloc.callSign}</div>
-            <div className={styles.matchDescription}>{userBloc.description}</div>
-          </div>
+            {/* Share button */}
+            {isProfileComplete && (
+              <button className={styles.shareButton} onClick={handleWebShare}>
+                Share your CORE profile
+              </button>
+            )}
+          </>
         )}
         
         {/* Colored squares row */}
@@ -1270,8 +1338,7 @@ export default function CoreInteractivePage() {
 
           {!hasAnySelection && (
             <div className={styles.ctaHint}>
-              <span className={styles.ctaIcon}>👆</span>
-              Tap a square to define your position
+              Tap a square to start building your political profile
             </div>
           )}
           

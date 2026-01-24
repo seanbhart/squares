@@ -205,7 +205,34 @@ interface CoreQuestionnaireProps {
 
 export default function CoreQuestionnaire({ onComplete, onCancel }: CoreQuestionnaireProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [answers, setAnswers] = useState<Record<string, number>>({});
+  const [answers, setAnswers] = useState<Record<string, number>>(() => {
+    // Load saved answers from localStorage
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('core_questionnaire_answers');
+      if (saved) {
+        try {
+          return JSON.parse(saved);
+        } catch {
+          return {};
+        }
+      }
+    }
+    return {};
+  });
+
+  // Save answers to localStorage whenever they change
+  React.useEffect(() => {
+    if (typeof window !== 'undefined' && Object.keys(answers).length > 0) {
+      localStorage.setItem('core_questionnaire_answers', JSON.stringify(answers));
+    }
+  }, [answers]);
+
+  // Clear saved answers on completion
+  const clearSavedAnswers = () => {
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem('core_questionnaire_answers');
+    }
+  };
 
   const currentQuestion = QUESTIONS[currentIndex];
   const progress = ((currentIndex) / QUESTIONS.length) * 100;
@@ -265,12 +292,31 @@ export default function CoreQuestionnaire({ onComplete, onCancel }: CoreQuestion
 
   const handleNext = () => {
     if (isLastQuestion) {
+      clearSavedAnswers();
       const scores = calculateScores();
       onComplete(scores);
     } else {
       setCurrentIndex((prev) => prev + 1);
     }
   };
+
+  const handleSkip = () => {
+    // Skip assigns a neutral middle value (2.5)
+    setAnswers((prev) => ({ ...prev, [currentQuestion.id]: 2.5 }));
+    if (!isLastQuestion) {
+      setCurrentIndex((prev) => prev + 1);
+    }
+  };
+
+  // Get progress milestone message
+  const getProgressMessage = (): string | null => {
+    if (currentIndex === 4) return "Great start! 3 more dimensions to explore.";
+    if (currentIndex === 8) return "Halfway there—you're doing great.";
+    if (currentIndex === 12) return "Almost done—4 questions left.";
+    return null;
+  };
+
+  const progressMessage = getProgressMessage();
 
   const handleBack = () => {
     if (currentIndex > 0) {
@@ -440,6 +486,13 @@ export default function CoreQuestionnaire({ onComplete, onCancel }: CoreQuestion
         {/* Question */}
         {renderQuestion()}
 
+        {/* Progress Milestone */}
+        {progressMessage && (
+          <div className={styles.progressMilestone}>
+            {progressMessage}
+          </div>
+        )}
+
         {/* Navigation */}
         <div className={styles.navigation}>
           <button
@@ -449,13 +502,22 @@ export default function CoreQuestionnaire({ onComplete, onCancel }: CoreQuestion
           >
             Back
           </button>
-          <button
-            className={styles.nextButton}
-            onClick={handleNext}
-            disabled={!hasAnswer && currentQuestion.type === 'forced-choice'}
-          >
-            {isLastQuestion ? 'See Results' : 'Next'}
-          </button>
+          <div className={styles.navRight}>
+            {!hasAnswer && (
+              <button
+                className={styles.skipButton}
+                onClick={handleSkip}
+              >
+                Skip
+              </button>
+            )}
+            <button
+              className={styles.nextButton}
+              onClick={handleNext}
+            >
+              {isLastQuestion ? 'Reveal my CORE profile' : 'Next'}
+            </button>
+          </div>
         </div>
       </div>
     </div>
