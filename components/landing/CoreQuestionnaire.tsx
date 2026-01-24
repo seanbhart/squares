@@ -3,21 +3,21 @@
 import React, { useState, useMemo } from 'react';
 import styles from './CoreQuestionnaire.module.css';
 
-// Position labels for slider questions - 7 positions mapping to the spectrum
+// Position labels for slider questions - 6 positions matching the colored squares
 const POSITION_LABELS: Record<string, string[]> = {
-  q1: ["Privacy is paramount", "Privacy usually wins", "Lean toward privacy", "Weighing both equally", "Lean toward security", "Security usually wins", "Security is paramount"],
-  q2: ["Embrace free trade", "Accept market outcomes", "Lean toward efficiency", "Balancing both concerns", "Lean toward protection", "Prioritize local jobs", "Protect jobs first"],
-  q4: ["Update curriculum now", "Favor modernizing", "Lean toward updating", "Case-by-case basis", "Lean toward tradition", "Favor preservation", "Preserve tradition fully"],
-  q5: ["Full personal choice", "Mostly personal choice", "Lean toward autonomy", "Balance both concerns", "Lean toward regulation", "Mostly restrict access", "Full government control"],
-  q6: ["Maximize openness", "Favor more immigration", "Lean toward openness", "Balance both values", "Lean toward cohesion", "Favor less immigration", "Prioritize cohesion"],
-  q7: ["Fully private system", "Mostly private", "Lean toward private", "Mixed approach", "Lean toward universal", "Mostly universal", "Fully universal system"],
-  q8: ["Question all traditions", "Favor critical review", "Lean toward updating", "Evaluate case-by-case", "Lean toward preserving", "Favor keeping traditions", "Preserve traditions strongly"],
-  q11: ["Symbols unimportant", "Mostly unimportant", "Lean toward flexibility", "Moderately important", "Lean toward preserving", "Quite important", "Symbols very important"],
-  q12: ["Experts should decide", "Favor expert oversight", "Lean toward oversight", "Shared responsibility", "Lean toward parents", "Favor parental authority", "Parents decide fully"],
-  q13: ["Wealth is earned", "Mostly earned", "Lean toward earned", "Mix of both factors", "Lean toward luck", "Mostly circumstance", "Wealth reflects luck"],
-  q14: ["Embrace change readily", "Generally favor change", "Lean toward change", "Depends on context", "Lean toward caution", "Generally favor caution", "Strong caution needed"],
-  q15: ["Global approach essential", "Favor cooperation", "Lean toward cooperation", "Balance both concerns", "Lean toward sovereignty", "Favor national control", "Sovereignty paramount"],
-  q16: ["Unacceptable requirement", "Generally oppose", "Lean against service", "Conflicted on this", "Lean toward service", "Generally support", "Reasonable obligation"],
+  q1: ["Ban AI cameras", "Limit to crime areas", "Require warrants", "Allow with oversight", "Expand coverage", "Full surveillance"],
+  q2: ["Let factory close", "Offer retraining", "Transition support", "Tariffs on imports", "Block the closure", "Ban outsourcing"],
+  q4: ["Full gender education", "Age-appropriate content", "Parent opt-in", "Parent opt-out", "Biology focus only", "No sex education"],
+  q5: ["Legalize all drugs", "Legalize most drugs", "Cannabis only", "Decriminalize use", "Medical exceptions", "Full prohibition"],
+  q6: ["Accept all applicants", "Expand visa quotas", "Merit-based entry", "Cap annual numbers", "Citizens first hiring", "Halt immigration"],
+  q7: ["Single-payer only", "Public option available", "Expand subsidies", "Tax credits for plans", "Free market only", "End mandates"],
+  q8: ["Abandon outdated", "Modernize actively", "Adapt gradually", "Maintain most", "Protect all customs", "Restore old ways"],
+  q11: ["Symbols unnecessary", "Optional observance", "Personal choice", "Encourage pride", "Teach in schools", "Mandate observance"],
+  q12: ["Doctors override", "Court decides", "Ethics board review", "Parents with input", "Parents decide", "No state interference"],
+  q13: ["Mostly luck", "System advantages", "Mixed factors", "Talent and timing", "Hard work pays", "Fully self-made"],
+  q14: ["Lead the change", "Join movements", "Open to reform", "Wait and see", "Resist until proven", "Oppose new norms"],
+  q15: ["Join immediately", "Negotiate then join", "Case by case", "Only if we lead", "Bilateral deals only", "Full independence"],
+  q16: ["Ban conscription", "Fully voluntary", "Incentivize service", "Civilian option", "Military service", "Universal duty"],
 };
 
 // Colors for the 6 spectrum squares (we show 6 to match CORE's color scheme)
@@ -301,12 +301,6 @@ export default function CoreQuestionnaire({ onComplete, onCancel }: CoreQuestion
     };
   };
 
-  const handleSliderChange = (value: number) => {
-    // Map 1-7 slider to 0-5 CORE scale
-    const mappedValue = mapSliderToCoreScore(value);
-    setAnswers((prev) => ({ ...prev, [currentQuestion.id]: mappedValue }));
-  };
-
   const handlePercentageChange = (value: number) => {
     // Map 0-100 percentage to 0-5 CORE scale
     const mappedValue = Math.round((value / 100) * 5);
@@ -351,34 +345,6 @@ export default function CoreQuestionnaire({ onComplete, onCancel }: CoreQuestion
     }
   };
 
-  // Map 7-point slider (1-7) to CORE score (0-5)
-  const mapSliderToCoreScore = (sliderValue: number): number => {
-    const mapping: Record<number, number> = {
-      1: 0,
-      2: 1,
-      3: 2,
-      4: 2.5,
-      5: 3,
-      6: 4,
-      7: 5,
-    };
-    return mapping[sliderValue] ?? 2.5;
-  };
-
-  // Get current slider value from answer
-  const getCurrentSliderValue = (): number => {
-    const answer = answers[currentQuestion.id];
-    if (answer === undefined) return 4; // Middle
-    // Reverse map from CORE score to slider
-    if (answer <= 0.5) return 1;
-    if (answer <= 1.5) return 2;
-    if (answer <= 2.25) return 3;
-    if (answer <= 2.75) return 4;
-    if (answer <= 3.5) return 5;
-    if (answer <= 4.5) return 6;
-    return 7;
-  };
-
   // Get current percentage value from answer
   const getCurrentPercentageValue = (): number => {
     const answer = answers[currentQuestion.id];
@@ -387,8 +353,10 @@ export default function CoreQuestionnaire({ onComplete, onCancel }: CoreQuestion
   };
 
   const renderSliderQuestion = (q: SliderQuestion) => {
-    const value = getCurrentSliderValue();
+    const currentAnswer = answers[q.id];
     const positionLabels = POSITION_LABELS[q.id] || [];
+    // Map CORE score (0-5) to selected square index (0-5)
+    const selectedIndex = currentAnswer !== undefined ? Math.round(currentAnswer) : -1;
 
     return (
       <div className={styles.questionContent}>
@@ -397,18 +365,15 @@ export default function CoreQuestionnaire({ onComplete, onCancel }: CoreQuestion
         <div className={styles.squaresContainer}>
           <div className={styles.squaresRow}>
             {SPECTRUM_COLORS.map((color, idx) => {
-              // Map 6 squares to 7 positions: 0->1, 1->2, 2->3, 3->5, 4->6, 5->7
-              // Position 4 (middle) is selected when value is 4
-              const squarePosition = idx < 3 ? idx + 1 : idx + 2;
-              const isSelected = value === squarePosition || (idx === 2 && value === 4);
+              const isSelected = idx === selectedIndex;
 
               return (
                 <button
                   key={idx}
                   className={`${styles.spectrumSquareBtn} ${isSelected ? styles.spectrumSquareSelected : ''}`}
                   style={{ backgroundColor: color }}
-                  onClick={() => handleSliderChange(squarePosition)}
-                  aria-label={positionLabels[squarePosition - 1] || `Position ${squarePosition}`}
+                  onClick={() => setAnswers((prev) => ({ ...prev, [q.id]: idx }))}
+                  aria-label={positionLabels[idx] || `Position ${idx + 1}`}
                 />
               );
             })}
@@ -417,9 +382,9 @@ export default function CoreQuestionnaire({ onComplete, onCancel }: CoreQuestion
             <span className={styles.squareLabel}>{q.lowLabel}</span>
             <span className={styles.squareLabel}>{q.highLabel}</span>
           </div>
-          {positionLabels[value - 1] && (
+          {selectedIndex >= 0 && positionLabels[selectedIndex] && (
             <div className={styles.selectedPositionLabel}>
-              {positionLabels[value - 1]}
+              {positionLabels[selectedIndex]}
             </div>
           )}
         </div>
