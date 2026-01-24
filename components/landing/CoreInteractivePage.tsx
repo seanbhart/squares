@@ -4,6 +4,7 @@ import React, { useRef, useEffect, useState } from 'react';
 import styles from './CoreLanding.module.css';
 import { COLOR_RAMP, AXES, getAllTypes, getTypePosition, getTypeName, getTypeSingularName, getTypeDescription, getAllSubTypesWithMeta, generateCallSign, TypeId, SubTypeWithMeta, FAMILY_NAMES } from '@/lib/bloc-config';
 import CoreIntroModal from './CoreIntroModal';
+import CoreQuestionnaire from './CoreQuestionnaire';
 
 type AxisKey = 'civilRights' | 'openness' | 'redistribution' | 'ethics';
 
@@ -20,6 +21,7 @@ export default function CoreInteractivePage() {
   const [viewingBloc, setViewingBloc] = React.useState<SubTypeWithMeta | null>(null);
   const [isLoaded, setIsLoaded] = React.useState(false);
   const [showIntro, setShowIntro] = React.useState(true);
+  const [showQuestionnaire, setShowQuestionnaire] = React.useState(false);
   
   // New State for Selection Overlay
   const [tempValue, setTempValue] = useState<number | null>(null);
@@ -216,6 +218,32 @@ export default function CoreInteractivePage() {
     });
     setHasAnimated(false);
     setTimeout(() => setHasAnimated(true), 50);
+  };
+
+  const handleStartQuestionnaire = () => {
+    setShowIntro(false);
+    setShowQuestionnaire(true);
+  };
+
+  const handleQuestionnaireComplete = (scores: {
+    civilRights: number;
+    openness: number;
+    redistribution: number;
+    ethics: number;
+  }) => {
+    setSelectedValues({
+      civilRights: scores.civilRights,
+      openness: scores.openness,
+      redistribution: scores.redistribution,
+      ethics: scores.ethics,
+    });
+    setShowQuestionnaire(false);
+    setHasAnimated(true);
+  };
+
+  const handleQuestionnaireCancel = () => {
+    setShowQuestionnaire(false);
+    setShowIntro(true);
   };
   
   // Get animation delay for entrance animation
@@ -1261,7 +1289,17 @@ export default function CoreInteractivePage() {
         {renderSelectionOverlay()}
         {renderBlocModal()}
         {renderFigureModal()}
-        <CoreIntroModal isOpen={showIntro} onClose={() => setShowIntro(false)} />
+        <CoreIntroModal
+          isOpen={showIntro}
+          onClose={() => setShowIntro(false)}
+          onStartQuestionnaire={handleStartQuestionnaire}
+        />
+        {showQuestionnaire && (
+          <CoreQuestionnaire
+            onComplete={handleQuestionnaireComplete}
+            onCancel={handleQuestionnaireCancel}
+          />
+        )}
       </main>
     </>
   );

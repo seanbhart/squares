@@ -114,7 +114,7 @@ export default function CoreAssessment({
   const renderIntro = () => (
     <div className={styles.introOverlay} style={{ position: 'fixed', overflowY: 'scroll' }}>
       <div className={styles.introContent}>
-        {/* Section 1 */}
+        {/* Section 1: Problem Statement */}
         <section className={styles.introSection}>
           <h1 className={styles.introTitle}>
             political labels are <span className={styles.brokenText}>broken</span>
@@ -125,16 +125,18 @@ export default function CoreAssessment({
             <span className={styles.blurLabel} style={{ animationDelay: '0.4s' }}>Moderate</span>
           </div>
           <p className={styles.introSubtitle}>
-            they cram complex beliefs into one word
+            They cram your entire worldview into a single word.
+            <br />
+            But you're not one word—your politics are unique.
           </p>
           <div className={styles.scrollIndicator}>scroll to learn more ↓</div>
         </section>
 
-        {/* Section 2 */}
+        {/* Section 2: CORE Introduction (combined) */}
         <section className={styles.introSection}>
-          <h2 className={styles.sectionTitle}>meet CORE</h2>
+          <h2 className={styles.sectionTitle}>Meet CORE</h2>
           <p className={styles.sectionText}>
-            your political DNA across four independent dimensions
+            Four independent dimensions of political thinking. Each is a spectrum—you'll see exactly where you sit.
           </p>
           <div className={styles.coreGrid}>
             <div className={styles.coreItem}>
@@ -160,11 +162,19 @@ export default function CoreAssessment({
           </div>
         </section>
 
-        {/* Section 3: CTA */}
+        {/* Section 3: CTA with time estimate */}
         <section className={styles.introSection}>
           <button className={styles.startCta} onClick={() => setShowIntro(false)}>
-            find your bloc
+            Select your positions
           </button>
+          <p style={{
+            color: 'rgba(255, 255, 255, 0.4)',
+            fontSize: '0.8rem',
+            marginTop: '1rem',
+            textAlign: 'center'
+          }}>
+            Takes about 2 minutes. Your results are private.
+          </p>
         </section>
       </div>
     </div>
