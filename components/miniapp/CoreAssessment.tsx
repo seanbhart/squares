@@ -2,7 +2,15 @@
 
 import React, { useState, useEffect } from 'react';
 import styles from './CoreAssessment.module.css';
-import { AXES } from '@/lib/bloc-config';
+import { AXES, COLOR_RAMP } from '@/lib/bloc-config';
+
+// Dimension data for cycling display
+const DIMENSIONS = [
+  { letter: 'C', name: 'Civil Rights', description: 'Where you draw the line between freedom and order', color: COLOR_RAMP.purple },
+  { letter: 'O', name: 'Openness', description: 'How far your sense of "us" extends', color: COLOR_RAMP.blue },
+  { letter: 'R', name: 'Redistribution', description: 'Who you think should have what', color: COLOR_RAMP.green },
+  { letter: 'E', name: 'Ethics', description: 'Whether progress should be fast or careful', color: COLOR_RAMP.gold },
+];
 import { sdk } from '@farcaster/miniapp-sdk';
 
 type AxisKey = 'civilRights' | 'openness' | 'redistribution' | 'ethics';
@@ -30,7 +38,24 @@ export default function CoreAssessment({
   onVisibilityChange 
 }: CoreAssessmentProps) {
   const [showIntro, setShowIntro] = useState(initialStep === 0 && !initialSpectrum);
-  
+  const [activeDimension, setActiveDimension] = useState(0);
+
+  // Auto-cycle through dimensions in intro
+  useEffect(() => {
+    if (!showIntro) return;
+    const interval = setInterval(() => {
+      setActiveDimension((prev) => (prev + 1) % DIMENSIONS.length);
+    }, 2500);
+    return () => clearInterval(interval);
+  }, [showIntro]);
+
+  // Reset dimension when intro shows
+  useEffect(() => {
+    if (showIntro) {
+      setActiveDimension(0);
+    }
+  }, [showIntro]);
+
   // Grid State
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [activeAxis, setActiveAxis] = useState<AxisKey | null>(null);
@@ -133,49 +158,73 @@ export default function CoreAssessment({
           <div className={styles.scrollIndicator}>see how ↓</div>
         </section>
 
-        {/* Section 2: CORE Introduction (combined) */}
+        {/* Section 2A: Meet CORE - Simple Concept */}
         <section className={styles.introSection}>
           <h2 className={styles.sectionTitle}>Four dimensions. One map.</h2>
-          <p className={styles.sectionText}>
-            Each is a spectrum—where do you land on each?
-          </p>
-          <div className={styles.coreGrid}>
-            <div className={styles.coreItem}>
-              <div className={styles.coreLetter} style={{ color: 'var(--color-purple)' }}>C</div>
-              <div className={styles.coreLabel}>Civil Rights</div>
-              <div className={styles.coreAxis}>Liberty ↔ Authority</div>
+
+          {/* Animated letters */}
+          <div className={styles.coreLettersRow}>
+            <span className={styles.coreLetterAnimated} style={{ color: COLOR_RAMP.purple }}>C</span>
+            <span className={styles.coreLetterDot}>·</span>
+            <span className={styles.coreLetterAnimated} style={{ color: COLOR_RAMP.blue }}>O</span>
+            <span className={styles.coreLetterDot}>·</span>
+            <span className={styles.coreLetterAnimated} style={{ color: COLOR_RAMP.green }}>R</span>
+            <span className={styles.coreLetterDot}>·</span>
+            <span className={styles.coreLetterAnimated} style={{ color: COLOR_RAMP.gold }}>E</span>
+          </div>
+
+          {/* Spectrum squares */}
+          <div className={styles.spectrumSquaresContainer}>
+            <div className={styles.introSpectrumRow}>
+              {[COLOR_RAMP.purple, COLOR_RAMP.blue, COLOR_RAMP.green, COLOR_RAMP.gold, COLOR_RAMP.orange, COLOR_RAMP.red].map((color, i) => (
+                <div
+                  key={i}
+                  className={styles.introSpectrumSquare}
+                  style={{ backgroundColor: color }}
+                />
+              ))}
             </div>
-            <div className={styles.coreItem}>
-              <div className={styles.coreLetter} style={{ color: 'var(--color-blue)' }}>O</div>
-              <div className={styles.coreLabel}>Openness</div>
-              <div className={styles.coreAxis}>Global ↔ National</div>
+            <p className={styles.spectrumCaption}>Where do you land on each?</p>
+          </div>
+        </section>
+
+        {/* Section 2B: What CORE Measures - Cycling Single Card */}
+        <section className={styles.introSection}>
+          <h2 className={styles.sectionTitle}>What shapes your politics</h2>
+
+          {/* Single cycling dimension display */}
+          <div className={styles.dimensionCycler}>
+            <div className={styles.dimensionDisplay} key={activeDimension}>
+              <span className={styles.dimensionDisplayLetter} style={{ color: DIMENSIONS[activeDimension].color }}>
+                {DIMENSIONS[activeDimension].letter}
+              </span>
+              <span className={styles.dimensionDisplayName}>{DIMENSIONS[activeDimension].name}</span>
+              <span className={styles.dimensionDisplayDesc}>{DIMENSIONS[activeDimension].description}</span>
             </div>
-            <div className={styles.coreItem}>
-              <div className={styles.coreLetter} style={{ color: 'var(--color-green)' }}>R</div>
-              <div className={styles.coreLabel}>Redistribution</div>
-              <div className={styles.coreAxis}>Market ↔ Social</div>
-            </div>
-            <div className={styles.coreItem}>
-              <div className={styles.coreLetter} style={{ color: 'var(--color-gold)' }}>E</div>
-              <div className={styles.coreLabel}>Ethics</div>
-              <div className={styles.coreAxis}>Progressive ↔ Traditional</div>
+
+            {/* Progress dots */}
+            <div className={styles.dimensionDots}>
+              {DIMENSIONS.map((dim, i) => (
+                <span
+                  key={i}
+                  className={`${styles.dimensionDot} ${i === activeDimension ? styles.dimensionDotActive : ''}`}
+                  style={i === activeDimension ? { backgroundColor: dim.color } : {}}
+                />
+              ))}
             </div>
           </div>
         </section>
 
-        {/* Section 3: CTA with time estimate */}
+        {/* Section 3: CTA */}
         <section className={styles.introSection}>
-          <button className={styles.startCta} onClick={() => setShowIntro(false)}>
-            I know where I stand
-          </button>
-          <p style={{
-            color: 'rgba(255, 255, 255, 0.4)',
-            fontSize: '0.8rem',
-            marginTop: '1rem',
-            textAlign: 'center'
-          }}>
-            1 minute. Completely private.
-          </p>
+          <div className={styles.ctaContainer}>
+            <button className={styles.startCta} onClick={() => setShowIntro(false)}>
+              I know where I stand
+            </button>
+            <p className={styles.ctaFootnote}>
+              1 minute. Completely private.
+            </p>
+          </div>
         </section>
       </div>
     </div>
