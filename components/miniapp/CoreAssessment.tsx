@@ -117,26 +117,27 @@ export default function CoreAssessment({
         {/* Section 1: Problem Statement */}
         <section className={styles.introSection}>
           <h1 className={styles.introTitle}>
-            political labels are <span className={styles.brokenText}>broken</span>
+            labels <span className={styles.brokenText}>lie</span>
           </h1>
           <div className={styles.labelCloud}>
             <span className={styles.blurLabel} style={{ animationDelay: '0s' }}>Liberal</span>
             <span className={styles.blurLabel} style={{ animationDelay: '0.2s' }}>Conservative</span>
             <span className={styles.blurLabel} style={{ animationDelay: '0.4s' }}>Moderate</span>
+            <span className={styles.blurLabel} style={{ animationDelay: '0.6s' }}>Libertarian</span>
           </div>
           <p className={styles.introSubtitle}>
-            They cram your entire worldview into a single word.
+            One word can't capture what you actually believe.
             <br />
-            But you're not one word—your politics are unique.
+            Your politics have depth—let's map it.
           </p>
-          <div className={styles.scrollIndicator}>scroll to learn more ↓</div>
+          <div className={styles.scrollIndicator}>see how ↓</div>
         </section>
 
         {/* Section 2: CORE Introduction (combined) */}
         <section className={styles.introSection}>
-          <h2 className={styles.sectionTitle}>Meet CORE</h2>
+          <h2 className={styles.sectionTitle}>Four dimensions. One map.</h2>
           <p className={styles.sectionText}>
-            Four independent dimensions of political thinking. Each is a spectrum—you'll see exactly where you sit.
+            Each is a spectrum—where do you land on each?
           </p>
           <div className={styles.coreGrid}>
             <div className={styles.coreItem}>
@@ -165,7 +166,7 @@ export default function CoreAssessment({
         {/* Section 3: CTA with time estimate */}
         <section className={styles.introSection}>
           <button className={styles.startCta} onClick={() => setShowIntro(false)}>
-            Select your positions
+            I know where I stand
           </button>
           <p style={{
             color: 'rgba(255, 255, 255, 0.4)',
@@ -173,7 +174,7 @@ export default function CoreAssessment({
             marginTop: '1rem',
             textAlign: 'center'
           }}>
-            Takes about 2 minutes. Your results are private.
+            1 minute. Completely private.
           </p>
         </section>
       </div>
