@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import styles from './CoreAssessment.module.css';
 import { AXES, COLOR_RAMP } from '@/lib/bloc-config';
+import CoreQuestionnaire from './CoreQuestionnaire';
 
 // Dimension data for cycling display
 const DIMENSIONS = [
@@ -38,6 +39,7 @@ export default function CoreAssessment({
   onVisibilityChange 
 }: CoreAssessmentProps) {
   const [showIntro, setShowIntro] = useState(initialStep === 0 && !initialSpectrum);
+  const [showQuestionnaire, setShowQuestionnaire] = useState(false);
   const [activeDimension, setActiveDimension] = useState(0);
 
   // Auto-cycle through dimensions in intro
@@ -105,6 +107,22 @@ export default function CoreAssessment({
     if (onVisibilityChange) {
       onVisibilityChange(newVisibility);
     }
+  };
+
+  const handleQuestionnaireComplete = (scores: CoreScores) => {
+    setSelectedValues({
+      civilRights: scores.civilRights,
+      openness: scores.openness,
+      redistribution: scores.redistribution,
+      ethics: scores.ethics,
+    });
+    setShowQuestionnaire(false);
+    setShowIntro(false);
+  };
+
+  const handleStartQuestionnaire = () => {
+    setShowIntro(false);
+    setShowQuestionnaire(true);
   };
 
   const handleShare = async () => {
@@ -221,8 +239,13 @@ export default function CoreAssessment({
             <button className={styles.startCta} onClick={() => setShowIntro(false)}>
               I know where I stand
             </button>
+            <div className={styles.ctaDivider}>or</div>
+            <button className={styles.secondaryCta} onClick={handleStartQuestionnaire}>
+              Help me figure it out
+            </button>
+            <p className={styles.ctaHelperText}>16 quick scenarios</p>
             <p className={styles.ctaFootnote}>
-              1 minute. Completely private.
+              3 minutes. Completely private.
             </p>
           </div>
         </section>
@@ -427,6 +450,18 @@ export default function CoreAssessment({
   };
 
   // Main Render
+  if (showQuestionnaire) {
+    return (
+      <CoreQuestionnaire
+        onComplete={handleQuestionnaireComplete}
+        onCancel={() => {
+          setShowQuestionnaire(false);
+          setShowIntro(true);
+        }}
+      />
+    );
+  }
+
   if (showIntro) {
     return renderIntro();
   }
