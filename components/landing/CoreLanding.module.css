@@ -992,6 +992,12 @@
 .introSection:nth-child(3) { animation-delay: 0.5s; }
 .introSection:nth-child(4) { animation-delay: 0.7s; }
 
+/* Prevent over-scrolling on last section */
+.introSection:last-child {
+  height: 100vh;
+  min-height: auto;
+}
+
 .introTitle {
   font-size: clamp(2.5rem, 5vw, 4rem);
   font-weight: 800;
