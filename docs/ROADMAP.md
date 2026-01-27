@@ -1,6 +1,6 @@
 # Squares.vote CORE Transition Roadmap
 
-> **Last Updated:** January 23, 2025
+> **Last Updated:** January 27, 2025
 > **Status:** Active Development
 > **Framework:** TAMER (legacy) → CORE (current)
 
@@ -57,6 +57,11 @@ This roadmap outlines the complete transition from the legacy TAMER framework (5
 - [x] Update share functionality to show CORE results
 - [x] Fixed corner bracket styling (transparent background, white brackets)
 - [x] Fixed loading spinner (7 colored squares including dark grey)
+- [x] Sync miniapp intro copy with main site ("labels lie", updated messaging)
+- [x] Add animated C·O·R·E letters and spectrum squares to miniapp intro
+- [x] Add cycling dimension display ("What shapes your politics")
+- [x] Add 16-question questionnaire to miniapp ("Help me figure it out" option)
+- [x] Fix intro scroll over-scrolling on last section
 - [ ] Update Farcaster frame metadata for CORE
 - [ ] Test end-to-end miniapp flow
 
@@ -333,10 +338,12 @@ This roadmap outlines the complete transition from the legacy TAMER framework (5
 
 ---
 
-### 6.1 CORE Assessment Questionnaire ⬜
+### 6.1 CORE Assessment Questionnaire ✅ COMPLETED
 **Priority:** High
 **Effort:** High
 **Rationale:** Direct selection on abstract dimensions may capture symbolic identity rather than operational beliefs. Scenario-based questions provide more valid measurement.
+
+> **Status:** Implemented in both main site (`components/landing/CoreQuestionnaire.tsx`) and miniapp (`components/miniapp/CoreQuestionnaire.tsx`). Users can choose "Help me figure it out" to take the 16-question assessment instead of direct grid selection.
 
 #### Assessment Questions (16 Total)
 
@@ -463,13 +470,17 @@ This roadmap outlines the complete transition from the legacy TAMER framework (5
 - **Reasoning:** Measures dispositional orientation toward change independent of specific issues
 
 #### Implementation Tasks
-- [ ] Design question UI components with 7-point slider and forced-choice formats
-- [ ] Implement scoring algorithm (7-point → 0-5 scale mapping)
-- [ ] Build questionnaire flow with interleaved dimensions
+- [x] Design question UI components with 6-square slider and forced-choice formats
+- [x] Implement scoring algorithm (6-point → 0-5 scale mapping)
+- [x] Build questionnaire flow with interleaved dimensions
+- [x] Create "help me decide" pathway for uncertain users ("Help me figure it out" button)
+- [x] Add progress indicators during assessment (progress bar + question count)
+- [x] Add progress milestone messages (at Q4, Q8, Q12)
+- [x] Implement localStorage persistence for questionnaire progress
+- [x] Add Skip button for questions users want to skip
+- [x] Add Back button for navigation
 - [ ] Add optional attention check question after Q8
-- [ ] Create "help me decide" pathway for uncertain users
 - [ ] Implement confidence scoring (Cronbach's alpha per dimension)
-- [ ] Add progress indicators during assessment
 - [ ] Store question responses for validation analysis
 - [ ] A/B test questionnaire vs. direct selection completion rates
 
@@ -486,10 +497,10 @@ This roadmap outlines the complete transition from the legacy TAMER framework (5
 
 ---
 
-### 6.2 About Section Redesign ⬜
+### 6.2 About Section Redesign ✅ PARTIALLY COMPLETED
 **Priority:** High
 **Effort:** Medium
-**Files:** `components/landing/CoreIntroModal.tsx`
+**Files:** `components/landing/CoreIntroModal.tsx`, `components/miniapp/CoreAssessment.tsx`
 
 #### Current Issues
 1. **Cognitive overload** - 5 new concepts before any action is too much
@@ -498,23 +509,28 @@ This roadmap outlines the complete transition from the legacy TAMER framework (5
 4. **Section 4 (bloc explanation)** is major drop-off point—too abstract pre-assessment
 
 #### Structural Changes
-- [ ] Cut Section 4 (bloc explanation) from pre-assessment flow
-- [ ] Merge Sections 2 and 3 into single "here's how it works" section
+- [x] Cut Section 4 (bloc explanation) from pre-assessment flow
+- [x] Merge Sections 2 and 3 into single "here's how it works" section
 - [ ] Move bloc/family explanation to post-assessment results page
-- [ ] Add time estimate near CTA ("Takes about 3 minutes")
-- [ ] Add privacy assurance ("Your results are private")
+- [x] Add time estimate near CTA ("3 minutes. Completely private.")
+- [x] Add privacy assurance ("Completely private")
+- [x] Fix scroll over-scrolling on last section (both main site and miniapp)
 
-#### Copy Revisions
+#### Copy Revisions ✅ IMPLEMENTED
 
-**Section 1 (Problem) - Revised:**
-> "Left. Right. Liberal. Conservative. These labels are broken—they cram your entire worldview into a single word. But you're not one word. Your politics are as unique as you are."
+**Section 1 (Problem) - Implemented:**
+> "labels lie" (title)
+> "One word can't capture what you actually believe. Your politics have depth—let's map it."
 
-**Section 2 (Solution) - Revised:**
-> "CORE measures four independent dimensions of political thinking—from how you view civil rights to how you think about economic systems. Instead of a label, you'll see exactly where you sit on each spectrum."
+**Section 2 (Solution) - Implemented:**
+> "Four dimensions. One map." with animated C·O·R·E letters
+> "What shapes your politics" with cycling dimension descriptions
+> Spectrum squares showing the 6-color scale
 
-**Section 3 (CTA) - Revised:**
-> "Discover your political profile"
-> "Takes about 3 minutes. Results are private."
+**Section 3 (CTA) - Implemented:**
+> "I know where I stand" (direct grid selection)
+> "Help me figure it out" (16-question questionnaire)
+> "3 minutes. Completely private."
 
 #### Language & Tone Tasks
 - [ ] Change all-lowercase to sentence case (approachable but professional)
@@ -686,8 +702,8 @@ This roadmap outlines the complete transition from the legacy TAMER framework (5
 | 4.3 | Community Engagement | Medium | Not Started |
 | 5.1 | Analytics | Medium | Not Started |
 | 5.2 | Feedback Loop | Ongoing | Not Started |
-| 6.1 | CORE Assessment Questionnaire | High | Not Started |
-| 6.2 | About Section Redesign | High | Not Started |
+| 6.1 | CORE Assessment Questionnaire | High | ✅ Complete |
+| 6.2 | About Section Redesign | High | Partial |
 | 6.3 | Interaction Design Improvements | High | Not Started |
 | 6.4 | Validation & Testing | Medium | Not Started |
 | 6.5 | Ethical Safeguards | High | Not Started |
