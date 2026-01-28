@@ -1,33 +1,22 @@
 'use client';
 
 import React, { useState, useCallback } from 'react';
+import {
+  CORE_DIMENSIONS,
+  COLOR_RAMP,
+  POSITION_LABELS,
+  getEmojiSquare as getCoreEmojiSquare,
+  type CoreSpectrum,
+  type CoreDimensionKey
+} from './core-config';
 
-/**
- * @deprecated This widget uses the legacy TAMER framework (5 dimensions, 0-6 scale).
- * It needs to be migrated to the CORE framework (4 dimensions: Civil Rights, Openness,
- * Redistribution, Ethics with 0-5 scale).
- *
- * TODO: CORE Migration Required
- * - Change POLICIES from 5 TAMER dimensions to 4 CORE dimensions (C, O, R, E)
- * - Update COLOR_RAMP from 7 colors (0-6) to 6 colors (0-5)
- * - Update POSITION_LABELS to 6 values per dimension using bloc_config.json axes.*.values
- * - Update EXAMPLE_FIGURES to use 4-element spectrum arrays
- * - Update getEmojiSquare to use 6-emoji array
- * - Update getSignatureText to use 'C', 'O', 'R', 'E' letters
- * - Update all UI text references (e.g., "7-color spectrum" -> "6-color spectrum")
- *
- * Reference files:
- * - /lib/core-config.ts for CORE_DIMENSIONS definitions
- * - /analytics/bloc_config.json for dimension labels and values
- */
 export interface SquaresWidgetProps {
-  onClose: (spectrum?: Record<string, number>) => void;
+  onClose: (spectrum?: CoreSpectrum) => void;
   primaryColor?: string;
-  initialSpectrum?: Record<string, number>;
+  initialSpectrum?: CoreSpectrum;
   initialStep?: number;
 }
 
-// TODO: CORE Migration - Update theme colors if needed for new framework
 // Theme colors matching app/globals.css
 const COLORS = {
   bgPrimary: '#121113',
@@ -42,119 +31,20 @@ const COLORS = {
   borderStrong: 'rgba(255, 255, 255, 0.12)',
 } as const;
 
-// TODO: CORE Migration - Replace with 4 CORE dimensions:
-// { key: 'civilRights', label: 'Civil Rights', shortName: 'C' },
-// { key: 'openness', label: 'Openness', shortName: 'O' },
-// { key: 'redistribution', label: 'Redistribution', shortName: 'R' },
-// { key: 'ethics', label: 'Ethics', shortName: 'E' },
-const POLICIES = [
-  { key: 'trade', label: 'Trade', emoji: '🌐' },
-  { key: 'abortion', label: 'Abortion', emoji: '🤰' },
-  { key: 'migration', label: 'Migration', emoji: '🌍' },
-  { key: 'economics', label: 'Economics', emoji: '💰' },
-  { key: 'rights', label: 'Rights', emoji: '🏳️‍🌈' },
-];
-
-// TODO: CORE Migration - Change to 6 colors for 0-5 scale:
-// ["#7e568e", "#1f6adb", "#398a34", "#eab308", "#e67e22", "#c0392b"]
-// (Remove the 7th dark slate color)
-const COLOR_RAMP = [
-  "#7e568e", // Purple (Trade)
-  "#1f6adb", // Blue (Abortion)
-  "#398a34", // Green
-  "#eab308", // Yellow/Orange (Economics)
-  "#e67e22", // Orange
-  "#c0392b", // Red (Migration)
-  "#383b3d", // Dark slate
-] as const;
-
-// TODO: CORE Migration - Replace with 4 CORE dimensions, 6 values each (from bloc_config.json):
-// civilRights: ['abolish enforcement', 'civil libertarian', 'privacy protections', 'public safety measures', 'surveillance state', 'police state']
-// openness: ['open borders', 'free movement', 'trade agreements', 'controlled immigration', 'strict border security', 'closed borders']
-// redistribution: ['pure capitalism', 'free markets', 'mixed economy', 'social programs', 'wealth redistribution', 'planned economy']
-// ethics: ['radical social change', 'progressive reform', 'incremental progress', 'preserve traditions', 'traditional values', 'enforce conformity']
-const POSITION_LABELS: Record<string, string[]> = {
-  trade: [
-    'free trade',
-    'minimal tariffs',
-    'selective trade agreements',
-    'balanced tariffs',
-    'strategic protections',
-    'heavy tariffs',
-    'closed economy'
-  ],
-  abortion: [
-    'no gestational limit',
-    'limit after second trimester',
-    'limit after viability',
-    'limit after 15 weeks',
-    'limit after first trimester',
-    'limit after heartbeat detection',
-    'total ban'
-  ],
-  migration: [
-    'open borders',
-    'easy pathways to citizenship',
-    'expanded quotas',
-    'current restrictions',
-    'reduced quotas',
-    'strict limits only',
-    'no immigration'
-  ],
-  economics: [
-    'pure free market',
-    'minimal regulation',
-    'market-based with safety net',
-    'balanced public-private',
-    'strong social programs',
-    'extensive public ownership',
-    'full state control'
-  ],
-  rights: [
-    'full legal equality',
-    'protections with few limits',
-    'protections with some limits',
-    'tolerance without endorsement',
-    'traditional definitions only',
-    'no legal recognition',
-    'criminalization'
-  ]
-};
-
-// TODO: CORE Migration - Update to 4-element spectrum arrays [C, O, R, E]:
-// Example: { name: 'Example', spectrum: [2, 1, 3, 2], ... }
-// Scores should be 0-5 for each dimension
-const EXAMPLE_FIGURES = [
-  {
-    name: 'Martin Luther King Jr.',
-    spectrum: [2, 1, 2, 4, 0],
-    period: '1963-1965',
-    title: 'Civil Rights Movement Leadership',
-    description: 'Led the March on Washington and Selma campaign, advocating for civil rights legislation and voting rights while maintaining nonviolent resistance.'
-  },
-  {
-    name: 'Ronald Reagan',
-    spectrum: [0, 5, 3, 1, 4],
-    period: '1981-1989',
-    title: 'Reagan Presidency',
-    description: 'Presidency marked by supply-side economics, conservative social policies, and strong anti-communist foreign policy during the Cold War.'
-  },
-  {
-    name: 'Franklin D. Roosevelt',
-    spectrum: [3, 2, 2, 5, 2],
-    period: '1933-1936',
-    title: 'First New Deal',
-    description: 'First term implementing the New Deal programs to combat the Great Depression through unprecedented government intervention in the economy.'
-  },
-];
+// Validate that a color is a safe CSS hex color to prevent CSS injection
+function isValidHexColor(color: string): boolean {
+  return /^#([A-Fa-f0-9]{3}|[A-Fa-f0-9]{6})$/.test(color);
+}
 
 function ColorSquare({ value, size = '48px', showBorder = true }: { value: number; size?: string; showBorder?: boolean }) {
+  // Clamp value to valid range to prevent undefined access
+  const safeValue = Math.max(0, Math.min(5, Math.floor(value)));
   return (
     <div style={{
       width: size,
       height: size,
       borderRadius: size === '48px' ? '10px' : (size === '32px' ? '8px' : '12px'),
-      backgroundColor: COLOR_RAMP[value],
+      backgroundColor: COLOR_RAMP[safeValue],
       boxShadow: '0 4px 12px rgba(0, 0, 0, 0.3)',
       border: showBorder ? '1px solid rgba(255, 255, 255, 0.1)' : 'none',
       flexShrink: 0
@@ -162,39 +52,34 @@ function ColorSquare({ value, size = '48px', showBorder = true }: { value: numbe
   );
 }
 
-export function SquaresWidget({ 
-  onClose, 
+// Helper to get the dimension key from CORE_DIMENSIONS
+// The dim.key is already the CoreDimensionKey ('civilRights', 'openness', etc.)
+const getDimensionKey = (dim: typeof CORE_DIMENSIONS[number]): CoreDimensionKey => {
+  return dim.key as CoreDimensionKey;
+};
+
+export function SquaresWidget({
+  onClose,
   primaryColor = '#57534e',
   initialSpectrum,
   initialStep = 0,
 }: SquaresWidgetProps) {
   const [step, setStep] = useState(initialStep);
-  const [spectrum, setSpectrum] = useState<Record<string, number>>(initialSpectrum || {
-    trade: 3,
-    abortion: 3,
-    migration: 3,
-    economics: 3,
-    rights: 3,
+  const [spectrum, setSpectrum] = useState<CoreSpectrum>(initialSpectrum || {
+    civilRights: 3,
+    openness: 3,
+    redistribution: 3,
+    ethics: 3,
   });
   const [copied, setCopied] = useState(false);
   const [currentDimension, setCurrentDimension] = useState(0);
   const [selectedSpectrumDimension, setSelectedSpectrumDimension] = useState(0);
 
-  // TODO: CORE Migration - Change to 6 emojis for 0-5 scale:
-  // ['🟪', '🟦', '🟩', '🟨', '🟧', '🟥']
-  const getEmojiSquare = (value: number): string => {
-    const emojis = ['🟪', '🟦', '🟩', '🟨', '🟧', '🟥', '⬛️'];
-    return emojis[value] || '🟨';
-  };
-
-  // TODO: CORE Migration - Change to ['C', 'O', 'R', 'E'] letters
-  const getSignatureText = () => {
-    const letters = ['T', 'A', 'M', 'E', 'R'];
-    return POLICIES.map((p, i) => `${letters[i]}${spectrum[p.key]}`).join(' ');
-  };
+  // Validate primaryColor to prevent CSS injection
+  const safePrimaryColor = isValidHexColor(primaryColor) ? primaryColor : '#57534e';
 
   const getEmojiText = () => {
-    return POLICIES.map((p) => getEmojiSquare(spectrum[p.key])).join('');
+    return CORE_DIMENSIONS.map((dim) => getCoreEmojiSquare(spectrum[getDimensionKey(dim)])).join('');
   };
 
   const handleCopy = useCallback(async () => {
@@ -202,8 +87,8 @@ export function SquaresWidget({
       await navigator.clipboard.writeText(getEmojiText());
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
-    } catch (error) {
-      console.error('Failed to copy:', error);
+    } catch {
+      // Clipboard access may be denied in some browsers/contexts
     }
   }, [spectrum]);
 
@@ -217,15 +102,14 @@ export function SquaresWidget({
               Your politics are unique.
             </h2>
             <div style={{ display: 'flex', justifyContent: 'center', gap: '1rem', margin: '2rem 0', flexWrap: 'wrap' }}>
-              {POLICIES.map((policy, index) => {
-                const letters = ['T', 'A', 'M', 'E', 'R'];
-                const colors = [COLOR_RAMP[0], COLOR_RAMP[1], COLOR_RAMP[6], COLOR_RAMP[4], COLOR_RAMP[2]];
+              {CORE_DIMENSIONS.map((dim, index) => {
+                const colors = [COLOR_RAMP[0], COLOR_RAMP[1], COLOR_RAMP[2], COLOR_RAMP[3]];
                 return (
-                  <div key={policy.key} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem' }}>
+                  <div key={dim.key} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem' }}>
                     <div style={{ width: '80px', height: '80px', borderRadius: '12px', backgroundColor: colors[index], display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 4px 12px rgba(0, 0, 0, 0.3)', border: `1px solid ${COLORS.border}` }}>
-                      <span style={{ fontSize: '2.5rem', color: 'white', fontWeight: 900 }}>{letters[index]}</span>
+                      <span style={{ fontSize: '2.5rem', color: 'white', fontWeight: 900 }}>{dim.shortName}</span>
                     </div>
-                    <span style={{ color: COLORS.textPrimary, fontSize: '0.875rem', fontWeight: 600 }}>{policy.label.split(' ')[0]}</span>
+                    <span style={{ color: COLORS.textPrimary, fontSize: '0.875rem', fontWeight: 600 }}>{dim.label.split(' ')[0]}</span>
                   </div>
                 );
               })}
@@ -237,23 +121,22 @@ export function SquaresWidget({
         );
 
       case 1: {
-        const selectedPolicy = POLICIES[selectedSpectrumDimension];
-        const letters = ['T', 'A', 'M', 'E', 'R'];
-        const colors = [COLOR_RAMP[0], COLOR_RAMP[1], COLOR_RAMP[6], COLOR_RAMP[4], COLOR_RAMP[2]];
-        
+        const selectedDim = CORE_DIMENSIONS[selectedSpectrumDimension];
+        const dimKey = getDimensionKey(selectedDim);
+
         return (
           <div style={{ minHeight: '400px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
             <h2 style={{ margin: '0 0 2rem 0', color: COLORS.textPrimary, fontSize: 'clamp(2rem, 5vw, 2.5rem)', fontWeight: 700, lineHeight: 1.2, textAlign: 'center' }}>
-              Each Square uses a<br />7-color spectrum
+              Each Square uses a<br />6-color spectrum
             </h2>
-            
+
             <div style={{ margin: '1.5rem 0' }}>
               <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '1rem', justifyContent: 'center' }}>
                 {COLOR_RAMP.map((color, i) => (
                   <ColorSquare key={i} value={i} size="48px" />
                 ))}
               </div>
-              
+
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '0.25rem', marginBottom: '1.5rem', maxWidth: '480px', margin: '0 auto 1.5rem' }}>
                 <span style={{ fontSize: '0.75rem', color: COLORS.textSecondary, fontWeight: 600 }}>Minimal intervention</span>
                 <span style={{ fontSize: '1rem', color: COLORS.textMuted }}>→</span>
@@ -266,9 +149,9 @@ export function SquaresWidget({
             </p>
 
             <div style={{ display: 'flex', justifyContent: 'center', gap: '0.75rem', marginBottom: '1.5rem', flexWrap: 'wrap' }}>
-              {POLICIES.map((policy, index) => (
+              {CORE_DIMENSIONS.map((dim, index) => (
                 <button
-                  key={policy.key}
+                  key={dim.key}
                   onClick={() => setSelectedSpectrumDimension(index)}
                   style={{
                     display: 'flex',
@@ -289,19 +172,19 @@ export function SquaresWidget({
                   }}
                 >
                   <div style={{ width: '40px', height: '40px', borderRadius: '8px', backgroundColor: COLORS.bgSecondary, display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 2px 8px rgba(0, 0, 0, 0.3)', border: `1px solid ${COLORS.borderStrong}` }}>
-                    <span style={{ fontSize: '1.25rem', color: COLORS.accent, fontWeight: 900 }}>{letters[index]}</span>
+                    <span style={{ fontSize: '1.25rem', color: COLORS.accent, fontWeight: 900 }}>{dim.shortName}</span>
                   </div>
-                  <span style={{ fontSize: '0.75rem', color: COLORS.textPrimary, fontWeight: 600 }}>{policy.label.split(' ')[0]}</span>
+                  <span style={{ fontSize: '0.75rem', color: COLORS.textPrimary, fontWeight: 600 }}>{dim.label.split(' ')[0]}</span>
                 </button>
               ))}
             </div>
 
             <div style={{ background: COLORS.surface, borderRadius: '12px', padding: '1.5rem', border: `1px solid ${COLORS.border}` }}>
               <h3 style={{ margin: '0 0 1rem 0', fontSize: '1.125rem', color: COLORS.textPrimary, fontWeight: 600, textAlign: 'center' }}>
-                {selectedPolicy.label}
+                {selectedDim.label}
               </h3>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-                {POSITION_LABELS[selectedPolicy.key].map((label, index) => (
+                {POSITION_LABELS[dimKey].map((label, index) => (
                   <div key={index} style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
                     <ColorSquare value={index} size="32px" />
                     <span style={{ fontSize: '0.875rem', color: COLORS.textPrimary, flex: 1 }}>{label}</span>
@@ -314,53 +197,53 @@ export function SquaresWidget({
       }
 
       case 2: {
-        const policy = POLICIES[currentDimension];
-        const letters = ['T', 'A', 'M', 'E', 'R'];
-        const colors = [COLOR_RAMP[0], COLOR_RAMP[1], COLOR_RAMP[6], COLOR_RAMP[4], COLOR_RAMP[2]];
-        const isLastDimension = currentDimension === POLICIES.length - 1;
-        
+        const dim = CORE_DIMENSIONS[currentDimension];
+        const dimKey = getDimensionKey(dim);
+        const isLastDimension = currentDimension === CORE_DIMENSIONS.length - 1;
+
         return (
           <div style={{ minHeight: '400px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
             <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
               <div style={{ fontSize: '0.875rem', color: COLORS.textSecondary, fontWeight: 600, marginBottom: '0.75rem', letterSpacing: '0.1em' }}>
-                {currentDimension + 1} OF {POLICIES.length}
+                {currentDimension + 1} OF {CORE_DIMENSIONS.length}
               </div>
               <div style={{ display: 'flex', justifyContent: 'center', gap: '0.5rem', marginBottom: '2rem' }}>
-                {POLICIES.map((p, i) => {
-                  const hasAnswer = spectrum[p.key] !== undefined && spectrum[p.key] !== null;
-                  const dotColor = hasAnswer ? COLOR_RAMP[spectrum[p.key]] : (i === currentDimension ? COLORS.textMuted : COLORS.surface);
+                {CORE_DIMENSIONS.map((d, i) => {
+                  const dKey = getDimensionKey(d);
+                  const hasAnswer = spectrum[dKey] !== undefined && spectrum[dKey] !== null;
+                  const dotColor = hasAnswer ? COLOR_RAMP[spectrum[dKey]] : (i === currentDimension ? COLORS.textMuted : COLORS.surface);
                   return (
-                    <div 
+                    <div
                       key={i}
-                      style={{ 
-                        width: '8px', 
-                        height: '8px', 
-                        borderRadius: '50%', 
+                      style={{
+                        width: '8px',
+                        height: '8px',
+                        borderRadius: '50%',
                         backgroundColor: dotColor,
                         transition: 'background-color 0.2s'
-                      }} 
+                      }}
                     />
                   );
                 })}
               </div>
               <div style={{ display: 'inline-block', marginBottom: '1rem' }}>
-                <div style={{ 
-                  width: '80px', 
-                  height: '80px', 
-                  borderRadius: '16px', 
-                  backgroundColor: spectrum[policy.key] !== undefined && spectrum[policy.key] !== null ? COLOR_RAMP[spectrum[policy.key]] : COLORS.bgSecondary, 
-                  display: 'flex', 
-                  alignItems: 'center', 
-                  justifyContent: 'center', 
-                  boxShadow: '0 8px 24px rgba(0, 0, 0, 0.3)', 
+                <div style={{
+                  width: '80px',
+                  height: '80px',
+                  borderRadius: '16px',
+                  backgroundColor: spectrum[dimKey] !== undefined && spectrum[dimKey] !== null ? COLOR_RAMP[spectrum[dimKey]] : COLORS.bgSecondary,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  boxShadow: '0 8px 24px rgba(0, 0, 0, 0.3)',
                   border: `1px solid ${COLORS.borderStrong}`,
                   transition: 'background-color 0.3s ease'
                 }}>
-                  <span style={{ fontSize: '3rem', color: 'white', fontWeight: 900 }}>{letters[currentDimension]}</span>
+                  <span style={{ fontSize: '3rem', color: 'white', fontWeight: 900 }}>{dim.shortName}</span>
                 </div>
               </div>
               <h2 style={{ margin: '0 0 1rem 0', color: COLORS.textPrimary, fontSize: 'clamp(1.75rem, 4vw, 2.5rem)', fontWeight: 800 }}>
-                {policy.label}
+                {dim.label}
               </h2>
               <p style={{ fontSize: '1rem', color: COLORS.textSecondary, marginBottom: '2rem' }}>
                 Where do you stand on government intervention?
@@ -368,13 +251,13 @@ export function SquaresWidget({
             </div>
 
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 1fr))', gap: '0.75rem', marginBottom: '2rem' }}>
-              {POSITION_LABELS[policy.key].map((label, valueIndex) => {
-                const isSelected = spectrum[policy.key] === valueIndex;
+              {POSITION_LABELS[dimKey].map((label, valueIndex) => {
+                const isSelected = spectrum[dimKey] === valueIndex;
                 const isCenter = valueIndex === 3;
                 return (
                   <button
                     key={valueIndex}
-                    onClick={() => setSpectrum(prev => ({ ...prev, [policy.key]: valueIndex }))}
+                    onClick={() => setSpectrum(prev => ({ ...prev, [dimKey]: valueIndex }))}
                     style={{
                       display: 'flex',
                       flexDirection: 'column',
@@ -382,9 +265,9 @@ export function SquaresWidget({
                       gap: '0.625rem',
                       padding: '0.875rem 0.5rem',
                       background: isSelected ? 'rgba(255, 255, 255, 0.05)' : 'transparent',
-                      border: isSelected 
-                        ? '2px solid rgba(255, 255, 255, 0.4)' 
-                        : isCenter 
+                      border: isSelected
+                        ? '2px solid rgba(255, 255, 255, 0.4)'
+                        : isCenter
                           ? '1px dashed rgba(255, 255, 255, 0.2)'
                           : '1px solid rgba(255, 255, 255, 0.15)',
                       borderRadius: '12px',
@@ -475,29 +358,33 @@ export function SquaresWidget({
             <h2 style={{ margin: '0 0 3rem 0', color: COLORS.textPrimary, fontSize: 'clamp(2rem, 5vw, 3rem)', fontWeight: 700, lineHeight: 1.2, textAlign: 'center' }}>
               Your Political Spectrum
             </h2>
-            
+
             <div style={{ textAlign: 'center', margin: '2rem 0', padding: '2.5rem 2rem', background: COLORS.surface, borderRadius: '16px', border: `1px solid ${COLORS.border}` }}>
               <div style={{ display: 'flex', justifyContent: 'center', gap: 'clamp(0.5rem, 1.5vw, 1rem)', flexWrap: 'wrap', marginBottom: '1.5rem' }}>
-                {POLICIES.map((policy, i) => (
-                  <div key={policy.key} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem' }}>
-                    <ColorSquare value={spectrum[policy.key]} size="64px" />
-                    <span style={{ fontSize: '0.75rem', color: COLORS.textSecondary, fontWeight: 600, letterSpacing: '0.02em' }}>
-                      {['T', 'A', 'M', 'E', 'R'][i]}
-                    </span>
-                  </div>
-                ))}
+                {CORE_DIMENSIONS.map((dim) => {
+                  const dimKey = getDimensionKey(dim);
+                  return (
+                    <div key={dim.key} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem' }}>
+                      <ColorSquare value={spectrum[dimKey]} size="64px" />
+                      <span style={{ fontSize: '0.75rem', color: COLORS.textSecondary, fontWeight: 600, letterSpacing: '0.02em' }}>
+                        {dim.shortName}
+                      </span>
+                    </div>
+                  );
+                })}
               </div>
               <div style={{ display: 'flex', justifyContent: 'center', gap: 'clamp(0.5rem, 1.5vw, 1rem)', flexWrap: 'wrap', paddingTop: '1rem', borderTop: '1px solid rgba(255, 255, 255, 0.1)' }}>
-                {POLICIES.map((policy) => (
-                  <span key={policy.key} style={{ fontSize: '0.6875rem', color: COLORS.textMuted, fontWeight: 500, textTransform: 'lowercase' }}>
-                    {policy.label}
+                {CORE_DIMENSIONS.map((dim) => (
+                  <span key={dim.key} style={{ fontSize: '0.6875rem', color: COLORS.textMuted, fontWeight: 500, textTransform: 'lowercase' }}>
+                    {dim.label}
                   </span>
                 ))}
               </div>
               <div style={{ fontSize: '2rem', marginTop: '1.5rem', paddingTop: '1.5rem', borderTop: '1px solid rgba(255, 255, 255, 0.1)', display: 'flex', justifyContent: 'center', gap: '0.125rem' }}>
-                {POLICIES.map((policy) => (
-                  <span key={policy.key}>{getEmojiSquare(spectrum[policy.key])}</span>
-                ))}
+                {CORE_DIMENSIONS.map((dim) => {
+                  const dimKey = getDimensionKey(dim);
+                  return <span key={dim.key}>{getCoreEmojiSquare(spectrum[dimKey])}</span>;
+                })}
               </div>
             </div>
 
@@ -566,11 +453,10 @@ export function SquaresWidget({
                   setStep(0);
                   setCurrentDimension(0);
                   setSpectrum({
-                    trade: 3,
-                    abortion: 3,
-                    migration: 3,
-                    economics: 3,
-                    rights: 3,
+                    civilRights: 3,
+                    openness: 3,
+                    redistribution: 3,
+                    ethics: 3,
                   });
                 }}
                 style={{
@@ -678,7 +564,7 @@ export function SquaresWidget({
           border-radius: 50%;
           background: white;
           cursor: pointer;
-          border: 3px solid ${primaryColor};
+          border: 3px solid ${safePrimaryColor};
           box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
         }
         input[type="range"]::-moz-range-thumb {
@@ -687,7 +573,7 @@ export function SquaresWidget({
           border-radius: 50%;
           background: white;
           cursor: pointer;
-          border: 3px solid ${primaryColor};
+          border: 3px solid ${safePrimaryColor};
           box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
         }
       `}</style>

@@ -1,7 +1,7 @@
 {
   "name": "@squares-app/react",
-  "version": "2.6.0",
-  "description": "Official React component for squares.vote embeds",
+  "version": "3.0.0",
+  "description": "Official React component for squares.vote embeds with CORE framework support",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
@@ -25,7 +25,8 @@
     "spectrum",
     "react",
     "component",
-    "embed"
+    "embed",
+    "CORE"
   ],
   "author": "squares.vote",
   "license": "MIT",

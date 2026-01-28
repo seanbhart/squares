@@ -1,12 +1,8 @@
 'use client';
 
-/**
- * @deprecated This component uses the legacy TAMER framework.
- * See SquaresWidget.tsx for migration details to CORE framework.
- */
-
 import React, { useState } from 'react';
 import { SquaresWidget } from './SquaresWidget';
+import { COLOR_RAMP } from './core-config';
 
 // Theme colors matching app/globals.css
 const COLORS = {
@@ -19,17 +15,6 @@ const COLORS = {
   accentText: '#121113',
   border: 'rgba(255, 255, 255, 0.08)',
 } as const;
-
-// TODO: CORE Migration - Change to 6 colors for 0-5 scale (remove dark slate)
-const COLOR_RAMP = [
-  "#7e568e", // Purple
-  "#1f6adb", // Blue
-  "#398a34", // Green
-  "#eab308", // Yellow
-  "#e67e22", // Orange
-  "#c0392b", // Red
-  "#383b3d", // Dark slate
-] as const;
 
 function ColorSquare({ value, size = 48 }: { value: number; size?: number }) {
   return (
@@ -156,9 +141,8 @@ export function SquaresEmbedReact({
             <h3 style={{ margin: '0 0 12px 0', fontSize: 'clamp(1.375rem, 3vw, 1.75rem)', fontWeight: 700, color: COLORS.textPrimary, lineHeight: 1.2 }}>
               Square Your Political Personality
             </h3>
-            {/* TODO: CORE Migration - Change to "four political dimensions" */}
             <p style={{ margin: 0, fontSize: 'clamp(0.9375rem, 2vw, 1rem)', color: COLORS.textSecondary, lineHeight: '1.5' }}>
-              Square yourself across five political dimensions
+              Square yourself across four political dimensions
             </p>
           </div>
 
@@ -179,22 +163,18 @@ export function SquaresEmbedReact({
                 Martin Luther King Jr.
               </span>
             </div>
-            {/* TODO: CORE Migration - Change to 4 ColorSquares with CORE dimension labels:
-                Civil Rights, Openness, Redistribution, Ethics */}
             <div style={{ textAlign: 'center' }}>
               <div style={{ marginBottom: '12px', display: 'flex', justifyContent: 'center', gap: 'clamp(6px, 1.5vw, 12px)' }}>
-                <ColorSquare value={2} size={48} />
                 <ColorSquare value={1} size={48} />
-                <ColorSquare value={2} size={48} />
+                <ColorSquare value={1} size={48} />
                 <ColorSquare value={4} size={48} />
-                <ColorSquare value={0} size={48} />
+                <ColorSquare value={1} size={48} />
               </div>
               <div style={{ fontSize: '0.6875rem', color: COLORS.textSecondary, display: 'flex', justifyContent: 'center', gap: 'clamp(8px, 2vw, 16px)', flexWrap: 'wrap', fontWeight: 500 }}>
-                <span>Trade</span>
-                <span>Abortion</span>
-                <span>Migration</span>
-                <span>Economics</span>
-                <span>Rights</span>
+                <span>Civil Rights</span>
+                <span>Openness</span>
+                <span>Redistribution</span>
+                <span>Ethics</span>
               </div>
             </div>
           </div>

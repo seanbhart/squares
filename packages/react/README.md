@@ -2,14 +2,58 @@
 
 Official React component for embedding [squares.vote](https://squares.vote) widgets.
 
-## What's New in v2.3.3
+## Version 3.0.0 - CORE Framework Migration
 
-🔄 **Final Slide Enhancements** - Better user control on results screen:
-- **Start Over button** - Subtle text link to restart the assessment
-- **Close button** - Second subtle option to dismiss the widget
-- **Clean layout** - Options separated by bullet point for clarity
-- **Resets state** - Start Over properly resets all dimensions to defaults
-- **Hover feedback** - Subtle color change on hover for both options
+🚨 **Breaking Changes** - This major version introduces the CORE political spectrum framework:
+
+### What Changed
+- **4 dimensions instead of 5**: The new CORE framework uses Civil Rights, Openness, Redistribution, and Ethics
+- **0-5 scale instead of 0-6**: Each dimension now uses a 6-point scale (0-5) instead of 7-point (0-6)
+- **New spectrum keys**: `CoreSpectrum` uses `civilRights`, `openness`, `redistribution`, `ethics` instead of legacy TAMER keys
+- **6 colors instead of 7**: The color ramp has been updated to match the new scale
+
+### Migration Guide from v2 to v3
+
+If you're upgrading from v2.x, you'll need to update your spectrum data structure:
+
+**Before (v2 - TAMER):**
+```typescript
+const spectrum = {
+  trade: 3,      // 0-6 scale
+  abortion: 2,   // 0-6 scale
+  migration: 4,  // 0-6 scale
+  economics: 5,  // 0-6 scale
+  rights: 1      // 0-6 scale
+};
+```
+
+**After (v3 - CORE):**
+```typescript
+import type { CoreSpectrum } from '@squares-app/react';
+
+const spectrum: CoreSpectrum = {
+  civilRights: 2,      // 0-5 scale: Liberty to Authority
+  openness: 3,         // 0-5 scale: Global to National
+  redistribution: 4,   // 0-5 scale: Market to Social
+  ethics: 1            // 0-5 scale: Progressive to Traditional
+};
+```
+
+### New Exports in v3
+
+The package now exports the CORE configuration:
+
+```typescript
+import {
+  CORE_DIMENSIONS,      // Array of dimension metadata
+  COLOR_RAMP,           // 6-color array for the 0-5 scale
+  POSITION_LABELS,      // Detailed labels for each position
+  getEmojiSquare,       // Convert value to emoji (🟪🟦🟩🟨🟧🟥)
+  getCoreCode,          // Generate 4-letter code (e.g., "LGMP")
+  type CoreSpectrum,    // TypeScript type for spectrum data
+  type CoreDimensionKey // TypeScript type for dimension keys
+} from '@squares-app/react';
+```
 
 ## Installation
 
@@ -41,7 +85,7 @@ function App() {
 ### With Customization
 
 ```tsx
-import { SquaresEmbedReact } from '@squares-app/react';
+import { SquaresEmbedReact, type CoreSpectrum } from '@squares-app/react';
 
 function App() {
   return (
@@ -58,6 +102,41 @@ function App() {
 }
 ```
 
+### Using CORE Configuration
+
+```tsx
+import {
+  SquaresEmbedReact,
+  CORE_DIMENSIONS,
+  COLOR_RAMP,
+  getEmojiSquare,
+  getCoreCode,
+  type CoreSpectrum
+} from '@squares-app/react';
+
+function MyComponent() {
+  const mySpectrum: CoreSpectrum = {
+    civilRights: 2,
+    openness: 3,
+    redistribution: 4,
+    ethics: 1
+  };
+
+  // Generate a 4-letter code like "LGST"
+  const code = getCoreCode(mySpectrum);
+
+  // Get emoji representation
+  const emoji = getEmojiSquare(mySpectrum.civilRights); // 🟩
+
+  return (
+    <div>
+      <h2>My Political Position: {code}</h2>
+      <SquaresEmbedReact variant="card" />
+    </div>
+  );
+}
+```
+
 ## Props
 
 | Prop | Type | Default | Description |
@@ -70,10 +149,24 @@ function App() {
 | `borderRadius` | `string` | `undefined` | Custom border radius |
 | `shadow` | `boolean` | `true` | Show/hide shadow |
 
+## The CORE Framework
+
+The CORE framework represents political positions across four key dimensions:
+
+| Dimension | Low (0-2) | High (3-5) | Description |
+|-----------|-----------|------------|-------------|
+| **C**ivil Rights | Liberty (L) | Authority (A) | Government constraint on personal freedoms |
+| **O**penness | Global (G) | National (N) | Supranational integration vs national sovereignty |
+| **R**edistribution | Market (M) | Social (S) | Market allocation vs state redistribution |
+| **E**thics | Progressive (P) | Traditional (T) | Change-seeking vs preservation-seeking |
+
+Each dimension uses a **0-5 scale** with detailed position labels and a 6-color visual representation.
+
 ## Features
 
 - ✅ **React-first:** Built specifically for React applications
-- ✅ **TypeScript:** Full type safety
+- ✅ **TypeScript:** Full type safety with CORE framework types
+- ✅ **CORE framework:** 4-dimension political spectrum (C, O, R, E)
 - ✅ **Lifecycle-aware:** Properly integrates with React's lifecycle
 - ✅ **Auto-cleanup:** Automatically cleans up on unmount
 - ✅ **No conflicts:** Uses refs to avoid DOM manipulation conflicts

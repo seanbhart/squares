@@ -2,9 +2,57 @@
 // Uses the shared analytics/type_config.json produced by the analytics pipeline
 
 import typeConfig from '../analytics/type_config.json';
+import blocConfig from '../analytics/bloc_config.json';
 
 export type CoreDimensionKey = 'C' | 'O' | 'R' | 'E';
 export type CoreScores = [number, number, number, number];
+
+// Spectrum type using full dimension names as keys (for widget compatibility)
+export type CoreSpectrum = {
+  civilRights: number;
+  openness: number;
+  redistribution: number;
+  ethics: number;
+};
+
+// 6-color spectrum for CORE (0-5 scale)
+export const COLOR_RAMP = [
+  "#7e568e", // Purple (0)
+  "#1f6adb", // Blue (1)
+  "#398a34", // Green (2)
+  "#eab308", // Yellow/Gold (3)
+  "#e67e22", // Orange (4)
+  "#c0392b", // Red (5)
+] as const;
+
+// Position labels for each dimension (6 values each, from bloc_config.json)
+export const POSITION_LABELS: Record<string, string[]> = {
+  civilRights: blocConfig.axes.civilRights.values,
+  openness: blocConfig.axes.openness.values,
+  redistribution: blocConfig.axes.redistribution.values,
+  ethics: blocConfig.axes.ethics.values,
+};
+
+// Emoji squares for spectrum display (6 emojis for 0-5 scale)
+export function getEmojiSquare(value: number): string {
+  const emojis = ['🟪', '🟦', '🟩', '🟨', '🟧', '🟥'];
+  return emojis[value] ?? '🟨';
+}
+
+// Convert CoreSpectrum to CoreScores array
+export function spectrumToScores(spectrum: CoreSpectrum): CoreScores {
+  return [spectrum.civilRights, spectrum.openness, spectrum.redistribution, spectrum.ethics];
+}
+
+// Convert CoreScores array to CoreSpectrum
+export function scoresToSpectrum(scores: CoreScores): CoreSpectrum {
+  return {
+    civilRights: scores[0],
+    openness: scores[1],
+    redistribution: scores[2],
+    ethics: scores[3],
+  };
+}
 
 export interface CoreDimension {
   key: CoreDimensionKey;
