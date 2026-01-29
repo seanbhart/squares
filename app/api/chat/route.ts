@@ -1,6 +1,15 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { NextRequest, NextResponse } from "next/server";
 import { extractSpectrumData } from "@/lib/extract-spectrum-data";
+import { checkIpBasedRateLimit } from "@/lib/api/rate-limit";
+
+// Input validation constants
+const MAX_MESSAGES = 50;
+const MAX_MESSAGE_LENGTH = 10000;
+
+// Rate limit configuration: 10 requests per minute per IP
+const RATE_LIMIT_MAX_REQUESTS = 10;
+const RATE_LIMIT_WINDOW_MS = 60000; // 1 minute
 
 const anthropic = new Anthropic({
   apiKey: process.env.CLAUDE_API_KEY,
@@ -123,12 +132,95 @@ async function reviewAssessment(lastUserMessage: string, assessment: string): Pr
 
 // extractSpectrumData is now imported from @/lib/extract-spectrum-data
 
+/**
+ * Get client IP address from request
+ * Uses Vercel's verified IP (request.ip) to prevent IP spoofing attacks.
+ * Falls back to x-forwarded-for only for local development.
+ */
+function getClientIp(request: NextRequest): string {
+  // On Vercel, request.ip is the verified client IP (cannot be spoofed)
+  // This is set by Vercel's edge network after validating the connection
+  if (request.ip) {
+    return request.ip;
+  }
+
+  // Fallback for local development only (not behind Vercel)
+  // In production on Vercel, request.ip will always be set
+  const forwardedFor = request.headers.get("x-forwarded-for");
+  if (forwardedFor) {
+    return forwardedFor.split(",")[0].trim();
+  }
+
+  return "127.0.0.1";
+}
+
+/**
+ * Validate the messages array structure and content
+ */
+function validateMessages(messages: unknown): { valid: boolean; error?: string } {
+  if (!messages || !Array.isArray(messages)) {
+    return { valid: false, error: "Invalid messages array" };
+  }
+
+  if (messages.length === 0) {
+    return { valid: false, error: "Messages array cannot be empty" };
+  }
+
+  if (messages.length > MAX_MESSAGES) {
+    return { valid: false, error: `Too many messages. Maximum allowed: ${MAX_MESSAGES}` };
+  }
+
+  for (let i = 0; i < messages.length; i++) {
+    const msg = messages[i];
+
+    // Check message structure
+    if (!msg || typeof msg !== "object") {
+      return { valid: false, error: `Invalid message at index ${i}` };
+    }
+
+    // Check role
+    if (msg.role !== "user" && msg.role !== "assistant") {
+      return { valid: false, error: `Invalid role at index ${i}. Must be 'user' or 'assistant'` };
+    }
+
+    // Check content exists and is a string
+    if (typeof msg.content !== "string") {
+      return { valid: false, error: `Invalid content at index ${i}. Must be a string` };
+    }
+
+    // Check content length
+    if (msg.content.length > MAX_MESSAGE_LENGTH) {
+      return {
+        valid: false,
+        error: `Message at index ${i} exceeds maximum length of ${MAX_MESSAGE_LENGTH} characters`,
+      };
+    }
+  }
+
+  return { valid: true };
+}
+
 export async function POST(request: NextRequest) {
   try {
+    // Get client IP for rate limiting
+    const clientIp = getClientIp(request);
+
+    // Check IP-based rate limit
+    const rateLimitError = checkIpBasedRateLimit(
+      clientIp,
+      RATE_LIMIT_MAX_REQUESTS,
+      RATE_LIMIT_WINDOW_MS
+    );
+    if (rateLimitError) {
+      return rateLimitError;
+    }
+
     const { messages } = await request.json();
 
-    if (!messages || !Array.isArray(messages)) {
-      return NextResponse.json({ error: "Invalid messages array" }, { status: 400 });
+    // Validate messages array
+    const validation = validateMessages(messages);
+    if (!validation.valid) {
+      return NextResponse.json({ error: validation.error }, { status: 400 });
     }
 
     // Get the last user message for checking if it's a typing request

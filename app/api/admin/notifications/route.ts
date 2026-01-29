@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { verifyAdminAuth } from '@/lib/api/admin-auth'
 import {
   getAllNotificationTokens,
   getNotificationStats,
@@ -11,9 +12,14 @@ import {
 export const dynamic = 'force-dynamic';
 
 export async function GET(request: NextRequest) {
+  const authResult = await verifyAdminAuth(request);
+  if (authResult instanceof Response) {
+    return authResult;
+  }
+
   const { searchParams } = new URL(request.url)
   const action = searchParams.get('action')
-  
+
   try {
     switch (action) {
       case 'list':
@@ -37,6 +43,11 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
+  const authResult = await verifyAdminAuth(request);
+  if (authResult instanceof Response) {
+    return authResult;
+  }
+
   try {
     const body = await request.json()
     const { action, fid, title, body: messageBody, targetUrl } = body
@@ -73,6 +84,11 @@ export async function POST(request: NextRequest) {
 }
 
 export async function DELETE(request: NextRequest) {
+  const authResult = await verifyAdminAuth(request);
+  if (authResult instanceof Response) {
+    return authResult;
+  }
+
   try {
     const { searchParams } = new URL(request.url)
     const fid = searchParams.get('fid')

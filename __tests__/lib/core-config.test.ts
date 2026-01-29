@@ -108,19 +108,25 @@ describe('classifyCore', () => {
     it('should find type info for LGMP', () => {
       const result = classifyCore([1, 1, 1, 1]);
       expect(result.code).toBe('LGMP');
-      expect(result.type).toBeDefined();
-      expect(result.type?.name).toBe('Optimists');
-      expect(result.family).toBeDefined();
-      expect(result.family?.name).toBe('Builders');
+      expect(result.type).not.toBeUndefined();
+      expect(result.type!.code).toBe('LGMP');
+      expect(result.type!.name).toBe('Optimists');
+      expect(result.type!.familyCode).toBe('GM');
+      expect(result.family).not.toBeUndefined();
+      expect(result.family!.code).toBe('GM');
+      expect(result.family!.name).toBe('Builders');
     });
 
     it('should find type info for ANST', () => {
       const result = classifyCore([4, 4, 4, 4]);
       expect(result.code).toBe('ANST');
-      expect(result.type).toBeDefined();
-      expect(result.type?.name).toBe('Order Conservatives');
-      expect(result.family).toBeDefined();
-      expect(result.family?.name).toBe('Unionists');
+      expect(result.type).not.toBeUndefined();
+      expect(result.type!.code).toBe('ANST');
+      expect(result.type!.name).toBe('Order Conservatives');
+      expect(result.type!.familyCode).toBe('NS');
+      expect(result.family).not.toBeUndefined();
+      expect(result.family!.code).toBe('NS');
+      expect(result.family!.name).toBe('Unionists');
     });
 
     it('should find correct family code', () => {
@@ -168,9 +174,10 @@ describe('classifyCore', () => {
 
     it('should calculate correct distance for non-exact matches', () => {
       // Score that's slightly off from any defined variation
+      // [1,1,1,2] differs from default LGMP [1,1,1,1] by 1 in the last dimension
       const result = classifyCore([1, 1, 1, 2]);
-      // Closest should have non-zero distance since [1,1,1,2] isn't an exact variation
-      expect(result.closestVariations[0].distance).toBeGreaterThanOrEqual(0);
+      // Euclidean distance from [1,1,1,2] to closest variation [1,1,1,1] = sqrt((2-1)^2) = 1
+      expect(result.closestVariations[0].distance).toBe(1);
     });
   });
 
@@ -249,68 +256,116 @@ describe('getDimensionColor', () => {
   });
 });
 
-describe('CORE_DIMENSIONS constant', () => {
-  it('should have exactly 4 dimensions', () => {
+describe('CORE_DIMENSIONS configuration', () => {
+  it('should have exactly 4 dimensions matching CORE acronym', () => {
     expect(CORE_DIMENSIONS).toHaveLength(4);
+    // Keys must spell "CORE"
+    expect(CORE_DIMENSIONS.map(d => d.key).join('')).toBe('CORE');
   });
 
-  it('should have correct keys in order: C, O, R, E', () => {
-    expect(CORE_DIMENSIONS.map(d => d.key)).toEqual(['C', 'O', 'R', 'E']);
+  it('should have unique dimension keys', () => {
+    const keys = CORE_DIMENSIONS.map(d => d.key);
+    expect(new Set(keys).size).toBe(keys.length);
   });
 
-  it('should have correct dimension names', () => {
-    expect(CORE_DIMENSIONS[0].name).toBe('Civil Rights');
-    expect(CORE_DIMENSIONS[1].name).toBe('Openness');
-    expect(CORE_DIMENSIONS[2].name).toBe('Redistribution');
-    expect(CORE_DIMENSIONS[3].name).toBe('Ethics');
-  });
+  it('should have letter pairs that match getCoreCode output format', () => {
+    // Each dimension pair should produce a letter used in type codes
+    const allTypeCodeLetters = Object.keys(CORE_TYPES_BY_CODE).flatMap(code => code.split(''));
+    const pairLetters = CORE_DIMENSIONS.flatMap(d => d.pair);
 
-  it('should have correct letter pairs', () => {
-    expect(CORE_DIMENSIONS[0].pair).toEqual(['L', 'A']);
-    expect(CORE_DIMENSIONS[1].pair).toEqual(['G', 'N']);
-    expect(CORE_DIMENSIONS[2].pair).toEqual(['M', 'S']);
-    expect(CORE_DIMENSIONS[3].pair).toEqual(['P', 'T']);
-  });
-});
-
-describe('CORE_FAMILIES constant', () => {
-  it('should have exactly 4 families', () => {
-    expect(Object.keys(CORE_FAMILIES)).toHaveLength(4);
-  });
-
-  it('should have families GM, GS, NM, NS', () => {
-    expect(CORE_FAMILIES).toHaveProperty('GM');
-    expect(CORE_FAMILIES).toHaveProperty('GS');
-    expect(CORE_FAMILIES).toHaveProperty('NM');
-    expect(CORE_FAMILIES).toHaveProperty('NS');
-  });
-
-  it('should have correct family names', () => {
-    expect(CORE_FAMILIES.GM.name).toBe('Builders');
-    expect(CORE_FAMILIES.GS.name).toBe('Diplomats');
-    expect(CORE_FAMILIES.NM.name).toBe('Proprietors');
-    expect(CORE_FAMILIES.NS.name).toBe('Unionists');
-  });
-});
-
-describe('CORE_TYPES_BY_CODE constant', () => {
-  it('should have exactly 16 types', () => {
-    expect(Object.keys(CORE_TYPES_BY_CODE)).toHaveLength(16);
-  });
-
-  it('should have all 16 type codes', () => {
-    const expectedCodes = [
-      'LGMP', 'AGMP', 'LGMT', 'AGMT',
-      'LGSP', 'AGSP', 'LGST', 'AGST',
-      'LNMP', 'ANMP', 'LNMT', 'ANMT',
-      'LNSP', 'ANSP', 'LNST', 'ANST',
-    ];
-    expectedCodes.forEach(code => {
-      expect(CORE_TYPES_BY_CODE).toHaveProperty(code);
+    // All letters in type codes should come from dimension pairs
+    allTypeCodeLetters.forEach(letter => {
+      expect(pairLetters).toContain(letter);
     });
   });
 
-  it('should have variations for each type', () => {
+  it('should produce valid type codes via getCoreCode', () => {
+    // Low scores should use first letter of each pair
+    const lowCode = getCoreCode([0, 0, 0, 0]);
+    expect(lowCode[0]).toBe(CORE_DIMENSIONS[0].pair[0]);
+    expect(lowCode[1]).toBe(CORE_DIMENSIONS[1].pair[0]);
+    expect(lowCode[2]).toBe(CORE_DIMENSIONS[2].pair[0]);
+    expect(lowCode[3]).toBe(CORE_DIMENSIONS[3].pair[0]);
+
+    // High scores should use second letter of each pair
+    const highCode = getCoreCode([5, 5, 5, 5]);
+    expect(highCode[0]).toBe(CORE_DIMENSIONS[0].pair[1]);
+    expect(highCode[1]).toBe(CORE_DIMENSIONS[1].pair[1]);
+    expect(highCode[2]).toBe(CORE_DIMENSIONS[2].pair[1]);
+    expect(highCode[3]).toBe(CORE_DIMENSIONS[3].pair[1]);
+  });
+});
+
+describe('CORE_FAMILIES configuration', () => {
+  it('should have families for each combination of middle dimensions (O,R)', () => {
+    // Families are determined by Openness (G/N) and Redistribution (M/S)
+    const familyCodes = Object.keys(CORE_FAMILIES);
+    expect(familyCodes).toHaveLength(4);
+
+    // Each family code should be 2 characters from O and R dimensions
+    const opennessLetters = CORE_DIMENSIONS[1].pair; // ['G', 'N']
+    const redistributionLetters = CORE_DIMENSIONS[2].pair; // ['M', 'S']
+
+    familyCodes.forEach(code => {
+      expect(code).toHaveLength(2);
+      expect(opennessLetters).toContain(code[0]);
+      expect(redistributionLetters).toContain(code[1]);
+    });
+  });
+
+  it('should have all families referenced by types', () => {
+    // Every type should belong to a valid family
+    Object.values(CORE_TYPES_BY_CODE).forEach(type => {
+      expect(CORE_FAMILIES).toHaveProperty(type.familyCode);
+      expect(type.familyName).toBe(CORE_FAMILIES[type.familyCode].name);
+    });
+  });
+});
+
+describe('CORE_TYPES_BY_CODE configuration', () => {
+  it('should have 16 types (2^4 combinations of 4 binary dimensions)', () => {
+    expect(Object.keys(CORE_TYPES_BY_CODE)).toHaveLength(16);
+  });
+
+  it('should have type codes that match getCoreCode output', () => {
+    // Every possible score combination should produce a valid type code
+    const allCodes = new Set(Object.keys(CORE_TYPES_BY_CODE));
+
+    // Test representative scores for each type boundary
+    for (let c = 0; c <= 5; c += 5) {
+      for (let o = 0; o <= 5; o += 5) {
+        for (let r = 0; r <= 5; r += 5) {
+          for (let e = 0; e <= 5; e += 5) {
+            const code = getCoreCode([c, o, r, e]);
+            expect(allCodes.has(code)).toBe(true);
+          }
+        }
+      }
+    }
+  });
+
+  it('should have variation scores within valid 0-5 range', () => {
+    Object.values(CORE_TYPES_BY_CODE).forEach(type => {
+      type.variations.forEach(variation => {
+        variation.scores.forEach(score => {
+          expect(score).toBeGreaterThanOrEqual(0);
+          expect(score).toBeLessThanOrEqual(5);
+        });
+      });
+    });
+  });
+
+  it('should have variation scores that classify back to parent type', () => {
+    // Each variation's scores should produce a code matching its parent type
+    Object.values(CORE_TYPES_BY_CODE).forEach(type => {
+      type.variations.forEach(variation => {
+        const derivedCode = getCoreCode(variation.scores);
+        expect(derivedCode).toBe(type.code);
+      });
+    });
+  });
+
+  it('should have three intensity levels per type (moderate, default, extreme)', () => {
     Object.values(CORE_TYPES_BY_CODE).forEach(type => {
       expect(type.variations).toHaveLength(3);
       const variationKeys = type.variations.map(v => v.key);

@@ -228,14 +228,19 @@ interface CoreQuestionnaireProps {
     ethics: number;
   }) => void;
   onCancel: () => void;
+  storageKey?: string;
 }
 
-export default function CoreQuestionnaire({ onComplete, onCancel }: CoreQuestionnaireProps) {
+export default function CoreQuestionnaire({
+  onComplete,
+  onCancel,
+  storageKey = 'core_questionnaire_answers'
+}: CoreQuestionnaireProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [answers, setAnswers] = useState<Record<string, number>>(() => {
     // Load saved answers from localStorage
     if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('core_questionnaire_answers');
+      const saved = localStorage.getItem(storageKey);
       if (saved) {
         try {
           return JSON.parse(saved);
@@ -250,14 +255,14 @@ export default function CoreQuestionnaire({ onComplete, onCancel }: CoreQuestion
   // Save answers to localStorage whenever they change
   React.useEffect(() => {
     if (typeof window !== 'undefined' && Object.keys(answers).length > 0) {
-      localStorage.setItem('core_questionnaire_answers', JSON.stringify(answers));
+      localStorage.setItem(storageKey, JSON.stringify(answers));
     }
-  }, [answers]);
+  }, [answers, storageKey]);
 
   // Clear saved answers on completion
   const clearSavedAnswers = () => {
     if (typeof window !== 'undefined') {
-      localStorage.removeItem('core_questionnaire_answers');
+      localStorage.removeItem(storageKey);
     }
   };
 
@@ -285,11 +290,15 @@ export default function CoreQuestionnaire({ onComplete, onCancel }: CoreQuestion
     });
 
     // Calculate averages and map to 0-5 scale
+    // Guard against division by zero by defaulting to 2.5 (middle) if no answers for a dimension
+    const safeAverage = (total: number, weight: number) =>
+      weight > 0 ? total / weight : 2.5;
+
     const finalScores = {
-      civilRights: Math.round(dimensionScores.civilRights.total / dimensionScores.civilRights.weight),
-      openness: Math.round(dimensionScores.openness.total / dimensionScores.openness.weight),
-      redistribution: Math.round(dimensionScores.redistribution.total / dimensionScores.redistribution.weight),
-      ethics: Math.round(dimensionScores.ethics.total / dimensionScores.ethics.weight),
+      civilRights: Math.round(safeAverage(dimensionScores.civilRights.total, dimensionScores.civilRights.weight)),
+      openness: Math.round(safeAverage(dimensionScores.openness.total, dimensionScores.openness.weight)),
+      redistribution: Math.round(safeAverage(dimensionScores.redistribution.total, dimensionScores.redistribution.weight)),
+      ethics: Math.round(safeAverage(dimensionScores.ethics.total, dimensionScores.ethics.weight)),
     };
 
     // Clamp to 0-5 range

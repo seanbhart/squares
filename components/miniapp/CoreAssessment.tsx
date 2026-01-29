@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import styles from './CoreAssessment.module.css';
 import { AXES, COLOR_RAMP } from '@/lib/bloc-config';
-import CoreQuestionnaire from './CoreQuestionnaire';
+import CoreQuestionnaire from '@/components/shared/CoreQuestionnaire';
 
 // Dimension data for cycling display
 const DIMENSIONS = [
@@ -458,6 +458,7 @@ export default function CoreAssessment({
           setShowQuestionnaire(false);
           setShowIntro(true);
         }}
+        storageKey="core_questionnaire_answers_miniapp"
       />
     );
   }

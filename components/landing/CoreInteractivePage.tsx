@@ -4,7 +4,7 @@ import React, { useRef, useEffect, useState } from 'react';
 import styles from './CoreLanding.module.css';
 import { COLOR_RAMP, AXES, getAllTypes, getTypePosition, getTypeName, getTypeSingularName, getTypeDescription, getAllSubTypesWithMeta, generateCallSign, TypeId, SubTypeWithMeta, FAMILY_NAMES } from '@/lib/bloc-config';
 import CoreIntroModal from './CoreIntroModal';
-import CoreQuestionnaire from './CoreQuestionnaire';
+import CoreQuestionnaire from '@/components/shared/CoreQuestionnaire';
 
 type AxisKey = 'civilRights' | 'openness' | 'redistribution' | 'ethics';
 

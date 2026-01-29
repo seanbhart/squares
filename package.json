@@ -16,6 +16,7 @@
     "@anthropic-ai/sdk": "^0.65.0",
     "@farcaster/miniapp-node": "^0.1.11",
     "@farcaster/miniapp-sdk": "^0.2.0",
+    "@farcaster/quick-auth": "^0.0.8",
     "@squares-app/react": "^2.6.0",
     "@supabase/ssr": "^0.7.0",
     "@supabase/supabase-js": "^2.75.0",

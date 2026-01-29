@@ -142,8 +142,11 @@ export default function MiniAppClient() {
         spectrum, // Matches CoreScores structure
         isPublic: publicVisibility,
       };
-      
-      const response = await fetch('/api/farcaster/spectrum', {
+
+      // Use quickAuth.fetch for authenticated requests
+      // This automatically adds the Bearer token for FID ownership verification
+      const { sdk } = await import('@farcaster/miniapp-sdk');
+      const response = await sdk.quickAuth.fetch('/api/farcaster/spectrum', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
@@ -154,13 +157,14 @@ export default function MiniAppClient() {
       if (data.success) {
         setExistingSpectrum(spectrum);
         setIsPublic(publicVisibility);
-        
+
         try {
-          const { sdk } = await import('@farcaster/miniapp-sdk');
           await sdk.actions.addMiniApp();
         } catch (e) {
           // Ignore if already added
         }
+      } else if (response.status === 401 || response.status === 403) {
+        console.error('[Squares] Authentication failed:', data.error);
       }
     } catch (error) {
       console.error('[Squares] Failed to save spectrum:', error);

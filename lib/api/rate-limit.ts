@@ -225,3 +225,128 @@ export function cleanupRateLimitStore() {
 if (typeof setInterval !== 'undefined') {
   setInterval(cleanupRateLimitStore, 5 * 60 * 1000);
 }
+
+// ============================================================================
+// IP-Based Rate Limiting (for public endpoints without API key auth)
+// ============================================================================
+
+// In-memory store for IP rate limiting (replace with Redis in production)
+// Structure: Map<ip, { count: number; resetAt: number }>
+const ipRateLimitStore = new Map<string, { count: number; resetAt: number }>();
+
+interface IpRateLimitConfig {
+  maxRequests: number;
+  windowMs: number;
+}
+
+/**
+ * Check and increment rate limit for an IP address
+ * @param ip - The IP address to check
+ * @param config - Rate limit configuration
+ * @returns RateLimitResult with allowed status and metadata
+ */
+function checkIpRateLimit(ip: string, config: IpRateLimitConfig): RateLimitResult {
+  const now = Date.now();
+  const windowKey = `${ip}:${Math.floor(now / config.windowMs)}`;
+
+  let entry = ipRateLimitStore.get(windowKey);
+
+  // Calculate reset time
+  const resetAt = Math.floor((Math.floor(now / config.windowMs) + 1) * config.windowMs / 1000);
+
+  // Clean up expired entry
+  if (entry && entry.resetAt < Math.floor(now / 1000)) {
+    ipRateLimitStore.delete(windowKey);
+    entry = undefined;
+  }
+
+  if (!entry) {
+    entry = { count: 0, resetAt };
+    ipRateLimitStore.set(windowKey, entry);
+  }
+
+  // Check if limit exceeded
+  if (entry.count >= config.maxRequests) {
+    const retryAfter = entry.resetAt - Math.floor(now / 1000);
+    return {
+      allowed: false,
+      limit: config.maxRequests,
+      remaining: 0,
+      resetAt: entry.resetAt,
+      retryAfter: Math.max(1, retryAfter),
+    };
+  }
+
+  // Increment counter
+  entry.count++;
+
+  return {
+    allowed: true,
+    limit: config.maxRequests,
+    remaining: config.maxRequests - entry.count,
+    resetAt: entry.resetAt,
+  };
+}
+
+/**
+ * Check IP-based rate limits for public endpoints
+ * Returns error response if limit exceeded, null if allowed
+ *
+ * @param ip - The client IP address
+ * @param maxRequests - Maximum requests allowed in the window (default: 10)
+ * @param windowMs - Time window in milliseconds (default: 60000 = 1 minute)
+ */
+export function checkIpBasedRateLimit(
+  ip: string,
+  maxRequests: number = 10,
+  windowMs: number = 60000
+): Response | null {
+  const result = checkIpRateLimit(ip, { maxRequests, windowMs });
+
+  if (!result.allowed) {
+    return rateLimitError(result.retryAfter!);
+  }
+
+  return null;
+}
+
+/**
+ * Get rate limit headers for IP-based limiting
+ */
+export function getIpRateLimitHeaders(
+  ip: string,
+  maxRequests: number = 10,
+  windowMs: number = 60000
+): Record<string, string> {
+  const now = Date.now();
+  const windowKey = `${ip}:${Math.floor(now / windowMs)}`;
+  const entry = ipRateLimitStore.get(windowKey);
+
+  const resetAt = entry?.resetAt || Math.floor((Math.floor(now / windowMs) + 1) * windowMs / 1000);
+  const remaining = entry ? maxRequests - entry.count : maxRequests;
+
+  return {
+    'X-RateLimit-Limit': maxRequests.toString(),
+    'X-RateLimit-Remaining': Math.max(0, remaining).toString(),
+    'X-RateLimit-Reset': resetAt.toString(),
+  };
+}
+
+/**
+ * Clean up old IP rate limit entries
+ * In production with Redis, this is handled automatically by TTL
+ */
+export function cleanupIpRateLimitStore() {
+  const now = Math.floor(Date.now() / 1000);
+
+  ipRateLimitStore.forEach((entry, key) => {
+    if (entry.resetAt < now) {
+      ipRateLimitStore.delete(key);
+    }
+  });
+}
+
+// Clean up IP rate limit store every 5 minutes
+if (typeof setInterval !== 'undefined') {
+  setInterval(cleanupIpRateLimitStore, 5 * 60 * 1000);
+}

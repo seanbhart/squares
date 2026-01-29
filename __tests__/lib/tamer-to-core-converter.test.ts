@@ -56,10 +56,12 @@ describe('convertTamerToCore', () => {
 
       const result = convertTamerToCore(tamer);
 
-      // Middle values (3 on 0-6 scale) should map close to middle (2-3 on 0-5 scale)
-      // 3/6 * 5 = 2.5, rounds to 2 or 3
-      expect(result.civil_rights_score).toBeGreaterThanOrEqual(2);
-      expect(result.civil_rights_score).toBeLessThanOrEqual(3);
+      // Middle values (3 on 0-6 scale): 3/6 * 5 = 2.5, Math.round(2.5) = 3
+      // JavaScript Math.round rounds half values towards positive infinity
+      expect(result.civil_rights_score).toBe(3); // avg(3,3) = 3, scale(3) = round(2.5) = 3
+      expect(result.openness_score).toBe(3);     // avg(3,3) = 3, scale(3) = 3
+      expect(result.redistribution_score).toBe(3); // scale(3) = 3
+      expect(result.ethics_score).toBe(3);       // 3*0.6 + 3*0.4 = 3, scale(3) = 3
     });
   });
 
@@ -91,9 +93,8 @@ describe('convertTamerToCore', () => {
 
       const result = convertTamerToCore(tamer);
 
-      // (0 + 6) / 2 = 3, scaled from 0-6 to 0-5: 3/6*5 = 2.5, rounds to 2 or 3
-      expect(result.civil_rights_score).toBeGreaterThanOrEqual(2);
-      expect(result.civil_rights_score).toBeLessThanOrEqual(3);
+      // (0 + 6) / 2 = 3, scaled from 0-6 to 0-5: 3/6*5 = 2.5, Math.round(2.5) = 3
+      expect(result.civil_rights_score).toBe(3);
     });
   });
 
@@ -125,9 +126,8 @@ describe('convertTamerToCore', () => {
 
       const result = convertTamerToCore(tamer);
 
-      // (0 + 6) / 2 = 3, scaled: 3/6*5 = 2.5
-      expect(result.openness_score).toBeGreaterThanOrEqual(2);
-      expect(result.openness_score).toBeLessThanOrEqual(3);
+      // (0 + 6) / 2 = 3, scaled: 3/6*5 = 2.5, Math.round(2.5) = 3
+      expect(result.openness_score).toBe(3);
     });
   });
 
@@ -276,27 +276,28 @@ describe('convertTamerToCore', () => {
   });
 
   describe('scale conversion accuracy', () => {
-    it('should correctly scale from 0-6 to 0-5 range', () => {
-      // Test specific scaling points
-      // 0 -> 0
-      // 1 -> ~0.83 -> 1
-      // 2 -> ~1.67 -> 2
-      // 3 -> 2.5 -> 2 or 3
-      // 4 -> ~3.33 -> 3
-      // 5 -> ~4.17 -> 4
-      // 6 -> 5
+    it('should correctly scale from 0-6 to 0-5 range using Math.round', () => {
+      // Test specific scaling points using the formula: Math.round((input / 6) * 5)
+      // JavaScript Math.round rounds 0.5 towards positive infinity
+      // 0 -> 0/6*5 = 0.000 -> 0
+      // 1 -> 1/6*5 = 0.833 -> 1
+      // 2 -> 2/6*5 = 1.667 -> 2
+      // 3 -> 3/6*5 = 2.500 -> 3 (Math.round(2.5) = 3 in JavaScript)
+      // 4 -> 4/6*5 = 3.333 -> 3
+      // 5 -> 5/6*5 = 4.167 -> 4
+      // 6 -> 6/6*5 = 5.000 -> 5
 
       const mappings = [
-        { input: 0, expectedMin: 0, expectedMax: 0 },
-        { input: 1, expectedMin: 1, expectedMax: 1 },
-        { input: 2, expectedMin: 1, expectedMax: 2 },
-        { input: 3, expectedMin: 2, expectedMax: 3 },
-        { input: 4, expectedMin: 3, expectedMax: 4 },
-        { input: 5, expectedMin: 4, expectedMax: 4 },
-        { input: 6, expectedMin: 5, expectedMax: 5 },
+        { input: 0, expected: 0 },
+        { input: 1, expected: 1 },
+        { input: 2, expected: 2 },
+        { input: 3, expected: 3 }, // 2.5 rounds to 3 in JS Math.round
+        { input: 4, expected: 3 },
+        { input: 5, expected: 4 },
+        { input: 6, expected: 5 },
       ];
 
-      mappings.forEach(({ input, expectedMin, expectedMax }) => {
+      mappings.forEach(({ input, expected }) => {
         const tamer: TamerScores = {
           trade_score: 3,
           abortion_score: 3,
@@ -307,8 +308,7 @@ describe('convertTamerToCore', () => {
 
         const result = convertTamerToCore(tamer);
 
-        expect(result.redistribution_score).toBeGreaterThanOrEqual(expectedMin);
-        expect(result.redistribution_score).toBeLessThanOrEqual(expectedMax);
+        expect(result.redistribution_score).toBe(expected);
       });
     });
   });
