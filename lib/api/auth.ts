@@ -100,10 +100,16 @@ export async function validateApiKey(
   }
   
   // Update last_used_at (fire and forget, don't wait)
-  void supabase
+  // We still log errors to help debug issues without blocking the request
+  supabase
     .from('api_keys')
     .update({ last_used_at: new Date().toISOString() })
-    .eq('id', key.id);
+    .eq('id', key.id)
+    .then(({ error }) => {
+      if (error) {
+        console.error('Failed to update last_used_at for API key:', key.id, error.message);
+      }
+    });
   
   return { key, plainKey: apiKey };
 }

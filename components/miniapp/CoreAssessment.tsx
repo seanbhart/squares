@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styles from './CoreAssessment.module.css';
 import { AXES, COLOR_RAMP } from '@/lib/bloc-config';
 import CoreQuestionnaire from '@/components/shared/CoreQuestionnaire';
@@ -69,6 +69,10 @@ export default function CoreAssessment({
   });
   const [isPublic, setIsPublic] = useState(initialIsPublic);
 
+  // Track the last completed spectrum to prevent duplicate onComplete calls
+  // when parent re-renders with a new onComplete reference
+  const lastCompletedRef = useRef<string | null>(null);
+
   // Auto-save when all dimensions are selected
   useEffect(() => {
     if (
@@ -83,7 +87,15 @@ export default function CoreAssessment({
         redistribution: selectedValues.redistribution,
         ethics: selectedValues.ethics,
       };
-      onComplete(spectrum, isPublic);
+
+      // Create a stable key representing the current state
+      const stateKey = `${spectrum.civilRights}-${spectrum.openness}-${spectrum.redistribution}-${spectrum.ethics}-${isPublic}`;
+
+      // Only call onComplete if the state has actually changed
+      if (lastCompletedRef.current !== stateKey) {
+        lastCompletedRef.current = stateKey;
+        onComplete(spectrum, isPublic);
+      }
     }
   }, [selectedValues, isPublic, onComplete]);
 

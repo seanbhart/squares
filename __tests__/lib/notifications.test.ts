@@ -169,7 +169,7 @@ describe('sendBatchNotification', () => {
   });
 
   describe('when tokens exist for multiple users', () => {
-    it('should send notifications and return success count', async () => {
+    it('should send notifications and return success count from API response', async () => {
       const tokens = [
         { fid: 1, notification_url: 'https://relay.farcaster.xyz/v1/notify', notification_token: 'token-1' },
         { fid: 2, notification_url: 'https://relay.farcaster.xyz/v1/notify', notification_token: 'token-2' },
@@ -185,12 +185,13 @@ describe('sendBatchNotification', () => {
 
       vi.mocked(supabaseServer).mockResolvedValue(mockSupabase as unknown as ReturnType<typeof supabaseServer>);
 
+      // Mock API returning only 2 successful (to verify we use API response, not token count)
       mockFetch.mockResolvedValue({
         ok: true,
         json: async () => ({
           result: {
-            successfulTokens: ['token-1', 'token-2', 'token-3'],
-            rateLimitedTokens: [],
+            successfulTokens: ['token-1', 'token-2'],
+            rateLimitedTokens: ['token-3'],
             invalidTokens: [],
           },
         }),
@@ -204,8 +205,19 @@ describe('sendBatchNotification', () => {
         notificationId: 'batch-notification-id',
       });
 
-      expect(result).toBe(3);
+      // Result should be 2 (from successfulTokens.length), not 3 (token count)
+      // This proves we're actually using the API response, not just counting tokens
+      expect(result).toBe(2);
       expect(mockFetch).toHaveBeenCalledTimes(1);
+
+      // Verify the request was made with correct payload
+      expect(mockFetch).toHaveBeenCalledWith(
+        'https://relay.farcaster.xyz/v1/notify',
+        expect.objectContaining({
+          method: 'POST',
+          body: expect.stringContaining('batch-notification-id'),
+        })
+      );
     });
 
     it('should group tokens by notification_url and send separate requests', async () => {
@@ -243,7 +255,14 @@ describe('sendBatchNotification', () => {
 
       // Should make 2 fetch calls (one per unique URL)
       expect(mockFetch).toHaveBeenCalledTimes(2);
-      expect(result).toBe(2); // 1 success per call
+
+      // Verify calls were made to different URLs
+      const callUrls = mockFetch.mock.calls.map((call: unknown[]) => call[0]);
+      expect(callUrls).toContain('https://relay1.farcaster.xyz/notify');
+      expect(callUrls).toContain('https://relay2.farcaster.xyz/notify');
+
+      // Result is 2: each call returns 1 successful token
+      expect(result).toBe(2);
     });
   });
 
@@ -328,6 +347,36 @@ describe('sendBatchNotification', () => {
       });
 
       expect(result).toBe(1); // Only first call succeeded
+    });
+
+    it('should handle response.ok being false gracefully', async () => {
+      const tokens = [
+        { fid: 1, notification_url: 'https://relay.farcaster.xyz/v1/notify', notification_token: 'token-1' },
+      ];
+
+      const mockEq = vi.fn().mockResolvedValue({ data: tokens, error: null });
+      const mockIn = vi.fn().mockReturnValue({ eq: mockEq });
+      const mockSelect = vi.fn().mockReturnValue({ in: mockIn });
+      const mockFrom = vi.fn().mockReturnValue({ select: mockSelect });
+      const mockSupabase = { from: mockFrom };
+
+      vi.mocked(supabaseServer).mockResolvedValue(mockSupabase as unknown as ReturnType<typeof supabaseServer>);
+
+      mockFetch.mockResolvedValue({
+        ok: false,
+        status: 500,
+      });
+
+      const result = await sendBatchNotification({
+        fids: [1],
+        title: 'Test',
+        body: 'Test body',
+        targetUrl: 'https://squares.vote/test',
+        notificationId: 'test-id',
+      });
+
+      // Should return 0 when response is not ok
+      expect(result).toBe(0);
     });
   });
 

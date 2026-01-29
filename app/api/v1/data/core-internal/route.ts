@@ -1,11 +1,14 @@
 /**
  * Internal CORE Data API Endpoint
- * Used by the DataViewer component (no API key required)
  * Returns public CORE spectrums from the public_core_spectrums view
+ *
+ * Authentication:
+ * - Header: Authorization: Bearer <your-api-key> (required)
  */
 
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
+import { validateApiKey } from '@/lib/api/auth';
 
 export const dynamic = 'force-dynamic';
 export const runtime = 'nodejs';
@@ -13,13 +16,27 @@ export const runtime = 'nodejs';
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
 const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;
 
+// Valid sort fields to prevent SQL injection
+const validSortFields = ['created_at', 'updated_at', 'diversity_score', 'times_updated'];
+
 export async function GET(request: NextRequest) {
   try {
+    // Validate API key
+    const authResult = await validateApiKey(request);
+    if (authResult instanceof Response) {
+      return authResult;
+    }
+
     const { searchParams } = new URL(request.url);
     const page = parseInt(searchParams.get('page') || '1', 10);
     const limit = Math.min(parseInt(searchParams.get('limit') || '100', 10), 1000);
     const sort = searchParams.get('sort') || 'created_at';
     const order = searchParams.get('order') === 'asc' ? 'asc' : 'desc';
+
+    // Validate sort field to prevent SQL injection
+    if (!validSortFields.includes(sort)) {
+      return NextResponse.json({ error: 'Invalid sort field' }, { status: 400 });
+    }
 
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
 

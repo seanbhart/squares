@@ -81,7 +81,7 @@ export async function POST(request: NextRequest) {
     
     if (error) {
       console.error('Error creating API key:', error);
-      return invalidRequestError('Failed to create API key: ' + error.message);
+      return invalidRequestError('Failed to create API key');
     }
     
     // Return response with plaintext key (only time it's shown)
@@ -147,7 +147,7 @@ export async function GET(request: NextRequest) {
     
     if (error) {
       console.error('Error fetching API keys:', error);
-      return invalidRequestError('Failed to fetch API keys: ' + error.message);
+      return invalidRequestError('Failed to fetch API keys');
     }
     
     return NextResponse.json({

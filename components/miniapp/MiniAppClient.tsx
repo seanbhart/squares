@@ -108,29 +108,7 @@ export default function MiniAppClient() {
     };
   }, []);
 
-  const handleAssessmentComplete = useCallback(async (spectrum: UserSpectrum, publicVisibility: boolean) => {
-    if (!user) return;
-
-    // Check if spectrum has changed
-    if (existingSpectrum && hasCompletedOnce) {
-      const hasChanged = 
-        spectrum.civilRights !== existingSpectrum.civilRights ||
-        spectrum.openness !== existingSpectrum.openness ||
-        spectrum.redistribution !== existingSpectrum.redistribution ||
-        spectrum.ethics !== existingSpectrum.ethics;
-
-      if (hasChanged) {
-        setPendingSpectrum(spectrum);
-        setShowUpdatePrompt(true);
-        return;
-      }
-    }
-
-    await saveSpectrum(spectrum, publicVisibility);
-    setHasCompletedOnce(true);
-  }, [user, existingSpectrum, hasCompletedOnce]);
-
-  const saveSpectrum = async (spectrum: UserSpectrum, publicVisibility: boolean) => {
+  const saveSpectrum = useCallback(async (spectrum: UserSpectrum, publicVisibility: boolean) => {
     if (!user) return;
 
     try {
@@ -169,7 +147,29 @@ export default function MiniAppClient() {
     } catch (error) {
       console.error('[Squares] Failed to save spectrum:', error);
     }
-  };
+  }, [user]);
+
+  const handleAssessmentComplete = useCallback(async (spectrum: UserSpectrum, publicVisibility: boolean) => {
+    if (!user) return;
+
+    // Check if spectrum has changed
+    if (existingSpectrum && hasCompletedOnce) {
+      const hasChanged =
+        spectrum.civilRights !== existingSpectrum.civilRights ||
+        spectrum.openness !== existingSpectrum.openness ||
+        spectrum.redistribution !== existingSpectrum.redistribution ||
+        spectrum.ethics !== existingSpectrum.ethics;
+
+      if (hasChanged) {
+        setPendingSpectrum(spectrum);
+        setShowUpdatePrompt(true);
+        return;
+      }
+    }
+
+    await saveSpectrum(spectrum, publicVisibility);
+    setHasCompletedOnce(true);
+  }, [user, existingSpectrum, hasCompletedOnce, saveSpectrum]);
 
   const handleVisibilityChange = useCallback(async (publicVisibility: boolean) => {
     setIsPublic(publicVisibility);
@@ -177,7 +177,7 @@ export default function MiniAppClient() {
     if (existingSpectrum) {
       await saveSpectrum(existingSpectrum, publicVisibility);
     }
-  }, [existingSpectrum]); // Added dependency
+  }, [existingSpectrum, saveSpectrum]);
 
   const handleConfirmUpdate = async () => {
     if (pendingSpectrum) {

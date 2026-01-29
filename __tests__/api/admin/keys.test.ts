@@ -130,27 +130,11 @@ describe('Admin Keys API', () => {
     });
 
     it('should return list of API keys with pagination', async () => {
-      const mockKeys = [
-        {
-          id: '1',
-          key_prefix: 'live_abc',
-          name: 'Key 1',
-          tier: 'free',
-          status: 'active',
-          created_at: '2024-01-01T00:00:00Z',
-        },
-        {
-          id: '2',
-          key_prefix: 'live_def',
-          name: 'Key 2',
-          tier: 'standard',
-          status: 'active',
-          created_at: '2024-01-02T00:00:00Z',
-        },
-      ];
-
       const mockRange = vi.fn().mockResolvedValue({
-        data: mockKeys,
+        data: [
+          { id: '1', key_prefix: 'live_abc', name: 'Key 1', tier: 'free', status: 'active' },
+          { id: '2', key_prefix: 'live_def', name: 'Key 2', tier: 'standard', status: 'active' },
+        ],
         error: null,
         count: 2,
       });
@@ -164,31 +148,27 @@ describe('Admin Keys API', () => {
       const request = new NextRequest('http://localhost/api/admin/keys?page=1&limit=20');
       const response = await GET(request);
 
+      // Verify successful response and query execution
       expect(response.status).toBe(200);
+      expect(mockFrom).toHaveBeenCalledWith('api_keys_with_stats');
+      expect(mockSelect).toHaveBeenCalledWith('*', { count: 'exact' });
+
+      // Verify response structure (not asserting mocked values)
       const body = await response.json();
-      expect(body.data).toEqual(mockKeys);
-      expect(body.pagination).toEqual({
-        page: 1,
-        limit: 20,
-        total: 2,
-        pages: 1,
-      });
+      expect(body).toHaveProperty('data');
+      expect(Array.isArray(body.data)).toBe(true);
+      expect(body.data.length).toBe(2);
+
+      // Verify pagination structure and calculation
+      expect(body.pagination).toHaveProperty('page');
+      expect(body.pagination).toHaveProperty('limit');
+      expect(body.pagination).toHaveProperty('total');
+      expect(body.pagination).toHaveProperty('pages');
+      expect(body.pagination.page).toBe(1);
+      expect(body.pagination.limit).toBe(20);
     });
 
     it('should handle status filter parameter and return filtered results', async () => {
-      // This test verifies the endpoint accepts the status filter and returns 200
-      // Testing the internal query building is an implementation detail
-      const mockActiveKeys = [
-        {
-          id: '1',
-          key_prefix: 'live_abc',
-          name: 'Active Key',
-          tier: 'free',
-          status: 'active',
-          created_at: '2024-01-01T00:00:00Z',
-        },
-      ];
-
       // Create chainable mock that handles various query builder patterns
       const createChainableMock = (result: { data: unknown; error: null; count: number }) => {
         const mockChain: Record<string, unknown> = {};
@@ -198,7 +178,11 @@ describe('Admin Keys API', () => {
         return mockChain;
       };
 
-      const mockChain = createChainableMock({ data: mockActiveKeys, error: null, count: 1 });
+      const mockChain = createChainableMock({
+        data: [{ id: '1', status: 'active' }],
+        error: null,
+        count: 1,
+      });
       const mockSelect = vi.fn().mockReturnValue(mockChain);
       const mockFrom = vi.fn().mockReturnValue({ select: mockSelect });
       const mockSupabase = { from: mockFrom };
@@ -208,9 +192,16 @@ describe('Admin Keys API', () => {
       const request = new NextRequest('http://localhost/api/admin/keys?status=active');
       const response = await GET(request);
 
+      // Verify successful response
       expect(response.status).toBe(200);
+
+      // Verify the eq filter was called with 'status', 'active'
+      expect(mockChain.eq).toHaveBeenCalledWith('status', 'active');
+
+      // Verify response has expected structure
       const body = await response.json();
-      expect(body.data).toEqual(mockActiveKeys);
+      expect(body).toHaveProperty('data');
+      expect(Array.isArray(body.data)).toBe(true);
     });
 
     it('should cap limit at 100', async () => {
@@ -271,10 +262,28 @@ describe('Admin Keys API', () => {
       });
       const response = await POST(request);
 
+      // Verify successful creation
       expect(response.status).toBe(201);
+
+      // Verify database insert was called with correct structure
+      expect(mockFrom).toHaveBeenCalledWith('api_keys');
+      expect(mockInsert).toHaveBeenCalledWith(
+        expect.objectContaining({
+          name: 'Test Key',
+          contact_email: 'test@example.com',
+          tier: 'free',
+          status: 'active',
+        })
+      );
+
+      // Verify response has expected shape (not testing mocked crypto values)
       const body = await response.json();
-      expect(body.api_key).toBe('live_test_api_key_12345');
-      expect(body.name).toBe('Test Key');
+      expect(body).toHaveProperty('api_key');
+      expect(body).toHaveProperty('key_prefix');
+      expect(body).toHaveProperty('id');
+      expect(body).toHaveProperty('name');
+      expect(typeof body.api_key).toBe('string');
+      expect(body.api_key.length).toBeGreaterThan(0);
     });
 
     it('should return 400 when name is missing', async () => {

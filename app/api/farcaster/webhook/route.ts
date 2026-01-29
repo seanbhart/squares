@@ -132,18 +132,24 @@ export async function POST(request: NextRequest) {
           
           console.log(`[Webhook] Notifications enabled for FID ${fid} (with new token)`)
         } else {
-          // No new token details - just update enabled flag
-          const { error } = await supabase
+          // No new token details - use upsert to ensure record exists
+          // This handles the case where a record doesn't exist yet
+          const { error, data: upsertData } = await supabase
             .from('notification_tokens')
-            .update({ 
+            .upsert({
+              fid,
               app_installed: true, // Ensure app_installed is true
               enabled: true,
               updated_at: new Date().toISOString(),
+            }, {
+              onConflict: 'fid'
             })
-            .eq('fid', fid)
-          
+            .select()
+
           if (error) {
             console.error('[Webhook] Error enabling notifications:', error)
+          } else if (!upsertData || upsertData.length === 0) {
+            console.warn(`[Webhook] Notifications enabled for FID ${fid} but no record returned`)
           } else {
             console.log(`[Webhook] Notifications enabled for FID ${fid} (existing token)`)
           }
@@ -202,7 +208,7 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     console.error('[Webhook] Error processing webhook:', error)
     return NextResponse.json(
-      { error: 'Invalid request', details: error instanceof Error ? error.message : 'Unknown error' },
+      { error: 'Invalid request' },
       { status: 400 }
     )
   }

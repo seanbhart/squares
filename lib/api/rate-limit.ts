@@ -91,8 +91,13 @@ function checkRateLimit(
     keyStore.set(windowKey, entry);
   }
   
-  // Check if limit exceeded
-  if (entry.count >= limit) {
+  // Increment counter FIRST to avoid race condition
+  // Between checking and incrementing, concurrent requests could slip through
+  // By incrementing first, we ensure atomic-like behavior in single-threaded JS
+  entry.count++;
+
+  // Check if limit exceeded (using > since we already incremented)
+  if (entry.count > limit) {
     return {
       allowed: false,
       limit,
@@ -101,10 +106,7 @@ function checkRateLimit(
       retryAfter: entry.resetAt - now,
     };
   }
-  
-  // Increment counter
-  entry.count++;
-  
+
   return {
     allowed: true,
     limit,
@@ -222,6 +224,9 @@ export function cleanupRateLimitStore() {
 }
 
 // Clean up every 5 minutes
+// Note: In serverless environments (Vercel, AWS Lambda), each instance is short-lived
+// and this interval is per-instance. The memory is automatically reclaimed when the
+// instance terminates. For production at scale, use Redis with TTL (e.g., Upstash).
 if (typeof setInterval !== 'undefined') {
   setInterval(cleanupRateLimitStore, 5 * 60 * 1000);
 }
@@ -265,8 +270,13 @@ function checkIpRateLimit(ip: string, config: IpRateLimitConfig): RateLimitResul
     ipRateLimitStore.set(windowKey, entry);
   }
 
-  // Check if limit exceeded
-  if (entry.count >= config.maxRequests) {
+  // Increment counter FIRST to avoid race condition
+  // Between checking and incrementing, concurrent requests could slip through
+  // By incrementing first, we ensure atomic-like behavior in single-threaded JS
+  entry.count++;
+
+  // Check if limit exceeded (using > since we already incremented)
+  if (entry.count > config.maxRequests) {
     const retryAfter = entry.resetAt - Math.floor(now / 1000);
     return {
       allowed: false,
@@ -276,9 +286,6 @@ function checkIpRateLimit(ip: string, config: IpRateLimitConfig): RateLimitResul
       retryAfter: Math.max(1, retryAfter),
     };
   }
-
-  // Increment counter
-  entry.count++;
 
   return {
     allowed: true,
@@ -347,6 +354,9 @@ export function cleanupIpRateLimitStore() {
 }
 
 // Clean up IP rate limit store every 5 minutes
+// Note: In serverless environments (Vercel, AWS Lambda), each instance is short-lived
+// and this interval is per-instance. The memory is automatically reclaimed when the
+// instance terminates. For production at scale, use Redis with TTL (e.g., Upstash).
 if (typeof setInterval !== 'undefined') {
   setInterval(cleanupIpRateLimitStore, 5 * 60 * 1000);
 }

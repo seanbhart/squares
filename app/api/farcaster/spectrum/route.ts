@@ -54,6 +54,7 @@ async function verifyFarcasterAuth(request: NextRequest): Promise<{ fid: number 
 }
 
 // GET - Fetch spectrum for a specific FID
+// Only returns public spectrums unless the requester is authenticated as the FID owner
 export async function GET(request: NextRequest) {
   try {
     const searchParams = request.nextUrl.searchParams;
@@ -66,12 +67,28 @@ export async function GET(request: NextRequest) {
       );
     }
 
+    // Validate FID is a valid number
+    const fidNum = parseInt(fid);
+    if (isNaN(fidNum)) {
+      return NextResponse.json(
+        { error: 'Invalid FID format' },
+        { status: 400 }
+      );
+    }
+
+    // Check if requester is authenticated as this FID
+    let isOwner = false;
+    const authResult = await verifyFarcasterAuth(request);
+    if (!('error' in authResult) && authResult.fid === fidNum) {
+      isOwner = true;
+    }
+
     const supabase = await supabaseServer();
 
     const { data, error } = await supabase
       .from('farcaster_spectrums')
       .select('*')
-      .eq('fid', parseInt(fid))
+      .eq('fid', fidNum)
       .single();
 
     if (error && error.code !== 'PGRST116') {
@@ -80,6 +97,11 @@ export async function GET(request: NextRequest) {
         return NextResponse.json({ spectrum: null });
       }
       throw error;
+    }
+
+    // If data exists but is not public and requester is not the owner, don't expose it
+    if (data && !data.is_public && !isOwner) {
+      return NextResponse.json({ spectrum: null });
     }
 
     return NextResponse.json({ spectrum: data });

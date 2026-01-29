@@ -11,11 +11,12 @@
  * - order: Sort order 'asc' or 'desc' (default: desc)
  * 
  * Headers:
- * - x-api-key: Your API key (optional for basic usage, required for higher rate limits)
+ * - Authorization: Bearer <your-api-key> (required)
  */
 
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
+import { validateApiKey } from '@/lib/api/auth';
 
 export const dynamic = 'force-dynamic';
 export const runtime = 'nodejs';
@@ -23,10 +24,16 @@ export const runtime = 'nodejs';
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
 const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;
 
+// Valid sort fields to prevent SQL injection
+const validSortFields = ['created_at', 'updated_at', 'diversity_score', 'times_updated'];
+
 export async function GET(request: NextRequest) {
   try {
-    // Note: Rate limiting and API key validation can be added later
-    // For now, this is a simple public endpoint
+    // Validate API key
+    const authResult = await validateApiKey(request);
+    if (authResult instanceof Response) {
+      return authResult;
+    }
 
     // Parse query parameters
     const { searchParams } = new URL(request.url);
@@ -34,6 +41,11 @@ export async function GET(request: NextRequest) {
     const limit = Math.min(parseInt(searchParams.get('limit') || '100', 10), 1000);
     const sort = searchParams.get('sort') || 'created_at';
     const order = searchParams.get('order') === 'asc' ? 'asc' : 'desc';
+
+    // Validate sort field to prevent SQL injection
+    if (!validSortFields.includes(sort)) {
+      return NextResponse.json({ error: 'Invalid sort field' }, { status: 400 });
+    }
 
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
 

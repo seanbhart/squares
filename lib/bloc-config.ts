@@ -168,10 +168,11 @@ export function generateCallSign(
   redistributionScore: number,
   ethicsScore: number
 ): CallSign {
-  const c: CivilRightsLetter = civilRightsScore < 2.5 ? 'L' : 'A';
-  const o: OpennessLetter = opennessScore < 2.5 ? 'G' : 'N';
-  const r: RedistributionLetter = redistributionScore < 2.5 ? 'M' : 'S';
-  const e: EthicsLetter = ethicsScore < 2.5 ? 'P' : 'T';
+  // Use <= 2 threshold for consistency with core-config.ts (integer-based for 0-5 scale)
+  const c: CivilRightsLetter = civilRightsScore <= 2 ? 'L' : 'A';
+  const o: OpennessLetter = opennessScore <= 2 ? 'G' : 'N';
+  const r: RedistributionLetter = redistributionScore <= 2 ? 'M' : 'S';
+  const e: EthicsLetter = ethicsScore <= 2 ? 'P' : 'T';
   return `${c}${o}${r}${e}`;
 }
 

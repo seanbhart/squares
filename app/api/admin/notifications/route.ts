@@ -96,8 +96,13 @@ export async function DELETE(request: NextRequest) {
     if (!fid) {
       return NextResponse.json({ error: 'FID required' }, { status: 400 })
     }
-    
-    await deleteNotificationToken(parseInt(fid))
+
+    const fidNum = parseInt(fid)
+    if (isNaN(fidNum)) {
+      return NextResponse.json({ error: 'Invalid FID format' }, { status: 400 })
+    }
+
+    await deleteNotificationToken(fidNum)
     return NextResponse.json({ success: true })
   } catch (error) {
     console.error('[Admin API] Error:', error)
